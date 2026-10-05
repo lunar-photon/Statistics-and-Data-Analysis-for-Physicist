@@ -1,0 +1,10 @@
+L =
+[[2.     0.    ]
+ [0.9    0.4359]]
+np.allclose(L @ L.T, C) = True
+lam = array([0.1569, 4.8431])
+np.linalg.solve(C, b) = array([-3.4211,  8.1579])
+np.linalg.inv(C) @ b = array([-3.4211,  8.1579])
+np.linalg.cond(C) = 30.9
+Hilbert n = 10: cond = 1.6e+13, residual solve = 8.5e-17, inv = 3.6e-05, error of x = 2.3e-05
+n = 2000: solve 44 ms, inv @ b 180 ms, cholesky 57 ms

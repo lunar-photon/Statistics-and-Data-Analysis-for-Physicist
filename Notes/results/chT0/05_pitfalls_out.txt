@@ -1,0 +1,24 @@
+# 1. floats
+0.1 + 0.2 == 0.3          -> False
+0.1 + 0.2 - 0.3           -> 5.551e-17
+np.isclose(0.1 + 0.2, 0.3) -> True
+# 2. integer arrays
+a = np.array([1, 2, 3]); a[0] = 0.7  -> a = [0 2 3], a.dtype = int64
+7 / 2 -> 3.5,   7 // 2 -> 3
+# 3. views and copies
+x = np.zeros(5); y = x[1:3]; y[:] = 9  -> x = [0. 9. 9. 0. 0.]
+same with y = x[1:3].copy()           -> x = [0. 0. 0. 0. 0.]
+# 4. where ranges stop
+list(range(5))            -> [0, 1, 2, 3, 4]
+len(np.arange(0, 1, 0.1)) -> 10   (1.0 is not included)
+len(np.linspace(0, 1, 11)) -> 11  (both ends included)
+v = np.arange(10); v[2:5] -> [2 3 4],  v[-1] -> 9
+# 5. shapes
+(r - r[:, None]).shape    -> (3, 3)
+r + np.ones(4)            -> ValueError: operands could not be broadcast together with shapes (3,) (4,) 
+# 6. mutable default argument
+append_bad(1); append_bad(2)   -> [1, 2]
+append_good(1); append_good(2) -> [2]
+# 7. seeds
+default_rng() twice        -> equal: False
+rng_for(same name) twice   -> equal: True  (0.858458)

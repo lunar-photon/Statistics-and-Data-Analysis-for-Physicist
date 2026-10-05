@@ -1,0 +1,53 @@
+\documentclass[11pt,openany]{book}
+\usepackage{notes}
+\renewcommand{\mainsourcename}{Wasserman}   %
+
+\title{\sffamily\bfseries\color{accent}\Huge Statistics and Data Analysis\\[10pt]
+  \normalfont\sffamily\Large\color{black!70} for the Physicist}
+\author{\large Chandra Prakash\\[0.6em]
+  \normalsize\href{https://lunar-photon.github.io}{\texttt{lunar-photon.github.io}}}
+\date{}
+\addbibresource{references.bib}
+\begin{document}
+\frontmatter
+\maketitle
+\input{chapters/preface}
+\tableofcontents
+\mainmatter
+\part{Probability and Inference}
+\setcounter{chapter}{-1}
+\include{chapters/ch00}
+\renewcommand{\thechapter}{T\arabic{chapter}}\renewcommand{\theHchapter}{T\arabic{chapter}}
+\setcounter{chapter}{-1}
+\include{chapters/chT0}
+\renewcommand{\thechapter}{\arabic{chapter}}\renewcommand{\theHchapter}{\arabic{chapter}}
+\setcounter{chapter}{0}
+\include{chapters/ch01}
+\include{chapters/ch02}
+\include{chapters/ch03}
+\include{chapters/ch04}
+\include{chapters/ch05}
+\part{Physics Toolkits}
+\renewcommand{\thechapter}{T\arabic{chapter}}\renewcommand{\theHchapter}{T\arabic{chapter}}
+\setcounter{chapter}{0}
+\include{chapters/chT1}
+\include{chapters/chT2}
+\include{chapters/chT3}
+\include{chapters/chT4}
+\part{Simulation, Fields and Forecasts}
+\renewcommand{\thechapter}{\arabic{chapter}}\renewcommand{\theHchapter}{N\arabic{chapter}}
+\setcounter{chapter}{5}
+\include{chapters/ch06}
+\include{chapters/ch07}
+\include{chapters/ch08}
+\include{chapters/ch09}
+\include{chapters/ch10}
+\include{chapters/ch11}
+\part{Beyond Two-Point Statistics, and Real Data}
+\setcounter{chapter}{11}
+\include{chapters/ch12}
+\include{chapters/ch13}
+\include{chapters/ch14}
+\backmatter
+\printbibliography[heading=bibintoc]
+\end{document}

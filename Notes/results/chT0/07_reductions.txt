@@ -1,0 +1,5 @@
+E.mean() = 9.8067
+E.mean(axis=1) = array([9.8  , 9.805, 9.815])
+E.mean(axis=0) = array([9.83  , 9.7667, 9.8167, 9.8133])
+E.std(axis=1, ddof=1) = array([0.0648, 0.0342, 0.0661])
+E.max() = 9.9   E.argmax() = 8   np.cumsum([1, 2, 3]) = array([1, 3, 6])

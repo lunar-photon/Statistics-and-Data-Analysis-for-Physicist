@@ -1,0 +1,16 @@
+z =  5: 1-cdf = 2.8665e-07   sf = 2.8665e-07   log10 sf =   -6.5426   mpmath log10 =   -6.5426
+z =  8: 1-cdf = 6.6613e-16   sf = 6.2210e-16   log10 sf =  -15.2061   mpmath log10 =  -15.2061
+z =  9: 1-cdf = 0.0000e+00   sf = 1.1286e-19   log10 sf =  -18.9475   mpmath log10 =  -18.9475
+z = 20: 1-cdf = 0.0000e+00   sf = 2.7536e-89   log10 sf =  -88.5601   mpmath log10 =  -88.5601
+z = 37: 1-cdf = 0.0000e+00   sf = 5.7256e-300   log10 sf = -299.2422   mpmath log10 = -299.2422
+z = 38: 1-cdf = 0.0000e+00   sf = 0.0000e+00   log10 sf = -315.5398   mpmath log10 = -315.5398
+z = 39: 1-cdf = 0.0000e+00   sf = 0.0000e+00   log10 sf = -332.2714   mpmath log10 = -332.2714
+z = 40: 1-cdf = 0.0000e+00   sf = 0.0000e+00   log10 sf = -349.4370   mpmath log10 = -349.4370
+x = 1.01: float64 expanded = 7.993606e-15   factored = 1.000000e-14
+          mpmath 15 digits = 7.9936058e-15   30 digits = 1.0e-14   exact (x = 1.01 as decimal) = 1.0e-14
+dps = 10:  2.18278728426e-10   dps = 20:  9.99999982452e-15   agree to   0.0 digits
+dps = 15:   7.9936057773e-15   dps = 30:            1.0e-14   agree to   0.7 digits
+dps = 20:  9.99999982452e-15   dps = 40:            1.0e-14   agree to   7.8 digits
+dps = 30:            1.0e-14   dps = 60:            1.0e-14   agree to  16.4 digits
+condition number of the expanded sum at x = 1.01: 1.325e+16  (log10 = 16.1)
+time per exp: numpy 13.0 ns, math 332 ns, mpmath (15 digits) 11330 ns, mpmath (50 digits) 21097 ns

@@ -1,0 +1,4 @@
+squares = [0, 1, 4, 9, 16]
+evens = [0, 2, 4, 6, 8]
+lengths = {'pi': 2, 'K': 1, 'p': 1}
+sum(k ** 2 for k in range(5)) = 30

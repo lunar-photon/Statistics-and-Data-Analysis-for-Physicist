@@ -1,0 +1,3022 @@
+\documentclass[10pt,a4paper]{article}
+
+% ------------------------------------------------------------
+% PACKAGES
+% ------------------------------------------------------------
+\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+% ------------------------------------------------------------
+% COLORS
+% ------------------------------------------------------------
+\definecolor{navy}{RGB}{25,55,95}
+\definecolor{lightblue}{RGB}{235,242,250}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{darkgray}{RGB}{70,70,70}
+\definecolor{codegray}{RGB}{245,245,245}
+
+% ------------------------------------------------------------
+% PAGE STYLE
+% ------------------------------------------------------------
+\pagestyle{empty}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+% ------------------------------------------------------------
+% SECTION STYLE
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\large\bfseries\color{navy}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\section}{0pt}{5pt}{3pt}
+
+% ------------------------------------------------------------
+% PYTHON CODE STYLE
+% ------------------------------------------------------------
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{navy}\bfseries,
+    commentstyle=\color{darkgray}\itshape,
+    stringstyle=\color{red!60!black},
+    showstringspaces=false,
+    keepspaces=true,
+    columns=fullflexible,
+    frame=single,
+    rulecolor=\color{black!15},
+    backgroundcolor=\color{codegray},
+    breaklines=true,
+    tabsize=4,
+    xleftmargin=3pt,
+    xrightmargin=3pt,
+    aboveskip=2pt,
+    belowskip=2pt
+}
+
+% ------------------------------------------------------------
+% CONCEPT BOX
+% ------------------------------------------------------------
+\newtcolorbox{card}{
+    colback=white,
+    colframe=black!12,
+    boxrule=0.4pt,
+    arc=2pt,
+    left=4pt,
+    right=4pt,
+    top=3pt,
+    bottom=3pt,
+    before skip=2pt,
+    after skip=2pt
+}
+\allowdisplaybreaks
+% ------------------------------------------------------------
+% DOCUMENT
+% ------------------------------------------------------------
+\begin{document}
+
+% ============================================================
+% TITLE
+% ============================================================
+
+\begin{center}
+    {\LARGE\bfseries\color{navy}
+    Scientific Python --- Quick Reference}\\[3pt]
+    {\small
+    Python, NumPy, Matplotlib, SciPy, and SymPy for physics and scientific computing --- with everything the Statistics book uses}
+\end{center}
+
+\vspace{3pt}
+
+% ============================================================
+% PAGE 1
+% ============================================================
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{1. Python Basics}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Variables} --- A name refers to an object.
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3
+y = 2.5
+z = x + y
+
+print(x)
+print(z)
+\end{lstlisting}
+
+Output:
+\texttt{3}\\
+\texttt{5.5}
+\end{card}
+
+\begin{card}
+\textbf{Basic types}
+
+\begin{lstlisting}[style=pythonstyle]
+a = 3
+b = 3.14
+c = 2 + 3j
+d = "hello"
+e = True
+f = None
+
+print(type(a))
+print(type(c))
+print(type(d))
+print(type(e))
+print(type(f))
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{print()}} --- Display values.
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3.14
+print(x)
+print("x =", x)
+\end{lstlisting}
+
+Output:
+\texttt{3.14}\\
+\texttt{x = 3.14}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{type()}} --- Find the type of an object.
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3
+print(type(x))
+\end{lstlisting}
+
+Output:
+\texttt{<class 'int'>}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{isinstance()}} --- Test whether an object has a given type.
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3.0
+
+print(isinstance(x, float))
+print(isinstance(x, int))
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{False}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{2. Operators}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Arithmetic}
+
+\begin{lstlisting}[style=pythonstyle]
+print(7 + 2)
+print(7 - 2)
+print(7 * 2)
+print(7 / 2)
+print(7 // 2)
+print(7 % 2)
+print(7 ** 2)
+\end{lstlisting}
+
+Output:
+\texttt{9}\\
+\texttt{5}\\
+\texttt{14}\\
+\texttt{3.5}\\
+\texttt{3}\\
+\texttt{1}\\
+\texttt{49}
+\end{card}
+
+\begin{card}
+\textbf{Comparison}
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3
+
+print(x == 3)
+print(x != 3)
+print(x > 2)
+print(x >= 3)
+print(x < 5)
+print(x <= 2)
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{False}\\
+\texttt{True}\\
+\texttt{True}\\
+\texttt{True}\\
+\texttt{False}
+\end{card}
+
+\begin{card}
+\textbf{Logical operators}
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3
+
+print(x > 0 and x < 5)
+print(x < 0 or x > 2)
+print(not (x > 0))
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{True}\\
+\texttt{False}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{in}} --- Test membership.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+
+print(2 in x)
+print(5 in x)
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{False}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{3. Strings}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Strings} --- Text enclosed by quotes.
+
+\begin{lstlisting}[style=pythonstyle]
+name = "Chandra"
+
+print(name)
+print(name[0])
+print(name[-1])
+\end{lstlisting}
+
+Output:
+\texttt{Chandra}\\
+\texttt{C}\\
+\texttt{a}
+\end{card}
+
+\begin{card}
+\textbf{String slicing}
+
+\begin{lstlisting}[style=pythonstyle]
+s = "abcdef"
+
+print(s[1:4])
+print(s[:3])
+print(s[3:])
+print(s[::-1])
+\end{lstlisting}
+
+Output:
+\texttt{bcd}\\
+\texttt{abc}\\
+\texttt{def}\\
+\texttt{fedcba}
+\end{card}
+
+\begin{card}
+\textbf{Useful string methods}
+
+\begin{lstlisting}[style=pythonstyle]
+s = "  Hello Python  "
+
+print(s.strip())
+print(s.lower())
+print(s.upper())
+print(s.replace("Python", "World"))
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{f-strings} --- Insert values directly into text.
+
+\begin{lstlisting}[style=pythonstyle]
+x = 3.14159
+
+print(f"x = {x}")
+print(f"x = {x:.2f}")
+\end{lstlisting}
+
+Output:
+\texttt{x = 3.14159}\\
+\texttt{x = 3.14}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{4. Conditions and Loops}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{if / elif / else}} --- Conditional logic.
+
+\begin{lstlisting}[style=pythonstyle]
+x = -2
+
+if x > 0:
+    print("positive")
+elif x < 0:
+    print("negative")
+else:
+    print("zero")
+\end{lstlisting}
+
+Output:
+\texttt{negative}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{for}} --- Iterate over elements.
+
+\begin{lstlisting}[style=pythonstyle]
+for i in range(5):
+    print(i)
+\end{lstlisting}
+
+Output:
+\texttt{0 1 2 3 4}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{range()}} --- Generate integer sequences.
+
+\begin{lstlisting}[style=pythonstyle]
+print(list(range(5)))
+print(list(range(2, 7)))
+print(list(range(0, 10, 2)))
+\end{lstlisting}
+
+Output:
+\texttt{[0, 1, 2, 3, 4]}\\
+\texttt{[2, 3, 4, 5, 6]}\\
+\texttt{[0, 2, 4, 6, 8]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{while}} --- Repeat while a condition is true.
+
+\begin{lstlisting}[style=pythonstyle]
+i = 0
+
+while i < 3:
+    print(i)
+    i += 1
+\end{lstlisting}
+
+Output:
+\texttt{0 1 2}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{break}} --- Exit a loop immediately.
+
+\begin{lstlisting}[style=pythonstyle]
+for i in range(10):
+    if i == 3:
+        break
+    print(i)
+\end{lstlisting}
+
+Output:
+\texttt{0 1 2}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{continue}} --- Skip the current iteration.
+
+\begin{lstlisting}[style=pythonstyle]
+for i in range(5):
+    if i == 2:
+        continue
+    print(i)
+\end{lstlisting}
+
+Output:
+\texttt{0 1 3 4}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{pass}} --- Do nothing; useful as a placeholder.
+
+\begin{lstlisting}[style=pythonstyle]
+for i in range(3):
+    pass
+
+print("done")
+\end{lstlisting}
+
+Output:
+\texttt{done}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{5. Built-in Functions}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{len()}} --- Number of elements.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [2, 4, 6]
+
+print(len(x))
+\end{lstlisting}
+
+Output: \texttt{3}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{sum()}} --- Sum elements.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+
+print(sum(x))
+\end{lstlisting}
+
+Output: \texttt{6}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{min()} / \texttt{max()}} --- Smallest/largest value.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [4, 2, 9, 1]
+
+print(min(x))
+print(max(x))
+\end{lstlisting}
+
+Output:
+\texttt{1}\\
+\texttt{9}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{abs()}} --- Absolute value.
+
+\begin{lstlisting}[style=pythonstyle]
+print(abs(-3.5))
+\end{lstlisting}
+
+Output: \texttt{3.5}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{sorted()}} --- Return a sorted copy.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [3, 1, 2]
+
+print(sorted(x))
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1, 2, 3]}\\
+\texttt{[3, 1, 2]}
+\end{card}
+
+% ============================================================
+% PAGE 2
+% ============================================================
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{6. Containers}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{List} --- Ordered, mutable collection.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+
+x.append(4)
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1, 2, 3, 4]}
+\end{card}
+
+\begin{card}
+\textbf{List methods}
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+
+x.append(4)
+x.extend([5, 6])
+x.insert(0, 0)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0, 1, 2, 3, 4, 5, 6]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{pop()}} --- Remove and return an element.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [10, 20, 30]
+
+y = x.pop()
+
+print(y)
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{30}\\
+\texttt{[10, 20]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{remove()}} --- Remove a specific value.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3, 2]
+
+x.remove(2)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1, 3, 2]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{sort()}} --- Sort a list in place.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [3, 1, 2]
+
+x.sort()
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1, 2, 3]}
+\end{card}
+
+\begin{card}
+\textbf{Tuple} --- Ordered, immutable collection.
+
+\begin{lstlisting}[style=pythonstyle]
+r = (1, 2, 3)
+
+print(r)
+print(r[0])
+\end{lstlisting}
+
+Output:
+\texttt{(1, 2, 3)}\\
+\texttt{1}
+
+Useful for fixed quantities such as coordinates.
+\end{card}
+
+\begin{card}
+\textbf{Unpacking} --- Assign several values at once.
+
+\begin{lstlisting}[style=pythonstyle]
+x = (10, 20, 30)
+
+a, b, c = x
+
+print(a)
+print(b)
+print(c)
+\end{lstlisting}
+
+Output:
+\texttt{10}\\
+\texttt{20}\\
+\texttt{30}
+\end{card}
+
+\begin{card}
+\textbf{Dictionary} --- Key--value storage.
+
+\begin{lstlisting}[style=pythonstyle]
+particle = {
+    "mass": 2.0,
+    "charge": 1.0
+}
+
+print(particle["mass"])
+print(particle["charge"])
+\end{lstlisting}
+
+Output:
+\texttt{2.0}\\
+\texttt{1.0}
+\end{card}
+
+\begin{card}
+\textbf{Dictionary methods}
+
+\begin{lstlisting}[style=pythonstyle]
+d = {"a": 1, "b": 2}
+
+print(d.keys())
+print(d.values())
+print(d.items())
+print(d.get("c", 0))
+\end{lstlisting}
+
+\texttt{get(key, default)} avoids an error if the key is absent.
+\end{card}
+
+\begin{card}
+\textbf{Loop over a dictionary}
+
+\begin{lstlisting}[style=pythonstyle]
+d = {"m": 2, "q": 1}
+
+for key, value in d.items():
+    print(key, value)
+\end{lstlisting}
+
+Output:
+\texttt{m 2}\\
+\texttt{q 1}
+\end{card}
+
+\begin{card}
+\textbf{Set} --- Unordered collection of unique values.
+
+\begin{lstlisting}[style=pythonstyle]
+x = {1, 2, 2, 3}
+
+print(x)
+print(2 in x)
+\end{lstlisting}
+
+Output:
+\texttt{\{1, 2, 3\}}\\
+\texttt{True}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{7. Indexing and Slicing}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Indexing}
+
+\begin{lstlisting}[style=pythonstyle]
+x = [10, 20, 30, 40]
+
+print(x[0])
+print(x[-1])
+\end{lstlisting}
+
+Output:
+\texttt{10}\\
+\texttt{40}
+
+Python starts indexing at zero.
+\end{card}
+
+\begin{card}
+\textbf{Slicing}
+
+\begin{lstlisting}[style=pythonstyle]
+x = [0, 1, 2, 3, 4, 5]
+
+print(x[1:4])
+print(x[:3])
+print(x[3:])
+print(x[::2])
+print(x[::-1])
+\end{lstlisting}
+
+Output:
+\texttt{[1, 2, 3]}\\
+\texttt{[0, 1, 2]}\\
+\texttt{[3, 4, 5]}\\
+\texttt{[0, 2, 4]}\\
+\texttt{[5, 4, 3, 2, 1, 0]}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{8. \texttt{enumerate()} and \texttt{zip()}}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{enumerate()}} --- Loop over index and value.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [10, 20, 30]
+
+for i, value in enumerate(x):
+    print(i, value)
+\end{lstlisting}
+
+Output:
+\texttt{0 10}\\
+\texttt{1 20}\\
+\texttt{2 30}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{zip()}} --- Iterate over sequences together.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+y = [4, 5, 6]
+
+for a, b in zip(x, y):
+    print(a, b)
+\end{lstlisting}
+
+Output:
+\texttt{1 4}\\
+\texttt{2 5}\\
+\texttt{3 6}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{9. Comprehensions}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{List comprehension} --- Compact loop construction.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [i**2 for i in range(5)]
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0, 1, 4, 9, 16]}
+\end{card}
+
+\begin{card}
+\textbf{Conditional comprehension}
+
+\begin{lstlisting}[style=pythonstyle]
+x = [i for i in range(10) if i % 2 == 0]
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0, 2, 4, 6, 8]}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{10. Functions}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{def}} --- Define a function.
+
+\begin{lstlisting}[style=pythonstyle]
+def energy(m, v):
+    return 0.5 * m * v**2
+
+E = energy(2, 3)
+
+print(E)
+\end{lstlisting}
+
+Output: \texttt{9.0}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{return}} --- Send a value out of a function.
+
+\begin{lstlisting}[style=pythonstyle]
+def square(x):
+    y = x**2
+    return y
+
+print(square(4))
+\end{lstlisting}
+
+Output: \texttt{16}
+\end{card}
+
+\begin{card}
+\textbf{Multiple return values}
+
+\begin{lstlisting}[style=pythonstyle]
+def powers(x):
+    return x**2, x**3
+
+a, b = powers(2)
+
+print(a)
+print(b)
+\end{lstlisting}
+
+Output:
+\texttt{4}\\
+\texttt{8}
+\end{card}
+
+\begin{card}
+\textbf{Default arguments}
+
+\begin{lstlisting}[style=pythonstyle]
+def greet(name, message="hello"):
+    print(message, name)
+
+greet("Chandra")
+greet("Chandra", "hi")
+\end{lstlisting}
+
+Output:
+\texttt{hello Chandra}\\
+\texttt{hi Chandra}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{lambda}} --- Small anonymous function.
+
+\begin{lstlisting}[style=pythonstyle]
+f = lambda x: x**2
+
+print(f(3))
+\end{lstlisting}
+
+Output: \texttt{9}
+
+Often used by SciPy functions.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{11. References and Copying}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Assignment does not copy a list.}
+
+\begin{lstlisting}[style=pythonstyle]
+a = [1, 2, 3]
+b = a
+
+b[0] = 100
+
+print(a)
+print(b)
+\end{lstlisting}
+
+Output:
+\texttt{[100, 2, 3]}\\
+\texttt{[100, 2, 3]}
+
+Both names refer to the same list.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{copy()}} --- Make an independent copy.
+
+\begin{lstlisting}[style=pythonstyle]
+a = [1, 2, 3]
+b = a.copy()
+
+b[0] = 100
+
+print(a)
+print(b)
+\end{lstlisting}
+
+Output:
+\texttt{[1, 2, 3]}\\
+\texttt{[100, 2, 3]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{is}} --- Test object identity.
+
+\begin{lstlisting}[style=pythonstyle]
+a = [1, 2]
+b = a
+c = a.copy()
+
+print(a is b)
+print(a is c)
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{False}
+\end{card}
+
+% ============================================================
+% PAGE 3
+% ============================================================
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{12. Modules and Imports}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{import}} --- Load a module.
+
+\begin{lstlisting}[style=pythonstyle]
+import math
+
+print(math.sqrt(16))
+print(math.pi)
+\end{lstlisting}
+
+Output:
+\texttt{4.0}\\
+\texttt{3.141592653589793}
+\end{card}
+
+\begin{card}
+\textbf{Import selected functions}
+
+\begin{lstlisting}[style=pythonstyle]
+from math import sqrt, pi
+
+print(sqrt(16))
+print(pi)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{Alias a module}
+
+\begin{lstlisting}[style=pythonstyle]
+import numpy as np
+
+x = np.array([1, 2, 3])
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1 2 3]}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{13. Useful Inspection Tools}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{dir()}} --- See attributes and methods.
+
+\begin{lstlisting}[style=pythonstyle]
+x = [1, 2, 3]
+
+print(dir(x))
+\end{lstlisting}
+
+Very useful when you forget a method.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{help()}} --- Read built-in documentation.
+
+\begin{lstlisting}[style=pythonstyle]
+help(str.split)
+\end{lstlisting}
+
+Useful at the interactive prompt.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{None}} --- Represents ``no value''.
+
+\begin{lstlisting}[style=pythonstyle]
+x = None
+
+print(x)
+print(x is None)
+\end{lstlisting}
+
+Output:
+\texttt{None}\\
+\texttt{True}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{14. Errors and Exceptions}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{try / except}} --- Handle an error.
+
+\begin{lstlisting}[style=pythonstyle]
+try:
+    x = 1 / 0
+except ZeroDivisionError:
+    print("division by zero")
+\end{lstlisting}
+
+Output:
+\texttt{division by zero}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{raise}} --- Explicitly generate an error.
+
+\begin{lstlisting}[style=pythonstyle]
+def energy(m, v):
+    if m <= 0:
+        raise ValueError("mass must be positive")
+    return 0.5 * m * v**2
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{assert}} --- Check an assumption.
+
+\begin{lstlisting}[style=pythonstyle]
+mass = 2.0
+
+assert mass > 0
+
+print("valid")
+\end{lstlisting}
+
+Output:
+\texttt{valid}
+
+Useful for numerical sanity checks.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{15. Files}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{open()}} --- Open a file.
+
+\begin{lstlisting}[style=pythonstyle]
+with open("data.txt", "r") as f:
+    text = f.read()
+
+print(text)
+\end{lstlisting}
+
+\texttt{"r"} = read.
+\end{card}
+
+\begin{card}
+\textbf{Write a file}
+
+\begin{lstlisting}[style=pythonstyle]
+with open("output.txt", "w") as f:
+    f.write("hello\n")
+    f.write("world\n")
+\end{lstlisting}
+
+\texttt{"w"} = write and overwrite.
+\end{card}
+
+\begin{card}
+\textbf{Read lines}
+
+\begin{lstlisting}[style=pythonstyle]
+with open("data.txt", "r") as f:
+    lines = f.readlines()
+
+print(lines)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{with}} --- Automatically closes the file.
+
+\begin{lstlisting}[style=pythonstyle]
+with open("data.txt") as f:
+    data = f.read()
+\end{lstlisting}
+
+Prefer this to manually calling \texttt{close()}.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{16. NumPy Essentials}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.array()}} --- Create numerical arrays.
+
+\begin{lstlisting}[style=pythonstyle]
+import numpy as np
+
+x = np.array([1.0, 2.0, 3.0])
+
+print(x)
+print(type(x))
+\end{lstlisting}
+
+Output:
+\texttt{[1. 2. 3.]}\\
+\texttt{<class 'numpy.ndarray'>}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.zeros()}} --- Array of zeros.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.zeros(5)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0. 0. 0. 0. 0.]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.ones()}} --- Array of ones.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.ones(4)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[1. 1. 1. 1.]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.eye()}} --- Identity matrix.
+
+\begin{lstlisting}[style=pythonstyle]
+I = np.eye(3)
+
+print(I)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linspace()}} --- Evenly spaced points.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.linspace(0, 1, 5)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0. 0.25 0.5 0.75 1.]}
+
+Very common for plotting.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.arange()}} --- Numerical range.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.arange(0, 1, 0.2)
+
+print(x)
+\end{lstlisting}
+
+Output:
+\texttt{[0. 0.2 0.4 0.6 0.8]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{shape}} --- Array dimensions.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.zeros((3, 4))
+
+print(A.shape)
+print(A.ndim)
+print(A.size)
+\end{lstlisting}
+
+Output:
+\texttt{(3, 4)}\\
+\texttt{2}\\
+\texttt{12}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{reshape()}} --- Change array shape.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.arange(12)
+A = x.reshape(3, 4)
+
+print(A)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{dtype}} --- Numerical data type.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3])
+
+print(x.dtype)
+\end{lstlisting}
+\end{card}
+
+% ============================================================
+% PAGE 4
+% ============================================================
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{17. NumPy Indexing and Slicing}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Array indexing}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([10, 20, 30, 40])
+
+print(x[0])
+print(x[-1])
+\end{lstlisting}
+
+Output:
+\texttt{10}\\
+\texttt{40}
+\end{card}
+
+\begin{card}
+\textbf{Array slicing}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.arange(6)
+
+print(x[1:4])
+print(x[::2])
+\end{lstlisting}
+
+Output:
+\texttt{[1 2 3]}\\
+\texttt{[0 2 4]}
+\end{card}
+
+\begin{card}
+\textbf{Matrix indexing}
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[1, 2],
+              [3, 4]])
+
+print(A[0, 1])
+print(A[:, 0])
+print(A[1, :])
+\end{lstlisting}
+
+Output:
+\texttt{2}\\
+\texttt{[1 3]}\\
+\texttt{[3 4]}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{18. Vectorization and Broadcasting}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Elementwise operations}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3])
+
+print(2 * x)
+print(x**2)
+print(x + 10)
+\end{lstlisting}
+
+Output:
+\texttt{[2 4 6]}\\
+\texttt{[1 4 9]}\\
+\texttt{[11 12 13]}
+\end{card}
+
+\begin{card}
+\textbf{Broadcasting} --- Compatible shapes can interact without explicit loops.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3])
+
+y = np.array([10, 20, 30])
+
+print(x + y)
+print(2 * x + y)
+\end{lstlisting}
+
+Output:
+\texttt{[11 22 33]}\\
+\texttt{[12 24 36]}
+\end{card}
+
+\begin{card}
+\textbf{Boolean masking}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([-2, 1, 4, -1])
+
+print(x > 0)
+print(x[x > 0])
+\end{lstlisting}
+
+Output:
+\texttt{[False True True False]}\\
+\texttt{[1 4]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.where()}} --- Conditional selection.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([-1, 2, -3, 4])
+
+y = np.where(x > 0, x, 0)
+
+print(y)
+\end{lstlisting}
+
+Output:
+\texttt{[0 2 0 4]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.all()} / \texttt{np.any()}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3])
+
+print(np.all(x > 0))
+print(np.any(x > 2))
+\end{lstlisting}
+
+Output:
+\texttt{True}\\
+\texttt{True}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{19. NumPy Numerical Tools}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Elementary functions}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([0, 1, 2])
+
+print(np.sqrt(x))
+print(np.exp(x))
+print(np.sin(x))
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.sum()} / \texttt{np.mean()}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3, 4])
+
+print(np.sum(x))
+print(np.mean(x))
+\end{lstlisting}
+
+Output:
+\texttt{10}\\
+\texttt{2.5}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.std()} / \texttt{np.var()}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 2, 3, 4])
+
+print(np.std(x))
+print(np.var(x))
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.argmax()} / \texttt{np.argmin()}} --- Index of maximum/minimum.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([4, 9, 2, 7])
+
+print(np.argmax(x))
+print(np.argmin(x))
+\end{lstlisting}
+
+Output:
+\texttt{1}\\
+\texttt{2}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.diff()}} --- Neighboring differences.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1, 4, 9, 16])
+
+print(np.diff(x))
+\end{lstlisting}
+
+Output:
+\texttt{[3 5 7]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.gradient()}} --- Numerical derivative.
+
+\begin{lstlisting}[style=pythonstyle]
+t = np.linspace(0, 10, 1000)
+x = np.sin(t)
+
+v = np.gradient(x, t)
+\end{lstlisting}
+
+Approximates
+\[
+v=\frac{dx}{dt}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.isclose()}} --- Compare floating-point values.
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.isclose(0.1 + 0.2, 0.3))
+\end{lstlisting}
+
+Output: \texttt{True}
+
+Prefer this to \texttt{==} for floating-point comparisons.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.allclose()}} --- Compare arrays.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([1.0, 2.0])
+B = np.array([1.0, 2.0000001])
+
+print(np.allclose(A, B))
+\end{lstlisting}
+
+Output: \texttt{True}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.isnan()} / \texttt{np.isfinite()}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1.0, np.nan, np.inf])
+
+print(np.isnan(x))
+print(np.isfinite(x))
+\end{lstlisting}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{20. Linear Algebra}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.dot()}} --- Dot product.
+
+\begin{lstlisting}[style=pythonstyle]
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+print(np.dot(a, b))
+\end{lstlisting}
+
+Output:
+\texttt{32}
+
+\[
+\mathbf a\cdot\mathbf b.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{@}} --- Matrix multiplication.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[1, 2],
+              [3, 4]])
+
+B = np.array([[5, 6],
+              [7, 8]])
+
+print(A @ B)
+\end{lstlisting}
+
+Output:
+\[
+\begin{pmatrix}
+19 & 22\\
+43 & 50
+\end{pmatrix}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{.T}} --- Transpose.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[1, 2],
+              [3, 4]])
+
+print(A.T)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.cross()}} --- Cross product.
+
+\begin{lstlisting}[style=pythonstyle]
+r = np.array([1, 0, 0])
+p = np.array([0, 2, 0])
+
+L = np.cross(r, p)
+
+print(L)
+\end{lstlisting}
+
+Output:
+\texttt{[0 0 2]}
+
+\[
+\mathbf L=\mathbf r\times\mathbf p.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linalg.norm()}} --- Vector magnitude.
+
+\begin{lstlisting}[style=pythonstyle]
+r = np.array([3, 4])
+
+print(np.linalg.norm(r))
+\end{lstlisting}
+
+Output: \texttt{5.0}
+\end{card}
+
+\begin{card}
+\textbf{Unit vector}
+
+\begin{lstlisting}[style=pythonstyle]
+r_hat = r / np.linalg.norm(r)
+
+print(r_hat)
+\end{lstlisting}
+
+\[
+\hat{\mathbf r}
+=
+\frac{\mathbf r}{|\mathbf r|}.
+\]
+\end{card}
+
+% ============================================================
+% PAGE 5
+% ============================================================
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{21. More Linear Algebra}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.linalg.solve()}} --- Solve
+\[
+A\mathbf x=\mathbf b.
+\]
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[2, 1],
+              [1, 3]])
+
+b = np.array([5, 6])
+
+x = np.linalg.solve(A, b)
+
+print(x)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linalg.eig()}} --- Eigenvalues/eigenvectors.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[2, 0],
+              [0, 3]])
+
+w, V = np.linalg.eig(A)
+
+print(w)
+print(V)
+\end{lstlisting}
+
+\[
+A\mathbf v=\lambda\mathbf v.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linalg.det()}} --- Determinant.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[1, 2],
+              [3, 4]])
+
+print(np.linalg.det(A))
+\end{lstlisting}
+
+Output:
+\texttt{-2.0}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{22. Matplotlib}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{plt.plot()}} --- Line plot.
+
+\begin{lstlisting}[style=pythonstyle]
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 10, 1000)
+x = np.cos(t)
+
+plt.plot(t, x)
+plt.show()
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{Labels and title}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.xlabel("Time")
+plt.ylabel("Position")
+plt.title("Oscillator")
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{plt.legend()}}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.plot(t, np.cos(t), label="cos")
+plt.plot(t, np.sin(t), label="sin")
+
+plt.legend()
+plt.show()
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{plt.grid()}}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.plot(t, x)
+
+plt.grid()
+plt.show()
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{plt.scatter()}} --- Scatter plot.
+
+\begin{lstlisting}[style=pythonstyle]
+plt.scatter(t, x)
+plt.show()
+\end{lstlisting}
+
+Useful for data points.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{plt.subplots()}} --- Explicit figure and axes.
+
+\begin{lstlisting}[style=pythonstyle]
+fig, ax = plt.subplots()
+
+ax.plot(t, x)
+ax.set_xlabel("t")
+ax.set_ylabel("x")
+
+plt.show()
+\end{lstlisting}
+
+Preferred for larger programs.
+\end{card}
+
+\begin{card}
+\textbf{Logarithmic axes}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.loglog(x, y)
+plt.show()
+\end{lstlisting}
+
+Also:
+\texttt{plt.semilogx()} and
+\texttt{plt.semilogy()}.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{plt.savefig()}} --- Save a figure.
+
+\begin{lstlisting}[style=pythonstyle]
+plt.savefig("spectrum.png", dpi=300)
+\end{lstlisting}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{23. SciPy}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{solve\_ivp()}} --- Solve an ODE.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.integrate import solve_ivp
+
+def rhs(t, y):
+    x, v = y
+    return [v, -x]
+
+sol = solve_ivp(
+    rhs,
+    [0, 10],
+    [1, 0]
+)
+
+print(sol.t.shape)
+print(sol.y.shape)
+\end{lstlisting}
+
+The state is
+\[
+\mathbf y=
+\begin{pmatrix}
+x\\
+v
+\end{pmatrix}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{quad()}} --- Numerical integration.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.integrate import quad
+
+f = lambda x: x**2
+
+I, err = quad(f, 0, 1)
+
+print(I)
+print(err)
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{root\_scalar()}} --- Find a scalar root.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.optimize import root_scalar
+
+f = lambda x: x**2 - 2
+
+result = root_scalar(
+    f,
+    bracket=[0, 2]
+)
+
+print(result.root)
+\end{lstlisting}
+
+Output is approximately:
+\texttt{1.41421356}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{minimize()}} --- Numerical optimization.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.optimize import minimize
+
+f = lambda x: (x - 3)**2
+
+result = minimize(f, 0)
+
+print(result.x)
+\end{lstlisting}
+
+Output is approximately:
+\texttt{[3.]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{curve\_fit()}} --- Fit a model to data.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.optimize import curve_fit
+
+def model(x, a, b):
+    return a*x + b
+
+popt, pcov = curve_fit(
+    model, x, y
+)
+
+print(popt)
+\end{lstlisting}
+
+\texttt{popt} contains fitted parameters.
+\texttt{pcov} contains their covariance estimate.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{24. SymPy}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{symbols()}} --- Create symbolic variables.
+
+\begin{lstlisting}[style=pythonstyle]
+import sympy as sp
+
+x = sp.symbols("x")
+
+print(x)
+\end{lstlisting}
+
+Output: \texttt{x}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{diff()}} --- Symbolic differentiation.
+
+\begin{lstlisting}[style=pythonstyle]
+f = x**3 + 2*x
+
+print(sp.diff(f, x))
+\end{lstlisting}
+
+Output:
+\[
+3x^2+2.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{integrate()}} --- Symbolic integration.
+
+\begin{lstlisting}[style=pythonstyle]
+print(
+    sp.integrate(x**2, x)
+)
+\end{lstlisting}
+
+Output:
+\[
+\frac{x^3}{3}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{solve()}} --- Solve equations symbolically.
+
+\begin{lstlisting}[style=pythonstyle]
+print(
+    sp.solve(x**2 - 4, x)
+)
+\end{lstlisting}
+
+Output:
+\texttt{[-2, 2]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{simplify()}} --- Simplify expressions.
+
+\begin{lstlisting}[style=pythonstyle]
+expr = (x**2 - 1)/(x - 1)
+
+print(sp.simplify(expr))
+\end{lstlisting}
+
+Result:
+\[
+x+1.
+\]
+\end{card}
+
+\begin{card}
+\textbf{\texttt{series()}} --- Taylor expansion.
+
+\begin{lstlisting}[style=pythonstyle]
+print(
+    sp.series(sp.sin(x), x, 0, 5)
+)
+\end{lstlisting}
+
+Output:
+\[
+x-\frac{x^3}{6}+O(x^5).
+\]
+\end{card}
+
+% ============================================================
+% PAGE 6
+% ============================================================
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{25. Useful Scientific Patterns}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Typical physics workflow}
+
+\begin{lstlisting}[style=pythonstyle]
+import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 10, 1000)
+x = np.cos(t)
+
+plt.plot(t, x)
+plt.xlabel("t")
+plt.ylabel("x(t)")
+plt.show()
+\end{lstlisting}
+\end{card}
+
+\begin{card}
+\textbf{Parameter sweep}
+
+\begin{lstlisting}[style=pythonstyle]
+for alpha in [0.1, 0.2, 0.5]:
+    result = simulate(alpha)
+    print(alpha, result)
+\end{lstlisting}
+
+Useful for scanning model parameters.
+\end{card}
+
+\begin{card}
+\textbf{Numerical derivative}
+
+\begin{lstlisting}[style=pythonstyle]
+v = np.gradient(x, t)
+a = np.gradient(v, t)
+
+print(v)
+print(a)
+\end{lstlisting}
+
+Corresponds to
+\[
+v=\dot{x},
+\qquad
+a=\ddot{x}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{Conservation check}
+
+\begin{lstlisting}[style=pythonstyle]
+E = kinetic + potential
+
+print(np.max(E))
+print(np.min(E))
+print(
+    np.max(E) - np.min(E)
+)
+\end{lstlisting}
+
+The last quantity measures the numerical variation of $E$.
+\end{card}
+
+\begin{card}
+\textbf{Position, velocity, acceleration}
+
+\begin{lstlisting}[style=pythonstyle]
+r = np.array([x, y, z])
+v = np.array([vx, vy, vz])
+
+speed = np.linalg.norm(v)
+
+print(speed)
+\end{lstlisting}
+
+\[
+|\mathbf v|
+=
+\sqrt{\mathbf v\cdot\mathbf v}.
+\]
+\end{card}
+
+\begin{card}
+\textbf{Angular momentum}
+
+\begin{lstlisting}[style=pythonstyle]
+L = np.cross(r, p)
+
+print(L)
+\end{lstlisting}
+
+\[
+\mathbf L=\mathbf r\times\mathbf p.
+\]
+\end{card}
+
+\begin{card}
+\textbf{Energy}
+
+\begin{lstlisting}[style=pythonstyle]
+K = 0.5 * m * np.dot(v, v)
+U = potential(r)
+
+E = K + U
+
+print(K)
+print(U)
+print(E)
+\end{lstlisting}
+
+\[
+E=K+U.
+\]
+\end{card}
+
+\begin{card}
+\textbf{ODE state vector}
+
+For
+\[
+\ddot{x}=f(x,\dot{x},t),
+\]
+use
+\[
+\mathbf y=
+\begin{pmatrix}
+x\\
+\dot{x}
+\end{pmatrix}.
+\]
+
+\begin{lstlisting}[style=pythonstyle]
+def rhs(t, y):
+    x, v = y
+    return [v, force(x, v, t)]
+\end{lstlisting}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{26. Random Numbers}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Modern random-number generator}
+
+\begin{lstlisting}[style=pythonstyle]
+rng = np.random.default_rng(123)
+
+x = rng.random(5)
+
+print(x)
+\end{lstlisting}
+
+A seed makes the sequence reproducible.
+\end{card}
+
+\begin{card}
+\textbf{Gaussian random numbers}
+
+\begin{lstlisting}[style=pythonstyle]
+rng = np.random.default_rng(123)
+
+x = rng.normal(
+    loc=0,
+    scale=1,
+    size=5
+)
+
+print(x)
+\end{lstlisting}
+
+Useful for simulations and Monte Carlo methods.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{27. Script Structure}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{if \_\_name\_\_ == "\_\_main\_\_"}}
+
+\begin{lstlisting}[style=pythonstyle]
+def main():
+    print("running program")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+The block runs when the file is executed directly,
+not when it is imported as a module.
+\end{card}
+
+\begin{card}
+\textbf{Typical reusable script}
+
+\begin{lstlisting}[style=pythonstyle]
+import numpy as np
+
+def model(x):
+    return np.exp(-x**2)
+
+def main():
+    x = np.linspace(-5, 5, 1000)
+    y = model(x)
+    print(y[0])
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{28. What to Memorize First}
+% ------------------------------------------------------------
+
+\begin{card}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Variables, numbers, strings, booleans, \texttt{None}
+    \item \texttt{+ - * / // \% **}
+    \item \texttt{== != < > <= >=}
+    \item \texttt{and}, \texttt{or}, \texttt{not}, \texttt{in}
+    \item \texttt{if / elif / else}
+    \item \texttt{for}, \texttt{while}
+    \item \texttt{break}, \texttt{continue}
+    \item Lists, tuples, dictionaries, sets
+    \item Indexing and slicing
+    \item \texttt{enumerate()}, \texttt{zip()}
+    \item Functions, arguments, \texttt{return}
+    \item List comprehensions
+    \item References vs.\ copies
+    \item \texttt{import}
+    \item \texttt{try / except}, \texttt{assert}
+    \item File handling with \texttt{with open()}
+    \item NumPy arrays and \texttt{shape}
+    \item Vectorization and broadcasting
+    \item \texttt{dot()}, \texttt{cross()}, \texttt{norm()}
+    \item Matplotlib plotting
+    \item SciPy ODE solving, integration, optimization
+    \item SymPy differentiation and solving
+\end{itemize}
+\end{card}
+
+\end{multicols}
+
+% ============================================================
+% PAGE 7+ : the rest of what "Statistics and Data Analysis for the
+% Physicist" uses (chosen from a census of the book's 343 scripts)
+% ============================================================
+
+\newpage
+
+\begin{center}
+    {\Large\bfseries\color{navy}
+    The Rest of What the Book Uses}\\[2pt]
+    {\small Sections 29--41: everything the book's scripts call that sections 1--28 do not cover}
+\end{center}
+
+\begin{multicols}{2}
+\raggedcolumns
+
+% ------------------------------------------------------------
+\section*{29. The Top of Every Script}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{pathlib.Path}} --- Paths that work on every computer.
+
+\begin{lstlisting}[style=pythonstyle]
+from pathlib import Path
+
+here = Path(__file__).resolve()
+print(here.name)        # this file
+print(here.parent)      # its folder
+print(here.parents[1])  # one folder up
+\end{lstlisting}
+
+\texttt{resolve()} turns a relative path into a full one.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{sys.path}} --- Let Python find the book's shared code.
+
+\begin{lstlisting}[style=pythonstyle]
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from common import setup, savefig, save_numbers
+\end{lstlisting}
+
+Adds \texttt{code/} to the import search, so \texttt{common.py} can be
+imported from any chapter folder.
+\end{card}
+
+\begin{card}
+\textbf{Files on disk}
+
+\begin{lstlisting}[style=pythonstyle]
+out = Path("data/ch06")
+out.mkdir(parents=True, exist_ok=True)
+
+f = out / "samples.npz"
+print(f.exists())
+\end{lstlisting}
+
+The \texttt{/} operator joins path pieces.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{30. Converting Types}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{int()}, \texttt{float()}, \texttt{str()}}
+
+\begin{lstlisting}[style=pythonstyle]
+print(int(3.9))
+print(int("42"))
+print(float("1e-3"))
+print(str(3.0) + " m")
+\end{lstlisting}
+
+Output:
+\texttt{3}\\
+\texttt{42}\\
+\texttt{0.001}\\
+\texttt{3.0 m}
+
+\texttt{int()} cuts towards zero; it does not round.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{round()}}
+
+\begin{lstlisting}[style=pythonstyle]
+print(round(3.14159, 2))
+print(round(2.675, 2))
+\end{lstlisting}
+
+Output:
+\texttt{3.14}\\
+\texttt{2.67}
+
+$2.675$ is stored as $2.67499\ldots$ in binary, so it rounds down.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{.astype()}} --- Convert a whole array.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([1.7, -1.7])
+
+print(x.astype(int))
+\end{lstlisting}
+
+Output:
+\texttt{[ 1 -1]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{dict.update()}} --- Add or overwrite several keys.
+
+\begin{lstlisting}[style=pythonstyle]
+d = {"a": 1, "b": 2}
+d.update({"b": 3, "c": 4})
+
+print(d)
+\end{lstlisting}
+
+Output:
+\texttt{\{'a': 1, 'b': 3, 'c': 4\}}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{31. Matplotlib the Book's Way: \texttt{fig, ax}}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{One figure, one axes} --- every call goes to \texttt{ax}.
+
+\begin{lstlisting}[style=pythonstyle]
+fig, ax = plt.subplots(figsize=(5, 3.5))
+
+ax.plot(x, y, label="model")
+ax.set_title("Power spectrum")
+ax.set_xlim(0, 10)
+ax.set_ylim(-1, 1)
+ax.legend()
+
+fig.tight_layout()
+fig.savefig("spectrum.pdf")
+\end{lstlisting}
+
+\texttt{tight\_layout()} stops labels from overlapping.
+\end{card}
+
+\begin{card}
+\textbf{Several panels}
+
+\begin{lstlisting}[style=pythonstyle]
+fig, axes = plt.subplots(1, 2, figsize=(8, 3))
+
+axes[0].plot(x, y)
+axes[1].hist(samples, bins=40)
+\end{lstlisting}
+
+\texttt{axes} is an array of axes, one per panel.
+\end{card}
+
+\begin{card}
+\textbf{Reference lines and text}
+
+\begin{lstlisting}[style=pythonstyle]
+ax.axhline(0, color="gray", lw=0.8)
+ax.axvline(1.96, ls="--")
+ax.text(0.05, 0.9, "p = 0.05",
+        transform=ax.transAxes)
+\end{lstlisting}
+
+With \texttt{transform=ax.transAxes} the position is a fraction of the
+panel, $(0,0)$ bottom left.
+\end{card}
+
+\begin{card}
+\textbf{Histograms and error bars}
+
+\begin{lstlisting}[style=pythonstyle]
+ax.hist(samples, bins=50, density=True)
+
+ax.errorbar(x, y, yerr=sigma, fmt="o",
+            capsize=2)
+\end{lstlisting}
+
+\texttt{density=True} makes the bars integrate to one, comparable with a pdf.
+\end{card}
+
+\begin{card}
+\textbf{Bands, scales, images}
+
+\begin{lstlisting}[style=pythonstyle]
+ax.fill_between(x, lo, hi, alpha=0.3)
+
+ax.set_xscale("log")
+ax.set_yscale("log")
+
+im = ax.imshow(Z, origin="lower")
+fig.colorbar(im, ax=ax)
+ax.set_aspect("equal")
+\end{lstlisting}
+
+\texttt{fill\_between} draws error bands such as $\pm1\sigma$.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{32. Building Arrays}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.full()}, \texttt{np.empty()}, \texttt{np.zeros\_like()}}
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.full(3, 7.0))
+
+a = np.empty(1000)   # filled later
+b = np.zeros_like(a) # same shape, zeros
+\end{lstlisting}
+
+Output:
+\texttt{[7. 7. 7.]}
+
+\texttt{np.empty} contains leftover garbage until you fill it.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.logspace()} / \texttt{np.geomspace()}} --- Evenly spaced in log.
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.geomspace(1, 1000, 4))
+print(np.logspace(0, 3, 4))
+\end{lstlisting}
+
+Both give $1, 10, 100, 1000$: \texttt{geomspace} takes the end values,
+\texttt{logspace} their powers of ten.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.diag()}}
+
+\begin{lstlisting}[style=pythonstyle]
+C = np.diag([1.0, 4.0])  # matrix from diagonal
+print(np.diag(C))        # diagonal from matrix
+\end{lstlisting}
+
+Output:
+\texttt{[1. 4.]}
+
+Error bars from a covariance: \texttt{np.sqrt(np.diag(C))}.
+\end{card}
+
+\begin{card}
+\textbf{Joining arrays}
+
+\begin{lstlisting}[style=pythonstyle]
+a = np.array([1, 2])
+b = np.array([3, 4])
+
+print(np.concatenate([a, b]))
+print(np.column_stack([a, b]))
+\end{lstlisting}
+
+Output:
+\texttt{[1 2 3 4]}\\
+\texttt{[[1 3]}\\
+\texttt{\ [2 4]]}
+
+Also \texttt{np.vstack} (rows) and \texttt{np.stack} (new axis).
+\end{card}
+
+\begin{card}
+\textbf{\texttt{.ravel()}} --- Flatten to one dimension.
+
+\begin{lstlisting}[style=pythonstyle]
+A = np.array([[1, 2], [3, 4]])
+
+print(A.ravel())
+\end{lstlisting}
+
+Output:
+\texttt{[1 2 3 4]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.meshgrid()}} --- A 2D grid of coordinates.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.linspace(-1, 1, 200)
+y = np.linspace(-1, 1, 100)
+X, Y = np.meshgrid(x, y)
+
+R = np.sqrt(X**2 + Y**2)
+print(R.shape)
+\end{lstlisting}
+
+Output:
+\texttt{(100, 200)}
+
+Rows follow $y$, columns follow $x$.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{33. More NumPy Maths}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{Logs, powers, absolute values}
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.log(np.e))
+print(np.log10(1000))
+print(np.abs(3 + 4j))
+\end{lstlisting}
+
+Output:
+\texttt{1.0}\\
+\texttt{3.0}\\
+\texttt{5.0}
+
+\texttt{np.log} is the natural log, $\ln$.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.cumsum()}, \texttt{np.maximum()}, \texttt{np.clip()}}
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.cumsum([1, 2, 3]))
+print(np.maximum([1, 5], [3, 2]))
+print(np.clip([-2, 0.5, 3], 0, 1))
+\end{lstlisting}
+
+Output:
+\texttt{[1 3 6]}\\
+\texttt{[3 5]}\\
+\texttt{[0.\ \ 0.5 1.\ ]}
+
+\texttt{np.maximum} compares element by element; \texttt{np.max} gives one number.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.median()}, \texttt{np.percentile()}, \texttt{np.quantile()}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = rng.standard_normal(100000)
+
+print(np.median(x))
+print(np.percentile(x, [16, 84]))
+print(np.quantile(x, 0.975))
+\end{lstlisting}
+
+Close to $0$, $[-1, 1]$ and $1.96$: the $68\%$ interval and a one-sided
+$97.5\%$ point of a Gaussian.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.interp()}} --- Straight-line interpolation.
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.interp(2.5, [1, 2, 3], [10, 20, 30]))
+\end{lstlisting}
+
+Output: \texttt{25.0}
+
+\texttt{x} must be increasing.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.trapezoid()}} --- Integrate sampled values.
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.linspace(0, 1, 101)
+
+print(np.trapezoid(x**2, x))
+\end{lstlisting}
+
+Output: about \texttt{0.33335}, against the exact $1/3$.
+
+Called \texttt{np.trapz} before NumPy 2.0. Use \texttt{quad} when you
+have the function, \texttt{trapezoid} when you only have samples.
+\end{card}
+
+\begin{card}
+\textbf{Counting: \texttt{np.histogram()}, \texttt{np.bincount()}}
+
+\begin{lstlisting}[style=pythonstyle]
+counts, edges = np.histogram(x, bins=20)
+print(len(counts), len(edges))
+
+print(np.bincount([0, 1, 1, 3]))
+\end{lstlisting}
+
+Output:
+\texttt{20 21}\\
+\texttt{[1 2 0 1]}
+
+$N$ bins have $N+1$ edges.
+\end{card}
+
+\begin{card}
+\textbf{Sorting and searching}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.array([30, 10, 20])
+
+print(np.sort(x))
+print(np.argsort(x))
+print(np.searchsorted([1, 3, 5], 4))
+print(np.unique([3, 1, 3, 2]))
+\end{lstlisting}
+
+Output:
+\texttt{[10 20 30]}\\
+\texttt{[1 2 0]}\\
+\texttt{2}\\
+\texttt{[1 2 3]}
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.cov()}} --- Sample covariance matrix.
+
+\begin{lstlisting}[style=pythonstyle]
+C = np.cov(x, y)   # 2 x 2
+print(C[0, 1])     # covariance of x and y
+\end{lstlisting}
+
+Divides by $N-1$. Rows are variables.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.outer()} and \texttt{np.einsum()}}
+
+\begin{lstlisting}[style=pythonstyle]
+print(np.outer([1, 2], [3, 4]))
+
+chi2 = np.einsum("i,ij,j->", r, Cinv, r)
+\end{lstlisting}
+
+Output:
+\texttt{[[3 4]}\\
+\texttt{\ [6 8]]}
+
+The \texttt{einsum} line is $\chi^2=\mathbf r^{\mathsf T}C^{-1}\mathbf r$:
+repeated letters are summed.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.polyfit()}} --- Least-squares polynomial.
+
+\begin{lstlisting}[style=pythonstyle]
+slope, intercept = np.polyfit(x, y, 1)
+\end{lstlisting}
+
+Highest power first.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{34. More Random Numbers}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{The generator's other methods}
+
+\begin{lstlisting}[style=pythonstyle]
+rng = np.random.default_rng(42)
+
+z = rng.standard_normal(1000)    # N(0, 1)
+u = rng.uniform(0, 1, size=1000)
+n = rng.poisson(4.0, size=1000)  # counts
+k = rng.integers(0, 10, size=5)  # 0..9
+\end{lstlisting}
+
+\texttt{integers(0, 10)} never returns $10$.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{choice()}} --- Draw from a list (resampling).
+
+\begin{lstlisting}[style=pythonstyle]
+boot = rng.choice(data, size=len(data),
+                  replace=True)
+\end{lstlisting}
+
+One bootstrap sample. \texttt{replace=False} shuffles without repeats.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{multivariate\_normal()}} --- Correlated Gaussians.
+
+\begin{lstlisting}[style=pythonstyle]
+mean = [0, 0]
+C = [[1.0, 0.8],
+     [0.8, 1.0]]
+
+xy = rng.multivariate_normal(mean, C, size=5000)
+print(xy.shape)
+\end{lstlisting}
+
+Output:
+\texttt{(5000, 2)}
+\end{card}
+
+% ------------------------------------------------------------
+\section*{35. Saving and Loading Arrays}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.savez()} / \texttt{np.load()}}
+
+\begin{lstlisting}[style=pythonstyle]
+np.savez("run.npz", ell=ell, cl=cl)
+
+d = np.load("run.npz")
+print(d["cl"][:3])
+\end{lstlisting}
+
+Several named arrays in one file, read back exactly.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.loadtxt()}} --- Read a table of numbers.
+
+\begin{lstlisting}[style=pythonstyle]
+z, H, sigma = np.loadtxt("chronometers.txt",
+                         unpack=True)
+\end{lstlisting}
+
+\texttt{unpack=True} gives one array per column. Lines starting with
+\texttt{\#} are skipped.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{36. Linear Algebra for Statistics}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{solve}, not \texttt{inv}}
+
+\begin{lstlisting}[style=pythonstyle]
+x = np.linalg.solve(C, b)    # good
+x = np.linalg.inv(C) @ b     # same, less accurate
+\end{lstlisting}
+
+Use \texttt{inv} only when the inverse itself is wanted, e.g.\ the error
+matrix $F^{-1}$ from a Fisher matrix $F$.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linalg.cholesky()}} --- $C=LL^{\mathsf T}$.
+
+\begin{lstlisting}[style=pythonstyle]
+L = np.linalg.cholesky(C)
+
+z = rng.standard_normal(len(C))
+x = L @ z            # covariance C
+
+logdet = 2 * np.sum(np.log(np.diag(L)))
+\end{lstlisting}
+
+Correlated noise and $\ln\det C$ in one step. Fails if $C$ is not
+positive definite: a useful warning.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{np.linalg.eigh()}} --- Symmetric matrices.
+
+\begin{lstlisting}[style=pythonstyle]
+w, V = np.linalg.eigh(C)
+
+print(w)          # ascending
+print(w.max() / w.min())
+\end{lstlisting}
+
+The last line is the condition number: about how many times errors in
+$\mathbf b$ can be magnified when solving $C\mathbf x=\mathbf b$.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{37. Fourier Transforms}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{np.fft.rfft()}} --- Spectrum of a real signal.
+
+\begin{lstlisting}[style=pythonstyle]
+n, dt = 1024, 0.01
+t = np.arange(n) * dt
+x = np.sin(2 * np.pi * 5 * t)
+
+X = np.fft.rfft(x)
+f = np.fft.rfftfreq(n, dt)
+
+print(f[np.argmax(np.abs(X))])
+\end{lstlisting}
+
+Output: about \texttt{4.98}, the nearest frequency bin to the $5$\,Hz input.
+
+Power: \texttt{np.abs(X)**2}. Back to time: \texttt{np.fft.irfft(X, n)}.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{38. Probability Distributions: \texttt{scipy.stats}}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{The four questions to ask a distribution}
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy import stats
+
+print(stats.norm.pdf(0))      # density
+print(stats.norm.cdf(1.96))   # P(X <= x)
+print(stats.norm.sf(5))       # P(X > x)
+print(stats.norm.ppf(0.975))  # inverse cdf
+\end{lstlisting}
+
+Output:
+\texttt{0.3989...}\\
+\texttt{0.9750...}\\
+\texttt{2.8665...e-07}\\
+\texttt{1.9599...}
+
+\texttt{sf} $=1-$\texttt{cdf}, but accurate far in the tail (the $5\sigma$
+$p$-value).
+\end{card}
+
+\begin{card}
+\textbf{Other distributions, same methods}
+
+\begin{lstlisting}[style=pythonstyle]
+print(stats.chi2.sf(30, df=20))   # p-value
+print(stats.chi2.ppf(0.95, df=1))
+print(stats.poisson.pmf(3, 2.0))  # P(N = 3)
+
+x = stats.norm.rvs(loc=1, scale=2,
+                   size=5, random_state=rng)
+\end{lstlisting}
+
+Output (first three):
+about \texttt{0.07}, \texttt{3.84}, \texttt{0.180}.
+
+Discrete distributions have \texttt{pmf} instead of \texttt{pdf}.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{39. Roots and Special Functions}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{brentq()}} --- The book's root finder.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.optimize import brentq
+
+r = brentq(lambda x: x**2 - 2, 0, 2)
+
+print(r)
+\end{lstlisting}
+
+Output: \texttt{1.414213562373...}
+
+$f$ must change sign between the two ends.
+\end{card}
+
+\begin{card}
+\textbf{\texttt{gammaln()} / \texttt{logsumexp()}} --- Work in logs.
+
+\begin{lstlisting}[style=pythonstyle]
+from scipy.special import gammaln, logsumexp
+
+print(gammaln(101))           # ln(100!)
+print(logsumexp([1000, 1000]))
+\end{lstlisting}
+
+Output:
+\texttt{363.739...}\\
+\texttt{1000.693...}
+
+$100!$ and $e^{1000}$ overflow; their logarithms do not.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{40. Timing}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{\texttt{time.perf\_counter()}}
+
+\begin{lstlisting}[style=pythonstyle]
+import time
+
+t0 = time.perf_counter()
+result = expensive(n)
+print(f"{time.perf_counter() - t0:.3f} s")
+\end{lstlisting}
+
+Time a few small $n$, fit the slope of $\log t$ against $\log n$, and
+extrapolate before launching a long run.
+\end{card}
+
+% ------------------------------------------------------------
+\section*{41. Black Boxes: healpy and CAMB}
+% ------------------------------------------------------------
+
+\begin{card}
+\textbf{healpy} --- Maps on the sphere.
+
+\begin{lstlisting}[style=pythonstyle]
+import healpy as hp
+
+nside = 64
+print(hp.nside2npix(nside))
+
+alm = hp.map2alm(m, lmax=128)  # map -> a_lm
+cl = hp.alm2cl(alm)            # a_lm -> C_l
+m2 = hp.alm2map(alm, nside)    # a_lm -> map
+cl2 = hp.anafast(m, lmax=128)  # map -> C_l
+hp.mollview(m)
+\end{lstlisting}
+
+Output (first line): \texttt{49152}, that is $12\,N_{\rm side}^2$ pixels.
+\end{card}
+
+\begin{card}
+\textbf{CAMB} --- Theory spectra from parameters.
+
+\begin{lstlisting}[style=pythonstyle]
+import camb
+
+pars = camb.set_params(H0=67.4, ombh2=0.0224,
+                       omch2=0.120, As=2.1e-9,
+                       ns=0.965, lmax=2500)
+res = camb.get_results(pars)
+cl = res.get_cmb_power_spectra(pars,
+        CMB_unit="muK", raw_cl=True)["total"][:, 0]
+\end{lstlisting}
+
+Six numbers in, $C_\ell^{TT}$ out. In the book this is wrapped in
+\texttt{camb\_fiducial.py}.
+\end{card}
+
+\begin{card}
+\textbf{The book's own helpers} (\texttt{code/common.py})
+
+\begin{itemize}[leftmargin=*,nosep]
+  \item \texttt{setup(w, h)}: house plot style and size
+  \item \texttt{savefig(fig, "ch06", "name")}: the figure in \texttt{figures/ch06/}
+  \item \texttt{save\_numbers("ch06", "name", \{...\})}: numbers as \LaTeX{} macros quoted in the text
+  \item \texttt{rng\_for("ch06", "name")}: a seeded generator for that script, the same on every computer
+\end{itemize}
+\end{card}
+
+\end{multicols}
+
+\end{document}

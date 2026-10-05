@@ -1,0 +1,3 @@
+math.pi = 3.141592653589793   comb(10, 3) = 120
+here.name = '06_python_tour.py'
+here.parents[0].name = 'chT0'   here.parents[1].name = 'code'

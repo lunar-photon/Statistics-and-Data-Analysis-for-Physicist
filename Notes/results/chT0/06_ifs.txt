@@ -1,0 +1,4 @@
+z = 0.5: nothing yet
+z = 3.4: evidence
+z = 5.3: discovery
+(2 < 3) and (3 < 1) = False   not (3 < 1) = True

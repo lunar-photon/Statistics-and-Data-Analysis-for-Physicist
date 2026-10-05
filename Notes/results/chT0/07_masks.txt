@@ -1,0 +1,4 @@
+m = array([ True, False,  True,  True, False])
+x[m] = array([0.3, 2.5, 0.8])   m.sum() = 3   m.mean() = 0.6
+np.where(x > 0, x, 0.0) = array([0.3, 0. , 2.5, 0.8, 0. ])
+x[(x > 0) & (x < 1)] = array([0.3, 0.8])

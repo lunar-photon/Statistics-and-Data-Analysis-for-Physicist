@@ -1,0 +1,332 @@
+% ============================================================
+%  notes.sty -- shared preamble for
+%  reusable notes template
+%  EVERY chapter file relies on this. Do not redefine anything here
+%  from inside a chapter.
+% ============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notes}
+
+% ---------- page, fonts ----------
+\RequirePackage[a4paper,margin=2.6cm,headheight=14pt]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{newpxtext}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{newpxmath}
+\RequirePackage{bm}
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs,array,tabularx,multirow}
+\RequirePackage{xltabular}   % tabularx that can break across pages (long summary tables)
+\renewcommand\tabularxcolumn[1]{>{\raggedright\arraybackslash}p{#1}}   % wrapped table cells: ragged right, no stretched word gaps
+
+\RequirePackage{caption}
+\captionsetup{font=small,labelfont={bf,color=accent},margin=1em}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{slashed}
+\RequirePackage{tensor}
+\RequirePackage{siunitx}
+
+
+% identity matrix: render \mathbb{1} (and \mathbb1) as the familiar double-struck one of dsfont
+\RequirePackage{dsfont}
+\let\notesoldmathbb\mathbb
+\renewcommand{\mathbb}[1]{\ifx1#1\mathds{1}\else\notesoldmathbb{#1}\fi}
+\newcommand{\Id}{\mathds{1}}
+
+% ---------- colours (used by boxes and figures) ----------
+\definecolor{accent}{HTML}{1F4E79}      % headings, labels
+\definecolor{formblue}{HTML}{2E6FBF}    % differential forms, fields
+\definecolor{bdryred}{HTML}{C0392B}     % boundaries, obstructions
+\definecolor{tangentgreen}{HTML}{1E8449}% vectors, tangent things
+\definecolor{fibreorange}{HTML}{D35400} % fibres, bundles, sections
+\definecolor{softgray}{HTML}{7F8C8D}
+\definecolor{ideabg}{HTML}{FBFBFA}
+\definecolor{intuitbg}{HTML}{FBFBFA}
+\definecolor{defbg}{HTML}{FBFBFA}
+\definecolor{exbg}{HTML}{FBFBFA}
+\definecolor{warnbg}{HTML}{FDF8F7}
+\definecolor{nashbg}{HTML}{FBFBFA}
+\definecolor{recapbg}{HTML}{FBFBFA}
+
+% ---------- figures ----------
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,
+  decorations.pathmorphing,decorations.pathreplacing,patterns,shapes.geometric,
+  shapes.misc,3d,intersections,fit,backgrounds,shadings,matrix,angles,quotes}
+\RequirePackage{tikz-cd}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\tikzset{
+  >={Stealth[length=2.2mm]},
+  every picture/.style={line cap=round,line join=round},
+  vec/.style={->,thick,tangentgreen},
+  form/.style={thick,formblue},
+  bdry/.style={very thick,bdryred},
+  fibre/.style={thick,fibreorange},
+  faint/.style={softgray,thin},
+  lbl/.style={font=\small},
+  midarrow/.style={postaction={decorate},decoration={markings,
+     mark=at position #1 with {\arrow{Stealth[length=2.2mm]}}}},
+  midarrow/.default=0.55,
+}
+
+% ---------- boxes ----------
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+  notesbase/.style={enhanced,breakable,sharp corners=south,arc=2mm,
+    boxrule=0.4pt,left=2.5mm,right=2.5mm,top=1.5mm,bottom=1.5mm,
+    fonttitle=\bfseries\sffamily\small,coltitle=black!80,colbacktitle=black!5,
+    titlerule=0.3pt,before skip=10pt,after skip=10pt},
+}
+% Big idea: the one sentence you must remember
+\newtcolorbox{keyidea}[1][]{notesbase,colback=ideabg,colframe=black!28,
+  title={Key idea\ifx\relax#1\relax\else: #1\fi}}
+% Physical / geometric picture
+\newtcolorbox{intuition}[1][]{notesbase,colback=intuitbg,colframe=black!28,
+  title={Physical picture\ifx\relax#1\relax\else: #1\fi}}
+% Operational ("working") definition: how to compute/recognise it
+\newcounter{wdef}[chapter]
+\renewcommand{\thewdef}{\thechapter.\arabic{wdef}}
+\newtcolorbox{workdef}[1][]{notesbase,colback=defbg,colframe=black!28,
+  step=wdef,before upper app={\makeatletter\def\@currentlabel{\thewdef}\def\cref@currentlabel{[wdef][\arabic{wdef}][\arabic{chapter}]\thewdef}\makeatother},title={Working definition~\thewdef\ifx\relax#1\relax\else\ (#1)\fi}}
+% Mental picture: sits directly under a working definition and decompresses it
+\definecolor{picbg}{HTML}{FBFBFA}
+\newtcolorbox{mentalpic}[1][]{notesbase,colback=picbg,colframe=black!28,
+  title={Mental picture\ifx\relax#1\relax\else: #1\fi}}
+% Solved example
+\newcounter{wex}[chapter]
+\renewcommand{\thewex}{\thechapter.\arabic{wex}}
+\newtcolorbox{example}[1][]{notesbase,colback=exbg,colframe=black!28,
+  step=wex,before upper app={\makeatletter\def\@currentlabel{\thewex}\def\cref@currentlabel{[wex][\arabic{wex}][\arabic{chapter}]\thewex}\makeatother},title={Worked example~\thewex\ifx\relax#1\relax\else: #1\fi}}
+% Pitfall / common confusion
+\newtcolorbox{pitfall}[1][]{notesbase,colback=warnbg,colframe=bdryred!45,
+  title={Watch out\ifx\relax#1\relax\else: #1\fi}}
+% Map back to Nash: what the book says and where
+\newtcolorbox{sourcesays}[1][]{notesbase,colback=nashbg,colframe=black!28,
+  title={Reading the source\ifx\relax#1\relax\else\ (#1)\fi}}
+% Dictionary math <-> physics
+\newtcolorbox{dictionary}[1][]{notesbase,colback=white,colframe=black!28,
+  title={Dictionary\ifx\relax#1\relax\else: #1\fi}}
+% End-of-section / chapter recap
+\newtcolorbox{recap}[1][]{notesbase,colback=recapbg,colframe=black!28,
+  title={Recap\ifx\relax#1\relax\else: #1\fi}}
+% A "try it yourself" with the answer hidden below
+\newtcolorbox{tryit}[1][]{notesbase,colback=white,colframe=black!28,
+  title={Try it\ifx\relax#1\relax\else: #1\fi}}
+
+% ---------- robust labels inside breakable boxes ----------
+% tcolorbox can drop a \label that sits at the very start of a breakable box when a page
+% break falls right there. Inside the boxes we therefore write labels immediately.
+\makeatletter
+\newcommand{\notes@iwrite}[1]{%
+  \begingroup\let\protect\@unexpandable@protect
+  \edef\reserved@a{\immediate\write\@auxout{#1}}\reserved@a\endgroup}
+\newcommand{\notes@immediatelabel}[1]{%
+  \@bsphack
+  \notes@iwrite{\string\newlabel{#1}{{\@currentlabel}{\thepage}{}{\@currentHref}{}}}%
+  \ifdefined\cref@currentlabel
+    \notes@iwrite{\string\newlabel{#1@cref}{{\cref@currentlabel}{[1][\arabic{page}][]\thepage}}}%
+  \fi
+  \@esphack}
+\tcbset{notesbase/.append style={before upper app={\let\label\notes@immediatelabel}}}
+\makeatother
+
+% ---------- the labelled-equality convention ----------
+% In a chain, write   &\eqby{1} ...   and after the chain explain each label
+% in an  \begin{explain} ... \end{explain}  list (items auto-numbered (1),(2),...).
+\newcommand{\eqby}[1]{\overset{\mathclap{\text{\scriptsize\color{accent}(#1)}}}{=}}
+\newcommand{\relby}[2]{\overset{\mathclap{\text{\scriptsize\color{accent}(#1)}}}{#2}}
+\newlist{explain}{enumerate}{1}
+\setlist[explain]{label={\color{accent}\small(\arabic*)},leftmargin=2.2em,
+  itemsep=1pt,topsep=3pt,parsep=0pt}
+
+% inline decompression of a technical term inside a definition: \unpack{what the term means}
+\newcommand{\unpack}[1]{{\color{tangentgreen!55!black}\,[\,#1\,]}}
+% placeholder for a figure that a separate (Sonnet) figure agent will draw from figspecs/<label>.md
+\newcommand{\figtodo}[1]{\fbox{\parbox{0.8\linewidth}{\centering\small\itshape Figure to be drawn: #1}}}
+% ---------- common notation (use these; do not redefine) ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\dd}{\mathrm{d}}                       % exterior derivative / differential
+\newcommand{\wedgep}{\wedge}
+\newcommand{\hodge}{\star}                         % Hodge star
+\newcommand{\form}[1]{\Omega^{#1}}                 % space of p-forms
+\newcommand{\bdry}{\partial}                       % boundary
+\newcommand{\interior}{\iota}                      % interior product
+\newcommand{\Lie}{\mathcal{L}}                     % Lie derivative
+\newcommand{\Hdr}[1]{H^{#1}_{\mathrm{dR}}}         % de Rham cohomology
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\ind}{\operatorname{index}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Coker}{\operatorname{Coker}}
+\newcommand{\Img}{\operatorname{Im}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\td}{\operatorname{td}}
+\newcommand{\Ahat}{\hat{A}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Diff}{\operatorname{Diff}}
+\newcommand{\Map}{\operatorname{Map}}
+\newcommand{\Cl}{\mathrm{Cl}}                      % Clifford algebra
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\Or}{\mathrm{O}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\lie}[1]{\mathfrak{#1}}                % Lie algebra
+\newcommand{\cA}{\mathcal{A}}                      % space of connections
+\newcommand{\cG}{\mathcal{G}}                      % gauge group
+\newcommand{\cM}{\mathcal{M}}                      % moduli space
+\newcommand{\Dslash}{\slashed{D}}                  % Dirac operator
+\newcommand{\pslash}{\slashed{\partial}}
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\bra}[1]{\langle #1\rvert}
+\newcommand{\braket}[2]{\langle #1\vert #2\rangle}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\homeo}{\cong}                         % homeomorphic / isomorphic
+\newcommand{\htpy}{\simeq}                         % homotopic / homotopy equivalent
+\newcommand{\vect}[1]{\vec{#1}}
+\newcommand{\srcref}[2]{\textsf{\small[#1~#2]}}   % \srcref{Nash}{p.~12, (1.4)}  generic source citation
+\newcommand{\mainref}[1]{\srcref{\mainsourcename}{#1}}  % citation of the main source followed
+\providecommand{\mainsourcename}{Wasserman}                  % set in main.tex: \renewcommand{\mainsourcename}{Nash}
+\newcommand{\newterm}[1]{\textbf{\color{accent}#1}}  % first appearance of a term
+
+% ---------- headings ----------
+\titleformat{\chapter}[display]{\normalfont\sffamily\huge\bfseries\color{accent}}
+  {\large\chaptertitlename\ \thechapter}{8pt}{\Huge}
+\titleformat{\section}{\normalfont\sffamily\Large\bfseries\color{accent}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\sffamily\large\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalfont\sffamily\normalsize\bfseries}{\thesubsubsection}{0.8em}{}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\thepage}
+\fancyhead[RE]{\small\sffamily\leftmark}
+\fancyhead[LO]{\small\sffamily\rightmark}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\numberwithin{equation}{chapter}
+\setlength{\parskip}{0.35em}
+\allowdisplaybreaks[3]
+\raggedbottom   % never stretch vertical space to fill a page
+% ---------- float placement (owner: no figure-only pages when the figure fits with text) ----------
+\renewcommand{\topfraction}{0.9}        % a float may fill up to 90% of the top of a text page
+\renewcommand{\bottomfraction}{0.8}     % ... or 80% of the bottom
+\renewcommand{\textfraction}{0.07}      % a text page needs only 7% text
+\renewcommand{\floatpagefraction}{0.8}  % a floats-only page must be at least 80% full
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+
+
+% ============================================================
+%  Statistics & Data Analysis additions (house style of
+%  bayes_theorem_notes.pdf: every idea opens with a story,
+%  states the question in words, then does the maths)
+% ============================================================
+\definecolor{storybg}{HTML}{FBFBFA}
+\definecolor{reasonbg}{HTML}{FBFBFA}
+\definecolor{takebg}{HTML}{FBFBFA}
+\definecolor{codebg}{HTML}{F8F8F6}
+% Story: the concrete situation that makes the idea necessary (opens every section)
+\newtcolorbox{story}[1][]{notesbase,colback=storybg,colframe=black!28,
+  title={Story\ifx\relax#1\relax\else: #1\fi}}
+% The central framing: what question this chapter/section answers
+\newtcolorbox{framing}[1][]{notesbase,colback=ideabg,colframe=black!28,
+  title={The central framing\ifx\relax#1\relax\else: #1\fi}}
+% The reasoning: the question stated in words before any symbol (numbered steps welcome)
+\newtcolorbox{reasoning}[1][]{notesbase,colback=reasonbg,colframe=black!28,
+  title={The reasoning\ifx\relax#1\relax\else: #1\fi}}
+% Takeaway: what the example/computation taught us, in one or two sentences
+\newtcolorbox{takeaway}[1][]{notesbase,colback=takebg,colframe=black!28,
+  title={Takeaway\ifx\relax#1\relax\else: #1\fi}}
+% Taxonomy: which tool answers which question, when it applies
+\newtcolorbox{taxonomy}[1][]{notesbase,colback=white,colframe=black!28,
+  left=7pt,right=7pt,bottom=6pt,
+  float=htbp,   % a table cannot split, so the box floats like a figure instead of leaving a gap
+  title={Taxonomy\ifx\relax#1\relax\else: #1\fi}}
+% Verify vs research: a Monte Carlo / numerical result used to CHECK theory,
+% versus used as the actual research instrument
+\newtcolorbox{inpractice}[1][]{notesbase,colback=nashbg,colframe=black!28,
+  title={How this is used in real research\ifx\relax#1\relax\else: #1\fi}}
+% backwards-compatible alias used in the exemplar
+\newenvironment{nashsays}[1][]{\begin{sourcesays}[#1]}{\end{sourcesays}}
+
+% ---------- Python listings ----------
+\RequirePackage{listings}
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{formblue}\bfseries,commentstyle=\color{tangentgreen!70!black}\itshape,
+  stringstyle=\color{bdryred!80!black},numbers=left,numberstyle=\tiny\color{softgray},
+  numbersep=6pt,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{softgray!50},
+  breaklines=true,breakatwhitespace=true,showstringspaces=false,columns=fullflexible,
+  keepspaces=true,tabsize=4,captionpos=t,xleftmargin=1.5em,framexleftmargin=1.5em,
+  literate={µ}{{$\mu$}}1 {σ}{{$\sigma$}}1 {θ}{{$\theta$}}1 {ℓ}{{$\ell$}}1 {—}{{--}}1 {–}{{-}}1 {²}{{$^2$}}1 {≈}{{$\approx$}}1 {→}{{$\to$}}1}
+\lstset{style=py}
+% \pyfile[listings options]{code/chXX/script.py}{caption}
+%   prints the whole script (or a line range: [firstline=10,lastline=40]) from its file on disk
+\newcommand{\pyfile}[3][]{\lstinputlisting[style=py,caption={#3\ \textnormal{\small(\texttt{\detokenize{#2}})}},#1]{#2}}
+\newcommand{\pyname}[1]{\texttt{\detokenize{#1}}}   % inline script / function name
+
+% ---------- statistics notation (use these; do not redefine) ----------
+\newcommand{\Prob}{\operatorname{P}}                % probability of an event
+\newcommand{\E}{\operatorname{\mathbb{E}}}           % expectation
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Corr}{\operatorname{Corr}}
+\newcommand{\given}{\,\vert\,}                       % conditioning bar
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Like}{\mathcal{L}}                      % likelihood function
+\newcommand{\Fish}{\mathbf{F}}                       % Fisher matrix
+\newcommand{\Cmat}{\mathbf{C}}                       % covariance matrix
+\newcommand{\data}{\bm{d}}                           % data vector
+\newcommand{\params}{\bm{\theta}}                    % parameter vector
+\newcommand{\Cell}{C_\ell}                           % angular power spectrum (NB: \Cl is the Clifford algebra)
+\newcommand{\Chat}{\widehat{C}_\ell}                 % its estimator
+\newcommand{\alm}{a_{\ell m}}
+\newcommand{\fsky}{f_{\mathrm{sky}}}
+\newcommand{\SNR}{\mathrm{SNR}}
+\newcommand{\pval}{p}
+\newcommand{\Hnull}{H_0}
+\newcommand{\Halt}{H_1}
+\newcommand{\dof}{\nu}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\T}{^{\mathsf{T}}}                       % transpose
+
+% ---------- bibliography ----------
+\RequirePackage[backend=bibtex,style=numeric-comp,sorting=none,maxbibnames=4,giveninits=true,url=false,doi=true,eprint=true]{biblatex}
+
+% ---------- links (load late) ----------
+\RequirePackage[colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent]{hyperref}
+\RequirePackage[capitalise,nameinlink]{cleveref}
+\crefname{figure}{Figure}{Figures}
+\crefname{wex}{Example}{Examples}
+\crefname{wdef}{Definition}{Definitions}
+
+\endinput

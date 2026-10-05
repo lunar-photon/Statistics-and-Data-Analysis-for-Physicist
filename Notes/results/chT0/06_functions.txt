@@ -1,0 +1,4 @@
+gaussian(0.0) = 0.3989
+gaussian(1.0, sigma=2.0) = 0.1760
+m = 9.800 +/- 0.032
+square(3) = 9

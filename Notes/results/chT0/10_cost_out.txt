@@ -1,0 +1,6 @@
+FFT:       slope 1.35   (N log N alone would give 1.07)
+Cholesky:  slope 2.45;  n = 6000: predicted 3.25 s, measured 3.21 s
+pairs:     brute-force slope 2.04, k-d tree slope 1.69;  same counts: True
+           brute force for 10^6 points, predicted 22.6 h;  tree at 256000 points 1.36 s
+map2alm:   slope in N_side 3.06;  N_side = 512: predicted 2.01 s, measured 1.43 s
+Cholesky of the 786432 x 786432 pixel covariance at N_side = 256: fitted slope 6 days, exponent 3 84 days, memory 4.9 TB

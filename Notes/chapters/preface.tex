@@ -1,0 +1,511 @@
+\providecommand{\CoinPkFair}{}\renewcommand{\CoinPkFair}{0.04395}
+\providecommand{\CoinPkBias}{}\renewcommand{\CoinPkBias}{0.302}
+\providecommand{\CoinSimFair}{}\renewcommand{\CoinSimFair}{0.04105}
+\providecommand{\CoinSimBias}{}\renewcommand{\CoinSimBias}{0.3024}
+\providecommand{\CoinSimErr}{}\renewcommand{\CoinSimErr}{0.001449}
+\providecommand{\CoinPostBias}{}\renewcommand{\CoinPostBias}{0.873}
+\providecommand{\CoinPostBiasFive}{}\renewcommand{\CoinPostBiasFive}{0.09696}
+\providecommand{\CoinLR}{}\renewcommand{\CoinLR}{6.872}
+\providecommand{\CoinNexp}{}\renewcommand{\CoinNexp}{20000}
+\providecommand{\zeroaShrinkFig}[6]{%
+\begin{tikzpicture}[scale=0.8]
+  \pgfmathsetmacro{\zA}{6*#1}                 %
+  \pgfmathsetmacro{\zL}{\zA-6*#1*#2}           %
+  \pgfmathsetmacro{\zR}{\zA+6*(1-#1)*#3}       %
+  \pgfmathsetmacro{\zJH}{#1*#2}                %
+  \pgfmathsetmacro{\zJN}{(1-#1)*#3}            %
+  \pgfmathsetmacro{\zPE}{\zJH+\zJN}            %
+  \pgfmathsetmacro{\zPost}{\zJH/\zPE}
+  \pgfmathsetmacro{\zPostN}{1-\zPost}
+  \pgfmathsetmacro{\zPH}{#1}
+  \pgfmathsetmacro{\zPN}{1-#1}
+  \begin{scope}
+    \fill[formblue!18] (0,0) rectangle (6,4);
+    \fill[tangentgreen!45] (\zL,0) rectangle (\zR,4);
+    \draw (\zA,0) -- (\zA,4);
+    \draw[thick] (0,0) rectangle (6,4);
+    \draw[line width=1.6pt,fibreorange] (\zL,0) rectangle (\zR,4);
+    \node[lbl] at ({\zL/2},2) {#4};
+    \node[lbl] at ({(\zR+6)/2},2) {#5};
+    \draw[faint] ({(\zL+\zA)/2},1.0) -- ({\zL-0.3},0.75)
+      node[lbl,font=\footnotesize,anchor=east,black,inner sep=1pt]
+      {\pgfmathprintnumber[fixed,precision=3]{\zJH}};
+    \draw[faint] (\zR,2.6) -- ({\zR+0.45},2.95)
+      node[lbl,font=\footnotesize,anchor=south west,black,inner sep=1pt]
+      {\pgfmathprintnumber[fixed,precision=3]{\zJN}};
+    \node[lbl,fibreorange!80!black,anchor=south] at ({(\zL+\zR)/2},4.05) {$E$: #6};
+    \node[lbl] at (6.25,3.75) {$\Omega$};
+    \draw[faint] (0,-0.15) -- (0,-0.3) -- (\zA,-0.3) -- (\zA,-0.15);
+    \draw[faint] (\zA,-0.15) -- (\zA,-0.3) -- (6,-0.3) -- (6,-0.15);
+    \node[lbl] at ({\zA/2},-0.6) {\pgfmathprintnumber{\zPH}};
+    \node[lbl] at ({(\zA+6)/2},-0.6) {\pgfmathprintnumber{\zPN}};
+    \node[lbl,align=center,text width=6.2cm,anchor=north] at (3,-0.95)
+      {before: one strip for each coin,\\ as wide as its prior};
+  \end{scope}
+  \draw[->,thick,accent] (6.7,2) -- (8.1,2);
+  \node[lbl,accent,align=center] at (7.4,2.75) {observe\\$E$};
+  \begin{scope}[xshift=8.7cm]
+    \draw[faint,dashed] (0,0) rectangle (6,4);
+    \draw[faint,dashed] (\zA,0) -- (\zA,4);
+    \fill[tangentgreen!45] (\zL,0) rectangle (\zR,4);
+    \draw[very thin,black!40] (\zA,0) -- (\zA,4);
+    \draw[line width=1.6pt,fibreorange] (\zL,0) rectangle (\zR,4);
+    \draw[faint] ({(\zL+\zA)/2},2.4) -- ({\zL-0.25},2.9)
+      node[lbl,anchor=east,black,align=right,inner sep=1pt]
+      {#4\\ \pgfmathprintnumber[fixed,precision=3]{\zPost}};
+    \draw[faint] ({\zR},1.2) -- ({\zR+0.45},0.9)
+      node[lbl,anchor=west,black,align=left,inner sep=1pt]
+      {#5\\ \pgfmathprintnumber[fixed,precision=3]{\zPostN}};
+    \node[lbl,fibreorange!80!black,anchor=south] at ({(\zL+\zR)/2},4.05)
+      {$E$, area \pgfmathprintnumber[fixed,precision=3]{\zPE}};
+    \node[lbl,align=center,text width=6.2cm,anchor=north] at (3,-0.95)
+      {after: $E$ is the new sample space,\\ each coin keeps its share of it};
+  \end{scope}
+\end{tikzpicture}}
+ \chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+\markboth{Preface}{Preface}
+\setcounter{figure}{0}\setcounter{wdef}{0}\setcounter{wex}{0}\setcounter{lstlisting}{0}
+\renewcommand{\thefigure}{P.\arabic{figure}}
+\renewcommand{\thewdef}{P.\arabic{wdef}}
+\renewcommand{\thewex}{P.\arabic{wex}}
+\renewcommand{\thelstlisting}{P.\arabic{lstlisting}}
+
+\section*{Who made these notes}
+These notes were made by Chandra Prakash
+(\texttt{chandra.pp@alumni.iitg.ac.in}; the latest version lives at
+\href{https://lunar-photon.github.io}{\texttt{lunar-photon.github.io}})
+together with Claude, an AI model made by Anthropic. The goals, the vision
+and the way every idea is framed are Chandra's: which questions matter, which
+pictures make them clear, and how the whole subject hangs together for a
+physicist. The drafting of the text and the writing of the code were done
+with Claude's help, one section at a time, with Chandra reading, correcting
+and redirecting. It was a joint project and an ambitious one: to take a
+physicist who has never properly learned statistics all the way from coin
+tosses to Monte Carlo simulations of the microwave sky, Markov chain samplers,
+Fisher forecasts and the topology of random fields, and to have every step
+run as a Python script on the reader's own machine.
+
+\section*{Goals and vision}
+\paragraph{What the notes are for.}
+The reader we have in mind is a phenomenologist working in particle physics,
+cosmology or gravitational waves. You are at home with calculus, linear
+algebra, Fourier analysis, quantum mechanics and statistical mechanics. You
+use likelihoods, error bars and MCMC chains in your work, often through code
+written by someone else, and you would like to know what each tool really
+does and why it exists. You also want to \emph{implement} it: to write the
+fifty lines of Python that do the job, see them work on data, and then trust
+the standard library because you know what it is doing inside.
+
+\paragraph{The vision.}
+Three convictions shape every chapter.
+\begin{enumerate}
+  \item \emph{Every idea opens with a story.} Before any definition we meet a
+        concrete situation that makes the idea necessary, and a physical
+        picture of what the idea will do for us. The formula comes after we
+        know what question it answers.
+  \item \emph{Probability runs in two directions.} Prediction goes forward:
+        given a hypothesis, how often does each outcome occur? Inference goes
+        backward: given the outcome we saw, which hypotheses could lie behind
+        it, and how much does each deserve belief now? Bayes' theorem is the bridge.
+        Almost every confusion in statistics is a confusion between these two
+        directions.
+  \item \emph{One pipeline organises the whole subject.} A physical model
+        produces a field or a data set. We choose what information in it
+        matters, compress the data into a summary $S$, work out how $S$
+        fluctuates from one realisation of the noise to the next (its sampling
+        distribution $p(S\given\params)$), and only then infer the physics
+        (\cref{pre:fig:pipeline}). The book walks along this pipeline, from
+        probability distributions to Bayes, Monte Carlo, MCMC and the Fisher
+        matrix, and ends where the summaries become most interesting:
+        topological summaries of random fields.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  stage/.style={draw=accent,thick,rounded corners=2pt,fill=ideabg,align=center,
+                font=\small,text width=2.35cm,minimum height=1.15cm},
+  flow/.style={->,thick,accent}]
+  \node[stage] (m) at (0,0)     {physical\\ model $\params$};
+  \node[stage] (d) at (3.0,0)   {field or\\ data set $\data$};
+  \node[stage] (c) at (6.0,0)   {what\\ information\\ matters?};
+  \node[stage] (s) at (6.0,-2.1){summary\\ $S(\data)$};
+  \node[stage] (p) at (3.0,-2.1){sampling\\ distribution\\ $p(S\given\params)$};
+  \node[stage] (i) at (0,-2.1)  {inference\\ on $\params$};
+  \draw[flow] (m) -- (d);
+  \draw[flow] (d) -- (c);
+  \draw[flow] (c) -- (s);
+  \draw[flow] (s) -- (p);
+  \draw[flow] (p) -- (i);
+\end{tikzpicture}
+\caption{The pipeline that organises the book. The top row is the physics
+and the observation; the bottom row is the statistics. Each chapter serves
+one or two of these steps, and \cref{ch:00} places every chapter on its step.}
+\label{pre:fig:pipeline}
+\end{figure}
+
+\paragraph{What you will be able to do at the end.}
+You will be able to look at a physics measurement and say which of the two
+directions each part of the analysis runs in. You will be able to write down
+a likelihood for Poisson counts in a collider bin, for a Gaussian random field
+on the sphere and for a gravitational-wave detector with coloured noise, and
+explain why these are the same idea. You will be able to write a Monte Carlo
+simulation that checks an analytic result, and to recognise when the same
+simulation is no longer a check but the only instrument available. You will
+be able to code a Metropolis--Hastings sampler from scratch and diagnose it,
+compute a Fisher forecast and know when it can be trusted, and treat a
+topological summary of a field (its Betti numbers, its Euler characteristic,
+its persistence diagram) as one more random observable, with its own
+covariance and likelihood.
+
+\section*{How the book is organised}
+\Cref{ch:00} is the map: the two directions of probability, the list of
+questions the book answers, the pipeline, the menu of summaries, and how to
+run the code. \Cref{ch:T0} is the small part of Python that every script in
+the book uses, and how to tell whether a number a script prints can be
+trusted.
+
+The first part builds the statistics. \Cref{ch:01} and \cref{ch:02} build
+probability and the distributions a physicist meets. \Cref{ch:03} turns data
+into estimates and introduces the likelihood; \cref{ch:04} asks whether a
+signal is really there and how to set a limit when it is not; \cref{ch:05} is
+Bayesian inference.
+
+The second part collects the physics the statistics is used on, one toolkit
+per field, each a map of the objects and equations that the later chapters
+need: cosmology and weak lensing (\cref{ch:T1}), astrophysics and
+gravitational waves (\cref{ch:T2}), the morphology of the microwave sky
+(\cref{ch:T3}), and collider particle physics (\cref{ch:T4}). They can be
+read in order or consulted when a chapter points to them.
+
+The third part turns the statistics into instruments. \Cref{ch:06} is Monte
+Carlo and the pseudo-random numbers behind it. \Cref{ch:07} makes the
+summary concrete for fields ($\xi(r)$, $P(k)$, $\Cell$) and \cref{ch:08} is
+a Monte Carlo research problem on the microwave sky. \Cref{ch:09} and
+\cref{ch:10} turn sampling distributions into parameter constraints with
+MCMC and the Fisher matrix, and \cref{ch:11} applies all of it to galaxy
+surveys and the local Universe.
+
+The last part goes beyond two-point statistics and onto real data.
+\Cref{ch:12} is topological data analysis of random fields, \cref{ch:13}
+runs four complete analyses on public data (the Planck sky, its topology,
+SDSS galaxies and a Higgs search), and \cref{ch:14} pulls the threads
+together: given a new problem, which idea to reach for. Every chapter opens
+with a roadmap and closes with a summary table.
+
+\section*{Bayes' theorem in one picture, told with one box of each kind}
+The text of each chapter carries the whole argument, and it reads correctly
+from start to finish if every box is skipped. Boxes are a sparse sidebar:
+something to find again, or to skip on a first reading. Rather than describe
+them, we show one real box of each kind. All of them tell one story, the
+story that also opens \cref{ch:00}: Bayes' theorem as information shrinking
+the sample space.
+
+\begin{story}[the coin from the drawer]
+A drawer holds two coins that look identical. One is fair. The other is
+bent and lands heads 80\% of the time. A friend picks one at random, tosses
+it ten times, and reports 8 heads. Which coin was it?
+
+\smallskip\noindent{\footnotesize\textsf{Stories give the concrete situation that makes an
+idea necessary. In the chapters they are ordinary prose, the first paragraph
+of a section.}}
+\end{story}
+
+The story contains both directions at once. If we knew which coin it was, we
+could predict how often it gives 8 heads. We do not know the coin; we know the
+8 heads. So the question runs backward, from the outcome to the coin.
+
+\begin{framing}
+A question about chance can face either way. Facing forward, we fix the
+situation and ask which outcomes it can give and how often each one turns up.
+Facing backward, the outcome is already in hand, and we ask which of the
+situations that might have been true could have given it, and how much each
+of them deserves to be believed now that we have seen it.
+
+For the coin, prediction asks $\Prob(E\given H)$: \emph{given this coin, how likely was
+this outcome?} Inference asks $\Prob(H\given E)$: \emph{given this outcome,
+which way could it have happened, and how probable is each way?} The two
+numbers are different, and Bayes' theorem converts one into the other.
+
+\smallskip\noindent{\footnotesize\textsf{The central framing states the question a chapter
+answers.}}
+\end{framing}
+
+To make the conversion we need one definition. We will look it up many times,
+so it is worth having in a box.
+
+\begin{workdef}[conditional probability]
+For events $A$ and $B$ with $\Prob(A)>0$, the \newterm{conditional
+probability} of $B$ given $A$ is
+\[
+  \Prob(B\given A)=\frac{\Prob(A\cap B)}{\Prob(A)} .
+\]
+It is the probability of $B$ once we know that $A$ happened
+\unpack{we keep only the outcomes in which $A$ is true} and
+renormalise \unpack{divide by $\Prob(A)$, so the kept outcomes again have
+total probability 1}. Operationally: in a long run of repetitions, throw away
+every run in which $A$ failed and count the fraction of the survivors in
+which $B$ happened.
+
+\smallskip\noindent{\footnotesize\textsf{Working definitions keep the precise sentence and
+unpack every term a forgetful reader may need, in green brackets.}}
+\end{workdef}
+
+Now the reasoning, in words, before any number.
+
+\begin{reasoning}
+The backward question can always be said in four plain steps before any
+equation is written:
+\begin{enumerate}
+  \item What did we actually see?
+  \item Which explanations could have given it?
+  \item If each explanation were true, how probable would that sight have been?
+  \item How do those answers change the weight each explanation had before?
+\end{enumerate}
+For the coin: (1) $E$ = ``8 heads in 10 tosses''; (2) $B$ (bent coin) and $F$
+(fair coin), each picked with probability $\tfrac12$; (3) the forward
+question, answered by the binomial distribution; (4) keep only the paths that
+end in $E$, and share the probability among them in proportion to how much
+each contributes.
+
+\smallskip\noindent{\footnotesize\textsf{Reasoning boxes state a question in words before
+any symbol appears.}}
+\end{reasoning}
+
+Step 3 is ordinary prediction: if this coin were the one, how often would it
+give 8 heads? For $n$ tosses of a coin with heads probability $p$, the
+probability of exactly $k$ heads is $\binom nk p^k(1-p)^{n-k}$. The factor
+$p^k(1-p)^{n-k}$ is the probability of one particular sequence with $k$ heads,
+and $\binom nk$ counts how many such sequences there are. With $n=10$ and
+$k=8$, the fair coin gives $\Prob(E\given F)=\binom{10}{8}/2^{10}=45/1024
+=\CoinPkFair$ and the bent coin gives
+$\Prob(E\given B)=45\times0.8^8\times0.2^2=\CoinPkBias$. Step 4 is Bayes'
+theorem, and it has a picture.
+
+\begin{intuition}[information shrinks the sample space]
+Before the evidence, the whole sample space is relevant. Draw it as a
+rectangle of area one and cut it into two strips, one for each coin, each as
+wide as its prior, $\Prob(B)=\Prob(F)=\tfrac12$. Inside each strip, mark the part
+in which 8 heads happens. It fills the fraction $\Prob(E\given B)=\CoinPkBias$
+of the bent-coin strip and only $\Prob(E\given F)=\CoinPkFair$ of the fair-coin
+strip, so the two pieces have areas $\Prob(E\cap B)$ and $\Prob(E\cap F)$.
+Together they are the event $E$, one box straddling the line between the
+strips. The evidence tells us that we are somewhere inside that box, so
+everything outside it is ruled out: the sample space has shrunk to the box.
+The posterior $\Prob(B\given E)$ is the share of the box that the bent-coin
+piece fills (\cref{pre:fig:shrink}).
+
+\smallskip\noindent{\footnotesize\textsf{Intuition boxes give the physical or visual
+picture.}}
+\end{intuition}
+
+\begin{figure}[htbp]
+\centering
+\zeroaShrinkFig{0.5}{\CoinPkBias}{\CoinPkFair}{bent}{fair}{8 heads in 10}
+\caption{Bayes' theorem as information shrinking the sample space, drawn to
+scale. Left: the rectangle $\Omega$ has area 1, and since the coin is either
+bent or fair, the two hypotheses fill it in two strips of width $\tfrac12$. The
+event $E$, ``8 heads in 10'' (orange outline), covers the fraction $\CoinPkBias$
+of the bent-coin strip, because that is how often the bent coin gives 8 heads,
+and only $\CoinPkFair$ of the fair-coin strip. Each green piece therefore has
+area prior times likelihood. Right: hearing ``8 heads'' discards everything
+outside the orange box, and each coin keeps the share of the box that its piece
+fills: $\CoinPostBias$ for the bent coin.}
+\label{pre:fig:shrink}
+\end{figure}
+
+The picture turns into a calculation with no new idea in it.
+
+\begin{example}[the posterior for the coin]
+With $\Prob(B)=\Prob(F)=\tfrac12$,
+\begin{align*}
+  \Prob(B\given E)
+  &\eqby{1}\frac{\Prob(E\cap B)}{\Prob(E\cap B)+\Prob(E\cap F)}\\
+  &\eqby{2}\frac{\Prob(E\given B)\Prob(B)}{\Prob(E\given B)\Prob(B)+\Prob(E\given F)\Prob(F)}\\
+  &\eqby{3}\frac{\Prob(E\given B)}{\Prob(E\given B)+\Prob(E\given F)}
+   =\frac{\CoinPkBias}{\CoinPkBias+\CoinPkFair}=\CoinPostBias .
+\end{align*}
+\begin{explain}
+  \item Conditional probability, $\Prob(B\given E)=\Prob(E\cap B)/\Prob(E)$,
+        with $\Prob(E)$ split into the two disjoint ways $E$ can happen (the
+        two green pieces of the box).
+  \item The product rule $\Prob(E\cap H)=\Prob(E\given H)\Prob(H)$ for each
+        piece: its share of the strip times the strip's width.
+  \item The equal priors $\tfrac12$ cancel between numerator and denominator.
+\end{explain}
+The 8 heads moved the probability of the bent coin from $0.5$ to
+$\CoinPostBias$.
+
+\smallskip\noindent{\footnotesize\textsf{Examples are solved to the last line. Every
+non-trivial equals sign is labelled and explained right after the chain.}}
+\end{example}
+
+One detail of the example is easy to overlook: the prior widths of the two
+strips cancelled only because they were equal. With unequal priors they stay
+in the answer.
+
+\begin{takeaway}
+In the picture, Bayes' theorem needs no extra assumption: it falls out of
+the picture. There is one patch, the overlap $H\cap E$, and two ways to
+measure it. As a share of the $H$ strip it is $\Prob(E\given H)$; as a share
+of the box $E$ it is $\Prob(H\given E)$. Bayes' theorem is the
+statement that both shares describe the same area,
+$\Prob(E\given H)\Prob(H)=\Prob(H\given E)\Prob(E)$.
+
+For the coin, with $H=B$: a forward probability is the \emph{share of a strip}
+that the evidence covers; a joint probability is an \emph{area}; the posterior
+is a \emph{ratio of areas} once the evidence has cut the sample space down to
+the box. Move the line between the strips and both pieces change width, so the
+same data give a different posterior.
+
+\smallskip\noindent{\footnotesize\textsf{Takeaways say in a sentence or two what a
+computation taught us.}}
+\end{takeaway}
+
+The most common error in reading such results is to swap the two directions,
+and it has a famous statistical form.
+
+\begin{pitfall}[a $p$-value is not the probability that the null is true]
+Suppose we test ``the coin is fair'' by asking how often a fair coin gives 8
+or more heads in 10 tosses. That number, $(45+10+1)/1024\approx0.055$, is a
+forward probability, $\Prob(\text{this or more extreme}\given F)$. It is not
+the probability that the coin is fair, $\Prob(F\given E)$. That we just found
+to be $1-\CoinPostBias$ with equal priors, and it depends on the prior as
+well. \Cref{ch:04} makes this precise.
+
+\smallskip\noindent{\footnotesize\textsf{Pitfalls flag a genuine trap.}}
+\end{pitfall}
+
+Every step of the story is a few lines of code. The script behind the numbers
+above computes the forward probabilities from the binomial formula, checks
+them by simulating \CoinNexp{} ten-toss experiments with each coin, and then
+runs Bayes on the observed outcome. The backward step is four lines.
+
+\pyfile[firstline=42,lastline=45,firstnumber=42]{code/ch00/01_coin_two_directions.py}{The
+backward direction: keep the paths that end at the observed $k$, then
+normalise}
+
+Line 43 is the area of the bent-coin piece of the box in \cref{pre:fig:shrink},
+line 44 the area of the fair-coin piece, and line 45 divides the first by their
+sum.
+The arrays run over every possible $k$ at once, so the script produces the
+posterior for all eleven outcomes in one go. For $k=8$ it prints
+$\CoinPostBias$; for $k=5$ it gives $\CoinPostBiasFive$. Every number quoted
+in the text is written to a file by the script that computed it and read back
+into \LaTeX. So the text and the code cannot drift apart (\cref{ch:00}
+describes the machinery).
+
+The simulation in the same script is a small instance of an idea that runs
+through the book: a Monte Carlo experiment can check a formula, or it can
+replace one.
+
+\begin{inpractice}[verification versus research]
+Here the simulation \emph{verifies} a known answer. The fraction of
+simulated fair-coin experiments with 8 heads is $\CoinSimFair$, against the
+exact $\CoinPkFair$. The difference is about two Monte Carlo standard errors
+($\pm\CoinSimErr$ each), an ordinary fluctuation that shrinks as $1/\sqrt{N}$
+when more experiments $N$ are simulated. In research the same machinery is
+often the only instrument. The covariance of a power-spectrum estimator on a
+masked, noisy microwave sky has no closed form, and thousands of simulated
+skies are how it is measured (\cref{ch:08}).
+
+\smallskip\noindent{\footnotesize\textsf{These boxes separate a numerical check of known
+theory from the same tool used where no analytic answer exists.}}
+\end{inpractice}
+
+When an idea has several tools, a small table says which to use when.
+
+\begin{taxonomy}[the coin, asked four ways]
+\small
+\begin{tabular}{@{}p{0.42\linewidth}p{0.3\linewidth}l@{}}
+  \textbf{question in words} & \textbf{object} & \textbf{chapter}\\
+  how often does a fair coin give 8 heads? & $\Prob(k\given p)$ & \cref{ch:02}\\
+  what is our best guess of $p$? & estimator $\hat p=k/n$ & \cref{ch:03}\\
+  is 8 heads surprising for a fair coin? & $p$-value & \cref{ch:04}\\
+  how probable is each value of $p$? & posterior $p(p\given k)$ & \cref{ch:05}\\
+\end{tabular}
+
+\smallskip\noindent{\footnotesize\textsf{Taxonomies list which tool answers which
+question.}}
+\end{taxonomy}
+
+The picture is not ours alone; the literature draws it in
+several ways.
+
+\begin{sourcesays}[Wasserman p.~ix, Fig.~1]
+Wasserman opens with one diagram: a data generating process and the observed
+data, joined by an arrow labelled ``probability'' going forward and one
+labelled ``inference'' coming back \mainref{p.~ix}. Kruschke describes the
+backward arrow as a reallocation of credibility across possibilities
+\srcref{Kruschke}{pp.~16--22}. In the chapters, such links are short
+citations at the point of use, with one ``Reading the literature'' list per
+chapter.
+
+\smallskip\noindent{\footnotesize\textsf{Source boxes map the notes onto the books, and flag
+their misprints.}}
+\end{sourcesays}
+
+\section*{The labelled-equality convention}
+Every calculation is written as a chain. Each non-trivial equals sign carries
+a small label, and the labels are explained, in order, right after the chain.
+For the odds form of the coin problem:
+\begin{align*}
+  \frac{\Prob(B\given E)}{\Prob(F\given E)}
+  &\eqby{1}\frac{\Prob(E\given B)\,\Prob(B)/\Prob(E)}{\Prob(E\given F)\,\Prob(F)/\Prob(E)}
+  \eqby{2}\frac{\Prob(E\given B)}{\Prob(E\given F)}\cdot\frac{\Prob(B)}{\Prob(F)}
+  =\CoinLR\times1 .
+\end{align*}
+\begin{explain}
+  \item Bayes' theorem for each coin.
+  \item $\Prob(E)$ cancels. Posterior odds are the likelihood ratio times the
+        prior odds.
+\end{explain}
+Odds of $\CoinLR$ to 1 are a probability $\CoinLR/(1+\CoinLR)=\CoinPostBias$,
+as before.
+
+\section*{The code}
+Every figure made from data and every simulated number comes from a short
+script in \texttt{code/chNN/}, runnable from the Notes directory with
+\texttt{python3 code/chNN/NN\_name.py}. Randomness is seeded from the script's
+name, so rerunning a script reproduces its figures bit for bit. Each method
+is first implemented from scratch, so the mechanism is visible, and then
+checked against a standard library (\texttt{emcee}, \texttt{getdist},
+\texttt{healpy}, \texttt{gudhi} and others). \Cref{ch:00} ends with a tour of
+the layout and the shared helpers.
+
+\section*{Sources}
+\begin{itemize}
+  \item L.~Wasserman, \emph{All of Statistics} (Springer 2004), followed
+        chapter by chapter and cited as \mainref{p.~\dots} with printed page
+        numbers.
+  \item J.~K.~Kruschke, \emph{Doing Bayesian Data Analysis} (2nd ed.), the
+        model of clarity, cited as \srcref{Kruschke}{\dots}.
+  \item G.~Cowan, \emph{Statistical Data Analysis}; D.~S.~Sivia,
+        \emph{Data Analysis: A Bayesian Tutorial}; G.~Casella and
+        R.~L.~Berger, \emph{Statistical Inference}; B.~Lambert, \emph{A
+        Student's Guide to Bayesian Statistics}; M.~P.~Hobson et al.,
+        \emph{Bayesian Methods in Cosmology}; and \emph{Seeing Theory}, each
+        cited by name where it is clearest.
+  \item Research papers on cosmological inference, pseudo-$\Cell$ estimation,
+        gravitational-wave forecasts and the topology of random fields, cited
+        in the usual way and collected in the bibliography.
+\end{itemize}
+
+\begin{recap}[the dictionary of this preface]
+\begin{tabular}{@{}ll@{}}
+  prediction & $\Prob(E\given H)$, the share of the $H$ strip covered by $E$\\
+  joint probability & $\Prob(E\cap H)=\Prob(E\given H)\Prob(H)$, an area\\
+  evidence & $\Prob(E)$, the total surviving area\\
+  inference & $\Prob(H\given E)$, a ratio of surviving areas\\
+  odds form & posterior odds $=$ likelihood ratio $\times$ prior odds\\
+  the pipeline & model $\to$ data $\to$ summary $\to p(S\given\params)\to$ inference\\
+\end{tabular}
+
+\smallskip\noindent{\footnotesize\textsf{A recap closes every part.}}
+\end{recap}
+
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thewdef}{\thechapter.\arabic{wdef}}
+\renewcommand{\thewex}{\thechapter.\arabic{wex}}
+\renewcommand{\thelstlisting}{\thechapter.\arabic{lstlisting}}

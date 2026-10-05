@@ -1,0 +1,29 @@
+eps = 2.2204e-16   largest = 1.7977e+308   smallest normal = 2.2251e-308
+1.0 + eps == 1.0 -> False;   1.0 + eps/2 == 1.0 -> True
+0.1 + 0.2 == 0.3 -> False;   np.isclose -> True
+x = 1e-5: (1 - cos x)/x^2 = 0.5000000414,  2 sin^2(x/2)/x^2 = 0.5000000000
+x = 1e-8: naive = 0.0,  rewritten = 0.5000000000
+variance of 1e8 + N(0,1): one-pass = 2.0000,  two-pass = 0.9919,  np.var = 0.9919
+best h: forward 1.2e-08 (predicted 3.0e-08),  central 8.2e-06 (predicted 8.7e-06)
+smallest error: forward 9.0e-09 (predicted 3.0e-08),  central 9.0e-12 (predicted 3.8e-11)
+  h = 1e-02:  central difference = 2.718327133383
+  h = 1e-03:  central difference = 2.718282281506
+  h = 1e-04:  central difference = 2.718281832990
+  h = 1e-05:  central difference = 2.718281828518
+  h = 1e-06:  central difference = 2.718281828296
+  h = 1e-08:  central difference = 2.718281821856
+  h = 1e-10:  central difference = 2.718281155722
+  h = 1e-12:  central difference = 2.718492098097
+quad narrow peak on [0, 100]: 0.000e+00 (claimed error 0.0e+00);  tighter tolerance: 0.000e+00;  points=[37.3]: 4.951e-14;  points=[37.25, 37.35]: 0.9999994267 (claimed 8.7e-10);  on [37.2, 37.4]: 1.0000000000 (claimed 8.7e-10)
+brentq on [0, 1] for x^2 - 2: ValueError: f(a) and f(b) must have different signs
+brentq on [0, 2]: 1.414213562373136   (sqrt 2 = 1.414213562373095)
+Nelder-Mead, 200 iterations: success = False, message = 'Maximum number of iterations has been exceeded.', x = [ 0.714  0.497  0.248  0.065 -0.023], |grad| = 7.60e+00
+BFGS with gradient: success = True, x = [1. 1. 1. 1. 1.], |grad| = 5.00e-06
+30 simulations of 50 bins: smallest eigenvalue -1.3e-15, rank 29, cholesky fails (LinAlgError)
+200 simulations of 50 bins: smallest eigenvalue 2.7e-01, rank 50, cholesky succeeds
+P(Z>2) exact 0.02275;  N = 10^4, eight seeds: [0.0226 0.0203 0.0229 0.0196 0.0251 0.0229 0.0227 0.0223];  predicted spread 0.00149, observed 0.00169
+difference P(X>2 | mu=0.1) - P(X>2 | mu=0) = 0.00597; scatter over 400 repeats: independent 0.00224, common random numbers 0.00076
+trapezoid n =  8: 1.9742316019   error -2.58e-02
+trapezoid n = 16: 1.9935703438   error -6.43e-03
+trapezoid n = 32: 1.9983933610   error -1.61e-03
+Richardson (4 T16 - T8)/3 = 2.0000165910   error 1.66e-05
