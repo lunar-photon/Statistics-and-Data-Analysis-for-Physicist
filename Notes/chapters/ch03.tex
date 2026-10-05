@@ -2983,7 +2983,8 @@ ruler.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[x=1.75cm,y=1.75cm,font=\small,>={Stealth[length=7pt,width=5pt]}]
+\begin{tikzpicture}[x=1.3cm,y=1.3cm,font=\small,>={Stealth[length=7pt,width=5pt]}]
+  \begin{scope}
   \coordinate (O) at (0,0); \coordinate (S) at (2.2,0.88); \coordinate (E) at (0.48,1.6);
   \coordinate (X) at (2.68,2.48); \coordinate (W) at (1.136,-0.341);
   \coordinate (U) at (0.8077,-0.2424); \coordinate (R) at ($2.2*(U)$);
@@ -2992,7 +2993,7 @@ ruler.
   \draw[black!55,line width=0.8pt] ($-0.4*(U)$) -- ($3.3*(U)$);
   \foreach \k in {1,2,3} \draw[black!55] ($\k*(U)+0.07*(0.3,1)$) -- ($\k*(U)-0.07*(0.3,1)$);
   \draw[bdryred!55,line width=1.2pt] (X) -- (R);
-  \pic[draw=bdryred!70,line width=0.6pt,angle radius=0.22cm] {right angle=X--R--O};
+  \pic[draw=bdryred!70,line width=0.6pt,angle radius=0.2cm] {right angle=X--R--O};
   \fill[bdryred] (R) circle (1.6pt) node[below right=0pt,bdryred] {$s$};
   \draw[decorate,decoration={brace,mirror,amplitude=5pt,raise=11pt},bdryred!85!black,line width=0.7pt]
         (O) -- (R) node[midway,below=19pt,font=\footnotesize] {$\bm w\T\bm x$};
@@ -3004,12 +3005,47 @@ ruler.
   \node[fibreorange,left=1pt] at (E) {everything else};
   \node[black,above=1pt] at (X) {data};
   \node[bdryred,above right=-1pt] at (W) {$\bm w$};
+  \node[anchor=south west] at (-0.4,3.15) {(a) the signal is known: we choose $\bm w$};
+  \end{scope}
+  \begin{scope}[xshift=7.1cm]
+  \coordinate (O) at (0,0); \coordinate (S) at (2.2,0.88); \coordinate (E) at (0.48,1.6);
+  \coordinate (X) at (2.68,2.48); \coordinate (W) at (1.136,-0.341);
+  \coordinate (U) at (0.8077,-0.2424); \coordinate (R) at ($2.2*(U)$);
+  \def\loopcells{1/6,2/6,3/6,0/5,4/5,0/4,4/4,1/3,2/3,3/3,4/3}
+  \def\tailcells{4/2,4/1,2/0,3/0}
+  \newcommand\thumb[3]{%
+    \begin{scope}[shift={($(#1)+(#2)$)},x=0.13cm,y=0.13cm]
+      \fill[black!5] (0,0) rectangle (5,7); #3 \draw[black!25,step=1] (0,0) grid (5,7);
+    \end{scope}}
+  \newcommand\nine{\foreach \c/\r in \loopcells \fill[formblue] (\c,\r) rectangle (\c+1,\r+1);
+                   \foreach \c/\r in \tailcells \fill[formblue] (\c,\r) rectangle (\c+1,\r+1);}
+  \newcommand\rest{\fill[fibreorange!70] (0,0) rectangle (2,1); \fill[fibreorange!45] (0,3) rectangle (1,4);}
+  \draw[black!30,->] (-0.4,0) -- (3.4,0) node[below left=1pt,black!55] {\footnotesize pixel 1};
+  \draw[black!30,->] (0,-1.0) -- (0,3.0) node[below left=1pt,black!55] {\footnotesize pixel 2};
+  \draw[black!55,line width=0.8pt] ($-0.4*(U)$) -- ($3.3*(U)$);
+  \draw[bdryred!55,line width=1.2pt] (X) -- (R);
+  \pic[draw=bdryred!70,line width=0.6pt,angle radius=0.2cm] {right angle=X--R--O};
+  \fill[bdryred] (R) circle (1.6pt);
+  \draw[->,formblue,line width=1.6pt] (O) -- (S);
+  \draw[->,fibreorange,line width=1.6pt] (O) -- (E);
+  \draw[->,black,line width=1.6pt] (O) -- (X);
+  \draw[->,bdryred,line width=1.6pt] (O) -- (W) node[above right=-1pt] {learned $\bm w$};
+  \thumb{S}{0.15,-0.62}{\nine}           \node[formblue,right=1pt,font=\footnotesize] at ($(S)+(0.68,-0.28)$) {$\bm x_9$};
+  \thumb{E}{-0.75,-0.2}{\rest}           \node[fibreorange,left=1pt,font=\footnotesize] at ($(E)+(-0.75,0.15)$) {$\bm x_{\rm rest}$};
+  \thumb{X}{0.18,-0.55}{\rest\nine}      \node[black,right=1pt,font=\footnotesize] at ($(X)+(0.72,-0.2)$) {$\bm x$};
+  \node[anchor=south west] at (-0.4,3.15) {(b) a photograph of a 9: $\bm w$ is learned};
+  \end{scope}
 \end{tikzpicture}
-\caption{The weighted sum as a shadow on a ruler. The data are the signal plus everything else. The
-weights $\bm w$ point along a ruler at right angles to everything else; the reading $\bm w\T\bm x$ is
-where the data fall when dropped straight onto it. The tip of the signal lies on the same drop line, so
-the data and the signal alone give the same reading. The two patterns are drawn further apart than at
-the party, so that the angles are easy to see.}
+\caption{Choosing $\bm w$ when the signal is known, and learning it when it is not. (a) The data are the signal
+plus everything else. The weights $\bm w$ point along a ruler at right angles to everything else, and the
+reading $\bm w\T\bm x$ is where the data fall when dropped straight onto it; the tip of the signal lies on
+the same drop line, so the data and the signal alone give the same reading. The two patterns are drawn
+further apart than at the party, so that the angles are easy to see. (b) The same split for a photograph of a 9.
+A picture is a long list of pixel values, so it is a vector too, drawn here in two of its many directions:
+the pixels of the written 9 are the signal, the paper, a smudge and uneven light are everything else, and the
+photograph is their sum, as in the first row of \cref{3a:fig:network}. A network is not told this split;
+training finds weights whose reading keeps the 9 and ignores the rest, and so decides what counts as the
+signal.}
 \label{3a:fig:ruler}
 \end{figure}
 
@@ -3017,12 +3053,9 @@ So $\bm w$ is a filter. It asks one question of the data: how much of the
 pattern we want is here, ignoring everything else? Notice that it does not
 point along the signal. It points where it must to be blind to everything
 else, so its direction is set as much by what we ignore as by what we want;
-only when the rest is plain noise does it line up with the signal itself. A
-neuron in a network is the same kind of filter. Its weights also decide
-which differences in the input it reads and which it ignores, but nobody
-works them out: they start at random and are adjusted during training until
-the readings are useful. Choosing weights is choosing a direction: one that
-sees what we want and is blind to what we do not. With
+only when the rest is plain noise does it line up with the signal itself.
+Choosing weights is choosing a direction: one that sees what we want and is
+blind to what we do not. With
 more readings there is room to be blind to more unwanted patterns at once,
 and finding the weights is a small set of linear equations. When the
 unwanted patterns are not known exactly, or the noise matters as much as
@@ -3048,7 +3081,9 @@ The principle does not stop at simple problems; even an artificial neural
 network runs on it. Suppose someone has written the digit 9 on a sheet of
 paper, we photograph it, and a network must tell from the photograph which
 digit was written. The photograph is a grid of pixel values: the pixels of
-the written 9, plus the paper, a smudge, uneven light. A first layer of
+the written 9, plus the paper, a smudge, uneven light. A grid of numbers is a
+long list of numbers, so the photograph is a vector, and this split is the
+same as the microphones' (\cref{3a:fig:ruler}b). A first layer of
 weighted sums extracts the feature we want, the pixels that belong to the
 number. Those pixels are in turn a few shapes, a loop and a stroke running
 down from it, plus details that do not matter, such as the size of the
@@ -3129,10 +3164,17 @@ neural network is this chain with many rows, and with weights learned from label
 \label{3a:fig:network}
 \end{figure}
 
-Every step in the figure is the dot product of the two microphones, repeated
-many times and chained; nothing else enters. Readings, patterns and weights
-are all lists of numbers, so the natural language for all of it is linear
-algebra.
+The loop and the tail in the figure are our names, chosen so that the steps
+are easy to follow. A trained network need not split the 9 this way. Training
+fixes its weights, and the weights fix the split: at every layer, whatever the
+weights read becomes that layer's signal, and whatever they are blind to
+becomes its everything else, just as in \cref{3a:fig:ruler}b. The pieces a
+real network ends up reading are often not shapes we would name. What carries
+over is the principle. Every layer splits its input into a part it keeps and a
+part it ignores, and it keeps that part with a weighted sum, the dot product of
+the two microphones, repeated many times and chained. Readings, patterns and
+weights are all lists of numbers, so the natural language for all of it is
+linear algebra.
 
 We start with the simplest case: readings of different quality, no
 contaminant, and weights chosen so the combination scatters as little as
