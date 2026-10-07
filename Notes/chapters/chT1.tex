@@ -2197,43 +2197,112 @@ ik\,\frac k\omega\,\hat{\bm z}\times(\hat{\bm z}\times\bm E)&\eqby{2}-\frac{i\om
   \item The vector identity $\hat{\bm z}\times(\hat{\bm z}\times\bm E)=\hat{\bm z}(\hat{\bm z}\cdot\bm E)-\bm E=-\bm E_\perp$, the part of $\bm E$ across $z$; then multiply by $ic^2/\omega$.
   \item In both media below $\varepsilon_r$ does not mix $z$ with $x$ and $y$. The $z$ row then reads $\varepsilon_{r,zz}E_z=0$, so $E_z=0$, and the $x,y$ rows form a $2\times2$ problem with the transverse block $\varepsilon_{r\perp}$.
 \end{explain}
-This is an eigenvalue problem. \emph{The polarizations that can travel unchanged are the eigenvectors of $\varepsilon_{r\perp}$, and their refractive indices squared are its eigenvalues.} A medium is \newterm{birefringent} when the two eigenvalues differ. Away from a resonance the friction $\gamma$ can be dropped, the matrix is then Hermitian in both cases below, and the indices are real; a nonzero $\gamma$ makes them complex, which is absorption, and absorption that differs between the two eigenvectors is called dichroism.
+This is an eigenvalue problem. \emph{The polarizations that can travel unchanged are the eigenvectors of $\varepsilon_{r\perp}$, and their refractive indices squared are its eigenvalues.} A medium is \newterm{birefringent} when the two eigenvalues differ. Away from a resonance the friction $\gamma$ can be dropped, the matrix is then Hermitian in both cases below, and the indices are real; a nonzero $\gamma$ makes them complex, which is absorption, and absorption that differs between the two eigenvectors is called dichroism. \Cref{T1c:fig:lorentz-scheme} shows the idea as a sum of the two eigen-polarizations, and \cref{T1c:fig:lorentz-snapshots} follows the shape step by step through the medium.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[scale=0.9]
-  \tikzset{stage/.style={faint}, flow/.style={->,softgray,thick}}
-  \foreach \y/\lab in {0/{crystal\\(case A)},-2.7/{magnetized\\plasma\\(case B)}}{
-    \node[font=\small,anchor=east,align=right] at (-1.1,\y) {\lab};
-    \draw[stage] (-0.85,\y-0.85) rectangle (0.85,\y+0.85);
-    \draw[very thick,formblue] ($(0,\y)+(45:0.6)$) -- ($(0,\y)+(225:0.6)$);
-    \draw[flow] (1.05,\y) -- (1.75,\y);
-    \draw[flow] (7.35,\y) -- (8.05,\y);
-    \draw[stage] (8.25,\y-0.85) rectangle (9.95,\y+0.85);
-  }
-  \draw[stage] (1.95,-0.85) rectangle (4.45,0.85);
-  \draw[stage] (4.85,-0.85) rectangle (7.15,0.85);
-  \draw[very thick,tangentgreen] (2.6,0) -- (3.8,0);
-  \node[font=\small] at (3.2,-0.55) {index $n_x$};
-  \draw[very thick,fibreorange] (6.0,-0.6) -- (6.0,0.6);
-  \node[font=\small,anchor=west] at (6.1,-0.55) {$n_y$};
-  \node[font=\small] at (4.65,0) {$+$};
-  \draw[very thick,formblue,rotate around={45:(9.1,0)}] (9.1,0) ellipse (0.62 and 0.3);
-  \draw[stage] (1.95,-3.55) rectangle (4.45,-1.85);
-  \draw[stage] (4.85,-3.55) rectangle (7.15,-1.85);
-  \draw[very thick,tangentgreen,->] (3.2,-2.7) ++(0:0.5) arc (0:300:0.5);
-  \node[font=\small] at (3.2,-3.35) {$\bm e_+$, index $n_+$};
-  \draw[very thick,fibreorange,->] (6.0,-2.7) ++(0:0.5) arc (0:-300:0.5);
-  \node[font=\small] at (6.0,-3.35) {$\bm e_-$, index $n_-$};
-  \node[font=\small] at (4.65,-2.7) {$+$};
-  \draw[very thick,formblue] ($(9.1,-2.7)+(15:0.6)$) -- ($(9.1,-2.7)+(195:0.6)$);
-  \draw[softgray,dotted] ($(9.1,-2.7)+(45:0.6)$) -- ($(9.1,-2.7)+(225:0.6)$);
-  \node[font=\small] at (0,1.15) {enters};
-  \node[font=\small,align=center] at (4.55,1.3) {splits into the two polarizations that keep their shape,\\each travelling with its own index};
-  \node[font=\small] at (9.1,1.15) {leaves};
+\begin{tikzpicture}[font=\small,>=Stealth,scale=1.05,every node/.style={transform shape}]
+  \def\bx#1#2#3{\begin{scope}[shift={(#1,#2)}]\begin{scope}[x={(0.72cm,0.32cm)},y={(0cm,1cm)}]
+    \draw[black!35,fill=black!4] (-0.62,-0.62) -- (0.62,-0.62) -- (0.62,0.62) -- (-0.62,0.62) -- cycle;
+    \draw[black!15] (-0.55,0) -- (0.55,0) (0,-0.55) -- (0,0.55); #3 \end{scope}\end{scope}}
+  \def\sym#1#2#3{\node[font=\large] at (#1,#2) {#3};}
+  \node[anchor=south west] at (-0.62,1.0) {\textbf{crystal}: the two parts that keep their shape are oscillations along $x$ and along $y$};
+  \bx{0}{0}{\draw[formblue,line width=1.4pt] (-0.4,-0.4) -- (0.4,0.4); \fill[black] (0.4,0.4) circle (1.6pt);}
+  \sym{0.95}{0}{$=$}
+  \bx{1.9}{0}{\draw[tangentgreen,line width=1.4pt] (-0.45,0) -- (0.45,0); \fill[black] (0.45,0) circle (1.6pt);}
+  \sym{2.85}{0}{$+$}
+  \bx{3.8}{0}{\draw[fibreorange,line width=1.4pt] (0,-0.45) -- (0,0.45); \fill[black] (0,0.45) circle (1.6pt);}
+  \draw[->,softgray,thick] (4.6,0) -- (5.9,0) node[midway,above,font=\scriptsize,black!60,align=center] {through\\[-2pt]the crystal};
+  \bx{6.7}{0}{\draw[tangentgreen,line width=1.4pt] (-0.45,0) -- (0.45,0); \fill[black] (0.45,0) circle (1.6pt);}
+  \sym{7.65}{0}{$+$}
+  \bx{8.6}{0}{\draw[fibreorange,line width=1.4pt] (0,-0.45) -- (0,0.45); \fill[black] (0,0.225) circle (1.6pt);}
+  \sym{9.55}{0}{$=$}
+  \bx{10.5}{0}{\draw[formblue,line width=1.4pt,domain=0:360,samples=80,smooth,variable=\t] plot ({0.42*cos(\t)},{0.42*cos(\t-60)}); \fill[black] (0.42,0.21) circle (1.6pt);
+              \draw[black!40,densely dotted] (-0.4,-0.4) -- (0.4,0.4);}
+  \node[font=\scriptsize,black!60] at (0,-1.05) {enters};
+  \node[font=\scriptsize,black!60] at (1.9,-1.05) {index $n_x$};
+  \node[font=\scriptsize,black!60] at (3.8,-1.05) {index $n_y$};
+  \node[font=\scriptsize,black!60] at (8.6,-1.05) {lags by $\delta$};
+  \node[font=\scriptsize,black!60] at (10.5,-1.05) {leaves};
+  \begin{scope}[yshift=-3.1cm]
+  \node[anchor=south west] at (-0.62,1.0) {\textbf{magnetized plasma}: the two parts are the two circular polarizations};
+  \bx{0}{0}{\draw[formblue,line width=1.4pt] (-0.4,-0.4) -- (0.4,0.4); \fill[black] (0.4,0.4) circle (1.6pt);}
+  \sym{0.95}{0}{$=$}
+  \bx{1.9}{0}{\draw[tangentgreen,line width=1.2pt] (0,0) circle (0.42); \draw[tangentgreen,line width=1.2pt,-{Stealth[length=4pt,width=4pt]}] (150:0.42) arc (150:200:0.42); \fill[black] (45:0.42) circle (1.6pt);}
+  \sym{2.85}{0}{$+$}
+  \bx{3.8}{0}{\draw[fibreorange,line width=1.2pt] (0,0) circle (0.42); \draw[fibreorange,line width=1.2pt,-{Stealth[length=4pt,width=4pt]}] (200:0.42) arc (200:150:0.42); \fill[black] (45:0.42) circle (1.6pt);}
+  \draw[->,softgray,thick] (4.6,0) -- (5.9,0) node[midway,above,font=\scriptsize,black!60,align=center] {through\\[-2pt]the plasma};
+  \bx{6.7}{0}{\draw[tangentgreen,line width=1.2pt] (0,0) circle (0.42); \draw[tangentgreen,line width=1.2pt,-{Stealth[length=4pt,width=4pt]}] (150:0.42) arc (150:200:0.42); \fill[black] (-15:0.42) circle (1.6pt);
+             \draw[black!30] (0,0) -- (45:0.42); \draw[black!60,-{Stealth[length=3pt,width=3pt]}] (45:0.3) arc (45:-15:0.3);}
+  \sym{7.65}{0}{$+$}
+  \bx{8.6}{0}{\draw[fibreorange,line width=1.2pt] (0,0) circle (0.42); \draw[fibreorange,line width=1.2pt,-{Stealth[length=4pt,width=4pt]}] (200:0.42) arc (200:150:0.42); \fill[black] (45:0.42) circle (1.6pt);}
+  \sym{9.55}{0}{$=$}
+  \bx{10.5}{0}{\draw[formblue,line width=1.4pt] (195:0.45) -- (15:0.45); \fill[black] (15:0.45) circle (1.6pt);
+              \draw[black!40,densely dotted] (-0.4,-0.4) -- (0.4,0.4);}
+  \node[font=\scriptsize,black!60] at (0,-1.05) {enters};
+  \node[font=\scriptsize,black!60] at (1.9,-1.05) {$\bm e_+$, index $n_+$};
+  \node[font=\scriptsize,black!60] at (3.8,-1.05) {$\bm e_-$, index $n_-$};
+  \node[font=\scriptsize,black!60] at (6.7,-1.05) {ahead by $\Delta$};
+  \node[font=\scriptsize,black!60] at (10.5,-1.05) {turned by $\Delta/2$};
+  \end{scope}
 \end{tikzpicture}
-\caption{What a birefringent medium does, in three stages. A wave enters linearly polarized at $45^\circ$. Inside, it is a sum of the medium's two eigen-polarizations, which travel at different speeds and drift apart in phase. In a crystal these are two straight lines, along $x$ and $y$, and the recombined wave is an ellipse. In a magnetized plasma they are the two circular polarizations, and the recombined wave is again a straight line, turned by half the phase difference (the dotted line is the entering direction).}
+\caption{What a birefringent medium does: split the wave into the two polarizations that keep their shape, let them drift
+apart in phase, and add them up again. The dot in each box is the tip of that part of the field at one instant. Top: in a
+crystal the parts are oscillations along $x$ and $y$; they enter in step, so their sum is the $45^\circ$ line, and after
+the crystal the $y$ part lags by $\delta$ (its dot has not yet reached the end when the $x$ dot has),
+so the sum traces an ellipse instead of a line. Bottom: in a magnetized plasma the parts are the two
+circular polarizations turning in opposite senses; their sum is a straight line pointing midway between the two dots. One
+part gets ahead by $\Delta$, the midway direction moves by $\Delta/2$, and the line leaves turned by $\Delta/2$
+(dotted: the entering direction).}
 \label{T1c:fig:lorentz-scheme}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small,>=Stealth,scale=1.12,every node/.style={transform shape}]
+  \def\lsframe#1#2#3{\begin{scope}[shift={(#1,#2)}]\begin{scope}[x={(0.72cm,0.32cm)},y={(0cm,1cm)}]
+    \fill[white,fill opacity=0.85] (-0.6,-0.6) -- (0.6,-0.6) -- (0.6,0.6) -- (-0.6,0.6) -- cycle;
+    \draw[black!35,fill=black!4,fill opacity=0.8] (-0.6,-0.6) -- (0.6,-0.6) -- (0.6,0.6) -- (-0.6,0.6) -- cycle;
+    \draw[black!18] (-0.55,0) -- (0.55,0) (0,-0.55) -- (0,0.55); #3 \end{scope}\end{scope}}
+  \def\lspol#1{\draw[formblue,line width=1.1pt,domain=0:360,samples=80,smooth,variable=\t]
+    plot ({0.45*cos(\t)},{0.45*cos(\t-#1)});}
+  \def\lsstick#1{\draw[black!45,densely dotted] (-0.34,-0.34) -- (0.34,0.34);
+    \draw[fibreorange,line width=1.4pt] ({-0.5*cos(#1)},{-0.5*sin(#1)}) -- ({0.5*cos(#1)},{0.5*sin(#1)});}
+  \def\beam#1{\draw[black!30,line width=0.6pt] (-0.9,#1) -- (9.0,#1); \draw[->,black!30,line width=0.6pt] (8.8,#1) -- (9.1,#1);}
+  \node[anchor=south west] at (-0.55,1.15) {\textbf{crystal} \footnotesize(eigen-polarizations: two straight lines)};
+  \fill[black!7] (0.85,-0.95) rectangle (7.25,0.95);
+  \beam{0}
+  \lsframe{0}{0}{\lspol{0} \node[font=\scriptsize,black!60] at (0.82,-0.12) {$x$}; \node[font=\scriptsize,black!60] at (-0.1,0.78) {$y$};}
+  \foreach \i/\d in {0/0,1/45,2/90,3/135,4/180} {\lsframe{1.4+1.4*\i}{0}{\lspol{\d}}}
+  \lsframe{8.4}{0}{\lspol{180}}
+  \foreach \i/\lab in {0/{$\delta=0$},1/{$\pi/4$},2/{$\pi/2$},3/{$3\pi/4$},4/{$\pi$}}
+    \node[font=\scriptsize,black!60] at (1.4+1.4*\i,-1.15) {\lab};
+  \node[font=\scriptsize,black!60] at (0,-1.15) {enters};
+  \node[font=\scriptsize,black!60] at (8.4,-1.15) {leaves};
+  \node[formblue,anchor=west,align=left,font=\footnotesize] at (9.4,0)
+    {line $\to$ ellipse $\to$ circle\\[-2pt]$\to$ other diagonal:\\[-2pt]the shape changes,\\[-2pt]never turned};
+  \begin{scope}[yshift=-3.9cm]
+  \node[anchor=south west] at (-0.55,1.75) {\textbf{magnetized plasma} \footnotesize(eigen-polarizations: two circles)};
+  \fill[black!7] (0.85,-0.95) rectangle (7.25,0.95);
+  \draw[->,bdryred,thick] (1.0,1.3) -- (7.1,1.3) node[midway,above,font=\footnotesize] {magnetic field along the beam};
+  \beam{0}
+  \lsframe{0}{0}{\lsstick{45}}
+  \foreach \i/\a in {0/45,1/30,2/15,3/0,4/-15} {\lsframe{1.4+1.4*\i}{0}{\lsstick{\a}}}
+  \lsframe{8.4}{0}{\lsstick{-15}}
+  \foreach \i/\lab in {0/{$\Delta=0$},1/{$\Delta/2=15^\circ$},2/{$30^\circ$},3/{$45^\circ$},4/{$60^\circ$}}
+    \node[font=\scriptsize,black!60] at (1.4+1.4*\i,-1.15) {\lab};
+  \node[fibreorange,anchor=west,align=left,font=\footnotesize] at (9.4,0)
+    {stays a line,\\[-2pt]turns steadily:\\[-2pt]a rotation};
+  \end{scope}
+  \draw[->,black!55] (-0.55,-5.35) -- (9.0,-5.35) node[right,font=\footnotesize] {beam travels};
+\end{tikzpicture}
+\caption{The same two media followed step by step along the beam, for a wave that enters linearly polarized at $45^\circ$. Each tilted frame is the plane at right angles to the beam at one depth inside
+the medium (shaded), and shows the curve traced there by the tip of the electric field. In a crystal the two waves that keep their shape
+are straight lines along $x$ and $y$; as they drift apart in phase by $\delta$, the line opens into an ellipse, then a circle, then
+closes again along the other diagonal, but it is never turned. In a magnetized plasma the two waves that keep their shape are the
+two circular polarizations; as they drift apart by $\Delta$, the wave stays a straight line and turns steadily, by $\Delta/2$
+(dotted: the entering direction).}
+\label{T1c:fig:lorentz-snapshots}
 \end{figure}
 
 \paragraph{Case A: a crystal.} Let the springs have different stiffness along $x$ and $y$, $\Omega_0^2=\mathrm{diag}(\omega_{0x}^2,\omega_{0y}^2,\omega_{0z}^2)$, with no magnetic field and no friction. Every matrix in \eqref{T1c:eq:lorentz-chi} is then diagonal, and so is
@@ -2260,28 +2329,53 @@ U\eqby{4}2\cdot\tfrac12E_0^2\cos(0-\delta)=E_0^2\cos\delta .
 \end{explain}
 The tip of the real field traces $E_x\propto\cos\omega t$, $E_y\propto\cos(\omega t-\delta)$: a line for $\delta=0$, an ellipse with its axes along the two diagonals, a circle at $\delta=\pi/2$, and a line along the other diagonal at $\delta=\pi$ (\cref{T1c:fig:lorentz}(a)). $Q$ stays zero and the linear polarization $\abs U=E_0^2\abs{\cos\delta}$ shrinks and comes back, while the circular part $V$, set aside since \cref{T1c:sec:stokes}, grows as $\sin\delta$. The stick is never turned; the light becomes partly circular. Even the plate with $\delta=\pi$ that sends the $45^\circ$ line to $-45^\circ$ is not a rotation: it sends a stick at $\psi$ from the $x$ axis to $-\psi$, so a stick at $10^\circ$ goes to $-10^\circ$ and one at $30^\circ$ to $-30^\circ$. That is a mirror in the $x$ axis, not the same turn for every stick.
 
-\paragraph{Case B: electrons in a magnetic field.} Now let the springs be equally stiff in every direction, $\Omega_0^2=\omega_0^2\Id$, and put a steady field $\bm B_0=B_0\hat{\bm z}$ along the direction of the wave. The magnetic force on the moving charge, with $\dot{\bm r}=-i\omega\bm r$ and $\bm r\times\hat{\bm z}=(y,-x,0)$, is $q\dot{\bm r}\times\bm B_0=-i\omega qB_0\,(y,-x,0)$. It pushes $x$ with $y$ and $y$ with $-x$. The transverse rows of \eqref{T1c:eq:lorentz-eom} become
-\begin{equation}
-M\begin{pmatrix}x\\y\end{pmatrix}=\frac qm\begin{pmatrix}E_x\\E_y\end{pmatrix},
-\qquad
-M=\begin{pmatrix}a&i\omega\omega_c\\-i\omega\omega_c&a\end{pmatrix},
-\qquad a\equiv\omega_0^2-\omega^2-i\omega\gamma,\qquad \omega_c\equiv\frac{qB_0}m,
-\label{T1c:eq:lorentz-b}
-\end{equation}
-where $\omega_c$ is the \newterm{cyclotron frequency}, the rate at which the charge would circle the field line, with a sign set by the charge and the direction of the field. The magnetic field has added off-diagonal entries with opposite signs, an antisymmetric part, which a crystal cannot produce because its spring matrix is symmetric. \emph{Which vectors does $M$ leave in their own direction?} Try the helicity vectors $\bm e_\pm=(\hat{\bm x}\pm i\hat{\bm y})/\sqrt2$ of \eqref{T1c:eq:helicity}:
+\paragraph{Case B: electrons in a magnetic field.} Now let the springs be equally stiff in every direction, $\Omega_0^2=\omega_0^2\Id$, and put a steady field $\bm B_0=B_0\hat{\bm z}$ along the direction of the wave. The only new force in \eqref{T1c:eq:lorentz-eom} is the magnetic one, $q\,\dot{\bm r}\times\bm B_0=qB_0\,(\dot y,\,-\dot x,\,0)$: a charge moving along $x$ is pushed along $-y$, one moving along $y$ is pushed along $+x$. The field therefore \emph{couples} the two directions: the motion along $y$ feeds the equation for $x$, and the motion along $x$ feeds the equation for $y$.
+
+\emph{The two equations, written out.} Insert the oscillating forms $\bm r e^{-i\omega t}$ and $\bm E e^{-i\omega t}$ as before, so that $\dot x\to-i\omega x$ and $\dot y\to-i\omega y$. The $x$ and $y$ rows of \eqref{T1c:eq:lorentz-eom} become
 \begin{align}
-M\bm e_\pm&\eqby{1}\frac1{\sqrt2}\begin{pmatrix}a+i\omega\omega_c(\pm i)\\-i\omega\omega_c+a(\pm i)\end{pmatrix}
-\eqby{2}\frac1{\sqrt2}\begin{pmatrix}a\mp\omega\omega_c\\\pm i(a\mp\omega\omega_c)\end{pmatrix}
-\eqby{3}(a\mp\omega\omega_c)\,\bm e_\pm,
+-m\omega^2x&\eqby{1}-m\omega_0^2x+im\gamma\omega\,x+qE_x+qB_0(-i\omega y),
 \nonumber\\
-n_\pm^2&\eqby{4}1+\frac{\omega_p^2}{\omega_0^2-\omega^2\mp\omega\omega_c}\qquad(\gamma=0).
+-m\omega^2y&\eqby{2}-m\omega_0^2y+im\gamma\omega\,y+qE_y-qB_0(-i\omega x),
+\nonumber\\
+a\,x+i\omega\omega_c\,y&\eqby{3}\frac qmE_x,
+\qquad
+-i\omega\omega_c\,x+a\,y\eqby{3}\frac qmE_y,
+\qquad a\equiv\omega_0^2-\omega^2-i\omega\gamma,\qquad \omega_c\equiv\frac{qB_0}m,
+\nonumber\\
+M\begin{pmatrix}x\\y\end{pmatrix}&\eqby{4}\frac qm\begin{pmatrix}E_x\\E_y\end{pmatrix},
+\qquad
+M=\begin{pmatrix}a&i\omega\omega_c\\-i\omega\omega_c&a\end{pmatrix}.
+\label{T1c:eq:lorentz-b}
+\end{align}
+\begin{explain}
+  \item The $x$ component: spring, friction and electric force as in Case A, plus the $x$ component of the magnetic force, $qB_0\dot y$ with $\dot y=-i\omega y$.
+  \item The $y$ component: the same, plus the $y$ component of the magnetic force, $-qB_0\dot x$ with $\dot x=-i\omega x$.
+  \item Move every term with $x$ or $y$ to the left and divide by $m$. In the first equation $-qB_0(-i\omega y)/m$ on the left is $+i\omega\omega_c\,y$; in the second, $+qB_0(-i\omega x)/m$ on the left is $-i\omega\omega_c\,x$.
+  \item Write the two equations as one matrix equation: the first equation is the first row of $M$, the second is the second row.
+\end{explain}
+Without the field ($\omega_c=0$) $M$ is $a$ times the unit matrix and $x$ and $y$ answer separately. The field adds two off-diagonal entries of opposite sign, an antisymmetric part, which a crystal cannot produce because its spring matrix is symmetric. The quantity $\omega_c$ is the \newterm{cyclotron frequency}, the rate at which the charge would circle the field line; its sign is set by the charge and the direction of the field.
+
+\emph{Which polarizations keep their shape?} They are the eigenvectors of $M$, because $\chi=\omega_p^2M^{-1}$ by \eqref{T1c:eq:lorentz-chi} and a matrix and its inverse share their eigenvectors. Find them the standard way, from the eigenvalues:
+\begin{align}
+\det(M-\lambda\Id)&\eqby{1}(a-\lambda)^2-(i\omega\omega_c)(-i\omega\omega_c)
+\eqby{2}(a-\lambda)^2-\omega^2\omega_c^2=0
+\quad\Rightarrow\quad \lambda_\pm\eqby{3}a\mp\omega\omega_c,
+\nonumber\\
+(M-\lambda_\pm\Id)\begin{pmatrix}1\\s\end{pmatrix}
+&\eqby{4}\begin{pmatrix}\pm\omega\omega_c+i\omega\omega_c\,s\\-i\omega\omega_c\pm\omega\omega_c\,s\end{pmatrix}=0
+\quad\Rightarrow\quad s\eqby{5}\pm i,
+\qquad \bm e_\pm=\frac{\hat{\bm x}\pm i\hat{\bm y}}{\sqrt2},
+\nonumber\\
+n_\pm^2&\eqby{6}1+\frac{\omega_p^2}{\omega_0^2-\omega^2\mp\omega\omega_c}\qquad(\gamma=0).
 \label{T1c:eq:case-b}
 \end{align}
 \begin{explain}
-  \item Multiply the matrix into the column $(1,\pm i)/\sqrt2$.
-  \item In the first entry $i\cdot(\pm i)=\mp1$; in the second, $-i\omega\omega_c=\pm i\,(\mp\omega\omega_c)$ because $(\pm i)(\mp1)=-i$.
-  \item Both entries are $(a\mp\omega\omega_c)$ times the entries of $\bm e_\pm$.
-  \item $\chi=\omega_p^2M^{-1}$ by \eqref{T1c:eq:lorentz-chi}; the inverse of a matrix has the same eigenvectors and the inverse eigenvalues, so $\varepsilon_{r\perp}=\Id+\chi$ has eigenvalues $1+\omega_p^2/(a\mp\omega\omega_c)$.
+  \item The determinant of a $2\times2$ matrix: product of the diagonal minus product of the off-diagonal entries.
+  \item $(i)(-i)=1$.
+  \item $(a-\lambda)^2=\omega^2\omega_c^2$, so $a-\lambda=\pm\omega\omega_c$.
+  \item Apply $M-\lambda_\pm\Id$, whose diagonal entries are $a-\lambda_\pm=\pm\omega\omega_c$, to a vector with first entry $1$ and second entry $s$.
+  \item The first row gives $\pm1+is=0$, so $s=\pm i$; the second row gives the same. Normalised, the eigenvectors are exactly the helicity vectors of \eqref{T1c:eq:helicity}.
+  \item $\varepsilon_{r\perp}=\Id+\omega_p^2M^{-1}$ has eigenvalues $1+\omega_p^2/\lambda_\pm$ on these same vectors, and these are $n_\pm^2$ by \eqref{T1c:eq:eigen}.
 \end{explain}
 The two waves that keep their shape are the two helicities, with different indices $n_+\ne n_-$ as soon as $\omega_c\ne0$. This is \newterm{circular birefringence}. \emph{What happens to a linear polarization?} By \eqref{T1c:eq:helicity}, a stick at angle $\psi$ is the equal mixture $(e^{-i\psi}\bm e_++e^{i\psi}\bm e_-)/\sqrt2$. After a length $L$ each helicity has picked up its own phase $\phi_\pm=n_\pm\omega L/c$, and with $\Delta\equiv\phi_+-\phi_-$ and $\bar\phi\equiv\frac12(\phi_++\phi_-)$,
 \begin{align}
@@ -2324,7 +2418,26 @@ The index difference falls as $\omega^{-3}$, the path in wavelengths grows as $\
 \end{equation}
 the standard rotation measure, which is what \cite{KosowskyLoeb1996} evaluate for a primordial field. The $\lambda^2$ law is the high-frequency limit. \Cref{T1c:fig:lorentz}(c) compares it with the exact indices of \eqref{T1c:eq:case-b} for a plasma with $\omega_c=0.2\,\omega_p$: at ten times the plasma frequency the exact angle exceeds the law by $\TOneCFarDevTen\%$, at three times by $\TOneCFarDevThree\%$, and near the plasma frequency the law fails. For the CMB, more than a million times above the plasma frequency of the gas it crosses, the law is exact for all practical purposes.
 
-\paragraph{Case C: cosmic birefringence.} The medium is now empty space filled with the slowly changing pseudoscalar field $\phi$ of \eqref{T1c:eq:beta-phi}. With the coupling $\frac14g_{\phi\gamma}\phi F_{\mu\nu}\tilde F^{\mu\nu}$, Maxwell's equations again have the two helicities as the waves that keep their shape, and again give them different phases. The difference is how that phase depends on frequency. For a field changing in time at the rate $\dot\phi$, the two helicities with the same wavenumber have frequencies that differ by $g_{\phi\gamma}\dot\phi$, the same amount for every wavelength \cite{CarrollFieldJackiw1990,Carroll1998}. Equivalently, at one frequency their wavenumbers differ by a fixed amount. Over the journey from last scattering the phase difference adds up to $g_{\phi\gamma}(\phi_{\mathrm{obs}}-\phi_{\mathrm{LSS}})$, and by \eqref{T1c:eq:case-b-turn} the plane turns by half of it, which is the twist $\beta$ of \eqref{T1c:eq:beta-phi} (its sign depends on the conventions for $g_{\phi\gamma}$ and for the angle). In Faraday rotation the splitting of the two indices, $n_+-n_-\propto\omega^{-3}$, falls faster than the path in wavelengths grows, and the angle goes as $\lambda^2$; here the splitting of the wavenumbers is a constant, $n_+-n_-\propto\omega^{-1}$, which exactly cancels the growth of the path in wavelengths, and the angle is the same at every frequency. This is the difference between the Faraday row and the birefringence row of the table in \cref{T1c:sec:table}, a $\lambda^2$ law against a constant, and it is the reason the colour test of \cref{T1c:fig:frequency}(b) can separate them.
+\paragraph{Case C: cosmic birefringence.} The medium is now empty space filled with the slowly changing pseudoscalar field $\phi$ of \eqref{T1c:eq:beta-phi}. With the coupling $\frac14g_{\phi\gamma}\phi F_{\mu\nu}\tilde F^{\mu\nu}$, Maxwell's equations again have the two helicities as the waves that keep their shape, and again give them different phases. The difference is how that phase depends on frequency. For a field changing in time at the rate $\dot\phi$, the two helicities with the same wavenumber have frequencies that differ by $g_{\phi\gamma}\dot\phi$, the same amount for every wavelength \cite{CarrollFieldJackiw1990,Carroll1998}. Equivalently, at one frequency their wavenumbers differ by a fixed amount. Over the journey from last scattering the phase difference adds up to $g_{\phi\gamma}(\phi_{\mathrm{obs}}-\phi_{\mathrm{LSS}})$, and by \eqref{T1c:eq:case-b-turn} the plane turns by half of it, which is the twist $\beta$ of \eqref{T1c:eq:beta-phi} (its sign depends on the conventions for $g_{\phi\gamma}$ and for the angle). In Faraday rotation the splitting of the two indices, $n_+-n_-\propto\omega^{-3}$, falls faster than the path in wavelengths grows, and the angle goes as $\lambda^2$; here the splitting of the wavenumbers is a constant, $n_+-n_-\propto\omega^{-1}$, which exactly cancels the growth of the path in wavelengths, and the angle is the same at every frequency. This is the difference between the Faraday row and the birefringence row of the table in \cref{T1c:sec:table}, a $\lambda^2$ law against a constant, and it is the reason the colour test of \cref{T1c:fig:frequency}(b) can separate them. \Cref{T1c:fig:colour-turn} shows the two cases side by side for two colours.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small,>=Stealth,scale=1.15,every node/.style={transform shape}]
+  \def\cframe#1#2#3#4{\begin{scope}[shift={(#2,0)}]
+    \fill[black!3] (-1.1,-1.1) rectangle (1.1,1.1); \draw[black!25] (-1.1,-1.1) rectangle (1.1,1.1);
+    \draw[black!40,densely dotted,line width=0.8pt] (-0.9,0) -- (0.9,0);
+    \draw[formblue,line width=1.6pt] ({-0.9*cos(#3)},{-0.9*sin(#3)}) -- ({0.9*cos(#3)},{0.9*sin(#3)});
+    \draw[bdryred,line width=1.6pt,#1] ({-0.9*cos(#4)},{-0.9*sin(#4)}) -- ({0.9*cos(#4)},{0.9*sin(#4)});
+    \draw[->,formblue] (1.0,0) arc (0:#3:1.0); \draw[->,bdryred] (0.75,0) arc (0:#4:0.75);
+    \end{scope}}
+  \cframe{}{0}{12}{48}
+  \node[anchor=north,align=center] at (0,-1.25) {(a) Faraday rotation\\[-1pt]\footnotesize red light (twice the wavelength)\\[-1pt]\footnotesize turns four times as far: $\propto\lambda^2$};
+  \cframe{dash pattern=on 5pt off 4pt}{4.2}{25}{25}
+  \node[anchor=north,align=center] at (4.2,-1.25) {(b) cosmic birefringence\\[-1pt]\footnotesize every colour turns\\[-1pt]\footnotesize by the same angle $\beta$};
+\end{tikzpicture}
+\caption{Two colours of light, both entering linearly polarized along the dotted line, after crossing (a) a magnetized plasma and (b) the pseudoscalar field of cosmic birefringence. Blue is the shorter wavelength, red the wavelength twice as long. In (a) the red line turns four times as far as the blue, because the Faraday angle grows as $\lambda^2$. In (b) the two lines lie on top of each other (red dashed over blue): the angle $\beta$ is the same at every wavelength.}
+\label{T1c:fig:colour-turn}
+\end{figure}
 
 \begin{figure}[htbp]
 \centering
