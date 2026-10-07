@@ -1333,6 +1333,9 @@ The lesson of the two experiments for the rest of the book is in two parts. The 
 \providecommand{\TOneCRhoThreeFiftyThree}{}\renewcommand{\TOneCRhoThreeFiftyThree}{-0.924}
 \providecommand{\TOneCSigSumThreeFiftyThree}{}\renewcommand{\TOneCSigSumThreeFiftyThree}{0.271}
 \providecommand{\TOneCDustRatioFish}{}\renewcommand{\TOneCDustRatioFish}{549}
+\providecommand{\TOneCFarDevThree}{}\renewcommand{\TOneCFarDevThree}{6.6}
+\providecommand{\TOneCFarDevTen}{}\renewcommand{\TOneCFarDevTen}{0.54}
+\providecommand{\TOneCRMconst}{}\renewcommand{\TOneCRMconst}{0.812}
  
 \section{Polarization: sticks on the sky, and two kinds of pattern}
 \label{T1c:sec:eb}
@@ -1554,12 +1557,170 @@ Four of the six spectra survive the mirror, and two, $EB$ and $TB$, change sign.
 Under a mirror $T$ and $E$ keep their sign and $B$ reverses. A universe whose laws are mirror symmetric therefore has $C_\ell^{EB}=C_\ell^{TB}=0$ on average. A nonzero $EB$ or $TB$ on the sky means that something between the emission and our detector picked a hand: a twist of the polarization by new physics, a twist by our own instrument, or a source whose own structure is handed.
 \end{keyidea}
 
+\subsection{The same mirror, written with matrices}
+\label{T1c:sec:parity-matrix}
+
+The mirror of \cref{T1c:sec:parity} was worked out by following one stick: its angle $\psi$ became $-\psi$, so $Q=P\cos2\psi$ stayed and $U=P\sin2\psi$ flipped. The same answer comes out of a short matrix calculation, and that calculation does more: it applies unchanged to the strain of a gravitational wave, and it shows which statements about even and odd are properties of a pattern and which are properties of the axes we happened to choose.
+
+\emph{The mirror as a matrix.} Put the line of sight along $z$ and the two sky axes $\bm e_1,\bm e_2$ along $x$ and $y$. The mirror $\theta_2\to-\theta_2$ is the reflection $(x,y,z)\to(x,-y,z)$, which acts on the components of any arrow as the matrix
+\begin{equation}
+\mathsf P_T=\begin{pmatrix}1&0&0\\0&-1&0\\0&0&1\end{pmatrix},
+\qquad \mathsf P_T^{\mathsf T}=\mathsf P_T,\qquad \mathsf P_T^2=\Id .
+\label{T1c:eq:pt}
+\end{equation}
+The subscript $T$ says that it reflects a transverse direction, across the line of sight, and leaves the direction of travel alone. Reflecting twice changes nothing, which is $\mathsf P_T^2=\Id$.
+
+\emph{How does a tensor feel the mirror?} The simplest tensor is a product of two arrows. Take the electric field of a wave, an arrow with components $E_a$, and form the table of products $T_{ab}=\langle E_aE_b\rangle$. In the mirror every arrow becomes $\bm E'=\mathsf P_T\bm E$, so
+\begin{align}
+T'_{ab}&\eqby{1}\langle E'_aE'_b\rangle
+\eqby{2}\sum_{c,d}(\mathsf P_T)_{ac}(\mathsf P_T)_{bd}\,\langle E_cE_d\rangle
+\eqby{3}\bigl(\mathsf P_T\,T\,\mathsf P_T^{\mathsf T}\bigr)_{ab},
+\nonumber\\
+T'_{ab}&\eqby{4}s_as_b\,T_{ab},\qquad (s_x,s_y,s_z)=(1,-1,1).
+\label{T1c:eq:tensor-mirror}
+\end{align}
+\begin{explain}
+  \item The mirrored table is built from the mirrored arrow.
+  \item Write each component of $\bm E'=\mathsf P_T\bm E$ as a sum, $E'_a=\sum_c(\mathsf P_T)_{ac}E_c$; the matrix entries are fixed numbers and come out of the average.
+  \item The double sum is the matrix product, with the second factor transposed because its index $b$ sits on the left of $(\mathsf P_T)_{bd}$.
+  \item $\mathsf P_T$ is diagonal with entries $s_a$, so only $c=a$ and $d=b$ survive.
+\end{explain}
+The rule $T'=\mathsf P_TT\mathsf P_T^{\mathsf T}$ holds for every two-index object that turns like a product of two arrows, which includes the strain of space. The last line says it in words: an entry keeps its sign if it carries an even number of $y$ indices and flips if it carries one.
+
+\paragraph{Example: the two polarizations of a gravitational wave.} A gravitational wave travelling along $z$ stretches and squeezes space across its direction of travel. Its strain is $h_{ij}=h_+e^+_{ij}+h_\times e^\times_{ij}$, with the two polarization tensors
+\begin{equation}
+e^+=\begin{pmatrix}1&0&0\\0&-1&0\\0&0&0\end{pmatrix},
+\qquad
+e^\times=\begin{pmatrix}0&1&0\\1&0&0\\0&0&0\end{pmatrix}.
+\label{T1c:eq:gw-tensors}
+\end{equation}
+The $+$ state stretches along $x$ while it squeezes along $y$; the $\times$ state does the same along the two diagonals (see the cosmology notes). In the mirror,
+\begin{align}
+\mathsf P_T\,e^+\,\mathsf P_T^{\mathsf T}
+&\eqby{1}\begin{pmatrix}1\cdot1\cdot1&0&0\\0&(-1)(-1)(-1)&0\\0&0&0\end{pmatrix}
+=\begin{pmatrix}1&0&0\\0&-1&0\\0&0&0\end{pmatrix}=e^+,
+\nonumber\\
+\mathsf P_T\,e^\times\,\mathsf P_T^{\mathsf T}
+&\eqby{2}\begin{pmatrix}0&(1)(1)(-1)&0\\(-1)(1)(1)&0&0\\0&0&0\end{pmatrix}
+=-e^\times,
+\nonumber\\
+\begin{pmatrix}h_+\\h_\times\end{pmatrix}
+&\eqby{3}\begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}h_+\\h_\times\end{pmatrix}.
+\label{T1c:eq:gw-mirror}
+\end{align}
+\begin{explain}
+  \item \eqref{T1c:eq:tensor-mirror} entry by entry: each diagonal entry $e^+_{aa}$ is multiplied by $s_a^2=1$, so nothing changes.
+  \item The only nonzero entries of $e^\times$ are $xy$ and $yx$, and each carries one $y$ index, so each is multiplied by $s_xs_y=-1$.
+  \item The mirrored strain is $h_+e^+-h_\times e^\times$: written in the same two tensors, the mirror keeps the amount $h_+$ and reverses the amount $h_\times$.
+\end{explain}
+\Cref{T1c:fig:parity-matrix} shows why. A ring of free particles squeezed into an ellipse along $x$ looks the same in a mirror that flips $y$. An ellipse along the diagonal from lower left to upper right turns, in that mirror, into an ellipse along the other diagonal, which is the $\times$ pattern with the opposite sign.
+
+\paragraph{Example: the Stokes numbers as a tensor.} The polarization of the microwave light is a two-index object too. The field across the line of sight has the two complex components $E_1=a_1e^{i\theta_1}$ and $E_2=a_2e^{i\theta_2}$ of \eqref{T1c:eq:stokes}. The real part of the table of averages $\langle E_aE_b^*\rangle$ is
+\begin{align}
+\mathrm{Re}\begin{pmatrix}\langle E_1E_1^*\rangle&\langle E_1E_2^*\rangle\\ \langle E_2E_1^*\rangle&\langle E_2E_2^*\rangle\end{pmatrix}
+&\eqby{1}\begin{pmatrix}\langle a_1^2\rangle&\langle a_1a_2\cos(\theta_1-\theta_2)\rangle\\ \langle a_1a_2\cos(\theta_1-\theta_2)\rangle&\langle a_2^2\rangle\end{pmatrix}
+\eqby{2}\frac12\begin{pmatrix}I+Q&U\\U&I-Q\end{pmatrix}
+\nonumber\\
+&\eqby{3}\frac I2\,\Id+\mathcal P,
+\qquad
+\mathcal P\equiv\frac12\begin{pmatrix}Q&U\\U&-Q\end{pmatrix}
+\eqby{4}\frac Q2\,e^++\frac U2\,e^\times .
+\label{T1c:eq:stokes-tensor}
+\end{align}
+\begin{explain}
+  \item $E_aE_b^*=a_aa_be^{i(\theta_a-\theta_b)}$, whose real part is $a_aa_b\cos(\theta_a-\theta_b)$; on the diagonal the phases cancel.
+  \item The definitions \eqref{T1c:eq:stokes}: $\langle a_1^2\rangle=\frac12(I+Q)$, $\langle a_2^2\rangle=\frac12(I-Q)$, and $\langle a_1a_2\cos(\theta_1-\theta_2)\rangle=\frac12U$.
+  \item Split off the part proportional to the unit matrix; what is left has zero trace.
+  \item Compare entry by entry with the $2\times2$ blocks of \eqref{T1c:eq:gw-tensors} that lie across the line of sight.
+\end{explain}
+(The imaginary part of the table, which is antisymmetric, holds the circular polarization $V$ that Thomson scattering does not produce.) The traceless part $\mathcal P_{ab}$ is built from $e^+$ and $e^\times$ exactly as the strain is, with $Q/2$ in place of $h_+$ and $U/2$ in place of $h_\times$. So the calculation \eqref{T1c:eq:gw-mirror} can be copied line by line: the mirror sends $(Q,U)\to(Q,-U)$ at the mirrored point, and the unit-matrix part, the intensity $I$, does not change. This is what the stick argument of \cref{T1c:sec:parity} found.
+
+\paragraph{Example: $E$ and $B$.} By \eqref{T1c:eq:eb-flat}, $E$ and $B$ are $Q$ and $U$ turned through the angle $2\varphi_{\bm\ell}$ of each wavevector:
+\begin{equation}
+\begin{pmatrix}E\\B\end{pmatrix}(\bm\ell)=R(-2\varphi_{\bm\ell})\begin{pmatrix}Q\\U\end{pmatrix}(\bm\ell),
+\qquad
+R(\vartheta)\equiv\begin{pmatrix}\cos\vartheta&-\sin\vartheta\\ \sin\vartheta&\cos\vartheta\end{pmatrix}.
+\label{T1c:eq:eb-matrix}
+\end{equation}
+Write $D=\mathrm{diag}(1,-1)$ for the action of the mirror on the pair $(Q,U)$. The mirror does two things to a wave: it flips $U$, and it turns the wavevector $\bm\ell$ into $\bar{\bm\ell}=(\ell_1,-\ell_2)$, whose angle is $\varphi_{\bar{\bm\ell}}=-\varphi_{\bm\ell}$. Then
+\begin{align}
+\begin{pmatrix}E^{\mathrm M}\\B^{\mathrm M}\end{pmatrix}(\bm\ell)
+&\eqby{1}R(-2\varphi_{\bm\ell})\,D\begin{pmatrix}Q\\U\end{pmatrix}(\bar{\bm\ell})
+\eqby{2}D\,R(2\varphi_{\bm\ell})\begin{pmatrix}Q\\U\end{pmatrix}(\bar{\bm\ell})
+\nonumber\\
+&\eqby{3}D\,R(-2\varphi_{\bar{\bm\ell}})\begin{pmatrix}Q\\U\end{pmatrix}(\bar{\bm\ell})
+\eqby{4}D\begin{pmatrix}E\\B\end{pmatrix}(\bar{\bm\ell}).
+\label{T1c:eq:eb-mirror-matrix}
+\end{align}
+\begin{explain}
+  \item \eqref{T1c:eq:eb-matrix} applied to the mirrored maps, whose Fourier coefficients at $\bm\ell$ are $Q(\bar{\bm\ell})$ and $-U(\bar{\bm\ell})$.
+  \item A reflection followed by a turn equals the opposite turn followed by the reflection, $R(\vartheta)D=DR(-\vartheta)$. Check it by multiplying: both sides equal $\begin{pmatrix}\cos\vartheta&\sin\vartheta\\ \sin\vartheta&-\cos\vartheta\end{pmatrix}$.
+  \item $2\varphi_{\bm\ell}=-2\varphi_{\bar{\bm\ell}}$.
+  \item \eqref{T1c:eq:eb-matrix} again, now at the wavevector $\bar{\bm\ell}$.
+\end{explain}
+$E$ and $B$ transform with the same matrix $D$ as $(Q,U)$ and $(h_+,h_\times)$: $E$ is even and $B$ is odd. This is \eqref{T1c:eq:mirror} in two lines. The reason it works is visible in step 2: the mirror flips $U$ and also flips the angle of the wave, and the two flips meet so that $E$ and $B$ come out with $D$ again.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+  \tikzset{ring/.style={faint,dashed}, pt/.style={fill=formblue}}
+  \node[font=\small,anchor=east] at (-1.1,0) {before};
+  \node[font=\small,anchor=east,align=right] at (-1.1,-2.7) {in the mirror\\$y\to-y$};
+  \foreach \y/\ra/\rb/\sa/\sb/\la/\lb/\lc/\ld in
+     {0/0/45/0/45/{$h_+$}/{$h_\times$}/{$Q$}/{$U$},
+      -2.7/0/-45/0/-45/{$h_+$: same}/{$-h_\times$}/{$Q$: same}/{$-U$}}{
+    \begin{scope}[yshift=\y cm]
+      \draw[ring] (0,0) circle (0.62);
+      \draw[thick,formblue,rotate=\ra] (0,0) ellipse (0.82 and 0.45);
+      \foreach \t in {0,45,...,315}{\fill[formblue,rotate=\ra] ({0.82*cos(\t)},{0.45*sin(\t)}) circle (1.4pt);}
+      \node[font=\small] at (0,-1.05) {\la};
+      \begin{scope}[xshift=2.6cm]
+        \draw[ring] (0,0) circle (0.62);
+        \draw[thick,formblue,rotate=\rb] (0,0) ellipse (0.82 and 0.45);
+        \foreach \t in {0,45,...,315}{\fill[formblue,rotate=\rb] ({0.82*cos(\t)},{0.45*sin(\t)}) circle (1.4pt);}
+        \node[font=\small] at (0,-1.05) {\lb};
+      \end{scope}
+      \begin{scope}[xshift=5.4cm]
+        \draw[faint] (-0.75,-0.75) rectangle (0.75,0.75);
+        \draw[very thick,fibreorange] (\sa:0.6) -- (\sa+180:0.6);
+        \node[font=\small] at (0,-1.05) {\lc};
+      \end{scope}
+      \begin{scope}[xshift=7.6cm]
+        \draw[faint] (-0.75,-0.75) rectangle (0.75,0.75);
+        \draw[very thick,fibreorange] (\sb:0.6) -- (\sb+180:0.6);
+        \node[font=\small] at (0,-1.05) {\ld};
+      \end{scope}
+    \end{scope}}
+  \draw[->,softgray] (9.0,-0.6) -- (9.6,-0.6) node[right,font=\small] {$x$};
+  \draw[->,softgray] (9.0,-0.6) -- (9.0,0.0) node[above,font=\small] {$y$};
+\end{tikzpicture}
+\caption{One mirror, four objects. Top: a ring of free particles (dashed) deformed by the $+$ and the $\times$ polarization of a gravitational wave, and a polarization stick with only $Q$ and with only $U$. Bottom: the same after the reflection $y\to-y$. The ellipse along $x$ and the stick along $x$ are unchanged. The ellipse and the stick along a diagonal move to the other diagonal, which is the same pattern with its amount reversed.}
+\label{T1c:fig:parity-matrix}
+\end{figure}
+
+\emph{All in one table.} Under the mirror $\mathsf P_T$:
+\begin{center}
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & even (sign kept) & odd (sign reversed)\\\midrule
+gravitational-wave strain & $h_+$ & $h_\times$\\
+Stokes numbers at a point & $I=T$, $Q$ & $U$\\
+patterns on the sky & $T$, $E$ & $B$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\emph{The same matrix is not the same quantity.} The table lines up $Q$, $E$ and $h_+$ because the mirror acts on each pair with the same matrix $\mathrm{diag}(+1,-1)$. That is a statement about the even and odd structure, and nothing more: $Q$ is not $E$, and $h_+$ is not $E$. The difference shows as soon as we use another mirror. Reflect instead in the diagonal line $x=y$, which swaps the two sky axes: its transverse block is $\begin{pmatrix}0&1\\1&0\end{pmatrix}$, and applied to the blocks of \eqref{T1c:eq:gw-tensors} it gives $e^+\to-e^+$ and $e^\times\to e^\times$ (swapping $x$ and $y$ swaps the two diagonal entries of $e^+$ and leaves $e^\times$ as it was). For that mirror $Q$ and $h_+$ are odd, and $U$ and $h_\times$ are even. So whether $Q$ is even or odd depends on how the mirror line sits relative to the axes we chose: $Q,U$ and $h_+,h_\times$ are components of one spin-2 tensor in a chosen basis, and the basis decides which component a given mirror flips. $E$ and $B$ were built differently, by reading each wave in axes set by the wave itself, so the answer does not depend on the mirror: every mirror line is the reflection $y\to-y$ seen from turned axes, and $E$, $B$ do not care about the turn of the axes. $E$ is even and $B$ is odd for every mirror, which is why they, and not $Q$ and $U$, are the quantities with a definite parity. Nor does the table say that gravitational waves make only $E$: $h_+$ and $h_\times$ are the strain in the frame of the wave, and the polarization patterns a gravitational wave leaves on the sky contain both $E$ and $B$ (\cref{T1c:sec:e-origin}).
+
+\emph{Why it matters.} A correlation of two quantities picks up the product of their signs. $EE$, $BB$, $TT$ and $TE$ multiply even by even or odd by odd and are unchanged by the mirror. $EB$ and $TB$ multiply an even quantity by an odd one and change sign, which is the content of \eqref{T1c:eq:parity-zero}. Only physics that tells left from right can make them nonzero on average.
+
 \subsection{Where the \texorpdfstring{$E$}{E} modes come from, and how large they are}
 \label{T1c:sec:e-origin}
 
 The CMB is polarized because of Thomson scattering at the last-scattering surface: an electron illuminated more strongly from one direction than from the direction at right angles (a quadrupole in the radiation it sees) scatters light that is linearly polarized \cite{HuWhite1997Pol}; the physics is in the cosmology notes. The quadrupole comes from the flows of the primordial plasma, and a second, smaller dose of polarization was added at reionization, at much larger angular scales.
 
-Which patterns can a density wave produce? A single scalar wave, a plane wave of density in the early universe, has one special direction, its wavevector. Reflect the whole set-up in any plane that contains the wavevector and the line of sight, and nothing changes. By \eqref{T1c:eq:mirror} the $B$ part of the pattern it produces must then equal its own negative, so it is zero. Scalar perturbations make only $E$ \cite{Kamionkowski1997,SeljakZaldarriaga1997}. A gravitational wave is different: its two polarization states stretch space along crossed axes, and the $\times$ state is not symmetric under that reflection, so tensor perturbations make both $E$ and $B$. This is why $B$ modes became the target of searches for primordial gravitational waves, and why the next sections ask what else can make them.
+Which patterns can a density wave produce? A single scalar wave, a plane wave of density in the early universe, has one special direction, its wavevector. Reflect the whole set-up in any plane that contains the wavevector and the line of sight, and nothing changes. By \eqref{T1c:eq:mirror} the $B$ part of the pattern it produces must then equal its own negative, so it is zero. Scalar perturbations make only $E$ \cite{Kamionkowski1997,SeljakZaldarriaga1997}. A gravitational wave is different: its two polarization states stretch space along crossed axes, and the $\times$ state is not symmetric under that reflection (it changes sign, \cref{T1c:eq:gw-mirror}), so tensor perturbations make both $E$ and $B$. This is why $B$ modes became the target of searches for primordial gravitational waves, and why the next sections ask what else can make them.
 
 The fiducial spectra fix the sizes. $D_\ell^{EE}=\ell(\ell+1)C_\ell^{EE}/2\pi$ peaks at $\TOneCDEEpeak\,\mu\mathrm K^2$ near $\ell\approx\TOneCEEpeakL$, so the polarization fluctuations are roughly a tenth of the temperature ones in amplitude. The $TE$ spectrum, with both signs, connects the two. The fiducial $BB$ is not zero, but it contains no primordial gravitational waves: it is the lensing $B$ of \cref{T1c:sec:lensing}, which peaks at $D_\ell^{BB}=\TOneCDBBpeak\,\mu\mathrm K^2$ near $\ell\approx\TOneCBBpeakL$, four hundred times below $EE$.
 \section{When power moves from \texorpdfstring{$E$}{E} to \texorpdfstring{$B$}{B}}
@@ -1885,7 +2046,7 @@ We now take the sources one at a time, each with its physical origin and its fin
 
 \emph{Cosmic birefringence.} A twist of the plane of polarization during the journey from last scattering, by an angle $\beta$ that is the same for every frequency. Its physical origin is discussed in \cref{T1c:sec:biref}. Fingerprints: $BB$, $EB$ and $TB$ with the shapes of \cref{T1c:sec:rot-spectra} ($EB$ follows $C^{EE}-C^{BB}$, $TB$ follows $C^{TE}$); grey in frequency; Gaussian (it is a fixed linear operation on Gaussian fields); and the only cosmological source that creates $EB$ and $TB$.
 
-\emph{Faraday rotation.} A plane of polarization travelling along a magnetic field through an ionized gas is also twisted, by an angle proportional to the square of the wavelength, that is to $1/\nu^2$ \cite{KosowskyLoeb1996}. A primordial magnetic field of $10^{-9}\,$G today would twist the CMB polarization by about $1^\circ$ at $30\,$GHz \cite{KosowskyLoeb1996}, hence by $(30/150)^2\times1^\circ=\TOneCFaradayOneFifty^\circ$ at $150\,$GHz. The twist formulas of \cref{T1c:sec:rotation} apply channel by channel (with the angle varying across the sky when the field does), so Faraday rotation makes $EB$ and $TB$ like birefringence, but its strong frequency dependence (\cref{T1c:fig:frequency}(b)) tells it apart: a constant $\beta$ and an angle falling as $\nu^{-2}$ cannot be confused once several channels are compared.
+\emph{Faraday rotation.} A plane of polarization travelling along a magnetic field through an ionized gas is also twisted, by an angle proportional to the square of the wavelength, that is to $1/\nu^2$ \cite{KosowskyLoeb1996}; \cref{T1c:sec:lorentz} derives this law from the motion of the electrons. A primordial magnetic field of $10^{-9}\,$G today would twist the CMB polarization by about $1^\circ$ at $30\,$GHz \cite{KosowskyLoeb1996}, hence by $(30/150)^2\times1^\circ=\TOneCFaradayOneFifty^\circ$ at $150\,$GHz. The twist formulas of \cref{T1c:sec:rotation} apply channel by channel (with the angle varying across the sky when the field does), so Faraday rotation makes $EB$ and $TB$ like birefringence, but its strong frequency dependence (\cref{T1c:fig:frequency}(b)) tells it apart: a constant $\beta$ and an angle falling as $\nu^{-2}$ cannot be confused once several channels are compared.
 
 \subsection{The instrument}
 \label{T1c:sec:instrument}
@@ -1951,7 +2112,7 @@ The microwave sky has a door frame. The polarized emission of our Galaxy reaches
 
 \emph{One idea, many names.} Calibrating an instrument on a source whose answer is known, while measuring an unknown one at the same time, is the oldest trick of experimental physics: a reference star in the same field, a known line in a spectrum, a tag-and-probe sample at a collider. What is special here is that the reference is not known in advance. Only one of its properties is assumed, that the Galaxy itself has no $EB$, and its own $EE-BB$ is measured from the same data.
 
-We first say what physics could twist the CMB light, then derive the Minami--Komatsu relation that turns the door-frame idea into a measurement, and end with what has been measured and why it is not yet a discovery.
+We first say what physics could twist the CMB light, and how ordinary matter twists light, then derive the Minami--Komatsu relation that turns the door-frame idea into a measurement, and end with what has been measured and why it is not yet a discovery.
 
 \subsection{What could twist the light}
 \label{T1c:sec:what-twists}
@@ -1976,7 +2137,216 @@ Now suppose that on its way the $+$ helicity is delayed in phase by $\beta$ rela
 \end{equation}
 set by how much the field changed between last scattering and today, and independent of the frequency of the light \cite{Carroll1998,LueWangKamionkowski1999,MinamiKomatsu2020}. Such ``axion-like'' fields are candidates for dark matter and dark energy. If the field had always been constant, or did not couple, $\beta=0$. Because the CMB has travelled for almost the whole age of the universe, it is the most sensitive test: a nonzero $\beta$ would be a sign of parity violation in the laws of physics beyond the Standard Model. For the data analyst the microphysics matters through three consequences, all met already: $\beta$ is the same in every channel, it is (for a field that is uniform on the sky) the same in every direction, and its signature is the set of spectra of \cref{T1c:sec:rot-spectra}. \Cref{T1c:eq:beta-phi} also says that the early proposals and searches for a twist in the CMB \cite{LueWangKamionkowski1999,Feng2006} are, in this language, measurements of $g_{\phi\gamma}\Delta\phi$.
 
-\emph{Faraday rotation} is also a helicity phase difference, caused by free electrons in a magnetic field, but its phase grows with the square of the wavelength (\cref{T1c:sec:twists}). That is the physical reason it is told apart by frequency, while a pseudoscalar twist is not.
+\emph{Faraday rotation} is also a helicity phase difference, caused by free electrons in a magnetic field, but its phase grows with the square of the wavelength (\cref{T1c:sec:twists}). That is the physical reason it is told apart by frequency, while a pseudoscalar twist is not. Both statements can be derived from the motion of a charge pushed by the wave, which is the subject of the next subsection.
+
+\subsection{How matter turns light: the electron on a spring}
+\label{T1c:sec:lorentz}
+
+The helicity identity \eqref{T1c:eq:helicity} turned the question ``what twists the plane of polarization?'' into ``what gives the two helicities different phases?''. For the pseudoscalar field the answer was stated with a citation. For ordinary matter it can be derived from a model every physicist has met, a charge on a spring, and the derivation shows what a twist needs and what it does not need.
+
+Lay a crystal of calcite on a printed page and every letter appears twice. Light polarized along one direction in the crystal travels at one speed, light polarized at right angles to it at another, and the two images are made of the two polarizations. Now put a glass of clear syrup between two polarizing filters, as in the polarimeters that sugar refineries use. The light that leaves the syrup is still linearly polarized, but along a turned direction, and the turn grows with the depth of syrup and with the amount of sugar in it. In white light the turn differs from colour to colour, so the filters show colours. Both materials have two speeds of light. They do different things to the light because the two kinds of light that keep their shape inside them are different: two straight lines in the crystal, two circles, one turning each way, in the syrup, whose sugar molecules are handed. A strong magnet laid along the beam makes plain glass behave like the syrup; Faraday found this in 1845.
+
+In the language of physics: the electrons of a medium are held by springs. In a crystal the springs are stiffer along some directions than others. A magnetic field adds a sideways force on a moving electron that couples its motion along $x$ with its motion along $y$, with a sense of rotation. The whole idea in one sentence: \emph{the medium acts on the wave through a matrix, the polarizations that keep their shape are the eigenvectors of that matrix, and a wave that is not an eigenvector changes shape because its two eigen-components drift out of phase.} Whether that change is a rotation depends only on which eigenvectors the matrix has. The naive guess, that a crystal whose axes are turned would turn the light, fails: the crystal's eigenvectors are still straight lines, and a mixture of two straight lines drifting out of phase becomes an ellipse. To turn the plane and keep it a plane, the eigenvectors must be the two helicities.
+
+\emph{One idea, many names.} A state that is a mixture of two eigenstates with different eigenvalues changes as the eigenstates drift in phase. Two coupled pendulums pass their swinging back and forth this way; a neutrino born as one flavour turns into another; a spin in a magnetic field precesses. Faraday rotation is the precession of the light's polarization about the direction of the field, and the mathematics is that of a two-state system in quantum mechanics.
+
+\emph{The electron on a spring.} Let a charge $q$ of mass $m$ be bound to an atom, displaced from its rest position by $\bm r$. It feels a restoring force $-m\,\Omega_0^2\bm r$, where $\Omega_0^2$ is a symmetric $3\times3$ matrix of spring constants divided by the mass, equal to $\omega_0^2\Id$ for a spring that is equally stiff in every direction; a friction force $-m\gamma\dot{\bm r}$; the electric field $\bm E(t)$ of the wave; and, if there is one, a steady magnetic field $\bm B_0$. Newton's law is
+\begin{equation}
+m\ddot{\bm r}=-m\,\Omega_0^2\bm r-m\gamma\dot{\bm r}+q\bm E+q\,\dot{\bm r}\times\bm B_0 .
+\label{T1c:eq:lorentz-eom}
+\end{equation}
+(The magnetic field of the wave itself also pushes, but with a force smaller by the speed of the electron over $c$, which we neglect.) \emph{How does the charge answer a wave of one frequency?} Write the wave as $\bm E e^{-i\omega t}$ and look for the steady answer $\bm r e^{-i\omega t}$, with the physical quantities the real parts. Then $\dot{\bm r}\to-i\omega\bm r$ and $\ddot{\bm r}\to-\omega^2\bm r$. Without $\bm B_0$,
+\begin{align}
+-m\omega^2\bm r&\eqby{1}-m\,\Omega_0^2\bm r+im\gamma\omega\,\bm r+q\bm E,
+\nonumber\\
+\bigl[\Omega_0^2-\omega^2\Id-i\omega\gamma\Id\bigr]\bm r&\eqby{2}\frac qm\bm E,
+\qquad
+\bm r\eqby{3}\frac qm\bigl[\Omega_0^2-\omega^2\Id-i\omega\gamma\Id\bigr]^{-1}\bm E .
+\label{T1c:eq:lorentz-r}
+\end{align}
+\begin{explain}
+  \item Insert the oscillating forms into \eqref{T1c:eq:lorentz-eom} with $\bm B_0=0$; the common factor $e^{-i\omega t}$ cancels, and $-m\gamma(-i\omega)\bm r=im\gamma\omega\bm r$.
+  \item Move every term with $\bm r$ to the left and divide by $m$.
+  \item Multiply by the inverse matrix, which exists as long as $\omega$ is not exactly a resonance of an undamped spring.
+\end{explain}
+With $N$ such charges per unit volume, each displaced by $\bm r$, the medium carries a dipole moment $Nq\bm r$ per unit volume. Writing it as $\varepsilon_0\chi\bm E$ defines the \newterm{susceptibility} matrix, and with it the relative permittivity:
+\begin{equation}
+\chi(\omega)=\omega_p^2\bigl[\Omega_0^2-\omega^2\Id-i\omega\gamma\Id\bigr]^{-1},
+\qquad
+\varepsilon_r(\omega)=\Id+\chi(\omega),
+\qquad
+\omega_p^2\equiv\frac{Nq^2}{\varepsilon_0m}.
+\label{T1c:eq:lorentz-chi}
+\end{equation}
+The frequency $\omega_p$ is the \newterm{plasma frequency} of the charges: it measures how many there are and how easily they move.
+
+\emph{Which waves can travel?} In the medium there are no free charges or currents beyond the bound ones already inside $\varepsilon_r$, so Maxwell's equations read $\nabla\times\bm E=-\partial_t\bm B$ and $\nabla\times\bm B=\mu_0\varepsilon_0\varepsilon_r\,\partial_t\bm E$. Try a plane wave along $z$, $\bm E\,e^{i(kz-\omega t)}$, for which $\nabla\times$ becomes $ik\,\hat{\bm z}\times$ and $\partial_t$ becomes $-i\omega$:
+\begin{align}
+\bm B&\eqby{1}\frac k\omega\,\hat{\bm z}\times\bm E,
+\nonumber\\
+ik\,\frac k\omega\,\hat{\bm z}\times(\hat{\bm z}\times\bm E)&\eqby{2}-\frac{i\omega}{c^2}\,\varepsilon_r\bm E,
+\nonumber\\
+\frac{c^2k^2}{\omega^2}\,\bm E_\perp&\eqby{3}\varepsilon_r\bm E,
+\qquad
+\bigl[\varepsilon_{r\perp}-n^2\Id\bigr]\bm E_\perp\eqby{4}0,\qquad n\equiv\frac{ck}{\omega}.
+\label{T1c:eq:eigen}
+\end{align}
+\begin{explain}
+  \item The first Maxwell equation: $ik\,\hat{\bm z}\times\bm E=i\omega\bm B$.
+  \item The second, with $\bm B$ from the first line inserted and $\mu_0\varepsilon_0=1/c^2$.
+  \item The vector identity $\hat{\bm z}\times(\hat{\bm z}\times\bm E)=\hat{\bm z}(\hat{\bm z}\cdot\bm E)-\bm E=-\bm E_\perp$, the part of $\bm E$ across $z$; then multiply by $ic^2/\omega$.
+  \item In both media below $\varepsilon_r$ does not mix $z$ with $x$ and $y$. The $z$ row then reads $\varepsilon_{r,zz}E_z=0$, so $E_z=0$, and the $x,y$ rows form a $2\times2$ problem with the transverse block $\varepsilon_{r\perp}$.
+\end{explain}
+This is an eigenvalue problem. \emph{The polarizations that can travel unchanged are the eigenvectors of $\varepsilon_{r\perp}$, and their refractive indices squared are its eigenvalues.} A medium is \newterm{birefringent} when the two eigenvalues differ. Away from a resonance the friction $\gamma$ can be dropped, the matrix is then Hermitian in both cases below, and the indices are real; a nonzero $\gamma$ makes them complex, which is absorption, and absorption that differs between the two eigenvectors is called dichroism.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+  \tikzset{stage/.style={faint}, flow/.style={->,softgray,thick}}
+  \foreach \y/\lab in {0/{crystal\\(case A)},-2.7/{magnetized\\plasma\\(case B)}}{
+    \node[font=\small,anchor=east,align=right] at (-1.1,\y) {\lab};
+    \draw[stage] (-0.85,\y-0.85) rectangle (0.85,\y+0.85);
+    \draw[very thick,formblue] ($(0,\y)+(45:0.6)$) -- ($(0,\y)+(225:0.6)$);
+    \draw[flow] (1.05,\y) -- (1.75,\y);
+    \draw[flow] (7.35,\y) -- (8.05,\y);
+    \draw[stage] (8.25,\y-0.85) rectangle (9.95,\y+0.85);
+  }
+  \draw[stage] (1.95,-0.85) rectangle (4.45,0.85);
+  \draw[stage] (4.85,-0.85) rectangle (7.15,0.85);
+  \draw[very thick,tangentgreen] (2.6,0) -- (3.8,0);
+  \node[font=\small] at (3.2,-0.55) {index $n_x$};
+  \draw[very thick,fibreorange] (6.0,-0.6) -- (6.0,0.6);
+  \node[font=\small,anchor=west] at (6.1,-0.55) {$n_y$};
+  \node[font=\small] at (4.65,0) {$+$};
+  \draw[very thick,formblue,rotate around={45:(9.1,0)}] (9.1,0) ellipse (0.62 and 0.3);
+  \draw[stage] (1.95,-3.55) rectangle (4.45,-1.85);
+  \draw[stage] (4.85,-3.55) rectangle (7.15,-1.85);
+  \draw[very thick,tangentgreen,->] (3.2,-2.7) ++(0:0.5) arc (0:300:0.5);
+  \node[font=\small] at (3.2,-3.35) {$\bm e_+$, index $n_+$};
+  \draw[very thick,fibreorange,->] (6.0,-2.7) ++(0:0.5) arc (0:-300:0.5);
+  \node[font=\small] at (6.0,-3.35) {$\bm e_-$, index $n_-$};
+  \node[font=\small] at (4.65,-2.7) {$+$};
+  \draw[very thick,formblue] ($(9.1,-2.7)+(15:0.6)$) -- ($(9.1,-2.7)+(195:0.6)$);
+  \draw[softgray,dotted] ($(9.1,-2.7)+(45:0.6)$) -- ($(9.1,-2.7)+(225:0.6)$);
+  \node[font=\small] at (0,1.15) {enters};
+  \node[font=\small,align=center] at (4.55,1.3) {splits into the two polarizations that keep their shape,\\each travelling with its own index};
+  \node[font=\small] at (9.1,1.15) {leaves};
+\end{tikzpicture}
+\caption{What a birefringent medium does, in three stages. A wave enters linearly polarized at $45^\circ$. Inside, it is a sum of the medium's two eigen-polarizations, which travel at different speeds and drift apart in phase. In a crystal these are two straight lines, along $x$ and $y$, and the recombined wave is an ellipse. In a magnetized plasma they are the two circular polarizations, and the recombined wave is again a straight line, turned by half the phase difference (the dotted line is the entering direction).}
+\label{T1c:fig:lorentz-scheme}
+\end{figure}
+
+\paragraph{Case A: a crystal.} Let the springs have different stiffness along $x$ and $y$, $\Omega_0^2=\mathrm{diag}(\omega_{0x}^2,\omega_{0y}^2,\omega_{0z}^2)$, with no magnetic field and no friction. Every matrix in \eqref{T1c:eq:lorentz-chi} is then diagonal, and so is
+\begin{equation}
+\varepsilon_{r\perp}=\begin{pmatrix}1+\dfrac{\omega_p^2}{\omega_{0x}^2-\omega^2}&0\\[2mm]0&1+\dfrac{\omega_p^2}{\omega_{0y}^2-\omega^2}\end{pmatrix}.
+\label{T1c:eq:crystal}
+\end{equation}
+Its eigenvectors are $\hat{\bm x}$ and $\hat{\bm y}$, with indices $n_x^2$ and $n_y^2$ equal to the two diagonal entries; they differ when $\omega_{0x}\ne\omega_{0y}$. This is \newterm{linear birefringence}: a wave polarized along $x$ or along $y$ crosses the crystal unchanged. \emph{What happens to a wave at $45^\circ$?} At the entrance it is $\bm E=\frac{E_0}{\sqrt2}(\hat{\bm x}+\hat{\bm y})$. Each part travels with its own wavenumber $k=n\omega/c$, so after a length $L$
+\begin{align}
+\bm E(L)&\eqby{1}\frac{E_0}{\sqrt2}\bigl(\hat{\bm x}\,e^{in_x\omega L/c}+\hat{\bm y}\,e^{in_y\omega L/c}\bigr)
+\eqby{2}e^{in_x\omega L/c}\,\frac{E_0}{\sqrt2}\bigl(\hat{\bm x}+\hat{\bm y}\,e^{i\delta}\bigr),
+\qquad \delta\equiv(n_y-n_x)\frac{\omega L}{c},
+\nonumber\\
+Q&\eqby{3}\tfrac12E_0^2-\tfrac12E_0^2=0,
+\qquad
+U\eqby{4}2\cdot\tfrac12E_0^2\cos(0-\delta)=E_0^2\cos\delta .
+\label{T1c:eq:case-a}
+\end{align}
+\begin{explain}
+  \item Each eigenvector picks up its own phase $kL=n\omega L/c$ and keeps its direction.
+  \item Take out the phase of the $x$ part, which is common to the whole wave and invisible in the Stokes numbers.
+  \item The definition \eqref{T1c:eq:stokes} with $a_1=a_2=E_0/\sqrt2$.
+  \item The same with the phase difference $\theta_1-\theta_2=-\delta$.
+\end{explain}
+The tip of the real field traces $E_x\propto\cos\omega t$, $E_y\propto\cos(\omega t-\delta)$: a line for $\delta=0$, an ellipse with its axes along the two diagonals, a circle at $\delta=\pi/2$, and a line along the other diagonal at $\delta=\pi$ (\cref{T1c:fig:lorentz}(a)). $Q$ stays zero and the linear polarization $\abs U=E_0^2\abs{\cos\delta}$ shrinks and comes back, while the circular part $V$, set aside since \cref{T1c:sec:stokes}, grows as $\sin\delta$. The stick is never turned; the light becomes partly circular. Even the plate with $\delta=\pi$ that sends the $45^\circ$ line to $-45^\circ$ is not a rotation: it sends a stick at $\psi$ from the $x$ axis to $-\psi$, so a stick at $10^\circ$ goes to $-10^\circ$ and one at $30^\circ$ to $-30^\circ$. That is a mirror in the $x$ axis, not the same turn for every stick.
+
+\paragraph{Case B: electrons in a magnetic field.} Now let the springs be equally stiff in every direction, $\Omega_0^2=\omega_0^2\Id$, and put a steady field $\bm B_0=B_0\hat{\bm z}$ along the direction of the wave. The magnetic force on the moving charge, with $\dot{\bm r}=-i\omega\bm r$ and $\bm r\times\hat{\bm z}=(y,-x,0)$, is $q\dot{\bm r}\times\bm B_0=-i\omega qB_0\,(y,-x,0)$. It pushes $x$ with $y$ and $y$ with $-x$. The transverse rows of \eqref{T1c:eq:lorentz-eom} become
+\begin{equation}
+M\begin{pmatrix}x\\y\end{pmatrix}=\frac qm\begin{pmatrix}E_x\\E_y\end{pmatrix},
+\qquad
+M=\begin{pmatrix}a&i\omega\omega_c\\-i\omega\omega_c&a\end{pmatrix},
+\qquad a\equiv\omega_0^2-\omega^2-i\omega\gamma,\qquad \omega_c\equiv\frac{qB_0}m,
+\label{T1c:eq:lorentz-b}
+\end{equation}
+where $\omega_c$ is the \newterm{cyclotron frequency}, the rate at which the charge would circle the field line, with a sign set by the charge and the direction of the field. The magnetic field has added off-diagonal entries with opposite signs, an antisymmetric part, which a crystal cannot produce because its spring matrix is symmetric. \emph{Which vectors does $M$ leave in their own direction?} Try the helicity vectors $\bm e_\pm=(\hat{\bm x}\pm i\hat{\bm y})/\sqrt2$ of \eqref{T1c:eq:helicity}:
+\begin{align}
+M\bm e_\pm&\eqby{1}\frac1{\sqrt2}\begin{pmatrix}a+i\omega\omega_c(\pm i)\\-i\omega\omega_c+a(\pm i)\end{pmatrix}
+\eqby{2}\frac1{\sqrt2}\begin{pmatrix}a\mp\omega\omega_c\\\pm i(a\mp\omega\omega_c)\end{pmatrix}
+\eqby{3}(a\mp\omega\omega_c)\,\bm e_\pm,
+\nonumber\\
+n_\pm^2&\eqby{4}1+\frac{\omega_p^2}{\omega_0^2-\omega^2\mp\omega\omega_c}\qquad(\gamma=0).
+\label{T1c:eq:case-b}
+\end{align}
+\begin{explain}
+  \item Multiply the matrix into the column $(1,\pm i)/\sqrt2$.
+  \item In the first entry $i\cdot(\pm i)=\mp1$; in the second, $-i\omega\omega_c=\pm i\,(\mp\omega\omega_c)$ because $(\pm i)(\mp1)=-i$.
+  \item Both entries are $(a\mp\omega\omega_c)$ times the entries of $\bm e_\pm$.
+  \item $\chi=\omega_p^2M^{-1}$ by \eqref{T1c:eq:lorentz-chi}; the inverse of a matrix has the same eigenvectors and the inverse eigenvalues, so $\varepsilon_{r\perp}=\Id+\chi$ has eigenvalues $1+\omega_p^2/(a\mp\omega\omega_c)$.
+\end{explain}
+The two waves that keep their shape are the two helicities, with different indices $n_+\ne n_-$ as soon as $\omega_c\ne0$. This is \newterm{circular birefringence}. \emph{What happens to a linear polarization?} By \eqref{T1c:eq:helicity}, a stick at angle $\psi$ is the equal mixture $(e^{-i\psi}\bm e_++e^{i\psi}\bm e_-)/\sqrt2$. After a length $L$ each helicity has picked up its own phase $\phi_\pm=n_\pm\omega L/c$, and with $\Delta\equiv\phi_+-\phi_-$ and $\bar\phi\equiv\frac12(\phi_++\phi_-)$,
+\begin{align}
+\frac{e^{-i\psi}e^{i\phi_+}\bm e_++e^{i\psi}e^{i\phi_-}\bm e_-}{\sqrt2}
+&\eqby{1}e^{i\bar\phi}\,\frac{e^{-i(\psi-\Delta/2)}\bm e_++e^{i(\psi-\Delta/2)}\bm e_-}{\sqrt2}
+\eqby{2}e^{i\bar\phi}\,\bigl[\cos(\psi-\tfrac\Delta2)\,\hat{\bm x}+\sin(\psi-\tfrac\Delta2)\,\hat{\bm y}\bigr].
+\label{T1c:eq:case-b-turn}
+\end{align}
+\begin{explain}
+  \item Write $\phi_\pm=\bar\phi\pm\Delta/2$ and take out the common phase $e^{i\bar\phi}$.
+  \item \eqref{T1c:eq:helicity} with $\psi$ replaced by $\psi-\Delta/2$.
+\end{explain}
+The wave leaves still linearly polarized, with the same strength, and its plane turned by $-\Delta/2$: half the phase difference of the two helicities, as found in \cref{T1c:sec:what-twists}, and the same turn for every starting angle $\psi$ (\cref{T1c:fig:lorentz}(b)). The sense of the turn is set by the sign of $\omega_c$, that is by the sign of the charge and the direction of the field. This is a rotation, a twist of every stick by the same angle, and it is the rule \eqref{T1c:eq:twist} with $\beta=-\Delta/2$.
+
+\emph{How does the angle depend on frequency?} Take free electrons in an ionized gas: no spring, $\omega_0=0$, charge $q=-e$, and no friction. Then $n_\pm^2=1-\omega_p^2/[\omega(\omega\pm\omega_c)]$, and the gas is transparent only above the plasma frequency. For radio and microwave light crossing interstellar or intergalactic gas the plasma and cyclotron frequencies are in the kilohertz range or below, far beneath the gigahertz of the light, so we expand in the small ratios $\omega_p/\omega$ and $\omega_c/\omega$:
+\begin{align}
+n_\pm&\eqby{1}\Bigl[1-\frac{\omega_p^2}{\omega^2}\Bigl(1\pm\frac{\omega_c}\omega\Bigr)^{-1}\Bigr]^{1/2}
+\eqby{2}1-\frac{\omega_p^2}{2\omega^2}\Bigl(1\mp\frac{\omega_c}{\omega}\Bigr),
+\nonumber\\
+\Delta&\eqby{3}(n_+-n_-)\frac{\omega L}c
+\eqby{4}\frac{\omega_p^2\omega_c}{\omega^3}\,\frac{\omega L}c
+=\frac{\omega_p^2\,\omega_c\,L}{c\,\omega^2}
+\eqby{5}\frac{\omega_p^2\,\omega_c\,L}{4\pi^2c^3}\,\lambda^2 .
+\label{T1c:eq:faraday}
+\end{align}
+\begin{explain}
+  \item Take $\omega^2$ out of $\omega(\omega\pm\omega_c)$ and the square root of $n_\pm^2$.
+  \item To first order, $(1\pm x)^{-1}\approx1\mp x$ and $(1-y)^{1/2}\approx1-y/2$; products of the two small ratios beyond $\omega_p^2\omega_c/\omega^3$ are dropped.
+  \item The definition of $\Delta$ with $\phi_\pm=n_\pm\omega L/c$.
+  \item In the difference of the two indices the terms $1-\omega_p^2/2\omega^2$ cancel; what is left is $+\omega_p^2\omega_c/2\omega^3$ in $n_+$ and $-\omega_p^2\omega_c/2\omega^3$ in $n_-$, which differ by $\omega_p^2\omega_c/\omega^3$.
+  \item $\omega=2\pi c/\lambda$, so $1/\omega^2=\lambda^2/(4\pi^2c^2)$.
+\end{explain}
+The index difference falls as $\omega^{-3}$, the path in wavelengths grows as $\omega$, and the phase difference, hence the angle $\abs\Delta/2$, grows as $\lambda^2$. That is the law of \newterm{Faraday rotation}. Inserting $\omega_p^2=n_ee^2/(\varepsilon_0m_e)$ for $n_e$ electrons per unit volume and $\abs{\omega_c}=eB_\parallel/m_e$, and adding up the contributions of a gas whose density and field change along the path, the angle is
+\begin{equation}
+\frac{\abs\Delta}2=\mathrm{RM}\,\lambda^2,
+\qquad
+\mathrm{RM}=\frac{e^3}{8\pi^2\varepsilon_0m_e^2c^3}\int n_eB_\parallel\,\dd l
+=\TOneCRMconst\,\mathrm{rad\,m^{-2}}\int\frac{n_e}{\mathrm{cm}^{-3}}\,\frac{B_\parallel}{\mu\mathrm G}\,\frac{\dd l}{\mathrm{pc}},
+\label{T1c:eq:rm}
+\end{equation}
+the standard rotation measure, which is what \cite{KosowskyLoeb1996} evaluate for a primordial field. The $\lambda^2$ law is the high-frequency limit. \Cref{T1c:fig:lorentz}(c) compares it with the exact indices of \eqref{T1c:eq:case-b} for a plasma with $\omega_c=0.2\,\omega_p$: at ten times the plasma frequency the exact angle exceeds the law by $\TOneCFarDevTen\%$, at three times by $\TOneCFarDevThree\%$, and near the plasma frequency the law fails. For the CMB, more than a million times above the plasma frequency of the gas it crosses, the law is exact for all practical purposes.
+
+\paragraph{Case C: cosmic birefringence.} The medium is now empty space filled with the slowly changing pseudoscalar field $\phi$ of \eqref{T1c:eq:beta-phi}. With the coupling $\frac14g_{\phi\gamma}\phi F_{\mu\nu}\tilde F^{\mu\nu}$, Maxwell's equations again have the two helicities as the waves that keep their shape, and again give them different phases. The difference is how that phase depends on frequency. For a field changing in time at the rate $\dot\phi$, the two helicities with the same wavenumber have frequencies that differ by $g_{\phi\gamma}\dot\phi$, the same amount for every wavelength \cite{CarrollFieldJackiw1990,Carroll1998}. Equivalently, at one frequency their wavenumbers differ by a fixed amount. Over the journey from last scattering the phase difference adds up to $g_{\phi\gamma}(\phi_{\mathrm{obs}}-\phi_{\mathrm{LSS}})$, and by \eqref{T1c:eq:case-b-turn} the plane turns by half of it, which is the twist $\beta$ of \eqref{T1c:eq:beta-phi} (its sign depends on the conventions for $g_{\phi\gamma}$ and for the angle). In Faraday rotation the splitting of the two indices, $n_+-n_-\propto\omega^{-3}$, falls faster than the path in wavelengths grows, and the angle goes as $\lambda^2$; here the splitting of the wavenumbers is a constant, $n_+-n_-\propto\omega^{-1}$, which exactly cancels the growth of the path in wavelengths, and the angle is the same at every frequency. This is the difference between the Faraday row and the birefringence row of the table in \cref{T1c:sec:table}, a $\lambda^2$ law against a constant, and it is the reason the colour test of \cref{T1c:fig:frequency}(b) can separate them.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/lorentz_birefringence.pdf}
+\caption{Linear against circular birefringence. A wave enters linearly polarized at $45^\circ$ (dotted). (a) In a crystal, after a phase difference $\delta$ between the $x$ and $y$ parts, the tip of the electric field traces an ellipse, then a circle, then the line along the other diagonal; the axis of the ellipse never turns. (b) With the two helicities as the travelling waves, a phase difference $\Delta$ leaves the light linearly polarized and turns the line by $\Delta/2$. (c) The angle of turn against the square of the wavelength, each normalised to its value at a reference wavelength: Faraday rotation in a cold magnetized plasma from the exact Lorentz-model indices (orange), its high-frequency $\lambda^2$ law (dashed), and cosmic birefringence, the same at every wavelength (green). The exact curve leaves the $\lambda^2$ law only as the frequency approaches the plasma frequency.}
+\label{T1c:fig:lorentz}
+\end{figure}
+
+\emph{Birefringence is not dispersion.} Birefringence means two different eigenvalues at one frequency: two polarizations travel at two speeds. Dispersion means one eigenvalue that changes with frequency: different colours travel at different speeds. Because $\chi$ in \eqref{T1c:eq:lorentz-chi} depends on $\omega$, the Lorentz model has both, and the Faraday law needs both: the two indices differ, and their difference changes with frequency. Dispersion alone, such as $n^2=1-\omega_p^2/\omega^2$ in a plasma without a magnetic field, delays a pulse but leaves every polarization as it was, because both eigenvalues move together.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\toprule
+medium & what makes the two indices differ & waves that keep their shape & a $45^\circ$ line becomes\\\midrule
+crystal & springs of different stiffness & lines along $x$, $y$ & an ellipse, not turned\\
+magnetized plasma & the force $q\,\dot{\bm r}\times\bm B_0$ & the two helicities & a line turned by $\propto\lambda^2$\\
+pseudoscalar field & $\phi F\tilde F$ with $\dot\phi\ne0$ & the two helicities & a line turned by $\beta$, any $\lambda$\\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \subsection{The Galaxy as a reference: the Minami--Komatsu relation}
 \label{T1c:sec:mk}
