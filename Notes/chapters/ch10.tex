@@ -371,7 +371,10 @@ are added as matrices, a change of parameters is a Jacobian sandwich, and a nuis
 by inverting. Then we forecast the six $\Lambda$CDM parameters for a Planck-like experiment, check the
 forecast against what Planck actually achieved, reproduce Knox's 1995 forecast and the classic
 degeneracies of the CMB, and test the whole method against the Markov chain of \cref{ch:09}. Part~10b
-applies the same machinery to gravitational waves (\cref{10a:fig:roadmap}).
+applies the same machinery to gravitational waves. The last part turns it on a tiny twist of the CMB
+polarization: a forecast of how small a rotation angle a Planck-like map can detect, and a thousand simulated
+masked skies that check the forecast (\cref{10c:sec:forecast,10c:sec:mc}), the rehearsal for the real-data
+measurement of \cref{ch:13} (\cref{10a:fig:roadmap}).
 
 In the pipeline of the book (physical model $\to$ field or data set $\to$ what matters $\to$ summary $\to$
 sampling distribution $\to$ inference), the Fisher matrix lives on the last two arrows, but it uses them
@@ -396,6 +399,7 @@ that has not been built.
   \node[gb] (cmb) at (0,-4.9)   {CMB forecast for $\Lambda$CDM;\\ Knox 1995; Planck 2018};
   \node[rb] (chk) at (4.9,-4.9) {is it right?\\ chain and $10^3$\\ maximum-likelihood fits};
   \node[bx] (res) at (9.8,-4.9) {research pipeline;\\ GW forecasts (10b)};
+  \node[gb] (bir) at (9.8,-7.2) {twist of the CMB\\ polarization: forecast\\ and simulated skies (10c)};
   \draw[flow] (mod) -- (fis);
   \draw[flow] (fis) -- (cr);
   \draw[flow] (cr) -- (gau);
@@ -404,11 +408,13 @@ that has not been built.
   \draw[flow] (der) -- (cmb);
   \draw[flow] (cmb) -- (chk);
   \draw[flow] (chk) -- (res);
+  \draw[flow] (res) -- (bir);
 \end{tikzpicture}
 \caption{The route of the chapter. A model of the experiment and a guess for the truth give the Fisher
 matrix; the Cram\'er--Rao bound says what its inverse means; Gaussian data give it in closed form; a short
-grammar tells us how to read and combine it; finite differences supply the derivatives. The green box is
-the worked application, the red box the test of whether the forecast can be trusted.}
+grammar tells us how to read and combine it; finite differences supply the derivatives. The green boxes are
+the worked applications on the CMB, the last of them a forecast and simulation of a rotation of the
+polarization; the red box is the test of whether the forecast can be trusted.}
 \label{10a:fig:roadmap}
 \end{figure}
 \section{How sharp will the likelihood be? The Fisher matrix}
@@ -5576,6 +5582,1231 @@ instead, and what the reduction costs.}
         at $\rho=80$ within about $10\%$; degeneracies and one-sided priors break it at any $\rho$.
 \end{itemize}
 \end{recap}
+\providecommand{\TenCPlEB}{}\renewcommand{\TenCPlEB}{0.0428}
+\providecommand{\TenCPlEBNine}{}\renewcommand{\TenCPlEBNine}{0.0377}
+\providecommand{\TenCPlTB}{}\renewcommand{\TenCPlTB}{0.0879}
+\providecommand{\TenCPlTBNine}{}\renewcommand{\TenCPlTBNine}{0.0775}
+\providecommand{\TenCPlJoint}{}\renewcommand{\TenCPlJoint}{0.0415}
+\providecommand{\TenCPlJointNine}{}\renewcommand{\TenCPlJointNine}{0.0366}
+\providecommand{\TenCPlDepthP}{}\renewcommand{\TenCPlDepthP}{52.3}
+\providecommand{\TenCPlDepthT}{}\renewcommand{\TenCPlDepthT}{25.5}
+\providecommand{\TenCClosedCheck}{}\renewcommand{\TenCClosedCheck}{4.9\times10^{-8}}
+\providecommand{\TenCRotInvariance}{}\renewcommand{\TenCRotInvariance}{4.8\times10^{-8}}
+\providecommand{\TenCEEBBshare}{}\renewcommand{\TenCEEBBshare}{9.4\times10^{-4}}
+\providecommand{\TenCDeepJoint}{}\renewcommand{\TenCDeepJoint}{0.0016}
+\providecommand{\TenCDeepJointFifteen}{}\renewcommand{\TenCDeepJointFifteen}{0.0018}
+\providecommand{\TenCHalfPl}{}\renewcommand{\TenCHalfPl}{457}
+\providecommand{\TenCLowFracPl}{}\renewcommand{\TenCLowFracPl}{5.1}
+\providecommand{\TenCPeakPl}{}\renewcommand{\TenCPeakPl}{373}
+\providecommand{\TenCHalfDeep}{}\renewcommand{\TenCHalfDeep}{1019}
+\providecommand{\TenCLowFracDeep}{}\renewcommand{\TenCLowFracDeep}{1.2}
+\providecommand{\TenCPeakDeep}{}\renewcommand{\TenCPeakDeep}{992}
+\providecommand{\TenCDialFloor}{}\renewcommand{\TenCDialFloor}{9.8\times10^{-4}}
+\providecommand{\TenCDialFloorNoLens}{}\renewcommand{\TenCDialFloorNoLens}{5.2\times10^{-5}}
+\providecommand{\TenCDialOne}{}\renewcommand{\TenCDialOne}{0.0014}
+\providecommand{\TenCDialOneNoLens}{}\renewcommand{\TenCDialOneNoLens}{5.2\times10^{-4}}
+\providecommand{\TenCDialTen}{}\renewcommand{\TenCDialTen}{0.0057}
+\providecommand{\TenCDialTenNoLens}{}\renewcommand{\TenCDialTenNoLens}{0.0053}
+\providecommand{\TenCDialSixty}{}\renewcommand{\TenCDialSixty}{0.045}
+\providecommand{\TenCDialSixtyNoLens}{}\renewcommand{\TenCDialSixtyNoLens}{0.044}
+\providecommand{\TenCSlopeThree}{}\renewcommand{\TenCSlopeThree}{0.54}
+\providecommand{\TenCSlopeSixty}{}\renewcommand{\TenCSlopeSixty}{1.36}
+\providecommand{\TenCSlopeThreeHundred}{}\renewcommand{\TenCSlopeThreeHundred}{1.32}
+\providecommand{\TenCBeamFive}{}\renewcommand{\TenCBeamFive}{0.045}
+\providecommand{\TenCBeamThirty}{}\renewcommand{\TenCBeamThirty}{0.16}
+\providecommand{\TenCLmaxFiveHundred}{}\renewcommand{\TenCLmaxFiveHundred}{0.065}
+\providecommand{\TenCLmaxThousand}{}\renewcommand{\TenCLmaxThousand}{0.047}
+\providecommand{\TenCLmaxFifteenHundred}{}\renewcommand{\TenCLmaxFifteenHundred}{0.045}
+\providecommand{\TenCLmaxThreeThousand}{}\renewcommand{\TenCLmaxThreeThousand}{0.045}
+\providecommand{\TenCSAHundred}{}\renewcommand{\TenCSAHundred}{7}
+\providecommand{\TenCSBHundred}{}\renewcommand{\TenCSBHundred}{7}
+\providecommand{\TenCSSumHundred}{}\renewcommand{\TenCSSumHundred}{0.18}
+\providecommand{\TenCRhoHundred}{}\renewcommand{\TenCRhoHundred}{-1.000}
+\providecommand{\TenCSAOneFortyThree}{}\renewcommand{\TenCSAOneFortyThree}{1.1}
+\providecommand{\TenCSBOneFortyThree}{}\renewcommand{\TenCSBOneFortyThree}{1.2}
+\providecommand{\TenCSSumOneFortyThree}{}\renewcommand{\TenCSSumOneFortyThree}{0.07}
+\providecommand{\TenCRhoOneFortyThree}{}\renewcommand{\TenCRhoOneFortyThree}{-0.998}
+\providecommand{\TenCSATwoSeventeen}{}\renewcommand{\TenCSATwoSeventeen}{0.49}
+\providecommand{\TenCSBTwoSeventeen}{}\renewcommand{\TenCSBTwoSeventeen}{0.54}
+\providecommand{\TenCSSumTwoSeventeen}{}\renewcommand{\TenCSSumTwoSeventeen}{0.12}
+\providecommand{\TenCRhoTwoSeventeen}{}\renewcommand{\TenCRhoTwoSeventeen}{-0.976}
+\providecommand{\TenCSAThreeFiftyThree}{}\renewcommand{\TenCSAThreeFiftyThree}{0.3}
+\providecommand{\TenCSBThreeFiftyThree}{}\renewcommand{\TenCSBThreeFiftyThree}{2.4}
+\providecommand{\TenCSSumThreeFiftyThree}{}\renewcommand{\TenCSSumThreeFiftyThree}{2.2}
+\providecommand{\TenCRhoThreeFiftyThree}{}\renewcommand{\TenCRhoThreeFiftyThree}{-0.596}
+\providecommand{\TenCMultiSB}{}\renewcommand{\TenCMultiSB}{0.25}
+\providecommand{\TenCMultiSBfixed}{}\renewcommand{\TenCMultiSBfixed}{0.044}
+\providecommand{\TenCMultiSAHundred}{}\renewcommand{\TenCMultiSAHundred}{0.27}
+\providecommand{\TenCMultiRhoHundred}{}\renewcommand{\TenCMultiRhoHundred}{-0.92}
+\providecommand{\TenCMultiSAOneFortyThree}{}\renewcommand{\TenCMultiSAOneFortyThree}{0.25}
+\providecommand{\TenCMultiRhoOneFortyThree}{}\renewcommand{\TenCMultiRhoOneFortyThree}{-0.98}
+\providecommand{\TenCMultiSATwoSeventeen}{}\renewcommand{\TenCMultiSATwoSeventeen}{0.24}
+\providecommand{\TenCMultiRhoTwoSeventeen}{}\renewcommand{\TenCMultiRhoTwoSeventeen}{-0.96}
+\providecommand{\TenCMultiSAThreeFiftyThree}{}\renewcommand{\TenCMultiSAThreeFiftyThree}{0.23}
+\providecommand{\TenCMultiRhoThreeFiftyThree}{}\renewcommand{\TenCMultiRhoThreeFiftyThree}{-0.9}
+\providecommand{\TenCMultiSBfskyFifty}{}\renewcommand{\TenCMultiSBfskyFifty}{0.3}
+\providecommand{\TenCMultiSBfskyNinety}{}\renewcommand{\TenCMultiSBfskyNinety}{0.22}
+\providecommand{\TenCMultiSBnoiseTenth}{}\renewcommand{\TenCMultiSBnoiseTenth}{0.1}
+\providecommand{\TenCMultiSBnoiseThird}{}\renewcommand{\TenCMultiSBnoiseThird}{0.15}
+\providecommand{\TenCMultiSBnoiseTriple}{}\renewcommand{\TenCMultiSBnoiseTriple}{0.42}
+\providecommand{\TenCMultiSBdustThird}{}\renewcommand{\TenCMultiSBdustThird}{0.42}
+\providecommand{\TenCMultiSBdustTriple}{}\renewcommand{\TenCMultiSBdustTriple}{0.17}
+\providecommand{\TenCCondCMBonly}{}\renewcommand{\TenCCondCMBonly}{5\times10^{-17}}
+\providecommand{\TenCSumOneFortyThreeCMB}{}\renewcommand{\TenCSumOneFortyThreeCMB}{0.066}
+\providecommand{\TenCNsim}{}\renewcommand{\TenCNsim}{1000}
+\providecommand{\TenCNside}{}\renewcommand{\TenCNside}{256}
+\providecommand{\TenCNbins}{}\renewcommand{\TenCNbins}{22}
+\providecommand{\TenCFskyApo}{}\renewcommand{\TenCFskyApo}{0.656}
+\providecommand{\TenCFskySharp}{}\renewcommand{\TenCFskySharp}{0.699}
+\providecommand{\TenCCommute}{}\renewcommand{\TenCCommute}{2\times10^{-16}}
+\providecommand{\TenCPlApoEBFisher}{}\renewcommand{\TenCPlApoEBFisher}{0.0653}
+\providecommand{\TenCPlApoEBFisherLeak}{}\renewcommand{\TenCPlApoEBFisherLeak}{0.0654}
+\providecommand{\TenCPlApoEBSD}{}\renewcommand{\TenCPlApoEBSD}{0.0672}
+\providecommand{\TenCPlApoEBSDerr}{}\renewcommand{\TenCPlApoEBSDerr}{0.002}
+\providecommand{\TenCPlApoEBRatio}{}\renewcommand{\TenCPlApoEBRatio}{1.029}
+\providecommand{\TenCPlApoEBBias}{}\renewcommand{\TenCPlApoEBBias}{0.0043}
+\providecommand{\TenCPlApoEBBiasErr}{}\renewcommand{\TenCPlApoEBBiasErr}{0.002}
+\providecommand{\TenCPlApoEBCovModel}{}\renewcommand{\TenCPlApoEBCovModel}{66.8}
+\providecommand{\TenCPlApoEBSigModel}{}\renewcommand{\TenCPlApoEBSigModel}{0.0654}
+\providecommand{\TenCPlApoEBSDModel}{}\renewcommand{\TenCPlApoEBSDModel}{0.0669}
+\providecommand{\TenCPlApoEBCovData}{}\renewcommand{\TenCPlApoEBCovData}{67.1}
+\providecommand{\TenCPlApoEBSigData}{}\renewcommand{\TenCPlApoEBSigData}{0.0655}
+\providecommand{\TenCPlApoEBSDData}{}\renewcommand{\TenCPlApoEBSDData}{0.0669}
+\providecommand{\TenCPlApoEBCovSims}{}\renewcommand{\TenCPlApoEBCovSims}{67.6}
+\providecommand{\TenCPlApoEBSigSims}{}\renewcommand{\TenCPlApoEBSigSims}{0.067}
+\providecommand{\TenCPlApoEBSDSims}{}\renewcommand{\TenCPlApoEBSDSims}{0.0672}
+\providecommand{\TenCPlApoJFisher}{}\renewcommand{\TenCPlApoJFisher}{0.0638}
+\providecommand{\TenCPlApoJFisherLeak}{}\renewcommand{\TenCPlApoJFisherLeak}{0.0639}
+\providecommand{\TenCPlApoJSD}{}\renewcommand{\TenCPlApoJSD}{0.066}
+\providecommand{\TenCPlApoJSDerr}{}\renewcommand{\TenCPlApoJSDerr}{0.001}
+\providecommand{\TenCPlApoJRatio}{}\renewcommand{\TenCPlApoJRatio}{1.034}
+\providecommand{\TenCPlApoJBias}{}\renewcommand{\TenCPlApoJBias}{0.0034}
+\providecommand{\TenCPlApoJBiasErr}{}\renewcommand{\TenCPlApoJBiasErr}{0.002}
+\providecommand{\TenCPlApoJCovModel}{}\renewcommand{\TenCPlApoJCovModel}{68}
+\providecommand{\TenCPlApoJSigModel}{}\renewcommand{\TenCPlApoJSigModel}{0.064}
+\providecommand{\TenCPlApoJSDModel}{}\renewcommand{\TenCPlApoJSDModel}{0.0648}
+\providecommand{\TenCPlApoJCovData}{}\renewcommand{\TenCPlApoJCovData}{67.9}
+\providecommand{\TenCPlApoJSigData}{}\renewcommand{\TenCPlApoJSigData}{0.064}
+\providecommand{\TenCPlApoJSDData}{}\renewcommand{\TenCPlApoJSDData}{0.0648}
+\providecommand{\TenCPlApoJCovSims}{}\renewcommand{\TenCPlApoJCovSims}{67.5}
+\providecommand{\TenCPlApoJSigSims}{}\renewcommand{\TenCPlApoJSigSims}{0.0645}
+\providecommand{\TenCPlApoJSDSims}{}\renewcommand{\TenCPlApoJSDSims}{0.066}
+\providecommand{\TenCPlSharpEBFisher}{}\renewcommand{\TenCPlSharpEBFisher}{0.0633}
+\providecommand{\TenCPlSharpEBFisherLeak}{}\renewcommand{\TenCPlSharpEBFisherLeak}{0.0636}
+\providecommand{\TenCPlSharpEBSD}{}\renewcommand{\TenCPlSharpEBSD}{0.0656}
+\providecommand{\TenCPlSharpEBSDerr}{}\renewcommand{\TenCPlSharpEBSDerr}{0.001}
+\providecommand{\TenCPlSharpEBRatio}{}\renewcommand{\TenCPlSharpEBRatio}{1.037}
+\providecommand{\TenCPlSharpEBBias}{}\renewcommand{\TenCPlSharpEBBias}{0.0036}
+\providecommand{\TenCPlSharpEBBiasErr}{}\renewcommand{\TenCPlSharpEBBiasErr}{0.002}
+\providecommand{\TenCPlSharpEBCovModel}{}\renewcommand{\TenCPlSharpEBCovModel}{68.5}
+\providecommand{\TenCPlSharpEBSigModel}{}\renewcommand{\TenCPlSharpEBSigModel}{0.0637}
+\providecommand{\TenCPlSharpEBSDModel}{}\renewcommand{\TenCPlSharpEBSDModel}{0.0651}
+\providecommand{\TenCPlSharpEBCovData}{}\renewcommand{\TenCPlSharpEBCovData}{68.2}
+\providecommand{\TenCPlSharpEBSigData}{}\renewcommand{\TenCPlSharpEBSigData}{0.0638}
+\providecommand{\TenCPlSharpEBSDData}{}\renewcommand{\TenCPlSharpEBSDData}{0.0651}
+\providecommand{\TenCPlSharpEBCovSims}{}\renewcommand{\TenCPlSharpEBCovSims}{69.3}
+\providecommand{\TenCPlSharpEBSigSims}{}\renewcommand{\TenCPlSharpEBSigSims}{0.065}
+\providecommand{\TenCPlSharpEBSDSims}{}\renewcommand{\TenCPlSharpEBSDSims}{0.0656}
+\providecommand{\TenCPlSharpJFisher}{}\renewcommand{\TenCPlSharpJFisher}{0.0618}
+\providecommand{\TenCPlSharpJFisherLeak}{}\renewcommand{\TenCPlSharpJFisherLeak}{0.0621}
+\providecommand{\TenCPlSharpJSD}{}\renewcommand{\TenCPlSharpJSD}{0.0641}
+\providecommand{\TenCPlSharpJSDerr}{}\renewcommand{\TenCPlSharpJSDerr}{0.001}
+\providecommand{\TenCPlSharpJRatio}{}\renewcommand{\TenCPlSharpJRatio}{1.038}
+\providecommand{\TenCPlSharpJBias}{}\renewcommand{\TenCPlSharpJBias}{0.0025}
+\providecommand{\TenCPlSharpJBiasErr}{}\renewcommand{\TenCPlSharpJBiasErr}{0.002}
+\providecommand{\TenCPlSharpJCovModel}{}\renewcommand{\TenCPlSharpJCovModel}{69.3}
+\providecommand{\TenCPlSharpJSigModel}{}\renewcommand{\TenCPlSharpJSigModel}{0.0623}
+\providecommand{\TenCPlSharpJSDModel}{}\renewcommand{\TenCPlSharpJSDModel}{0.0633}
+\providecommand{\TenCPlSharpJCovData}{}\renewcommand{\TenCPlSharpJCovData}{69.3}
+\providecommand{\TenCPlSharpJSigData}{}\renewcommand{\TenCPlSharpJSigData}{0.0623}
+\providecommand{\TenCPlSharpJSDData}{}\renewcommand{\TenCPlSharpJSDData}{0.0632}
+\providecommand{\TenCPlSharpJCovSims}{}\renewcommand{\TenCPlSharpJCovSims}{67.9}
+\providecommand{\TenCPlSharpJSigSims}{}\renewcommand{\TenCPlSharpJSigSims}{0.063}
+\providecommand{\TenCPlSharpJSDSims}{}\renewcommand{\TenCPlSharpJSDSims}{0.0641}
+\providecommand{\TenCDeepApoEBFisher}{}\renewcommand{\TenCDeepApoEBFisher}{0.00486}
+\providecommand{\TenCDeepApoEBFisherLeak}{}\renewcommand{\TenCDeepApoEBFisherLeak}{0.00514}
+\providecommand{\TenCDeepApoEBSD}{}\renewcommand{\TenCDeepApoEBSD}{0.00516}
+\providecommand{\TenCDeepApoEBSDerr}{}\renewcommand{\TenCDeepApoEBSDerr}{0.0001}
+\providecommand{\TenCDeepApoEBRatio}{}\renewcommand{\TenCDeepApoEBRatio}{1.062}
+\providecommand{\TenCDeepApoEBBias}{}\renewcommand{\TenCDeepApoEBBias}{0.00026}
+\providecommand{\TenCDeepApoEBBiasErr}{}\renewcommand{\TenCDeepApoEBBiasErr}{0.0002}
+\providecommand{\TenCDeepApoEBCovModel}{}\renewcommand{\TenCDeepApoEBCovModel}{64.7}
+\providecommand{\TenCDeepApoEBSigModel}{}\renewcommand{\TenCDeepApoEBSigModel}{0.00486}
+\providecommand{\TenCDeepApoEBSDModel}{}\renewcommand{\TenCDeepApoEBSDModel}{0.00512}
+\providecommand{\TenCDeepApoEBCovData}{}\renewcommand{\TenCDeepApoEBCovData}{69}
+\providecommand{\TenCDeepApoEBSigData}{}\renewcommand{\TenCDeepApoEBSigData}{0.00521}
+\providecommand{\TenCDeepApoEBSDData}{}\renewcommand{\TenCDeepApoEBSDData}{0.00507}
+\providecommand{\TenCDeepApoEBCovSims}{}\renewcommand{\TenCDeepApoEBCovSims}{69.9}
+\providecommand{\TenCDeepApoEBSigSims}{}\renewcommand{\TenCDeepApoEBSigSims}{0.00523}
+\providecommand{\TenCDeepApoEBSDSims}{}\renewcommand{\TenCDeepApoEBSDSims}{0.00516}
+\providecommand{\TenCDeepApoJFisher}{}\renewcommand{\TenCDeepApoJFisher}{0.00486}
+\providecommand{\TenCDeepApoJFisherLeak}{}\renewcommand{\TenCDeepApoJFisherLeak}{0.00514}
+\providecommand{\TenCDeepApoJSD}{}\renewcommand{\TenCDeepApoJSD}{0.00524}
+\providecommand{\TenCDeepApoJSDerr}{}\renewcommand{\TenCDeepApoJSDerr}{0.0001}
+\providecommand{\TenCDeepApoJRatio}{}\renewcommand{\TenCDeepApoJRatio}{1.079}
+\providecommand{\TenCDeepApoJBias}{}\renewcommand{\TenCDeepApoJBias}{0.00029}
+\providecommand{\TenCDeepApoJBiasErr}{}\renewcommand{\TenCDeepApoJBiasErr}{0.0002}
+\providecommand{\TenCDeepApoJCovModel}{}\renewcommand{\TenCDeepApoJCovModel}{64.8}
+\providecommand{\TenCDeepApoJSigModel}{}\renewcommand{\TenCDeepApoJSigModel}{0.00486}
+\providecommand{\TenCDeepApoJSDModel}{}\renewcommand{\TenCDeepApoJSDModel}{0.00513}
+\providecommand{\TenCDeepApoJCovData}{}\renewcommand{\TenCDeepApoJCovData}{69}
+\providecommand{\TenCDeepApoJSigData}{}\renewcommand{\TenCDeepApoJSigData}{0.00521}
+\providecommand{\TenCDeepApoJSDData}{}\renewcommand{\TenCDeepApoJSDData}{0.00507}
+\providecommand{\TenCDeepApoJCovSims}{}\renewcommand{\TenCDeepApoJCovSims}{67.9}
+\providecommand{\TenCDeepApoJSigSims}{}\renewcommand{\TenCDeepApoJSigSims}{0.00524}
+\providecommand{\TenCDeepApoJSDSims}{}\renewcommand{\TenCDeepApoJSDSims}{0.00524}
+\providecommand{\TenCDeepSharpEBFisher}{}\renewcommand{\TenCDeepSharpEBFisher}{0.0047}
+\providecommand{\TenCDeepSharpEBFisherLeak}{}\renewcommand{\TenCDeepSharpEBFisherLeak}{0.00563}
+\providecommand{\TenCDeepSharpEBSD}{}\renewcommand{\TenCDeepSharpEBSD}{0.00508}
+\providecommand{\TenCDeepSharpEBSDerr}{}\renewcommand{\TenCDeepSharpEBSDerr}{0.0001}
+\providecommand{\TenCDeepSharpEBRatio}{}\renewcommand{\TenCDeepSharpEBRatio}{1.08}
+\providecommand{\TenCDeepSharpEBBias}{}\renewcommand{\TenCDeepSharpEBBias}{0.00024}
+\providecommand{\TenCDeepSharpEBBiasErr}{}\renewcommand{\TenCDeepSharpEBBiasErr}{0.0002}
+\providecommand{\TenCDeepSharpEBCovModel}{}\renewcommand{\TenCDeepSharpEBCovModel}{64.6}
+\providecommand{\TenCDeepSharpEBSigModel}{}\renewcommand{\TenCDeepSharpEBSigModel}{0.00473}
+\providecommand{\TenCDeepSharpEBSDModel}{}\renewcommand{\TenCDeepSharpEBSDModel}{0.00504}
+\providecommand{\TenCDeepSharpEBCovData}{}\renewcommand{\TenCDeepSharpEBCovData}{74.3}
+\providecommand{\TenCDeepSharpEBSigData}{}\renewcommand{\TenCDeepSharpEBSigData}{0.00569}
+\providecommand{\TenCDeepSharpEBSDData}{}\renewcommand{\TenCDeepSharpEBSDData}{0.00502}
+\providecommand{\TenCDeepSharpEBCovSims}{}\renewcommand{\TenCDeepSharpEBCovSims}{67.9}
+\providecommand{\TenCDeepSharpEBSigSims}{}\renewcommand{\TenCDeepSharpEBSigSims}{0.0051}
+\providecommand{\TenCDeepSharpEBSDSims}{}\renewcommand{\TenCDeepSharpEBSDSims}{0.00508}
+\providecommand{\TenCDeepSharpJFisher}{}\renewcommand{\TenCDeepSharpJFisher}{0.0047}
+\providecommand{\TenCDeepSharpJFisherLeak}{}\renewcommand{\TenCDeepSharpJFisherLeak}{0.00563}
+\providecommand{\TenCDeepSharpJSD}{}\renewcommand{\TenCDeepSharpJSD}{0.00518}
+\providecommand{\TenCDeepSharpJSDerr}{}\renewcommand{\TenCDeepSharpJSDerr}{0.0001}
+\providecommand{\TenCDeepSharpJRatio}{}\renewcommand{\TenCDeepSharpJRatio}{1.102}
+\providecommand{\TenCDeepSharpJBias}{}\renewcommand{\TenCDeepSharpJBias}{0.00033}
+\providecommand{\TenCDeepSharpJBiasErr}{}\renewcommand{\TenCDeepSharpJBiasErr}{0.0002}
+\providecommand{\TenCDeepSharpJCovModel}{}\renewcommand{\TenCDeepSharpJCovModel}{64.7}
+\providecommand{\TenCDeepSharpJSigModel}{}\renewcommand{\TenCDeepSharpJSigModel}{0.00473}
+\providecommand{\TenCDeepSharpJSDModel}{}\renewcommand{\TenCDeepSharpJSDModel}{0.00504}
+\providecommand{\TenCDeepSharpJCovData}{}\renewcommand{\TenCDeepSharpJCovData}{74.5}
+\providecommand{\TenCDeepSharpJSigData}{}\renewcommand{\TenCDeepSharpJSigData}{0.00569}
+\providecommand{\TenCDeepSharpJSDData}{}\renewcommand{\TenCDeepSharpJSDData}{0.00502}
+\providecommand{\TenCDeepSharpJCovSims}{}\renewcommand{\TenCDeepSharpJCovSims}{67}
+\providecommand{\TenCDeepSharpJSigSims}{}\renewcommand{\TenCDeepSharpJSigSims}{0.00513}
+\providecommand{\TenCDeepSharpJSDSims}{}\renewcommand{\TenCDeepSharpJSDSims}{0.00518}
+\providecommand{\TenCCovErr}{}\renewcommand{\TenCCovErr}{1.5}
+\providecommand{\TenCBiasSigMax}{}\renewcommand{\TenCBiasSigMax}{2.0}
+\providecommand{\TenCBiasFracMax}{}\renewcommand{\TenCBiasFracMax}{0.06}
+\providecommand{\TenCBiasResol}{}\renewcommand{\TenCBiasResol}{0.09}
+\providecommand{\TenCDeepApoJCovModelSig}{}\renewcommand{\TenCDeepApoJCovModelSig}{2.4}
+\providecommand{\TenCDeepApoJSigModelGap}{}\renewcommand{\TenCDeepApoJSigModelGap}{2}
+\providecommand{\TenCDeepSharpJCovModelSig}{}\renewcommand{\TenCDeepSharpJCovModelSig}{2.4}
+\providecommand{\TenCDeepSharpJSigModelGap}{}\renewcommand{\TenCDeepSharpJSigModelGap}{3}
+\providecommand{\TenCChiEBPlApo}{}\renewcommand{\TenCChiEBPlApo}{32}
+\providecommand{\TenCChiEBPlSharp}{}\renewcommand{\TenCChiEBPlSharp}{34.8}
+\providecommand{\TenCChiEBDeepApo}{}\renewcommand{\TenCChiEBDeepApo}{45.2}
+\providecommand{\TenCChiEBDeepSharp}{}\renewcommand{\TenCChiEBDeepSharp}{42.3}
+\providecommand{\TenCLeakLowApo}{}\renewcommand{\TenCLeakLowApo}{1.5}
+\providecommand{\TenCLeakMidApo}{}\renewcommand{\TenCLeakMidApo}{0.12}
+\providecommand{\TenCLeakEEpctApo}{}\renewcommand{\TenCLeakEEpctApo}{0.8}
+\providecommand{\TenCLeakEEpctMidApo}{}\renewcommand{\TenCLeakEEpctMidApo}{0.048}
+\providecommand{\TenCLeakLowSharp}{}\renewcommand{\TenCLeakLowSharp}{2.5}
+\providecommand{\TenCLeakMidSharp}{}\renewcommand{\TenCLeakMidSharp}{0.59}
+\providecommand{\TenCLeakEEpctSharp}{}\renewcommand{\TenCLeakEEpctSharp}{1.3}
+\providecommand{\TenCLeakEEpctMidSharp}{}\renewcommand{\TenCLeakEEpctMidSharp}{0.24}
+\providecommand{\TenCLeakRatioLow}{}\renewcommand{\TenCLeakRatioLow}{0.60}
+\providecommand{\TenCLeakRatioMid}{}\renewcommand{\TenCLeakRatioMid}{0.20}
+\providecommand{\TenCLeakLcLow}{}\renewcommand{\TenCLeakLcLow}{63}
+\providecommand{\TenCLeakLcMid}{}\renewcommand{\TenCLeakLcMid}{288}
+\section{How small a twist can the sky reveal?}
+\label{10c:sec:forecast}
+
+\Cref{10a:sec:cmb} forecast the six numbers of $\Lambda$CDM from the temperature and $E$-mode spectra of a
+Planck-like experiment, and the forecast came close to what Planck delivered. Every parameter there did the same
+kind of thing: it changed the size of a spectrum that is already large, $\Cell^{TT}$, $\Cell^{TE}$ or $\Cell^{EE}$, and
+the Fisher matrix weighed that change against the scatter of the measured spectrum. The birefringence part of
+\cref{ch:T1} then introduced a parameter of a different kind. Light from the last-scattering surface may have its
+plane of polarization turned by a small angle $\beta$ on the way to us. Picture the polarization at each point of
+the sky as a short headless stick. The ordinary sky makes the sticks line up in spoke-and-ring patterns ($E$) and
+almost never in swirls ($B$); a uniform twist turns every stick by $\beta$, so a little of every spoke pattern
+becomes a swirl, and that new swirl remembers the spoke it came from. In the spectra this shows up as a
+correlation between $E$ and $B$, and between $T$ and $B$, which the untwisted sky does not have at all
+(\cref{T1c:sec:rot-spectra}).
+
+That is where the earlier forecast stops being enough. At $\beta=0$ the twist changes none of the spectra the
+$\Lambda$CDM forecast used, to first order: $EE$ and $BB$ move by an amount proportional to $\beta^2$, and $TT$ does
+not move at all. Its whole first-order effect sits in two spectra, $EB$ and $TB$, whose expected value in the
+fiducial model is exactly zero. A spectrum that is zero on average still scatters from sky to sky, and how much it
+scatters is not obvious: it is not set by its own size, which is zero, but by the sizes of the other spectra. The
+forecast must therefore be built from the full covariance of the three fields $T$, $E$, $B$ together.
+
+\paragraph{A fence knocked off true.} A surveyor wants to know whether a long straight fence has been knocked a
+tiny angle off its line. Measuring the angle at the near end is hopeless; the angle is far too small for her
+protractor. Instead she walks to the far end and measures how far the last post sits to the side of the true line.
+The sideways shift is the length of the fence times the angle, so a longer fence turns the same small angle into a
+larger shift. What limits her is not the length but the sideways wobble: the posts were never perfectly in line,
+and her tape shakes in the wind. The angle she can detect is roughly the wobble divided by the length, and every
+extra post she checks gives her one more independent reading. One thing she should not do is look at how much the
+posts wobble in total: a small knock adds only (length $\times$ angle)$^2$ to the wobble's square, which is lost
+among the posts' own irregularities long before the shift itself is.
+
+The polarized sky is that fence. The bright $E$ pattern is its length. The twist moves a fraction $2\beta$ of $E$
+into the sideways direction, $B$. The wobble is whatever $B$ was there anyway: the swirls made by gravitational
+lensing (\cref{T1c:sec:lensing}) and the noise of the instrument. Each mode of the sky, each $(\ell,m)$, is one
+post. In one sentence: \emph{the information on a small twist is the $E$ power divided by the $B$ wobble, per
+mode, added up over all the modes we can measure.}
+
+\emph{The fence in symbols.} Take one mode with a large $E$ of variance $C_E$, a pre-existing $B$ of variance
+$C_B$, and noise of variance $N$ in each. After a small twist $\beta$ (in radians),
+\begin{equation}
+  E^{\rm o}=E+n_E,\qquad
+  B^{\rm o}=2\beta E+B+n_B ,
+  \label{10c:eq:toy}
+\end{equation}
+from the rotation rule $B'=\sin2\beta\,E+\cos2\beta\,B\approx2\beta E+B$ of \cref{T1c:eq:rot-eb}. The dials are the
+lever $C_E$, the wobble $C_B+N$, and the number $n$ of modes. The naive choice is to look at the $B$ power. Its
+average is $\E|B^{\rm o}|^2=4\beta^2C_E+C_B+N$, so the twist adds only $4\beta^2C_E$ to it, and the derivative of
+this with respect to $\beta$ vanishes at $\beta=0$: a measurement of $B$ power contains no information on $\beta$ to
+first order. The good choice is the product $E^{\rm o}B^{\rm o}$. Its average is
+$\E[E^{\rm o}B^{\rm o}]=2\beta C_E$, linear in $\beta$, because $E$, $B$, $n_E$, $n_B$ are independent with mean
+zero and only the term $2\beta E\cdot E$ survives. Its variance at $\beta=0$ is
+$\E[(E+n_E)^2(B+n_B)^2]=(C_E+N)(C_B+N)$, the product of two independent variances. So one mode measures
+$\beta$ with variance $(C_E+N)(C_B+N)/(4C_E^2)$, and $n$ independent modes divide that by $n$:
+\begin{equation}
+  \sigma^2(\beta)\eqby{1}\frac{(C_E+N)(C_B+N)}{4\,n\,C_E^2}
+  \;\eqby{2}\;\frac{C_B+N}{4\,n\,C_E}\quad(N\ll C_E).
+  \label{10c:eq:toy-sigma}
+\end{equation}
+\begin{explain}
+  \item The estimate $\hat\beta=\overline{E^{\rm o}B^{\rm o}}/(2C_E)$ is the average product over $n$ modes divided
+        by its slope $2C_E$; dividing a quantity by a constant divides its variance by the square of the constant.
+  \item When $E$ is measured much better than its noise, $C_E+N\approx C_E$ and one factor of $C_E$ cancels.
+\end{explain}
+The second form is the surveyor's rule: wobble over length, divided by the number of posts. Put numbers in. Let
+the wobble be one hundredth of the lever, $C_B+N=0.01\,C_E$, and let there be $n=1000$ modes. Then
+$\sigma(\beta)=\sqrt{0.01/4000}=1.6\times10^{-3}$\,rad, or $0.09^\circ$, so a twist of $0.35^\circ$
+($6.1\times10^{-3}$\,rad) stands out at about $3.9\sigma$. The $B$ power of the same modes would grow by
+$4\beta^2C_E=1.5\times10^{-4}\,C_E$, while the average of $n$ squared Gaussian values has a relative scatter of
+$\sqrt{2/n}$ (\cref{ch:07}), so the measured $B$ power itself scatters by $\sqrt{2/1000}\times0.01\,C_E=4.5\times10^{-4}\,C_E$: the
+twist would appear in the power at a third of a standard deviation. Lesson: the twist is measured in the cross
+product, with an error set by the ratio of what is in $B$ anyway to what is in $E$; its square in the $B$ power is
+useless at small angles.
+
+\paragraph{A picture: fitting a line through the origin.} \Cref{T1c:sec:rotation} drew every mode as a point
+with its $E$ across and its $B$ up: a thin horizontal cigar, which a twist tilts, and that tilt is why the
+correlation, not the power, identifies a twist. The same picture also says how well the tilt can be measured.
+By \eqref{10c:eq:toy} the points scatter around the straight line $B=2\beta E$ through the origin, so measuring
+$\beta$ is fitting the slope of that line, and $\hat\beta=\sum E^{\rm o}B^{\rm o}/(2\sum
+(E^{\rm o})^2)$ is exactly least squares through the origin (\cref{3b:sec:linear-ls}). Everyone who has fitted a
+line knows the two dials: the vertical scatter of the points, which is the wobble $C_B+N$, and how far the points
+spread along the horizontal axis, which is the lever $\sum E^2\approx nC_E$. A slope is pinned when the points
+reach far out and sit close to the line.
+
+\emph{One idea, many names.} Measuring a tiny turn of a bright quantity by looking in the direction at right
+angles to it is the principle of quadrature readout: a gravitational-wave interferometer runs close to a dark
+fringe so that a small change of arm length appears as light in an output that is otherwise nearly empty, and the
+noise that matters is the noise of that empty port, not the brightness of the beam. In statistics it is a slope
+estimated by regression through the origin, and in the language of the Fisher matrix it is the information about
+a rotation, which we now compute for the real $T$, $E$, $B$ sky. The computation answers three questions: which
+multipoles carry the information, how the error depends on the noise, the beam, the multipole range and the sky
+fraction, and how close a Planck-like experiment comes to the errors that were actually published.
+
+\subsection{The information on an angle, from the covariance of \texorpdfstring{$T$, $E$ and $B$}{T, E and B}}
+\label{10c:sec:fisher-beta}
+
+\emph{The data.} At each multipole $\ell$ and each $m$ the experiment measures three harmonic coefficients,
+$T_{\ell m}$, $E_{\ell m}$, $B_{\ell m}$ (\cref{T1c:eq:spectra}), each the sky plus white noise with the beam divided
+out. They are Gaussian with mean zero, and different $(\ell,m)$ are independent, exactly as the temperature
+$\alm$ were in \cref{10a:sec:cmb-derive}. What is new is that at one $(\ell,m)$ we now have three correlated numbers
+instead of one or two. Their covariance is the $3\times3$ matrix of rotated spectra of \cref{T1c:sec:rot-spectra},
+plus the noise $N^T_\ell$ in temperature and $N^P_\ell$ in each of $E$ and $B$:
+\begin{equation}
+  \Cmat_\ell(\beta)=
+  \begin{pmatrix}
+    \Cell^{TT}+N^T_\ell & \cos2\beta\,\Cell^{TE} & \sin2\beta\,\Cell^{TE}\\
+    \cos2\beta\,\Cell^{TE} & c^2\Cell^{EE}+s^2\Cell^{BB}+N^P_\ell & \tfrac12\sin4\beta\,\Delta_\ell\\
+    \sin2\beta\,\Cell^{TE} & \tfrac12\sin4\beta\,\Delta_\ell & s^2\Cell^{EE}+c^2\Cell^{BB}+N^P_\ell
+  \end{pmatrix},
+  \label{10c:eq:teb-cov}
+\end{equation}
+with $c=\cos2\beta$, $s=\sin2\beta$ and $\Delta_\ell\equiv\Cell^{EE}-\Cell^{BB}$; the spectra on the right are those of
+the untwisted sky, which has no $EB$ and no $TB$. The noise enters $E$ and $B$ with the same $N^P_\ell$ because white
+noise in $Q$ and $U$ has no preferred orientation, so it is not twisted by anything.
+
+\emph{The formula to use.} \Cref{10a:eq:cmb-fisher-TE} is the Fisher matrix for exactly this situation, a
+zero-mean Gaussian vector at each $(\ell,m)$ with an $\ell$-dependent covariance; it was written there for the pair
+$(T,E)$, but nothing in its derivation used the size of the matrix. With one parameter,
+\begin{equation}
+  F_{\beta\beta}=\sum_\ell\frac{(2\ell+1)\fsky}{2}\Tr\bigl[\Cmat_\ell^{-1}\partial_\beta\Cmat_\ell\,\Cmat_\ell^{-1}\partial_\beta\Cmat_\ell\bigr],
+  \label{10c:eq:fisher-trace}
+\end{equation}
+where $(2\ell+1)\fsky$ counts the independent $m$-modes of a sky fraction $\fsky$ (the argument of
+\cref{10a:sec:cmb-derive}).
+
+\emph{The derivative at $\beta=0$.} Differentiate each entry of \eqref{10c:eq:teb-cov} and set $\beta=0$. The
+diagonal entries contain $\cos^22\beta$ and $\sin^22\beta$, whose derivatives $\mp2\sin4\beta$ vanish there; the $TE$
+entry contains $\cos2\beta$, whose derivative $-2\sin2\beta$ also vanishes. Only the two entries that were zero
+survive: $\partial_\beta\sin2\beta=2\cos2\beta\to2$ and $\partial_\beta\tfrac12\sin4\beta=2\cos4\beta\to2$. Write
+$b_\ell\equiv2\Cell^{TE}$ and $e_\ell\equiv2\Delta_\ell$, gather the $(T,E)$ block of the covariance at $\beta=0$
+into a $2\times2$ matrix $\bm A_\ell$ and the $B$ entry into one number $\tilde B_\ell\equiv\Cell^{BB}+N^P_\ell$:
+\begin{equation}
+  \Cmat_\ell(0)=\begin{pmatrix}\bm A_\ell&\bm0\\ \bm0\T&\tilde B_\ell\end{pmatrix},\quad
+  \bm A_\ell=\begin{pmatrix}\Cell^{TT}+N^T_\ell&\Cell^{TE}\\ \Cell^{TE}&\Cell^{EE}+N^P_\ell\end{pmatrix},\quad
+  \partial_\beta\Cmat_\ell=\begin{pmatrix}\bm0&\bm v_\ell\\ \bm v_\ell\T&0\end{pmatrix},\quad
+  \bm v_\ell=\begin{pmatrix}b_\ell\\ e_\ell\end{pmatrix}.
+  \label{10c:eq:blocks}
+\end{equation}
+\emph{The trace.} The covariance is block diagonal, so its inverse is too, with $\bm A_\ell^{-1}$ and $1/\tilde B_\ell$
+on the diagonal. Then
+\begin{align}
+  \Cmat_\ell^{-1}\partial_\beta\Cmat_\ell
+  &\eqby{1}\begin{pmatrix}\bm A_\ell^{-1}&\bm0\\ \bm0\T&\tilde B_\ell^{-1}\end{pmatrix}
+           \begin{pmatrix}\bm0&\bm v_\ell\\ \bm v_\ell\T&0\end{pmatrix}
+   =\begin{pmatrix}\bm0&\bm A_\ell^{-1}\bm v_\ell\\ \bm v_\ell\T/\tilde B_\ell&0\end{pmatrix},
+  \nonumber\\
+  \bigl(\Cmat_\ell^{-1}\partial_\beta\Cmat_\ell\bigr)^2
+  &\eqby{2}\begin{pmatrix}\bm A_\ell^{-1}\bm v_\ell\bm v_\ell\T/\tilde B_\ell&\bm0\\ \bm0\T&\bm v_\ell\T\bm A_\ell^{-1}\bm v_\ell/\tilde B_\ell\end{pmatrix},
+  \nonumber\\
+  \Tr\bigl[\bigl(\Cmat_\ell^{-1}\partial_\beta\Cmat_\ell\bigr)^2\bigr]
+  &\eqby{3}\frac{\Tr(\bm A_\ell^{-1}\bm v_\ell\bm v_\ell\T)+\bm v_\ell\T\bm A_\ell^{-1}\bm v_\ell}{\tilde B_\ell}
+   \eqby{4}\frac{2\,\bm v_\ell\T\bm A_\ell^{-1}\bm v_\ell}{\tilde B_\ell}.
+  \label{10c:eq:trace}
+\end{align}
+\begin{explain}
+  \item Multiply the blocks: the top-left block of $\Cmat^{-1}$ meets the top-right block $\bm v_\ell$ of the
+        derivative, the bottom-right number meets the bottom-left row $\bm v_\ell\T$.
+  \item Square the result block by block: (top-right)(bottom-left) gives a $2\times2$ matrix,
+        (bottom-left)(top-right) a single number; the off-diagonal blocks of the square are products with a zero
+        block.
+  \item The trace of a block-diagonal matrix is the sum of the traces of its blocks.
+  \item The cyclic property, $\Tr(\bm A^{-1}\bm v\bm v\T)=\Tr(\bm v\T\bm A^{-1}\bm v)=\bm v\T\bm A^{-1}\bm v$, since the
+        last expression is a single number.
+\end{explain}
+Insert this into \eqref{10c:eq:fisher-trace}: the factor $\frac12$ cancels the $2$, and
+\begin{equation}
+  \boxed{F_{\beta\beta}=\sum_\ell(2\ell+1)\fsky\,\frac{\bm v_\ell\T\bm A_\ell^{-1}\bm v_\ell}{\Cell^{BB}+N^P_\ell}
+  =\sum_\ell(2\ell+1)\fsky\,
+  \frac{b_\ell^2\tilde E_\ell-2b_\ell e_\ell\Cell^{TE}+e_\ell^2\tilde T_\ell}{(\tilde T_\ell\tilde E_\ell-(\Cell^{TE})^2)\,\tilde B_\ell}}
+  \label{10c:eq:fisher-beta}
+\end{equation}
+with $\tilde T_\ell=\Cell^{TT}+N^T_\ell$, $\tilde E_\ell=\Cell^{EE}+N^P_\ell$, and the second form written out with the
+inverse of a $2\times2$ matrix, $\bm A^{-1}=\bigl(\begin{smallmatrix}\tilde E&-\Cell^{TE}\\-\Cell^{TE}&\tilde T\end{smallmatrix}\bigr)/\det\bm A$.
+The error on the angle is $\sigma(\beta)=F_{\beta\beta}^{-1/2}$. The script \pyname{code/ch10/17_biref_fisher.py} also
+evaluates \eqref{10c:eq:fisher-trace} numerically, differentiating the full matrix \eqref{10c:eq:teb-cov} by central
+differences; the two agree to $\TenCClosedCheck$ in relative terms.
+
+\paragraph{Example: $EB$ alone, and the variance of a cross-spectrum.} Drop the temperature: the data at each
+$(\ell,m)$ are only $(E,B)$, $\bm A_\ell$ shrinks to the number $\tilde E_\ell$ and $\bm v_\ell$ to $e_\ell$, and
+\begin{equation}
+  F^{EB}_{\beta\beta}=\sum_\ell(2\ell+1)\fsky\,\frac{4\Delta_\ell^2}{\tilde E_\ell\tilde B_\ell}
+  =\sum_\ell\frac{\bigl(\partial_\beta\Cell^{EB}\bigr)^2}{\Var\widehat C^{EB}_\ell},
+  \qquad
+  \Var\widehat C^{EB}_\ell=\frac{\tilde E_\ell\tilde B_\ell}{(2\ell+1)\fsky}.
+  \label{10c:eq:fisher-eb}
+\end{equation}
+The second form reads the same number as ``squared response over variance'' of the measured spectrum, the reading
+of \cref{10a:sec:cmb-derive}, and it identifies the variance of a measured $EB$ when the true $EB$ vanishes. That
+variance follows directly. On the full sky $\widehat C^{EB}_\ell$ is an average over $2\ell+1$ real modes of the
+product $E\,B$ (\cref{T1c:eq:spectra}), and for each mode $E$ and $B$ are independent with variances $\tilde E_\ell$ and
+$\tilde B_\ell$, so the product has variance $\tilde E_\ell\tilde B_\ell$; an average of $2\ell+1$ independent copies
+divides it by $2\ell+1$. In general, for Gaussian fields, the covariance of two measured spectra is
+$\Cov(\widehat C^{XY}_\ell,\widehat C^{ZW}_\ell)=(\tilde C^{XZ}_\ell\tilde C^{YW}_\ell+\tilde C^{XW}_\ell\tilde C^{YZ}_\ell)/(2\ell+1)$, by
+Isserlis' theorem for the four-point average (\cref{7a:sec:grf-predicts}); this is the formula of
+\cite{Minami2019}, Appendix~A, and of \cite{EskiltKomatsu2022}, eq.~(21), and with $X=Z=E$, $Y=W=B$ and
+$\tilde C^{EB}=0$ it gives \eqref{10c:eq:fisher-eb}. The one-channel forecast of \cref{T1c:sec:mk} used this variance
+as an input; here it is a consequence of the Gaussian likelihood.
+
+\paragraph{Example: when does $TB$ help?} With only $(T,B)$, the same steps give the information
+$F^{TB}_\ell=(2\ell+1)\fsky\,4(\Cell^{TE})^2/(\tilde T_\ell\tilde B_\ell)$ from one multipole. Divide it by the $EB$
+information of the same multipole:
+\begin{equation}
+  \frac{F^{TB}_\ell}{F^{EB}_\ell}
+  \eqby{1}\frac{(\Cell^{TE})^2\,\tilde E_\ell}{\tilde T_\ell\,\Delta_\ell^2}
+  \eqby{2}\rho_\ell^2\,\frac{\tilde E_\ell}{\Cell^{EE}}\quad(N^T_\ell\ll\Cell^{TT},\ \Cell^{BB}\ll\Cell^{EE}),
+  \qquad\rho_\ell\equiv\frac{\Cell^{TE}}{\sqrt{\Cell^{TT}\Cell^{EE}}} .
+  \label{10c:eq:tb-eb}
+\end{equation}
+\begin{explain}
+  \item The common factors $(2\ell+1)\fsky\cdot4$ and $\tilde B_\ell$ cancel.
+  \item Neglect the temperature noise and the $B$ power next to the $E$ power, and multiply and divide by $\Cell^{EE}$.
+\end{explain}
+The correlation coefficient $\rho_\ell$ between temperature and $E$ is never larger than one in size, and on the
+acoustic scales its square is well below one. So $TB$ beats $EB$ only at multipoles where the $E$ measurement is
+swamped by its own noise, $\tilde E_\ell/\Cell^{EE}>1/\rho_\ell^2$: there the temperature, measured almost without noise,
+serves as a cleaner copy of the $E$ pattern through their correlation. In the opposite limit, with no noise at all,
+\eqref{10c:eq:fisher-beta} collapses to the $EB$ answer. Set $N=0$ and $\Cell^{BB}\ll\Cell^{EE}$ in the numerator:
+$b^2\tilde E-2be\,\Cell^{TE}+e^2\tilde T=4(\Cell^{TE})^2\Cell^{EE}-8(\Cell^{TE})^2\Cell^{EE}+4(\Cell^{EE})^2\Cell^{TT}=4\Cell^{EE}\bigl(\Cell^{TT}\Cell^{EE}-(\Cell^{TE})^2\bigr)$, and the bracket
+cancels the determinant, leaving $F_\ell=(2\ell+1)\fsky\,4\Cell^{EE}/\tilde B_\ell$, exactly $F^{EB}_\ell$ in the same limit.
+A perfectly measured $E$ already contains everything the temperature knows about it.
+
+\paragraph{Example: what $EE$ and $BB$ add.} At $\beta=0$ they add nothing, because their derivatives vanish. At
+$\beta\neq0$ they respond, $\partial_\beta C^{EE\prime}=-2\sin4\beta\,\Delta$, and one might expect a little extra
+information. There is none, for a reason worth knowing. Write $\bm R$ for the matrix that turns $(E,B)$ by $2\beta$
+and leaves $T$ alone. By \cref{T1c:eq:rot-eb} the twisted coefficients are $\bm R$ times the untwisted ones, and the
+noise is unchanged by $\bm R$ in distribution, so $\Cmat_\ell(\beta)=\bm R\,\Cmat_\ell(0)\,\bm R\T$. Then
+$\partial_\beta\Cmat_\ell(\beta)=\bm R\,\bigl[\bm J\Cmat_\ell(0)+\Cmat_\ell(0)\bm J\T\bigr]\bm R\T$ with
+$\bm J=\bm R\T\partial_\beta\bm R$ a fixed matrix, and $\bm R\T=\bm R^{-1}$, so in
+$\Tr[\Cmat^{-1}\partial\Cmat\,\Cmat^{-1}\partial\Cmat]$ every $\bm R$ meets an $\bm R^{-1}$ and cancels. The information is the
+same at every angle. Turning all the sticks by a known amount changes nothing about how well a further turn can
+be measured, so as $\beta$ grows the information moves out of $EB$ and $TB$ into $EE$ and $BB$, and the total stays
+fixed. The script finds the total at $\beta=0.35^\circ$ equal to that at $\beta=0$ to $\TenCRotInvariance$, with the
+share carried by $EE$ and $BB$ alone at that angle only $\TenCEEBBshare$. For any angle of interest, $EB$ and $TB$
+are where the information is.
+
+\begin{keyidea}[The information on a twist]
+Each $(\ell,m)$ mode contributes $\bm v\T\bm A^{-1}\bm v/\tilde B$ to the Fisher information on $\beta$, with
+$\bm v=(2C^{TE},2(C^{EE}-C^{BB}))$ the response of $TB$ and $EB$, $\bm A$ the $(T,E)$ covariance and $\tilde B=C^{BB}+N^P$
+the $B$ power already present. For a well-measured $E$ this is $4C^{EE}/\tilde B$: the $E$ power is the lever, the
+$B$ power and noise are the floor, and the $B$ power itself carries no information at small angles.
+\end{keyidea}
+
+\subsection{Which multipoles carry the information}
+\label{10c:sec:info-ell}
+
+Read \eqref{10c:eq:fisher-beta} one multipole at a time, in its well-measured-$E$ form,
+$F_\ell\approx(2\ell+1)\fsky\,4\Cell^{EE}/(\Cell^{BB}+N^P_\ell)$. Three factors compete: the number of modes $2\ell+1$, which
+grows with $\ell$; the lever $\Cell^{EE}$, which falls with $\ell$ apart from its acoustic peaks; and the floor
+$\Cell^{BB}+N^P_\ell$, which is the lensing $B$ power where the noise is low and the noise where it is high. The noise
+after the beam has been divided out is $N^P_\ell=\Delta_P^2e^{\ell(\ell+1)\sigma_b^2}$ (\cref{10a:eq:alm-cov}), with
+$\Delta_P$ the depth of the polarization map and $\sigma_b=\mathrm{FWHM}/\sqrt{8\ln2}$ the width of the beam; it is
+flat until the beam scale and then grows exponentially.
+
+\Cref{10c:fig:info} shows the ingredients and the result for two experiments. The Planck-like one combines the
+three Planck HFI channels used for the CMB, $100$, $143$ and $217\,$GHz, with the noise levels and beams of
+\cite{Planck2018I}, Table~4, by inverse-variance weighting at each $\ell$ (as in \cref{10a:sec:cmb-planck}); its
+polarization depth is $\TenCPlDepthP\,\mu$K-arcmin on large scales. Its noise lies above the lensing $BB$ at every
+multipole, so the floor is pure noise and the information follows $(2\ell+1)\Cell^{EE}$ until the beam cuts it: it
+peaks at $\ell\approx\TenCPeakPl$, half of it comes from multipoles below $\TenCHalfPl$, and only $\TenCLowFracPl\%$ from
+$\ell<200$. The deep experiment, $2\,\mu$K-arcmin with a $3'$ beam, has noise below the lensing floor out to
+$\ell\approx2000$. Its information then traces the acoustic peaks of $\Cell^{EE}$ divided by the smooth lensing $BB$, and
+it peaks near $\ell\approx\TenCPeakDeep$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/ch10/biref_info.pdf}
+\caption{Where the information on a twist comes from. Top: the lever and the floor. The $E$-mode spectrum
+(blue) is what the twist turns into $B$; the lensing $B$ modes (orange) and the noise (dashed: Planck-like and
+deep) are the $B$ that is there anyway. Bottom: the Fisher information on $\beta$ per multipole,
+\eqref{10c:eq:fisher-beta}, scaled to the peak of each experiment's combined $EB$+$TB$ curve. For the
+Planck-like experiment the noise is the floor and the information follows the $E$ power out to the beam; $TB$
+(dotted orange) adds little because the temperature is a good copy of $E$ only where $E$ is noisy. For the deep
+experiment the lensing $B$ is the floor and the information follows the acoustic peaks of $EE$ to
+$\ell\approx2000$. The large-scale bump at $\ell<10$ is the reionization peak of $EE$.}
+\label{10c:fig:info}
+\end{figure}
+
+This answers the question of which spectra matter. $EE$ is large and it is the lever: the twist borrows its pattern,
+so the brighter $E$ is at some multipole, the more $B$ the twist makes there. $BB$ is small and it is the floor: it
+enters only the denominator, as part of the wobble against which the borrowed $B$ is seen. A brighter $EE$ helps; a
+brighter $BB$ hurts. Both are needed in the forecast, but only through the covariance, never through a
+derivative.
+
+\begin{pitfall}[The reionization bump]
+The information per multipole at $\ell<10$ is large, because $\Cell^{EE}$ has its reionization peak there while the
+lensing $B$ is smallest. The published analyses nevertheless start at $\ell=51$ \cite{MinamiKomatsu2020}: on the
+largest scales the polarization maps are dominated by foreground residuals and instrumental systematics, whose
+$EB$ is not that of a twist. A forecast that keeps $\ell<50$ promises information that the real analysis throws
+away. The forecast numbers for both experiments therefore use $51\le\ell\le\ell_{\max}$.
+\end{pitfall}
+
+\subsection{The dials: depth, beam, multipole range and sky fraction}
+\label{10c:sec:dials}
+
+\emph{The sky fraction.} Every term of \eqref{10c:eq:fisher-beta} carries one factor $\fsky$, so
+$\sigma(\beta)\propto\fsky^{-1/2}$ exactly. For the Planck-like experiment the forecast is ${\TenCPlJoint}^\circ$ at
+$\fsky=0.7$ and ${\TenCPlJointNine}^\circ$ at $\fsky=0.9$, in the ratio $\sqrt{0.7/0.9}=0.88$. With a tapered mask the
+$\fsky$ to use is not the plain fraction of sky kept but $\fsky=w_2^2/w_4$, with $w_i$ the average of the $i$-th
+power of the mask over the sphere \cite{EskiltKomatsu2022}, eq.~(22). It is the number of independent modes a tapered window leaves, derived in
+\cref{8b:eq:hivon-count}: a mode in a region where the mask has weight $W$ has its variance multiplied by $W^2$, and
+the modes count fully only where $W=1$.
+
+\emph{The depth.} Fix the beam at $5'$ and vary $\Delta_P$, with the temperature depth $\Delta_P/\sqrt2$ as for
+detectors that measure both. \Cref{10c:eq:fisher-beta} predicts three regimes, which we read off the
+well-measured-$E$ form $F_\ell\propto\Cell^{EE}/(\Cell^{BB}+N_\ell)$ and its noisy-$E$ version
+$F_\ell\propto(\Cell^{EE})^2/[(\Cell^{EE}+N_\ell)(\Cell^{BB}+N_\ell)]$.
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+  \item \emph{Noise above the $E$ signal} ($N_\ell\gg\Cell^{EE}$): $F_\ell\propto(\Cell^{EE})^2/N_\ell^2$, and $N_\ell\propto\Delta_P^2$,
+        so $\sigma(\beta)\propto\Delta_P^2$. Halving the noise improves the error four times.
+  \item \emph{Noise between the two} ($\Cell^{BB}\ll N_\ell\ll\Cell^{EE}$): $F_\ell\propto\Cell^{EE}/N_\ell$, so $\sigma(\beta)\propto\Delta_P$.
+  \item \emph{Noise below the lensing $B$} ($N_\ell\ll\Cell^{BB}$): $F_\ell\propto\Cell^{EE}/\Cell^{BB}$, independent of the noise. The
+        error stops improving: lensing is the floor.
+\end{enumerate}
+\Cref{10c:fig:dials}(a) shows all three. A real experiment mixes regimes across multipoles, so the local slope
+$\dd\ln\sigma/\dd\ln\Delta_P$ lies between them: $\TenCSlopeSixty$ at $60\,\mu$K-arcmin, where the noise is above the $E$
+signal at high $\ell$ and below it at low $\ell$, and $\TenCSlopeThree$ at $3\,\mu$K-arcmin, close to the lensing
+floor. The floor itself, with $\ell\le3000$, is ${\TenCDialFloor}^\circ$ at $0.1\,\mu$K-arcmin; with the lensing $B$
+removed it would be ${\TenCDialFloorNoLens}^\circ$, almost twenty times smaller, which is why a future experiment measuring
+very small angles would want to remove the lensing $B$ modes first (delensing, \cref{T1c:sec:lensing}).
+
+\emph{The beam.} At fixed depth a wider beam pushes $N_\ell$ up at lower $\ell$ and removes the multipoles where most
+modes live: at $60\,\mu$K-arcmin, $\sigma(\beta)$ grows from ${\TenCBeamFive}^\circ$ with a $5'$ beam to
+${\TenCBeamThirty}^\circ$ with $30'$ (\cref{10c:fig:dials}(b)).
+
+\emph{The multipole range.} Raising $\ell_{\max}$ helps only while the new multipoles have $N_\ell\lesssim\Cell^{EE}$. At
+$60\,\mu$K-arcmin and $5'$ the error is ${\TenCLmaxFiveHundred}^\circ$ for $\ell_{\max}=500$, ${\TenCLmaxThousand}^\circ$ for
+$1000$, ${\TenCLmaxFifteenHundred}^\circ$ for $1500$, and ${\TenCLmaxThreeThousand}^\circ$ for $3000$: beyond $\ell\approx1000$ the
+noise has won. A deeper map keeps gaining to much higher $\ell$ (\cref{10c:fig:dials}(c)), because its noise stays
+below the $E$ signal there.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/ch10/biref_dials.pdf}
+\caption{The dials of a birefringence forecast, from \eqref{10c:eq:fisher-beta} with $EB$ and $TB$ and $\fsky=0.7$.
+(a) Error against polarization depth with a $5'$ beam: steeper than linear for noisy maps, linear in between,
+and flat below a few $\mu$K-arcmin, where the lensing $B$ modes become the floor; without them (dashed) the error
+would keep falling. (b) Error against beam width at two depths. (c) Error against the largest multipole used:
+it stops improving where the noise overtakes the $E$ signal, earlier for a noisier map.}
+\label{10c:fig:dials}
+\end{figure}
+
+\subsection{A Planck-like forecast against the published errors}
+\label{10c:sec:planck-forecast}
+
+\emph{Their question.} The Planck team \cite{PlanckIntXLIX2016} and later \cite{MinamiKomatsu2020} measured the
+angle by which the CMB polarization appears turned, from the $EB$ (and $TB$) spectra of the HFI maps over
+$51\le\ell\le1500$. With the detector angles held at their ground calibration, $\alpha_\nu=0$, the measured angle is
+the sum $\alpha+\beta$ of \cref{T1c:sec:rot-alpha}, and the statistical error is what our forecast predicts. The
+Planck team found $0.29^\circ\pm0.05^\circ$ (statistical), Minami and Komatsu $0.289^\circ\pm0.048^\circ$ with the same
+data, and Eskilt and Komatsu, from the reprocessed maps (PR4) with more detector splits, $0.288^\circ\pm0.032^\circ$
+\cite{EskiltKomatsu2022}.
+
+\emph{Our forecast.} The Planck-like experiment of \cref{10c:sec:info-ell}, $51\le\ell\le1500$, gives
+\begin{equation}
+  \sigma(\beta)={\TenCPlEB}^\circ\ (EB),\qquad{\TenCPlTB}^\circ\ (TB),\qquad{\TenCPlJoint}^\circ\ (EB+TB)\qquad(\fsky=0.7),
+  \label{10c:eq:planck-forecast}
+\end{equation}
+and ${\TenCPlJointNine}^\circ$ for $\fsky=0.9$. $TB$ alone is about twice worse than $EB$ and adds only a few per cent
+when combined, as \eqref{10c:eq:tb-eb} predicts for an experiment whose $E$ is measured above its noise over most
+of the range.
+
+\emph{Side by side, and why they differ.} The published statistical errors, $0.048^\circ$ to $0.05^\circ$ for the PR3
+maps, are about a third larger than our ${\TenCPlJointNine}^\circ$ at a similar sky fraction (their apodized masks keep
+$\fsky=0.77$--$0.97$ depending on the map, \cite{MinamiKomatsu2020}). Three causes push the real error up. The
+published analyses use cross-spectra between half-mission maps, each of which has $\sqrt2$ times the noise of the
+full map; this removes the noise bias but loses information wherever the noise matters. Their covariance is built
+from the observed spectra, which contain the residual Galactic emission, so the floor $\tilde B_\ell$ is higher than
+our CMB-plus-noise model. And the real noise is not white: it rises towards large scales and varies over the sky.
+The PR4 error is smaller because the reprocessing lowered the noise by $10$--$30\%$ \cite{DiegoPalazuelos2022} and
+because more independent detector splits were used. Lesson: a Fisher forecast with white noise and an ideal sky
+fraction lands within about a third of the measured error; the remaining gap is a list of known losses, each of
+which can be put back into the covariance.
+\section{Two angles and one sum}
+\label{10c:sec:alpha-beta}
+
+Everything in \cref{10c:sec:forecast} assumed that the experiment knows which way its own detectors point. It does
+not, exactly. Each detector measures polarization along an axis whose orientation on the sky is calibrated on the
+ground, and if that axis is off by an angle $\alpha$, every stick the detector sees appears twisted by $\alpha$
+(\cref{T1c:sec:rot-alpha}). The CMB light then arrives twisted by $\beta$ on its journey and by $\alpha$ in the
+instrument, and its spectra depend only on the sum $\alpha+\beta$. For Planck the ground calibration of $\alpha$ is
+uncertain by $0.28^\circ$ \cite{MinamiKomatsu2020}, almost seven times the statistical error of the forecast
+\eqref{10c:eq:planck-forecast}. \Cref{T1c:sec:biref} described the way out with a door frame next to a crooked
+painting: the polarized light of our own Galaxy passes through the same detectors but travels too short a distance
+to be twisted by $\beta$, so it carries $\alpha$ alone \cite{Minami2019}. A single-channel forecast there showed that
+the dust in one map can close the degeneracy, at a price. A real experiment has several frequency channels, each
+with its own detector angle $\alpha_\nu$, and dust that is faint in some and bright in others. How well is $\beta$
+then measured, and what sets the answer?
+
+\paragraph{Four scales, each with its own zero.} A post office has four kitchen scales, and each one reads a little
+off: scale $i$ shows its true load plus an unknown zero error $\alpha_i$. A parcel of unknown weight $\beta$ is put on
+every scale in turn. Each reading is $\alpha_i+\beta$, so the parcel alone can never tell the clerk whether the
+parcel is heavy or the scales read high: shifting every zero up by a gram and the parcel down by a gram changes no
+reading at all. The clerk needs a second measurement that involves the zeros but not the parcel. She looks at each
+scale with its pan empty. That reading is $\alpha_i$ itself, though on some scales the display flickers so much that
+the empty reading is poor. Now each scale gives its own estimate of the parcel, the loaded reading minus the empty
+one, and the error of that estimate is set mostly by the worse of the two readings. A scale whose empty reading is
+useless contributes nothing to the parcel's weight; it only measures its own zero.
+
+The four scales are the four frequency channels of the Planck HFI, $100$, $143$, $217$ and $353\,$GHz. The parcel is
+$\beta$, which only the CMB carries. The empty pan is the Galactic dust, which sees each channel's $\alpha_\nu$ and
+not $\beta$. The flicker is the dust's faintness: at $100\,$GHz the dust is barely there, at $353\,$GHz it is bright.
+
+\emph{The scales in symbols.} Suppose each channel's sum $\alpha_i+\beta$ is measured with error $\sigma_s$ and its
+zero $\alpha_i$ with an independent error $\sigma_i$. Then $\hat\beta_i=\widehat{(\alpha_i+\beta)}-\hat\alpha_i$ has
+variance $\sigma_s^2+\sigma_i^2$. The dials are $\sigma_s$, the $\sigma_i$ and the number of channels. The naive choice
+fixes every $\alpha_i$ at its nominal zero and quotes $\hat\beta$ with error $\sigma_s$: it is precise, and wrong by
+whatever the true $\alpha_i$ are. The good choice fits the zeros too. With $\sigma_s=0.05^\circ$, roughly the
+Planck-like sum of \eqref{10c:eq:planck-forecast}, and zeros known to $\sigma_i=0.5^\circ$ from the dust, each channel
+gives $\beta$ to $\sqrt{0.05^2+0.5^2}=0.50^\circ$: the sum hardly matters. Four such channels would average to
+$0.25^\circ$ if their errors were independent. The CMB part is not independent between channels, because all of them
+see the same CMB sky, but that part is small here; the dust part, which differs from channel to channel through its
+noise, is what averages. Lesson: once the detector angles are free, the error on $\beta$ is set by how well the dust
+measures the $\alpha_\nu$, not by how well the CMB measures the sum \cite{Minami2019}.
+
+\emph{A picture.} In the plane of $(\alpha,\beta)$ for one channel, the CMB alone allows a band along the line
+$\alpha+\beta=\text{const}$, infinitely long. The dust adds a band along $\alpha=\text{const}$, a vertical strip. The
+two cross in a parallelogram, long and thin along the CMB band when the dust strip is wide, and that parallelogram
+(\cref{10c:fig:band-strip}) is what the Fisher ellipse in $(\alpha,\beta)$ looks like. Its long axis is tilted at $45^\circ$ downwards, so $\alpha$ and $\beta$ are
+anti-correlated: a fit that pushes $\alpha$ up pushes $\beta$ down by the same amount.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \draw[->,faint] (-2.3,0) -- (2.5,0) node[right,black,lbl] {$\alpha$};
+  \draw[->,faint] (0,-2.2) -- (0,2.4) node[above,black,lbl] {$\beta$};
+  \fill[fibreorange!25] (-2.2,2.45) -- (-1.7,2.45) -- (2.2,-1.45) -- (2.2,-1.95) -- cycle;
+  \draw[fibreorange,thick] (-2.2,2.45) -- (2.2,-1.95);
+  \draw[fibreorange,thick] (-1.7,2.45) -- (2.2,-1.45);
+  \node[lbl,fibreorange,anchor=north] at (1.7,-2.05) {CMB: $\alpha+\beta$ fixed};
+  \fill[formblue!18] (-0.6,-2.1) rectangle (0.6,2.3);
+  \draw[formblue,thick] (-0.6,-2.1) -- (-0.6,2.3);
+  \draw[formblue,thick] (0.6,-2.1) -- (0.6,2.3);
+  \node[lbl,formblue,anchor=west] at (0.65,2.0) {dust: $\alpha$ fixed};
+  \fill[bdryred!45] (-0.6,1.35) -- (-0.6,0.85) -- (0.6,-0.35) -- (0.6,0.15) -- cycle;
+  \draw[bdryred,thick] (-0.6,1.35) -- (-0.6,0.85) -- (0.6,-0.35) -- (0.6,0.15) -- cycle;
+  \draw[faint,dashed] (-1.9,1.35) -- (-0.6,1.35);
+  \draw[faint,dashed] (-1.9,-0.35) -- (0.6,-0.35);
+  \draw[<->,bdryred] (-1.8,1.35) -- (-1.8,-0.35);
+  \node[lbl,bdryred,anchor=east] at (-1.85,0.5) {range of $\beta$};
+\end{tikzpicture}
+\caption{Why the dust sets the error on $\beta$. The CMB of one channel allows a band of constant $\alpha+\beta$ (orange);
+the dust allows a strip of $\alpha$ values (blue). They cross in a tilted parallelogram (red) whose height, the
+error on $\beta$, is set by the width of the dust strip once the CMB band is narrow, and whose tilt makes $\alpha$
+and $\beta$ anti-correlated.}
+\label{10c:fig:band-strip}
+\end{figure}
+
+\emph{One idea, many names.} Separating a common offset from individual offsets by adding a measurement that sees
+only the individual ones is the logic of every calibration network: the zero points of several telescopes from
+stars that all of them see, the gains of an interferometer's antennas from a calibrator source, the alignment of
+tracking detectors from cosmic rays that cross them all. In the Fisher matrix it appears as a null direction,
+$(\delta\alpha_1,\dots,\delta\alpha_N,\delta\beta)\propto(1,\dots,1,-1)$, that the second kind of data lifts. We now
+build the covariance of several channels, show that without dust it is exactly singular, and compute what the
+dust buys, channel by channel and for all four channels at once.
+
+\subsection{The covariance of several channels}
+\label{10c:sec:multi-cov}
+
+\emph{The maps.} Channel $\nu$ sees the CMB, twisted by $\alpha_\nu+\beta$, the dust, twisted by $\alpha_\nu$, and its own
+noise. By \cref{T1c:eq:mk-alm}, mode by mode,
+\begin{equation}
+  E_\nu+iB_\nu=e^{2i\alpha_\nu}\,a_\nu\bigl(E_{\rm d}+iB_{\rm d}\bigr)+e^{2i(\alpha_\nu+\beta)}\bigl(E_{\rm c}+iB_{\rm c}\bigr)+n^E_\nu+in^B_\nu ,
+  \label{10c:eq:multi-map}
+\end{equation}
+where $(E_{\rm c},B_{\rm c})$ are the CMB coefficients, $(E_{\rm d},B_{\rm d})$ those of one fixed dust pattern, and $a_\nu$
+the brightness of the dust in channel $\nu$ in CMB temperature units. Writing the dust as one pattern times a
+number per channel assumes that its emission law is the same in every direction of the sky. It is the simplest
+model, and it makes the dust in different channels perfectly correlated; a dust whose emission law changes across
+the sky would decorrelate the channels a little and weaken the calibration.
+
+\emph{The covariance.} The data at one $(\ell,m)$ are the $2N$ numbers $(E_1,B_1,\dots,E_N,B_N)$. Write $\bm R(\theta)$ for
+the $2\times2$ matrix that turns $(E,B)$ by $2\theta$, $\bm S_{\rm c}=\diag(\Cell^{EE},\Cell^{BB})$ for the CMB and
+$\bm S_{\rm d}=\diag(C^{EE}_{\ell,\rm d},C^{BB}_{\ell,\rm d})$ for the dust pattern. Since the three pieces of
+\eqref{10c:eq:multi-map} are independent with mean zero, the $2\times2$ block between channels $\mu$ and $\nu$ is the sum
+of three covariances:
+\begin{equation}
+  \Cmat_{\mu\nu}=\bm R(\alpha_\mu+\beta)\,\bm S_{\rm c}\,\bm R(\alpha_\nu+\beta)\T
+                +a_\mu a_\nu\,\bm R(\alpha_\mu)\,\bm S_{\rm d}\,\bm R(\alpha_\nu)\T
+                +\delta_{\mu\nu}N^P_{\ell,\nu}\Id .
+  \label{10c:eq:multi-cov}
+\end{equation}
+Each term is the rule ``if $\bm x=\bm R\bm y$ then $\Cov\bm x=\bm R\Cov(\bm y)\bm R\T$'' applied to one component in two
+channels; the noise is independent between channels and isotropic in $(E,B)$. The dust model is the one of
+\cref{T1c:sec:mk}: Planck's power-law fit over $71\%$ of the sky at $353\,$GHz, $C^{BB}_{\rm d}=0.53\,C^{EE}_{\rm d}$, scaled
+to other frequencies by a modified black body \cite{Planck2018XI}. The Fisher matrix in the $N+1$ parameters
+$(\alpha_1,\dots,\alpha_N,\beta)$ is \eqref{10c:eq:fisher-trace} with the $2N\times2N$ trace, and the script computes the
+derivatives of \eqref{10c:eq:multi-cov} by central differences (\cref{10a:sec:numderiv}).
+
+\emph{Without dust the matrix is singular, exactly.} Set $a_\nu=0$. Every entry of \eqref{10c:eq:multi-cov} depends
+on the angles only through the sums $\alpha_\nu+\beta$. Change every $\alpha_\nu$ by $+\delta$ and $\beta$ by $-\delta$: no
+sum changes, so the covariance is unchanged, so the likelihood is unchanged, so the curvature of $-\ln\Like$ along
+the direction $\bm u=(1,\dots,1,-1)$ is zero, $\bm u\T\Fish\bm u=0$. A Fisher matrix with a zero-curvature direction has
+a zero eigenvalue and no inverse (\cref{10a:sec:degeneracy}). For the four Planck channels the script finds the
+ratio of the smallest to the largest eigenvalue to be $\TenCCondCMBonly$, zero to round-off. With the dust, the
+dust terms depend on $\alpha_\nu$ alone, the shift $\bm u$ changes them, and the eigenvalue is lifted.
+
+\subsection{One channel at a time}
+\label{10c:sec:single}
+
+Take one Planck channel with its noise and beam, the CMB and the dust, $\fsky=0.7$ and $51\le\ell\le1500$, and
+compute the $2\times2$ Fisher matrix in $(\alpha,\beta)$. \Cref{10c:tab:single} lists the marginal errors (the square roots
+of the diagonal of $\Fish^{-1}$, \cref{10a:sec:marginal}).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+channel & $\sigma(\alpha)$ [deg] & $\sigma(\beta)$ [deg] & $\sigma(\alpha+\beta)$ [deg] & $\rho(\alpha,\beta)$\\\midrule
+$100\,$GHz & $\TenCSAHundred$ & $\TenCSBHundred$ & $\TenCSSumHundred$ & $\TenCRhoHundred$\\
+$143\,$GHz & $\TenCSAOneFortyThree$ & $\TenCSBOneFortyThree$ & $\TenCSSumOneFortyThree$ & $\TenCRhoOneFortyThree$\\
+$217\,$GHz & $\TenCSATwoSeventeen$ & $\TenCSBTwoSeventeen$ & $\TenCSSumTwoSeventeen$ & $\TenCRhoTwoSeventeen$\\
+$353\,$GHz & $\TenCSAThreeFiftyThree$ & $\TenCSBThreeFiftyThree$ & $\TenCSSumThreeFiftyThree$ & $\TenCRhoThreeFiftyThree$\\
+\bottomrule
+\end{tabular}
+\caption{Fisher forecast for the detector angle $\alpha$ and the birefringence angle $\beta$ from the $E$ and $B$ modes of one
+Planck HFI channel at a time, with CMB, dust and noise, $\fsky=0.7$, $51\le\ell\le1500$. The sum is always measured
+better than either angle, and the two angles are almost perfectly anti-correlated except at $353\,$GHz.}
+\label{10c:tab:single}
+\end{table}
+
+\emph{Reading the table across frequency.} At $100$ and $143\,$GHz the dust is faint. The CMB fixes the sum well
+(${\TenCSSumOneFortyThree}^\circ$ at $143\,$GHz, close to the CMB-only value ${\TenCSumOneFortyThreeCMB}^\circ$), but the dust
+pins $\alpha$ so weakly that $\beta=(\alpha+\beta)-\alpha$ inherits the large error of $\alpha$, and the two are
+anti-correlated with $\rho\approx-1$: the ellipse is the CMB band, cut off far away. At $217\,$GHz the dust is brighter
+and $\sigma(\beta)$ drops to ${\TenCSBTwoSeventeen}^\circ$. At $353\,$GHz the dust is so bright that it measures $\alpha$ to
+${\TenCSAThreeFiftyThree}^\circ$, but it also fills $\tilde E_\ell$ and $\tilde B_\ell$ with its own power, which is the floor
+against which the CMB's $EB$ is read (\cref{10c:sec:fisher-beta}). The sum is now known only to
+${\TenCSSumThreeFiftyThree}^\circ$, and $\beta$ to ${\TenCSBThreeFiftyThree}^\circ$. Too little dust cannot calibrate, too much
+blurs the CMB.
+
+\Cref{10c:fig:alpha-beta}(a) turns this into a curve. For one channel with the same depth at every frequency, the
+error on $\beta$ is large at both ends and has a minimum in between, near $280\,$GHz in our dust model, where
+the dust and CMB polarization are of comparable size on the scales that carry the information. A lower noise moves
+the whole curve down and widens the useful range, but hardly moves the minimum. Minami et al.\ found the same shape
+for the channels of the planned LiteBIRD satellite, with the best single-channel error, $11'$ ($0.18^\circ$), at
+$195\,$GHz \cite{Minami2019}, Table~2. Their minimum sits at a lower frequency for a reason the curve itself
+suggests: the minimum is where dust and CMB balance on the scales that carry the information. LiteBIRD's beams
+are tens of arcminutes wide, so its information comes from $\ell$ of a few hundred and below, where the $E$ power of
+the CMB is much smaller and the dust, whose power falls with $\ell$, relatively brighter; the balance is then
+struck at a lower frequency, where the dust is fainter.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/ch10/biref_alpha_beta.pdf}
+\caption{Breaking the degeneracy with dust. (a) Error on $\beta$ from a single channel against its frequency, for a
+channel of fixed depth (two depths shown) and $5'$ beam, with the detector angle free: poor where the dust is too faint to calibrate
+(low $\nu$) and where it is so bright that it blurs the CMB (high $\nu$). Dots: the four Planck HFI channels, each
+alone; dashed line: all four together, each with its own $\alpha_\nu$. (b) The $1\sigma$ regions in $(\alpha,\beta)$: the
+CMB alone at $143\,$GHz allows a band of constant $\alpha+\beta$ (shaded); the faint $143\,$GHz dust closes it far away
+(blue), the bright $353\,$GHz dust pins $\alpha$ but leaves $\beta$ loose (dotted green); the four channels together
+(orange, shown in the plane of $\alpha_{143}$ and $\beta$) give the smallest region.}
+\label{10c:fig:alpha-beta}
+\end{figure}
+
+\subsection{All four channels, each with its own angle}
+\label{10c:sec:four}
+
+Now fit all four channels at once, with five parameters $(\alpha_{100},\alpha_{143},\alpha_{217},\alpha_{353},\beta)$ and the
+full $8\times8$ covariance \eqref{10c:eq:multi-cov}. The channels help each other in two ways. The bright dust at
+$353\,$GHz is the same dust pattern that is faint at $143\,$GHz, so it tells the fit what that faint dust looks like;
+and the CMB, the same in every channel, ties all the sums together. The forecast is
+\begin{equation}
+  \sigma(\beta)={\TenCMultiSB}^\circ\quad\text{($\alpha_\nu$ free)},\qquad
+  \sigma(\beta)={\TenCMultiSBfixed}^\circ\quad\text{($\alpha_\nu$ known)},
+  \label{10c:eq:four}
+\end{equation}
+with each $\sigma(\alpha_\nu)$ between ${\TenCMultiSAThreeFiftyThree}^\circ$ and ${\TenCMultiSAHundred}^\circ$ and each correlation
+$\rho(\alpha_\nu,\beta)$ between $\TenCMultiRhoOneFortyThree$ and $\TenCMultiRhoThreeFiftyThree$. Not knowing the detector angles costs a
+factor of about six. All four $\alpha_\nu$ end up with nearly the same error as $\beta$: the scales of the story, whose
+loaded readings are nearly perfect, so that each zero is known as well as the parcel and no better.
+
+\emph{The dials.} Shrinking the sky to $\fsky=0.5$ gives ${\TenCMultiSBfskyFifty}^\circ$; enlarging it to $0.9$,
+${\TenCMultiSBfskyNinety}^\circ$, the $\fsky^{-1/2}$ scaling. Lowering every channel's noise by a factor of three gives
+${\TenCMultiSBnoiseThird}^\circ$, by ten ${\TenCMultiSBnoiseTenth}^\circ$; raising it threefold gives ${\TenCMultiSBnoiseTriple}^\circ$.
+Making the dust three times fainter in power gives ${\TenCMultiSBdustThird}^\circ$, three times brighter
+${\TenCMultiSBdustTriple}^\circ$. Both the noise and the dust brightness matter, because the dust calibrates $\alpha_\nu$
+only where it stands above the noise.
+
+\emph{Side by side with the measurement.} \Cite{MinamiKomatsu2020} fitted the same five parameters to the Planck
+2018 maps and found $\beta=0.35^\circ\pm0.14^\circ$, an error about half of our ${\TenCMultiSB}^\circ$. Their setup differs from ours
+in the direction that helps them. Their masks keep $77$--$97\%$ of the sky, including regions close to the Galactic
+plane, where the dust is several times brighter than in the $71\%$ region our dust model describes; our forecast
+with three times brighter dust gives ${\TenCMultiSBdustTriple}^\circ$, and with $\fsky=0.9$ on top of that the error would
+fall further. They did not model the dust spectra at all: the relation \cref{T1c:eq:mk-final} uses the
+observed $EE-BB$ of each map as the dust template, so the brightest regions contribute fully. And they used every
+cross-spectrum between half-mission maps of different channels. Lesson: with the detector angles free, the error on
+$\beta$ is a statement about the polarized Galaxy, its brightness and the area over which it is used, more than about
+the CMB.
+
+\begin{pitfall}[A brighter Galaxy is also a less certain reference]
+Using more of the bright Galactic plane shrinks $\sigma(\beta)$ in the forecast, but the method assumes that the dust
+itself has no $EB$. Any intrinsic dust $EB$ appears as an extra twist $\gamma$ of the dust and shifts the result to
+$\beta-\gamma$ (\cref{T1c:eq:gamma}). The PR4 analysis found $\beta$ falling as the Galactic mask grows
+\cite{DiegoPalazuelos2022}, which is what a dust $EB$ concentrated near the plane would do. The Fisher error does not
+see this bias; only a model of the dust $EB$, or a calibration that does not rely on the dust, can.
+\end{pitfall}
+\section{Simulating the measurement}
+\label{10c:sec:mc}
+
+A forecast is a promise made with a clean model of the data. Twice already the book has checked such a promise by
+building many skies on the computer and measuring them. In \cref{10a:sec:knox} Knox's error bars for a beamed,
+noisy map were set against a hundred simulated skies per experiment, and they matched. In \cref{10a:sec:cmb-check} a
+Markov chain run on the full likelihood found the Fisher ellipses of $\Lambda$CDM where the forecast had put them,
+except along degeneracies. And in \cref{ch:08} the simulations showed what a mask does to a temperature spectrum:
+it couples neighbouring multipoles and changes the scatter, and the MASTER method undoes the first effect on
+average. The forecast of \cref{10c:sec:forecast} made its promise for clean, full-sky $T$, $E$, $B$ coefficients with
+a sky fraction put in by hand. A real polarization map has a hole where the Galaxy is, and that hole does something
+to polarization that it does not do to temperature.
+
+Think of a field of wheat stalks combed in neat rows by the wind, all leaning east along the rows. Photograph it
+through a window frame. Inside the frame the rows are perfect. But cut the photograph along the edge of the frame,
+and ask someone who has only the cut photograph to describe the pattern by its waves. A wave that ends abruptly at
+the frame is no longer a single wave; it is a bundle of waves pointing in slightly different directions, and for
+those other directions the same stalks no longer lean along the wave but at an angle to it. Part of a pure
+``along the rows'' pattern is now described as ``across'', and nothing in the field has changed. The leakage is an
+artefact of cutting.
+
+On the sky the combed rows are $E$, the ``across'' description is $B$, and the window frame is the Galactic mask. A
+mask turns some $E$ into $B$ by itself. For a measurement of $\beta$ this is the dangerous direction: the twist is
+read as $B$ that remembers $E$, and the floor against which it is read is the $B$ already present. Leaked $B$ raises
+that floor. Does it also fake a twist? Does the estimator stay unbiased? And if the covariance used to weight the
+data and quote the error ignores the leaked $B$, are the quoted error bars still honest? Those are questions about
+the whole distribution of the estimate over many skies, and the simulations answer them.
+
+\emph{The leak in symbols.} On a flat patch, take one pure-$E$ plane wave along the first axis, so that its sticks lie
+along or across the wavevector: $Q(\bm\theta)=A\cos(k\theta_1)$, $U=0$ (\cref{T1c:eq:eb-flat} with $\varphi_{\bm\ell}=0$).
+Multiply it by a window $W(\theta_2)$ that depends only on the other coordinate, a straight edge parallel to the
+wave's direction of travel. The masked $Q$ is a product, so its Fourier transform is a product of a delta function
+in $\ell_1$ and the transform $\widetilde W(\ell_2)$ in $\ell_2$; $U$ stays zero. At a wavevector $\bm\ell=(k,\ell_2)$ whose
+angle is $\varphi$, with $\tan\varphi=\ell_2/k$,
+\begin{align}
+  B(\bm\ell)
+  &\eqby{1}-\sin2\varphi\;Q(\bm\ell)+\cos2\varphi\;U(\bm\ell)
+   \eqby{2}-\sin2\varphi\;\tfrac A2\,\widetilde W(\ell_2)
+   \eqby{3}-\frac{2k\ell_2}{k^2+\ell_2^2}\,\tfrac A2\,\widetilde W(\ell_2),
+  \nonumber\\
+  E(\bm\ell)&\eqby{4}\frac{k^2-\ell_2^2}{k^2+\ell_2^2}\,\tfrac A2\,\widetilde W(\ell_2).
+  \label{10c:eq:leak-toy}
+\end{align}
+\begin{explain}
+  \item The definition of $B$ for one wave, \cref{T1c:eq:eb-flat}.
+  \item $U=0$; the masked $Q$ at $(k,\ell_2)$ is $\frac A2\widetilde W(\ell_2)$ (the $\cos$ splits into two delta functions at
+        $\ell_1=\pm k$, and we keep the one at $+k$).
+  \item $\sin2\varphi=2\tan\varphi/(1+\tan^2\varphi)$ with $\tan\varphi=\ell_2/k$.
+  \item The same for $E$, with $\cos2\varphi=(1-\tan^2\varphi)/(1+\tan^2\varphi)$.
+\end{explain}
+The mask spreads the single wave over a range of $\ell_2$ as wide as $\widetilde W$, and at every $\ell_2\neq0$ a part
+$\propto\ell_2/k$ of it is read as $B$. How much in total? Parseval's theorem, $\int|\widetilde W(\ell_2)|^2\,\dd\ell_2/2\pi=\int
+W(\theta_2)^2\,\dd\theta_2$, turns the question into one about the window on the sky. Let the window keep a strip of
+width $L$, many wavelengths wide. The masked wave then carries the power $(A/2)^2\int W^2\dd\theta_2\approx(A/2)^2L$ in
+the component at $+k$, and its $B$ part carries $P_B=(A/2)^2\int\sin^22\varphi\,|\widetilde W|^2\,\dd\ell_2/2\pi$. The dials
+are the wavenumber $k$ and the shape of the edge. Take the two edges in turn.
+\begin{align}
+  \text{sharp edges:}\quad
+  \frac{P_B}{(A/2)^2}
+  &\eqby{1}\int\frac{4k^2\ell_2^2}{(k^2+\ell_2^2)^2}\,\frac{2}{\ell_2^2}\,\frac{\dd\ell_2}{2\pi}
+   \eqby{2}\frac{8k^2}{2\pi}\,\frac{\pi}{2k^3}=\frac2k ,
+  \nonumber\\
+  \text{tapered edges:}\quad
+  \frac{P_B}{(A/2)^2}
+  &\eqby{3}\frac{4}{k^2}\int\ell_2^2\,|\widetilde W|^2\,\frac{\dd\ell_2}{2\pi}
+   \eqby{4}\frac{4}{k^2}\int W'(\theta_2)^2\,\dd\theta_2
+   \eqby{5}\frac{\pi^2}{k^2\theta_{\rm apo}} .
+  \label{10c:eq:leak-size}
+\end{align}
+\begin{explain}
+  \item $\sin^22\varphi$ from \eqref{10c:eq:leak-toy}. The strip $|\theta_2|<L/2$ has $\widetilde W=2\sin(\ell_2L/2)/\ell_2$, whose
+        square oscillates quickly and averages to $2/\ell_2^2$, since $\sin^2$ averages to $\frac12$.
+  \item The integral $\int\dd x/(k^2+x^2)^2=\pi/(2k^3)$, found by substituting $x=k\tan u$, which turns it into
+        $k^{-3}\int\cos^2u\,\dd u$ over $(-\pi/2,\pi/2)$.
+  \item A taper of width $\theta_{\rm apo}\gg1/k$ confines $\widetilde W$ to $|\ell_2|\lesssim1/\theta_{\rm apo}\ll k$, where
+        $\sin2\varphi\approx2\ell_2/k$.
+  \item Parseval's theorem again, for the derivative: the transform of $W'$ is $i\ell_2\widetilde W$.
+  \item A cosine taper rises as $W=\frac12[1-\cos(\pi x/\theta_{\rm apo})]$ over $0<x<\theta_{\rm apo}$, so
+        $W'=\frac{\pi}{2\theta_{\rm apo}}\sin(\pi x/\theta_{\rm apo})$ and $\int W'^2\dd x=\pi^2/(8\theta_{\rm apo})$; the strip has two edges.
+\end{explain}
+Divide by the power $(A/2)^2L$ of the wave. A sharp edge leaks the fraction $2/(kL)$: it is as if a strip about one
+wavelength wide along each cut were read as $B$, so the leaked fraction falls only like $1/\ell$. A taper leaks
+$\pi^2/(k^2\theta_{\rm apo}L)$, falling like $\ell^{-2}$, and the ratio of the two,
+\begin{equation}
+  \frac{\text{taper}}{\text{sharp}}=\frac{\pi^2}{2k\theta_{\rm apo}},
+  \label{10c:eq:leak-ratio}
+\end{equation}
+does not depend on the size of the kept region. For a $5^\circ$ taper, $\theta_{\rm apo}=0.087$\,rad, it is $0.2$ at
+$\ell\approx290$: the taper cuts the leak fivefold there. At $\ell\approx60$ the formula gives $0.9$, but there
+$k\theta_{\rm apo}\approx5$ and the assumption behind step~3 is only roughly met; the taper helps little on the
+largest scales either way. The good choice, tapering, costs sky: the tapered part of the mask counts only partly.
+Lesson: a sharp edge leaks a fraction of $E$ into $B$ that falls like $1/\ell$, a smooth one a fraction that falls
+like $\ell^{-2}$.
+
+Does the leaked $B$ correlate with $E$ and so look like a twist? In \eqref{10c:eq:leak-toy} the product
+$E(\bm\ell)B^*(\bm\ell)\propto-(k^2-\ell_2^2)\,2k\ell_2\,|\widetilde W(\ell_2)|^2$ is odd in $\ell_2$, while the window of a straight
+edge has $|\widetilde W(\ell_2)|=|\widetilde W(-\ell_2)|$. The leaks at $+\ell_2$ and $-\ell_2$ have opposite signs and cancel in a
+spectrum, which sums over directions: the mask makes $B$ power without a hand. The same holds for any mask on the
+sphere, because the pseudo-$EB$ spectrum of a masked sky is fed by the true $EB$ only and not by $EE$ or $BB$
+\cite{Alonso2019}. A leak adds wobble to the floor; it does not fake the twist.
+
+\emph{One idea, many names.} Spreading a pure tone into neighbouring frequencies by cutting it off is spectral
+leakage, met for the temperature in \cref{ch:08} and for gravitational-wave data in \cref{10b:sec:welch}; here the
+neighbours differ in direction, and direction is what separates $E$ from $B$. The research tools built on this are
+the pseudo-$C_\ell$ estimators of polarization: MASTER generalised to spin-2 fields \cite{Hivon2002,Alonso2019}, which
+undoes the leak in the mean spectra, and ``pure'' $B$-mode estimators, which build the $B$ map so that it never
+receives $E$ in the first place \cite{SmithPureB2006}. We use neither: the twist passes through the mask untouched,
+as \cref{10c:sec:mc-sims} shows, so the angle can be measured from the raw masked spectra; the leak then matters only for the
+error bar.
+
+\subsection{The simulated skies}
+\label{10c:sec:mc-sims}
+
+The script \pyname{code/ch10/18_biref_mc.py} draws $\TenCNsim$ independent skies, each a Gaussian realisation of
+the lensed fiducial $T$, $E$, $B$ spectra with $EB=TB=0$, on a HEALPix grid of $N_{\rm side}=\TenCNside$ (pixels of
+$13.7'$). The lensing $B$ modes are drawn as a Gaussian field with the lensed $BB$ spectrum; real lensing $B$ is not
+Gaussian (\cref{T1c:sec:lensing}), which matters for the scatter of $BB$ itself but very little for $EB$. Each sky is
+smoothed with a $7.22'$ Gaussian beam, that of the $143\,$GHz channel \cite{Planck2018I}, and the pixel window. Two noise levels are added, white in each pixel:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+  \item \emph{Planck-like}: $\TenCPlDepthP\,\mu$K-arcmin in $Q$ and $U$ and $\TenCPlDepthT\,\mu$K-arcmin in $T$, the depths of the
+        combined HFI channels of \cref{10c:sec:info-ell};
+  \item \emph{deep}: $3\,\mu$K-arcmin in $Q$, $U$ and $3/\sqrt2$ in $T$, below the lensing floor.
+\end{itemize}
+Two Galactic-like masks remove $|b|<17.5^\circ$: one with a sharp edge, one with a $5^\circ$ cosine taper eating into
+the kept region, with effective sky fractions $w_2^2/w_4=\TenCFskySharp$ and $\TenCFskyApo$
+(\cref{10c:sec:dials}). The analysis uses $51\le\ell\le600$ in $\TenCNbins$ bins of $25$ multipoles. The full research
+version (\cref{10c:sec:research}) works at $N_{\rm side}=2048$ to $\ell=1500$ with the real noise of each map; the
+smaller grid keeps a thousand skies under half an hour on four cores. It costs the information above $\ell=600$:
+by \cref{10c:sec:dials}, a $60\,\mu$K-arcmin map measures $\beta$ to ${\TenCLmaxFiveHundred}^\circ$ with $\ell\le500$ and to
+${\TenCLmaxFifteenHundred}^\circ$ with $\ell\le1500$. Every Fisher number set against the simulations is computed for exactly the simulated
+set-up, so the comparison is fair.
+
+Two choices make the simulation cheap and the leakage visible. The $E$ part of each sky (with its correlated $T$)
+and the $B$ part are turned into maps separately, masked, and transformed back. Because the transform is linear,
+their sum is the masked sky, and the $B$ coefficients of the masked $E$ part are exactly the leaked $B$. The noise
+is drawn once per sky at unit depth and scaled to each noise level, again by linearity.
+
+\emph{The twist passes through the mask.} The twist is applied after masking, to the coefficients of the masked
+sky. That is legitimate because the two operations commute. Masking multiplies $Q+iU$ at each pixel by the real
+number $W$; twisting multiplies it by the constant $e^{2i\beta}$; at each pixel $W\,e^{2i\beta}(Q+iU)=e^{2i\beta}\,W(Q+iU)$, so
+the masked twisted sky is the twisted masked sky. Its spin-2 coefficients are then the twisted ones of
+\cref{T1c:eq:rot-alm}, and the pseudo-$E$ and pseudo-$B$ of the masked sky turn into each other by exactly the rule
+\cref{T1c:eq:rot-eb}. On one sky, twisting the $Q$, $U$ maps before the mask and twisting the masked coefficients
+after it agree to $\TenCCommute$ of the largest coefficient, round-off. The consequence is the relation of
+\cref{T1c:sec:rot-sims}, now on the masked sky: for each sky, the measured pseudo-spectra obey
+$\widetilde C^{EB\prime}_\ell=\frac12\sin4\beta\,(\widetilde C^{EE}_\ell-\widetilde C^{BB}_\ell)+\cos4\beta\,\widetilde C^{EB}_\ell$, whatever the mask has
+done to them. No mode-coupling matrix is needed to measure the angle.
+
+\subsection{The estimator}
+\label{10c:sec:mc-estimator}
+
+\emph{The model.} Divide every measured pseudo-spectrum by $w_2$, the average of $W^2$, so that it estimates the
+full-sky spectrum on average, and bin it. For a small twist the relation above becomes, bin by bin,
+\begin{equation}
+  e_b=2\beta\,D_b+n_b,\qquad e_b\equiv\widetilde C^{EB}_b,\quad D_b\equiv\widetilde C^{EE}_b-\widetilde C^{BB}_b,
+  \label{10c:eq:mc-model}
+\end{equation}
+where $n_b$ is the chance $EB$ the sky and the noise would have shown without a twist, and $\sin4\beta=4\beta$ to a
+relative accuracy of $(4\beta)^2/6\approx10^{-4}$. The template $D_b$ is measured on the same sky; its noise bias
+cancels in the difference, because white noise puts the same power into $EE$ and $BB$. For the joint fit we add
+$t_b=\widetilde C^{TB}_b=2\beta\,G_b+\dots$ with $G_b=\widetilde C^{TE}_b$.
+
+\emph{The estimate.} With the data vector $\bm e$, the template $\bm D$ and a covariance $\bm V$ for $\bm n$, the
+least-squares fit of the slope $2\beta$ minimises $(\bm e-2\beta\bm D)\T\bm V^{-1}(\bm e-2\beta\bm D)$ (\cref{3b:sec:correlated}).
+Setting the derivative with respect to $\beta$ to zero,
+\begin{equation}
+  \hat\beta\eqby{1}\frac{\bm D\T\bm V^{-1}\bm e}{2\,\bm D\T\bm V^{-1}\bm D},\qquad
+  \hat\sigma(\hat\beta)\eqby{2}\frac{1}{2\sqrt{\bm D\T\bm V^{-1}\bm D}} .
+  \label{10c:eq:mc-betahat}
+\end{equation}
+\begin{explain}
+  \item $\partial_\beta$ of the quadratic form is $-4\bm D\T\bm V^{-1}(\bm e-2\beta\bm D)$; set it to zero and solve.
+  \item $\hat\beta$ is linear in $\bm e$ with coefficient vector $\bm c=\bm V^{-1}\bm D/(2\bm D\T\bm V^{-1}\bm D)$, so its variance is
+        $\bm c\T\bm V\bm c=1/(4\bm D\T\bm V^{-1}\bm D)$ when $\bm V$ is the true covariance of $\bm e$.
+\end{explain}
+The quoted error is honest only if $\bm V$ is the true covariance. We try three.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=2pt]
+  \item \emph{The model covariance, which ignores the leak.} $V_b=\tilde E_b\tilde B_b/\nu_b$ from \eqref{10c:eq:fisher-eb},
+        with the full-sky signal-plus-noise spectra and $\nu_b=\fsky\sum_{\ell\in b}(2\ell+1)$ modes. This is what the
+        forecast assumed.
+  \item \emph{The measured spectra.} The same formula with each sky's own measured $\widetilde C^{EE}_b$ and $\widetilde C^{BB}_b$
+        in place of the model, as the published analyses do \cite{MinamiKomatsu2020,EskiltKomatsu2022}. The measured
+        $BB$ contains the leaked $B$, so this covariance knows about the leak without being told.
+  \item \emph{The simulations.} The covariance of the bandpowers over the other half of the skies (even skies for odd,
+        odd for even), with the Hartlap correction of \cref{8b:sec:hartlap} for the noise in its inverse. It contains
+        everything the simulations contain, bin-to-bin correlations included.
+\end{enumerate}
+For the joint fit each $V_b$ becomes the $2\times2$ covariance of $(e_b,t_b)$ from the general Gaussian formula of
+\cref{10c:sec:fisher-beta}, $\Cov(EB,TB)=\Cell^{TE}\tilde B_\ell/\nu$. The angle put into every sky is $\beta_{\rm in}=0.35^\circ$.
+
+\subsection{What a thousand skies say}
+\label{10c:sec:mc-results}
+
+\emph{The leak.} \Cref{10c:fig:leakage}(a) shows the $B$ power of the masked $E$ part of the skies, averaged over the
+$\TenCNsim$ skies: pure leakage, since those skies had no $B$ at all. In the lowest bin, $51\le\ell<76$, it is
+$\TenCLeakEEpctApo\%$ of the $E$ power for the tapered mask and $\TenCLeakEEpctSharp\%$ for the sharp one, which is
+$\TenCLeakLowApo$ and $\TenCLeakLowSharp$ times the lensing $B$ there. In the bin centred on $\ell=\TenCLeakLcMid$ the
+sharp edge still leaks $\TenCLeakEEpctMidSharp\%$ of the $E$ power, $\TenCLeakMidSharp$ of the lensing $B$, while the taper
+has cut it to $\TenCLeakEEpctMidApo\%$ of $E$, $\TenCLeakMidApo$ of the lensing $B$. Both behave as the cut wave predicts.
+At the sharp edge the leaked fraction falls by about the factor by which $\ell$ grows, the $1/\ell$ of
+\eqref{10c:eq:leak-size}. The ratio of taper to sharp edge is $\TenCLeakRatioMid$ at $\ell=\TenCLeakLcMid$, where
+\eqref{10c:eq:leak-ratio} gives $0.2$, and $\TenCLeakRatioLow$ at $\ell=\TenCLeakLcLow$, where the formula's assumption
+$k\theta_{\rm apo}\gg1$ fails. (The slight rise of the tapered curve above $\ell\approx500$ comes from the pixel grid,
+which also mixes $E$ and $B$ near its resolution limit.) The Planck-like noise lies well over an order of magnitude
+above the leak at every multipole, so for it none of this matters. For the deep noise the leak is the largest part
+of the floor on large scales. Panel (b) shows the other half of the
+promise: the average measured $EB$ of the twisted skies follows $\frac12\sin4\beta(C^{EE}-C^{BB})$ at every multipole,
+with no extra $EB$ from the mask.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/ch10/biref_leakage.pdf}
+\caption{(a) $E$-to-$B$ leakage of the two masks, measured as the $B$ power of skies that contain only $E$ (dots, with the
+error of the average over $\TenCNsim$ skies), against the lensing $B$, the $E$ power and the two noise levels, all with
+the beam. Relative to $E$, the sharp edge leaks a fraction that falls roughly like $1/\ell$, the tapered mask one that falls
+faster, so the taper gains most at high $\ell$. (b) The average $EB$ of the skies twisted by $0.35^\circ$, tapered mask, Planck-like and deep noise (shifted
+slightly in $\ell$ for visibility), against the prediction of \cref{T1c:eq:rot-ebsp}: the mask adds no $EB$.}
+\label{10c:fig:leakage}
+\end{figure}
+
+\emph{The bias.} With the simulation covariance and both $EB$ and $TB$, the average of $\hat\beta-\beta_{\rm in}$ over the
+skies is ${\TenCPlApoJBias}^\circ\pm{\TenCPlApoJBiasErr}^\circ$ for the Planck-like noise and ${\TenCDeepApoJBias}^\circ\pm{\TenCDeepApoJBiasErr}^\circ$
+for the deep noise, tapered mask, and similar for the sharp one (the error is the Monte Carlo error of an average of
+$\TenCNsim$ values, the scatter divided by $\sqrt{\TenCNsim}$). Is an offset this size, or a larger one, something we
+would reasonably expect from an unbiased estimator? An unbiased average lands more than one Monte Carlo error
+from the truth a third of the time and more than two errors away one time in twenty. Over all eight set-ups (two
+noise levels, two masks, $EB$ alone or with $TB$) the largest offset is $\TenCBiasSigMax$ Monte Carlo errors, which is
+$\TenCBiasFracMax$ of the scatter of a single measurement. The eight are not eight independent checks, though.
+They are measured on the same thousand skies, with the noise of each sky scaled from one draw, so a chance lean of
+the particular skies drawn shows up in all of them together, and the eight offsets move as one rather than
+averaging out. What the skies establish is an upper limit: a bias as large as three Monte Carlo errors, $\TenCBiasResol$ of the scatter of a
+single measurement, would have been seen, and none was. That is what the commutation argument predicts, since it
+says the estimator needs no mask correction at all; a smaller bias than a tenth of the scatter could only be
+tested with many more skies.
+
+\emph{The scatter against the forecast.} \Cref{10c:tab:mc} sets the standard deviation of $\hat\beta$ over the skies
+against two Fisher errors for exactly the simulated set-up: the forecast of \eqref{10c:eq:fisher-beta} with the sky
+fraction $w_2^2/w_4$, and the same with the measured leak added to the floor $\tilde B_\ell$. For the Planck-like noise
+the estimator reaches the forecast: the scatter is $\TenCPlApoJRatio$ times the Fisher error with the taper and
+$\TenCPlSharpJRatio$ with the sharp edge, where the scatter itself is known to ${\TenCPlApoJSDerr}^\circ$ from the finite number of skies, and adding the leak to the
+floor changes the forecast by less than one per cent. For the deep noise the scatter is $\TenCDeepApoJRatio$ and
+$\TenCDeepSharpJRatio$ times the plain forecast. With the taper, the forecast that includes the leak,
+${\TenCDeepApoJFisherLeak}^\circ$, accounts for most of the difference. With the sharp edge, the scatter lies between the two
+forecasts: counting the leak as extra noise independent of everything else overstates its harm, and the weights
+built from the simulations, which know how the leaked $B$ is correlated across bins, recover part of the loss.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+noise & mask & Fisher & Fisher, leak in floor & scatter of $\hat\beta$ & ratio & bias\\\midrule
+Planck-like & taper & $\TenCPlApoJFisher$ & $\TenCPlApoJFisherLeak$ & $\TenCPlApoJSD\pm\TenCPlApoJSDerr$ & $\TenCPlApoJRatio$ & $\TenCPlApoJBias\pm\TenCPlApoJBiasErr$\\
+Planck-like & sharp & $\TenCPlSharpJFisher$ & $\TenCPlSharpJFisherLeak$ & $\TenCPlSharpJSD\pm\TenCPlSharpJSDerr$ & $\TenCPlSharpJRatio$ & $\TenCPlSharpJBias\pm\TenCPlSharpJBiasErr$\\
+deep & taper & $\TenCDeepApoJFisher$ & $\TenCDeepApoJFisherLeak$ & $\TenCDeepApoJSD\pm\TenCDeepApoJSDerr$ & $\TenCDeepApoJRatio$ & $\TenCDeepApoJBias\pm\TenCDeepApoJBiasErr$\\
+deep & sharp & $\TenCDeepSharpJFisher$ & $\TenCDeepSharpJFisherLeak$ & $\TenCDeepSharpJSD\pm\TenCDeepSharpJSDerr$ & $\TenCDeepSharpJRatio$ & $\TenCDeepSharpJBias\pm\TenCDeepSharpJBiasErr$\\
+\bottomrule
+\end{tabular}
+\caption{The estimator of $\beta$ on $\TenCNsim$ simulated skies twisted by $\beta_{\rm in}=0.35^\circ$, $EB$ and $TB$ together, simulation
+covariance, $51\le\ell\le600$; all angles in degrees. ``Ratio'' is the scatter over the Fisher error. The Planck-like
+forecast is reached within a few per cent; for the deep noise the leak raises the floor and the scatter.}
+\label{10c:tab:mc}
+\end{table}
+
+\emph{The error bars.} A $\pm1\sigma$ interval should contain the true angle in $68.3\%$ of the skies; with $\TenCNsim$ skies the
+fraction we measure carries a Monte Carlo error of $\pm\TenCCovErr$ percentage points (the binomial standard deviation
+$\sqrt{0.683\times0.317/\TenCNsim}$). \Cref{10c:fig:mc}(b) shows the coverage for the three covariances.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \emph{Planck-like noise:} model, measured spectra and simulations give $\TenCPlApoJCovModel\%$, $\TenCPlApoJCovData\%$
+        and $\TenCPlApoJCovSims\%$ with the taper, $\TenCPlSharpJCovModel\%$, $\TenCPlSharpJCovData\%$ and $\TenCPlSharpJCovSims\%$ with
+        the sharp edge, all consistent with $68.3\%$ given the Monte Carlo error. When the noise dominates the floor, ignoring the
+        leak costs nothing.
+  \item \emph{Deep noise, model covariance (leak ignored):} $\TenCDeepApoJCovModel\%$ with the taper and $\TenCDeepSharpJCovModel\%$
+        with the sharp edge, about $\TenCDeepApoJCovModelSig$ and $\TenCDeepSharpJCovModelSig$ Monte Carlo errors short of $68.3\%$. The coverage does not
+        stand alone: the quoted error, ${\TenCDeepSharpJSigModel}^\circ$ for the sharp mask, is smaller than the measured
+        scatter of that estimator, ${\TenCDeepSharpJSDModel}^\circ$, by about $\TenCDeepSharpJSigModelGap$ times the Monte Carlo error
+        of the scatter, and the Fisher error with the leak in the floor says why it must be. The error bars are too
+        short, and an analysis that used them would claim more significance than its data hold.
+  \item \emph{Deep noise, measured spectra:} $\TenCDeepApoJCovData\%$ with the taper, correct, but $\TenCDeepSharpJCovData\%$ with
+        the sharp edge, too high. The measured $BB$ contains the leak, and the formula treats it as independent noise, so
+        the quoted error, ${\TenCDeepSharpJSigData}^\circ$, is larger than the scatter, ${\TenCDeepSharpJSDData}^\circ$: safe, but
+        wasteful.
+  \item \emph{Deep noise, simulations:} $\TenCDeepApoJCovSims\%$ and $\TenCDeepSharpJCovSims\%$, correct within the Monte Carlo
+        error, as they must be: this covariance contains everything the skies contain.
+\end{itemize}
+\Cref{10c:fig:mc}(a) shows the shape behind these numbers. The distribution of $(\hat\beta-\beta_{\rm in})/\sigma_{\rm Fisher}$ over
+the skies is a Gaussian of nearly unit width, for both noise levels; a linear estimator of many nearly Gaussian
+bandpowers is itself nearly Gaussian.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/ch10/biref_mc.pdf}
+\caption{(a) The distribution of the estimated angle over $\TenCNsim$ skies, in units of the Fisher error of each set-up
+(tapered mask, $EB$ and $TB$, simulation covariance): close to a unit Gaussian, as the forecast promised, slightly wider for the deep noise, where the leak raises the floor (\cref{10c:tab:mc}). (b) The fraction of
+skies whose $\pm1\sigma$ interval contains $\beta_{\rm in}$, for the three covariances (model, which ignores the leak; measured spectra; simulations) and four set-ups; the dashed line is
+$68.3\%$, and the Monte Carlo error of each bar is $\pm\TenCCovErr$ points. Only the deep noise separates the
+covariances: ignoring the leak gives too short error bars, the measured spectra too long ones at a sharp edge.}
+\label{10c:fig:mc}
+\end{figure}
+
+\paragraph{The answer.} Is the forecast reached on a sky with a hole, noise and a beam? For a
+Planck-like map it is, within a few per cent, by an estimator on raw masked spectra with no bias the skies can detect, with honest error
+bars from any of the three covariances. For a map deep enough to see below the lensing floor the mask's leak becomes
+part of the floor; the estimator still shows no bias, its scatter grows to $\TenCDeepApoJRatio$--$\TenCDeepSharpJRatio$ times the plain forecast, and the error bars are honest
+only if the covariance knows about the leak. A tapered mask keeps the loss small, and simulations make the error
+bars right. Every one of these statements is an average over $\TenCNsim$ skies with its Monte Carlo error attached,
+and a different set of random skies would move each number only within that error.
+
+\begin{pitfall}[A covariance from the model is only as good as the model]
+The forecast covariance knows the CMB, the noise and the sky fraction, and nothing else. Whatever the analysis does
+to the sky that the forecast did not, a mask, a filter, a beam asymmetry, enters the true scatter but not the
+quoted error. The test is the one done here: simulate the whole analysis on skies with a known answer and count how
+often the error bars cover it.
+\end{pitfall}
+\section{How a birefringence measurement is made in research}
+\label{10c:sec:research}
+
+The published measurements of \cref{10c:sec:planck-forecast,10c:sec:four} follow the same three steps,
+forecast, simulate, measure, at full scale and with every known imperfection of the instrument put in.
+
+\emph{The data.} Not one map per channel but two or more independent splits (half-missions, detector sets), so
+that only cross-spectra between splits are used and the noise bias never appears \cite{MinamiKomatsu2020}. For four
+Planck channels in two splits this gives sixteen maps and many cross-spectra, each with its own detector angle in
+the model. The masks remove the Galactic plane, carbon-monoxide regions and bright point sources and are tapered by
+half a degree to a degree \cite{MinamiKomatsu2020,DiegoPalazuelos2022}, close to the masks of the Planck likelihood
+\cite{Planck2018V}.
+
+\emph{The spectra.} Pseudo-spectra corrected for the mask with the spin-2 version of MASTER, in the codes NaMaster or
+PolSpice \cite{Alonso2019}, and corrected for the leakage of temperature into polarization caused by the beams.
+\Cref{10c:sec:mc-sims} showed that the angle itself does not need the mask correction; the real analyses apply it
+anyway because the dust template and the CMB template of \cref{T1c:eq:mk-final} must be compared at the same
+multipoles.
+
+\emph{The likelihood.} The relation \cref{T1c:eq:mk-final}, written for every pair of maps, is turned into a Gaussian
+likelihood for $(\alpha_\nu,\beta)$ whose covariance is built from the observed spectra with the formula of
+\eqref{10c:eq:fisher-eb}, divided by an effective sky fraction \cite{EskiltKomatsu2022}, eqs.~(21)--(22); it is sampled with an
+MCMC (\cref{ch:09}). This is choice (b) of \cref{10c:sec:mc-estimator}, which the simulations of \cref{10c:sec:mc-results} found honest with a tapered mask, and safe but wasteful at a sharp edge on a map deep enough for the leak to matter.
+
+\emph{The simulations.} End-to-end simulations of the instrument, with no twist: ten FFP10 skies for the PR3 analysis
+gave $\beta=0.010^\circ\pm0.030^\circ$ \cite{MinamiKomatsu2020}, six hundred NPIPE skies for PR4 \cite{DiegoPalazuelos2022}. Here
+the simulations are the research instrument, not a check: they contain the scanning, the beams, the noise
+correlations and the detector systematics, for which no closed form exists, and the published pipeline is trusted
+only because it returns zero on skies that have no twist. Ten skies whose estimates scatter by $0.030^\circ$ pin their mean to
+$0.030^\circ/\sqrt{10}\approx0.01^\circ$, a third of the scatter of one sky; excluding a bias of a tenth of the scatter, as
+\cref{10c:sec:mc-results} did, takes hundreds.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & research analysis & here\\\midrule
+maps & $N_{\rm side}=2048$, four channels, split maps, real noise & $N_{\rm side}=256$, one effective channel, white noise\\
+multipoles & $51\le\ell\le1500$ & $51\le\ell\le600$\\
+foregrounds & real Galaxy, dust as the reference for $\alpha_\nu$ & none in the simulations; Gaussian dust in the forecast\\
+spectra & spin-2 MASTER, beam leakage corrected & raw masked pseudo-spectra (the angle commutes with the mask)\\
+covariance & from the observed spectra & three options compared over $\TenCNsim$ skies\\
+validation & FFP10 (10 skies), NPIPE (600 skies) & $\TenCNsim$ Gaussian skies with a known twist\\
+\bottomrule
+\end{tabularx}
+\caption{The research version of a birefringence measurement and the laptop-scale version used for the forecast and the simulations.}
+\label{10c:tab:laptop}
+\end{table}
+
+\begin{inpractice}[Simulations that check, simulations that measure]
+In \cref{10c:sec:mc} the simulations \emph{verify}: the Fisher error and the coverage have analytic predictions, and a
+thousand Gaussian skies test them. In a real analysis the same machinery \emph{is} the measurement of everything
+that has no analytic answer: the covariance of spectra from an inhomogeneous noise and a complicated mask, the bias
+from beam systematics, the distribution of $\hat\beta$ under the null hypothesis. \Cref{ch:13} measures the sum
+$\alpha+\beta$ on the Planck SMICA maps with the estimator of \cref{10c:sec:mc-estimator}, calibrated by simulations of
+exactly this kind.
+\end{inpractice}
+
+One chain of reasoning leads from the twist to its measurement. A twist moves a little of the bright $E$ pattern into $B$, so its
+information is the $E$ power measured against the $B$ already there; the instrument's own angle hides it until a
+component that sees only the instrument, the Galaxy, is added; and on a real sky the mask adds to the $B$ already
+there without faking a twist, so the forecast survives, provided the error bars are built from a covariance that
+has seen the mask.
+
+\begin{recap}
+\begin{itemize}[itemsep=1pt,leftmargin=1.2em]
+  \item A twist $\beta$ enters the $T$, $E$, $B$ covariance only through $EB$ and $TB$ at first order. The Fisher
+        information per mode is $\bm v\T\bm A^{-1}\bm v/\tilde B$, with $\bm v=(2C^{TE},2(C^{EE}-C^{BB}))$; for a well-measured $E$
+        it is $4C^{EE}/(C^{BB}+N^P)$: $E$ is the lever, the $B$ already present the floor. $B$ power carries no
+        information at small angles; the information on a rotation is the same at every angle.
+  \item $TB$ adds to $EB$ only where $E$ is noise-dominated by more than $1/\rho^2$. A Planck-like experiment measures the
+        sum $\alpha+\beta$ to ${\TenCPlJoint}^\circ$ ($\fsky=0.7$, $51\le\ell\le1500$), within about a third of the published statistical
+        errors; the error scales as $\fsky^{-1/2}$, as $\Delta_P^2$ to $\Delta_P$ with depth, and flattens at the lensing floor.
+  \item With one detector angle per channel the CMB-only Fisher matrix is exactly singular. The dust lifts the null
+        direction; four Planck-like channels give $\sigma(\beta)={\TenCMultiSB}^\circ$, about six times the error with known angles,
+        and the error is set by the brightness of the dust and the noise, not by the CMB.
+  \item A mask turns $E$ into $B$ (a fraction falling like $1/\ell$ at a sharp edge, like $\ell^{-2}$ with a taper) but makes no
+        $EB$ on average. The twist commutes with the mask, so the template estimator on raw pseudo-spectra needs no mask correction.
+  \item Over $\TenCNsim$ simulated skies the estimator shows no bias; a bias of a tenth of its scatter would have been seen. With Planck-like noise it
+        reaches the Fisher error within a few per cent and every covariance gives honest error bars. Below the lensing
+        floor the leak raises the scatter to $\TenCDeepApoJRatio$--$\TenCDeepSharpJRatio$ times the plain forecast; a model covariance that ignores it covers only $\TenCDeepApoJCovModel\%$ (taper) and $\TenCDeepSharpJCovModel\%$ (sharp edge), the
+        measured spectra over-cover at a sharp edge, and the simulation covariance covers correctly.
+\end{itemize}
+\end{recap}
 
 \subsection*{Reading the literature}
 \label{10b:sec:reading-list}
@@ -5610,6 +6841,13 @@ instead, and what the reduction costs.}
         \cite{Eda2015}; Kavanagh et al.\ and Coogan et al.\ on heated spikes and their detectability
         \cite{Kavanagh2020,Coogan2022}; Speeney et al.\ on relativistic spikes \cite{Speeney2022}; Kim et al.\ on wave dark
         matter \cite{Kim2023}; Chase, L\'opez Nacir and Yunes on vector dark matter \cite{Chase2025}.
+  \item \textbf{Cosmic birefringence and polarization on a cut sky.} Minami et al.\ on determining the detector angles
+        and the birefringence angle together \cite{Minami2019}; Minami and Komatsu, Diego-Palazuelos et al.\ and Eskilt
+        and Komatsu on the measurements from Planck and WMAP \cite{MinamiKomatsu2020,DiegoPalazuelos2022,EskiltKomatsu2022};
+        the Planck team's measurement with the angles fixed \cite{PlanckIntXLIX2016}; Hivon et al.\ and Alonso et al.\ on
+        pseudo-spectra and their spin-2 version \cite{Hivon2002,Alonso2019}; Smith on $B$ modes that receive no $E$
+        \cite{SmithPureB2006}; the Planck likelihood paper for the masks and multipole ranges of a real analysis
+        \cite{Planck2018V}.
 \end{itemize}
 
 \section*{Chapter summary}
@@ -5626,7 +6864,11 @@ formula becomes $(\partial_ih|\partial_jh)$ and says that a phase parameter is m
 the others cannot imitate. That one sentence turns many separate dark-matter and astrophysics questions into one: an
 environment is a power law in the phase, and its detectability is a single curve in the exponent. Every forecast was
 then reproduced against the papers that published it, and every one was tested against a Markov chain, which showed
-where the Gaussian picture breaks: at low signal-to-noise ratio, along degeneracies and at prior boundaries. In the
+where the Gaussian picture breaks: at low signal-to-noise ratio, along degeneracies and at prior boundaries. A twist
+of the CMB polarization showed the covariance part at work on a parameter whose signal sits in spectra that are zero
+on average: the information on the angle is the $E$ power over the $B$ already present, the instrument's own angle
+makes the problem singular until the Galaxy is added as a reference, and a thousand simulated masked skies showed the
+estimator free of any detectable bias, the forecast reached for a Planck-like map, and the error bars honest once the covariance knows what the mask does to $B$. In the
 pipeline
 \[
   \text{physical model}\to\text{field or data}\to\text{summary }S\to\boxed{P(S\given\theta)\to\text{infer physics}},
@@ -5677,6 +6919,27 @@ detectability map & $3\sigma_\beta(b)u_{\rm lo}^b$ against each effect's predict
 linearised signal & Fisher $=$ posterior of $h\approx h_0+\Delta\theta^i\partial_ih$; check $\tfrac12(R|R)\lesssim0.1$ on the $1\sigma$ surface & \cref{ch:14}\\
 median experiment & noise-free data $d=h(\params_0)$: the shape of a typical posterior without its random shift & \cref{ch:14}\\
 waveform bias & $\delta\theta^i=(\Gamma^{-1})^{ij}(\partial_jh|\delta h)$; model good enough if $(\delta h|\delta h)\lesssim1$ & \cref{ch:14}\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{3.3cm}
+                               >{\raggedright\arraybackslash}X
+                               >{\raggedright\arraybackslash}p{2.3cm}@{}}
+\toprule
+\multicolumn{3}{@{}l}{\textbf{A twist of the CMB polarization}}\\
+concept & operational meaning & used later in\\\midrule
+information on a twist & $F_{\beta\beta}=\sum_\ell(2\ell+1)\fsky\,\bm v\T\bm A^{-1}\bm v/\tilde B$, $\bm v=(2C^{TE},2(C^{EE}-C^{BB}))$; $\approx4C^{EE}/\tilde B$ per mode & \cref{ch:13}\\
+$EB$ versus $TB$ & $F^{TB}/F^{EB}=\rho^2\tilde E/C^{EE}$: $TB$ helps only where $E$ is noisy & \cref{ch:13}\\
+rotation invariance & $F(\beta)=F(0)$; at $\beta\ne0$ information moves from $EB$, $TB$ into $EE$, $BB$ & \\
+depth regimes & $\sigma\propto\Delta^2$, $\propto\Delta$, then the lensing floor & \cref{ch:13}\\
+$\alpha$--$\beta$ degeneracy & null direction $(1,\dots,1,-1)$ without dust; dust sets $\sigma(\beta)$ when the $\alpha_\nu$ are free & \cref{ch:13}\\
+$E\to B$ leakage & a cut wave is read partly as $B$; fraction $\propto1/\ell$ at a sharp edge, $\propto\ell^{-2}$ with a taper; no $EB$ on average & \cref{ch:13}\\
+twist through a mask & $W e^{2i\beta}(Q+iU)=e^{2i\beta}W(Q+iU)$: pseudo-$E$, $B$ rotate exactly; no MASTER needed for the angle & \cref{ch:13}\\
+honest error bars & weights and errors from a covariance that contains the leak: measured spectra or simulations & \cref{ch:13}\\
 \bottomrule
 \end{tabularx}
 \end{center}

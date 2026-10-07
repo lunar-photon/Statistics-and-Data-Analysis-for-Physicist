@@ -1,7 +1,7 @@
 # Statistics and Data Analysis for the Physicist
 
 A self-contained book on statistics and data analysis for physicists, from probability and estimation through
-Bayesian inference, Monte Carlo, Fisher forecasts and sampling, to analyses of real data: the Planck CMB maps,
+Bayesian inference, Monte Carlo, Fisher forecasts and sampling, to analyses of real data: the Planck CMB temperature and polarization maps (including a cosmic-birefringence measurement),
 the BOSS CMASS galaxy survey and the ATLAS H→γγ open data.
 
 By Chandra Prakash, written with Claude.

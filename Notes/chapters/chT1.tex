@@ -60,6 +60,8 @@ The book follows one pipeline (\cref{ch:00}): a theory, its data, a compressed s
 
 The link between the cosmology and the statistics is how the outputs move when the inputs move. Nudge one parameter and watch $\Cell$ respond. That response is a derivative, and the Fisher matrix of \cref{ch:10} is built from such derivatives. If two parameters produce responses that look alike, the data cannot tell those parameters apart. This is a degeneracy, and the MCMC chains of \cref{ch:09} show it as a long ridge. On the matter side, the linear $P(k)$ is the input of the Gaussian random fields of \cref{ch:07}. On small scales gravity makes the real spectrum (computed by the halofit recipe) depart from the linear one. There the field is no longer Gaussian, and the topological summaries of \cref{ch:12} have something to find that the power spectrum misses.
 
+The microwave light is also polarized, and a field of polarization sticks splits into a part that looks the same in a mirror and a part that does not. Ordinary physics leaves no correlation between the two, so a measured one is a test of whether the laws of physics, or our own detectors, prefer one hand (\cref{T1c:sec:eb,T1c:sec:biref}).
+
 \section{Six numbers in, statistics out}
 \label{T1a:sec:machine}
 
@@ -1220,11 +1222,891 @@ The lesson of the two experiments for the rest of the book is in two parts. The 
 \end{itemize}
 \end{recap}
 
+\providecommand{\TOneLmax}{}\renewcommand{\TOneLmax}{2500}
+\providecommand{\TOneCosAsTauTT}{}\renewcommand{\TOneCosAsTauTT}{-0.999}
+\providecommand{\TOneCosAsTauEElow}{}\renewcommand{\TOneCosAsTauEElow}{0.98}
+\providecommand{\TOneAsRespHigh}{}\renewcommand{\TOneAsRespHigh}{1.41}
+\providecommand{\TOneTauRespHigh}{}\renewcommand{\TOneTauRespHigh}{-1.46}
+\providecommand{\TOneTauRespEElow}{}\renewcommand{\TOneTauRespEElow}{46}
+\providecommand{\TOneNsPivotEll}{}\renewcommand{\TOneNsPivotEll}{542}
+\providecommand{\TOneMaxRespOmc}{}\renewcommand{\TOneMaxRespOmc}{1.1}
+\providecommand{\TOneDpeakEll}{}\renewcommand{\TOneDpeakEll}{220}
+\providecommand{\TOneDpeak}{}\renewcommand{\TOneDpeak}{5732}
+\providecommand{\TOneSigmaEight}{}\renewcommand{\TOneSigmaEight}{0.8111}
+\providecommand{\TOneSigmaEightOurs}{}\renewcommand{\TOneSigmaEightOurs}{0.8112}
+\providecommand{\TOneSigmaEightZone}{}\renewcommand{\TOneSigmaEightZone}{0.4928}
+\providecommand{\TOneRdrag}{}\renewcommand{\TOneRdrag}{147.10}
+\providecommand{\TOneRdragH}{}\renewcommand{\TOneRdragH}{99.1}
+\providecommand{\TOneRpeak}{}\renewcommand{\TOneRpeak}{101.5}
+\providecommand{\TOneKnl}{}\renewcommand{\TOneKnl}{0.15}
+\providecommand{\TOneKnlZone}{}\renewcommand{\TOneKnlZone}{0.21}
+\providecommand{\TOneKpeak}{}\renewcommand{\TOneKpeak}{0.017}
+\providecommand{\TOneRatioOne}{}\renewcommand{\TOneRatioOne}{5.9}
+\providecommand{\TOneSEightFid}{}\renewcommand{\TOneSEightFid}{0.832}
+\providecommand{\TOneZmed}{}\renewcommand{\TOneZmed}{0.71}
+\providecommand{\TOneZmedLo}{}\renewcommand{\TOneZmedLo}{0.49}
+\providecommand{\TOneZmedHi}{}\renewcommand{\TOneZmedHi}{0.99}
+\providecommand{\TOneSigEightLo}{}\renewcommand{\TOneSigEightLo}{0.911}
+\providecommand{\TOneSigEightHi}{}\renewcommand{\TOneSigEightHi}{0.720}
+\providecommand{\TOneAlongMax}{}\renewcommand{\TOneAlongMax}{9}
+\providecommand{\TOneAlongMedLo}{}\renewcommand{\TOneAlongMedLo}{-4}
+\providecommand{\TOneAlongMedHi}{}\renewcommand{\TOneAlongMedHi}{+7}
+\providecommand{\TOneAcrossLo}{}\renewcommand{\TOneAcrossLo}{-22}
+\providecommand{\TOneAcrossHi}{}\renewcommand{\TOneAcrossHi}{+24}
+\providecommand{\TOneLimberErr}{}\renewcommand{\TOneLimberErr}{0.1}
+\providecommand{\TOneDlnCdlnSEight}{}\renewcommand{\TOneDlnCdlnSEight}{2.8}
+\providecommand{\TOneDlnCdlnOm}{}\renewcommand{\TOneDlnCdlnOm}{1.6}
+\providecommand{\TOneAlphaGalTwo}{}\renewcommand{\TOneAlphaGalTwo}{0.59}
+\providecommand{\TOneAlphaGalTwoK}{}\renewcommand{\TOneAlphaGalTwoK}{0.62}
+\providecommand{\TOneAlphaLoFive}{}\renewcommand{\TOneAlphaLoFive}{0.58}
+\providecommand{\TOneAlphaFive}{}\renewcommand{\TOneAlphaFive}{0.55}
+\providecommand{\TOneAlphaHiFive}{}\renewcommand{\TOneAlphaHiFive}{0.53}
+\providecommand{\TOneNoiseOne}{}\renewcommand{\TOneNoiseOne}{4.965\times10^{-9}}
+\providecommand{\TOneFsky}{}\renewcommand{\TOneFsky}{0.0242}
+\providecommand{\TOneEdgeOne}{}\renewcommand{\TOneEdgeOne}{0.43}
+\providecommand{\TOneEdgeFour}{}\renewcommand{\TOneEdgeFour}{1.05}
+\providecommand{\TOneLeqOne}{}\renewcommand{\TOneLeqOne}{21}
+\providecommand{\TOneLeqThree}{}\renewcommand{\TOneLeqThree}{87}
+\providecommand{\TOneLeqFive}{}\renewcommand{\TOneLeqFive}{194}
+\providecommand{\TOneSNtomo}{}\renewcommand{\TOneSNtomo}{48}
+\providecommand{\TOneSNone}{}\renewcommand{\TOneSNone}{42}
+\providecommand{\TOneSigLnSEight}{}\renewcommand{\TOneSigLnSEight}{0.8}
+\providecommand{\TOneLmaxSN}{}\renewcommand{\TOneLmaxSN}{2000}
+\providecommand{\TOneSigmaE}{}\renewcommand{\TOneSigmaE}{0.27}
+\providecommand{\TOneNeff}{}\renewcommand{\TOneNeff}{6.2}
+\providecommand{\TOneArea}{}\renewcommand{\TOneArea}{1000}
+\providecommand{\TOneCMirrorErr}{}\renewcommand{\TOneCMirrorErr}{3.400\times10^{-11}}
+\providecommand{\TOneCRotErr}{}\renewcommand{\TOneCRotErr}{2.600\times10^{-11}}
+\providecommand{\TOneCBetaDeg}{}\renewcommand{\TOneCBetaDeg}{0.35}
+\providecommand{\TOneCTwoBetaPct}{}\renewcommand{\TOneCTwoBetaPct}{1.22}
+\providecommand{\TOneCSinSqTwoBeta}{}\renewcommand{\TOneCSinSqTwoBeta}{1.490\times10^{-4}}
+\providecommand{\TOneCEEpeakL}{}\renewcommand{\TOneCEEpeakL}{990}
+\providecommand{\TOneCDEEpeak}{}\renewcommand{\TOneCDEEpeak}{42.4}
+\providecommand{\TOneCBBpeakL}{}\renewcommand{\TOneCBBpeakL}{886}
+\providecommand{\TOneCDBBpeak}{}\renewcommand{\TOneCDBBpeak}{0.101}
+\providecommand{\TOneCRotLensHundred}{}\renewcommand{\TOneCRotLensHundred}{0.036}
+\providecommand{\TOneCRotLensThousand}{}\renewcommand{\TOneCRotLensThousand}{0.065}
+\providecommand{\TOneCRotLensMax}{}\renewcommand{\TOneCRotLensMax}{2.539}
+\providecommand{\TOneCDEBmax}{}\renewcommand{\TOneCDEBmax}{0.517}
+\providecommand{\TOneCEBmaxL}{}\renewcommand{\TOneCEBmaxL}{990}
+\providecommand{\TOneCDTBmax}{}\renewcommand{\TOneCDTBmax}{1.637}
+\providecommand{\TOneCTBmaxL}{}\renewcommand{\TOneCTBmaxL}{748}
+\providecommand{\TOneCDBBrotPeak}{}\renewcommand{\TOneCDBBrotPeak}{0.00633}
+\providecommand{\TOneCLensWhiteC}{}\renewcommand{\TOneCLensWhiteC}{1.890\times10^{-6}}
+\providecommand{\TOneCLensWhiteUKarcmin}{}\renewcommand{\TOneCLensWhiteUKarcmin}{4.7}
+\providecommand{\TOneCLensLowMean}{}\renewcommand{\TOneCLensLowMean}{1.940\times10^{-6}}
+\providecommand{\TOneCFirstOrderMin}{}\renewcommand{\TOneCFirstOrderMin}{0.985}
+\providecommand{\TOneCFirstOrderMax}{}\renewcommand{\TOneCFirstOrderMax}{0.997}
+\providecommand{\TOneCr}{}\renewcommand{\TOneCr}{0.01}
+\providecommand{\TOneCReionL}{}\renewcommand{\TOneCReionL}{2}
+\providecommand{\TOneCRecombL}{}\renewcommand{\TOneCRecombL}{88}
+\providecommand{\TOneCDtRec}{}\renewcommand{\TOneCDtRec}{6.590\times10^{-4}}
+\providecommand{\TOneCDlensEighty}{}\renewcommand{\TOneCDlensEighty}{0.00205}
+\providecommand{\TOneCDdustEighty}{}\renewcommand{\TOneCDdustEighty}{0.011}
+\providecommand{\TOneCDustOverLens}{}\renewcommand{\TOneCDustOverLens}{5.2}
+\providecommand{\TOneCDustOverGW}{}\renewcommand{\TOneCDustOverGW}{16.5}
+\providecommand{\TOneCDustRatio}{}\renewcommand{\TOneCDustRatio}{410}
+\providecommand{\TOneCSyncRatio}{}\renewcommand{\TOneCSyncRatio}{7504}
+\providecommand{\TOneCFgMinNu}{}\renewcommand{\TOneCFgMinNu}{90}
+\providecommand{\TOneCFaradayOneFifty}{}\renewcommand{\TOneCFaradayOneFifty}{0.04}
+\providecommand{\TOneCDrotEighty}{}\renewcommand{\TOneCDrotEighty}{7.020\times10^{-5}}
+\providecommand{\TOneCNsim}{}\renewcommand{\TOneCNsim}{500}
+\providecommand{\TOneCNbin}{}\renewcommand{\TOneCNbin}{25}
+\providecommand{\TOneCSimBetaDeg}{}\renewcommand{\TOneCSimBetaDeg}{2}
+\providecommand{\TOneCChiEB}{}\renewcommand{\TOneCChiEB}{18.1}
+\providecommand{\TOneCChiTB}{}\renewcommand{\TOneCChiTB}{25.3}
+\providecommand{\TOneCLensBBRatio}{}\renewcommand{\TOneCLensBBRatio}{1.000}
+\providecommand{\TOneCLensBBErr}{}\renewcommand{\TOneCLensBBErr}{0.001}
+\providecommand{\TOneCRotEBRatio}{}\renewcommand{\TOneCRotEBRatio}{1.0000}
+\providecommand{\TOneCRotEBErr}{}\renewcommand{\TOneCRotEBErr}{0.0004}
+\providecommand{\TOneCEBFracPct}{}\renewcommand{\TOneCEBFracPct}{0.15}
+\providecommand{\TOneCBBRotOverLens}{}\renewcommand{\TOneCBBRotOverLens}{1.00}
+\providecommand{\TOneCIdentity}{}\renewcommand{\TOneCIdentity}{5.100\times10^{-16}}
+\providecommand{\TOneCSigSum}{}\renewcommand{\TOneCSigSum}{0.036}
+\providecommand{\TOneCDetZero}{}\renewcommand{\TOneCDetZero}{0}
+\providecommand{\TOneCSigAOneFortyThree}{}\renewcommand{\TOneCSigAOneFortyThree}{0.8466}
+\providecommand{\TOneCSigBOneFortyThree}{}\renewcommand{\TOneCSigBOneFortyThree}{0.8578}
+\providecommand{\TOneCRhoOneFortyThree}{}\renewcommand{\TOneCRhoOneFortyThree}{-0.999}
+\providecommand{\TOneCSigSumOneFortyThree}{}\renewcommand{\TOneCSigSumOneFortyThree}{0.038}
+\providecommand{\TOneCSigAThreeFiftyThree}{}\renewcommand{\TOneCSigAThreeFiftyThree}{0.1129}
+\providecommand{\TOneCSigBThreeFiftyThree}{}\renewcommand{\TOneCSigBThreeFiftyThree}{0.3717}
+\providecommand{\TOneCRhoThreeFiftyThree}{}\renewcommand{\TOneCRhoThreeFiftyThree}{-0.924}
+\providecommand{\TOneCSigSumThreeFiftyThree}{}\renewcommand{\TOneCSigSumThreeFiftyThree}{0.271}
+\providecommand{\TOneCDustRatioFish}{}\renewcommand{\TOneCDustRatioFish}{549}
+ 
+\section{Polarization: sticks on the sky, and two kinds of pattern}
+\label{T1c:sec:eb}
+
+So far the microwave sky has been a map of one number per direction, the temperature. Its statistics are the $\alm$ and their variance $\Cell$ (\cref{T1a:sec:objects}), and one sky is one draw from them. That description already handles everything in the temperature map: its acoustic peaks, its parameters, its scatter. Weak lensing then showed us a sky whose value at each point is not a number but a short stick without an arrowhead, the shear of a galaxy image, and it gave us the rule for how such a stick is written and how it changes when the axes turn (\cref{T1b:sec:shapes}).
+
+The microwave light carries a stick too. It is partly linearly polarized: at each point of the sky the electric field oscillates a little more along one direction than along the one at right angles. A temperature map cannot tell left from right. A field of sticks can.
+
+Picture two wheels. The first is an old cart wheel, its spokes running straight out from the hub. The second is a toy pinwheel, its blades all leaning the same way, so that it swirls. Hold each in front of a mirror. The cart wheel in the mirror is the same cart wheel. The pinwheel in the mirror swirls the other way: a left-handed pinwheel has become a right-handed one. Now take the cart wheel and twist every spoke by the same small angle at the hub. It has become a faint pinwheel, and a pinwheel of one particular hand, set by the sense of the twist. A smudge on the glass that blurs the spokes in random directions would also spoil the clean radial pattern, but it would not prefer one hand: averaged over many wheels, it makes as many left swirls as right ones.
+
+The polarization of the microwave sky behaves in the same way. Its sticks can be split into a spoke-like part, called $E$, and a pinwheel-like part, called $B$. The ordinary physics that made the sky at last scattering does not know left from right, so it cannot produce a net handedness. If something on the way to us twists every stick by the same angle $\beta$, part of $E$ turns into $B$, and the new $B$ has a definite hand, which appears as a correlation between $E$ and $B$. Gravitational lensing, which plays the part of the smudge, also turns $E$ into $B$, but without a hand. Everything that follows is a search for that hand.
+
+\emph{The twist in symbols.} Take one stick of length $P$ at an angle $\psi$ from a fixed reference axis, and recall from \cref{T1b:eq:spin2} that a headless stick is described by the complex number $Pe^{2i\psi}$, the factor $2$ because the stick at $\psi+\pi$ is the same stick. Let the stick be a spoke: it points from a hub at position angle $\varphi$, so $\psi=\varphi$. Twist it by $\beta$, so $\psi=\varphi+\beta$, and ask how much of it is still a spoke and how much now leans at $45^\circ$ to the spoke direction, the pinwheel direction. Measured from the spoke direction, the twisted stick is $Pe^{2i\beta}=P\cos2\beta+iP\sin2\beta$: a spoke part $P\cos2\beta$ and a pinwheel part $P\sin2\beta$. There are two dials, the twist $\beta$ and the hand, which is the sign of $\beta$. The naive way to detect the twist is to look for pinwheel power. That power is $P^2\sin^22\beta$, which for a twist of a third of a degree is about $1.5\times10^{-4}$ of the spoke power, and lensing makes pinwheel power of its own. The good choice is the product of the spoke part and the pinwheel part, $P^2\cos2\beta\sin2\beta=\frac12P^2\sin4\beta$. It is linear in $\beta$ for small twists, it changes sign with the hand, and lensing gives zero for it on average. Its price is that we must know which way our own reference axis points to better than $\beta$: an instrument whose axis is off by an angle $\alpha$ adds $\alpha$ to every $\psi$, and that is a twist too. For the Planck satellite the uncertainty of $\alpha$ is $0.28^\circ$ \cite{MinamiKomatsu2020}, as large as the twist that has been reported. Lesson: a twist shows up first in a cross product that changes sign in a mirror, not in power, and the instrument's own orientation is the first thing it can be confused with.
+
+\paragraph{A picture: gradient and curl.} An ordinary vector field in a plane splits into a part that is the gradient of something, flowing straight out of hills and into valleys, and a part that is a curl, circulating around them. $E$ and $B$ are the same split for headless sticks. Around a hot or cold patch, $E$ sticks line up along the radius or around the circle, the spokes and rims of a wheel; $B$ sticks lean at $45^\circ$ and swirl. A mirror leaves gradients alone and reverses circulation, so it leaves $E$ alone and reverses $B$.
+
+\emph{One idea, many names.} A quantity that changes sign in a mirror is called a pseudoscalar, and a nonzero average of one means that the laws producing the data distinguish left from right. In particle physics this is a parity-violation test: in 1957 the electrons from polarized cobalt-60 nuclei were found to leave preferentially opposite to the nuclear spin, a correlation between a vector and an axial vector that a mirror reverses. In chemistry it is chirality, the handedness of a molecule, and in fluids it is helicity. In each case the statistic that detects the handedness is linear in a parity-odd quantity, and its expected value is zero when the laws are mirror symmetric. The mathematical language is that of how objects change under rotations and reflections, which is why spin weights and Fourier modes do all the work below.
+
+We first write the stick in terms of the measured Stokes numbers and derive what a twist does to them, then split a field of sticks into $E$ and $B$, show what a mirror does to each, and see why the ordinary sky has no $EB$ and no $TB$. \Cref{T1c:sec:rotation} then follows the twist and the smudge through to the power spectra.
+
+\subsection{Stokes \texorpdfstring{$Q$}{Q} and \texorpdfstring{$U$}{U}, and what a twist does to them}
+\label{T1c:sec:stokes}
+
+An instrument does not see sticks. It sees intensities. Fix two axes $\bm e_1,\bm e_2$ across the line of sight, and write the electric field of a wave as $a_1e^{i\theta_1}$ along $\bm e_1$ and $a_2e^{i\theta_2}$ along $\bm e_2$, with amplitudes $a_1,a_2$ and phases $\theta_1,\theta_2$. The cosmology notes define the four \newterm{Stokes parameters} as time averages,
+\begin{equation}
+I=\langle a_1^2\rangle+\langle a_2^2\rangle,\qquad
+Q=\langle a_1^2\rangle-\langle a_2^2\rangle,\qquad
+U=2\langle a_1a_2\cos(\theta_1-\theta_2)\rangle,
+\label{T1c:eq:stokes}
+\end{equation}
+plus a fourth, $V$, for circular polarization, which Thomson scattering does not produce and which we drop. $I$ is the total intensity, which for the CMB we write as the temperature $T$. $Q$ is the excess of intensity along $\bm e_1$ over $\bm e_2$, measured by a detector that compares the two. $U$ is the same excess for a pair of axes turned by $45^\circ$.
+
+\emph{Where is the stick?} Take a wave linearly polarized along a direction at angle $\psi$ from $\bm e_1$, with amplitude $a$. Its two components oscillate in step, $\theta_1=\theta_2$, with $a_1=a\cos\psi$ and $a_2=a\sin\psi$. Then
+\begin{align}
+Q&\eqby{1}a^2\cos^2\psi-a^2\sin^2\psi\eqby{2}a^2\cos2\psi,
+\nonumber\\
+U&\eqby{3}2a^2\cos\psi\sin\psi\eqby{4}a^2\sin2\psi,
+\nonumber\\
+Q+iU&\eqby{5}P\,e^{2i\psi},\qquad P\equiv\sqrt{Q^2+U^2}=a^2 .
+\label{T1c:eq:qu-psi}
+\end{align}
+\begin{explain}
+  \item Insert $a_1=a\cos\psi$, $a_2=a\sin\psi$ into the definition of $Q$; for a steady wave the time average does nothing.
+  \item The double-angle identity $\cos^2\psi-\sin^2\psi=\cos2\psi$.
+  \item The definition of $U$ with $\cos(\theta_1-\theta_2)=\cos0=1$.
+  \item The double-angle identity $2\sin\psi\cos\psi=\sin2\psi$.
+  \item Euler's formula, $\cos2\psi+i\sin2\psi=e^{2i\psi}$. $P$ is the polarized intensity, here all of $I$ because the wave is fully polarized; an unpolarized part would add to $I$ and nothing to $Q$ or $U$.
+\end{explain}
+So the measured pair $(Q,U)$ is the stick of \cref{T1b:sec:shapes}: its length is $P$, its angle is $\psi=\frac12\arctan(U/Q)$ (taken in the right quadrant), and the factor two makes $\psi$ and $\psi+180^\circ$ the same stick. \Cref{T1c:fig:stokes} is the dictionary: $Q>0$ is a stick along $\bm e_1$, $Q<0$ along $\bm e_2$, $U>0$ and $U<0$ the two diagonals.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \foreach \x/\ang/\lab in {0/0/{$Q>0,\ U=0$},2.6/90/{$Q<0,\ U=0$},5.2/45/{$Q=0,\ U>0$},7.8/-45/{$Q=0,\ U<0$}}{
+    \draw[faint] (\x-0.9,-0.9) rectangle (\x+0.9,0.9);
+    \draw[very thick,formblue] ($(\x,0)+(\ang:0.7)$) -- ($(\x,0)+(\ang+180:0.7)$);
+    \node[font=\small] at (\x,-1.25) {\lab};
+  }
+  \begin{scope}[xshift=11.2cm]
+    \draw[faint] (-1.2,-0.9) rectangle (1.6,1.5);
+    \draw[->,softgray] (-1.0,0) -- (1.4,0) node[below,font=\small] {$\bm e_1$};
+    \draw[->,softgray] (0,-0.8) -- (0,1.35) node[left,font=\small] {$\bm e_2$};
+    \draw[very thick,formblue] (25:1.1) -- (205:0.6);
+    \draw[very thick,tangentgreen] (55:1.1) -- (235:0.6);
+    \draw[formblue] (0.55,0) arc (0:25:0.55);
+    \node[font=\small,formblue] at (0.85,0.18) {$\psi$};
+    \draw[tangentgreen] (25:0.8) arc (25:55:0.8);
+    \node[font=\small,tangentgreen] at (40:1.05) {$\beta$};
+    \node[font=\small] at (0.2,-1.25) {twist: $\psi\to\psi+\beta$};
+  \end{scope}
+\end{tikzpicture}
+\caption{The Stokes dictionary. Each square shows one point of the sky with the polarization stick that the pair $(Q,U)$ describes: along the first reference axis, along the second, and along the two diagonals. On the right, a stick at angle $\psi$ (blue) is twisted by $\beta$ (green); the twist adds $\beta$ to $\psi$ and so multiplies $Q+iU$ by $e^{2i\beta}$.}
+\label{T1c:fig:stokes}
+\end{figure}
+
+\emph{What a twist does.} Suppose something turns the plane of polarization by an angle $\beta$, in the sense from $\bm e_1$ towards $\bm e_2$, without changing its strength. The stick at $\psi$ becomes a stick at $\psi+\beta$ with the same $P$. Then
+\begin{align}
+Q'+iU'&\eqby{1}P\,e^{2i(\psi+\beta)}\eqby{2}e^{2i\beta}\,(Q+iU),
+\qquad
+Q'-iU'\eqby{3}e^{-2i\beta}\,(Q-iU),
+\nonumber\\
+\begin{pmatrix}Q'\\U'\end{pmatrix}
+&\eqby{4}\begin{pmatrix}\cos2\beta&-\sin2\beta\\ \sin2\beta&\cos2\beta\end{pmatrix}
+\begin{pmatrix}Q\\U\end{pmatrix}.
+\label{T1c:eq:twist}
+\end{align}
+\begin{explain}
+  \item \eqref{T1c:eq:qu-psi} for the twisted stick, whose angle is $\psi+\beta$ and whose length is unchanged.
+  \item Split the exponential, $e^{2i(\psi+\beta)}=e^{2i\beta}e^{2i\psi}$, and use \eqref{T1c:eq:qu-psi} again for the untwisted stick.
+  \item $Q$ and $U$ are real, so the complex conjugate of the first equation is the second.
+  \item Write $e^{2i\beta}=\cos2\beta+i\sin2\beta$, multiply out $(\cos2\beta+i\sin2\beta)(Q+iU)$, and read off the real part $Q'$ and the imaginary part $U'$.
+\end{explain}
+The pair $(Q,U)$ turns like a vector, but by twice the angle. A partly polarized wave obeys the same rule, because its unpolarized part sits in $I$ and does not move, and every point of the sky obeys it with the same $\beta$ if the cause of the twist is the same everywhere.
+
+\paragraph{Example: three twists of one stick.} Let a stick lie along $\bm e_1$, so $(Q,U)=(P,0)$. A twist of $\beta=45^\circ$ gives $(Q',U')=(P\cos90^\circ,P\sin90^\circ)=(0,P)$: the stick is now on the diagonal and all of the signal has moved from $Q$ to $U$. A twist of $90^\circ$ gives $(-P,0)$: the stick stands along $\bm e_2$, and $Q$ has changed sign. A twist of $\beta=0.35^\circ$ gives $Q'=P\cos0.70^\circ=0.99993\,P$ and $U'=P\sin0.70^\circ=0.0122\,P$: a $1.2\%$ leak of signal into $U$ and a loss in $Q$ of only $7\times10^{-5}$. Small twists move signal linearly in $\beta$ and power quadratically.
+
+\paragraph{A twist of the sticks or a turn of the axes?} \Cref{T1b:eq:spin2} said that turning the \emph{axes} by $\alpha$ multiplies $Q+iU$ by $e^{-2i\alpha}$. That is the same stick described by a turned observer, so it changes the numbers and nothing physical. A twist turns the sticks themselves. The two are mirror images of each other in the formula, and that matters for an instrument: a detector whose reference axis is turned by $-\alpha$ from where we believe it to be reads every stick as if it had been twisted by $+\alpha$. In the data a miscalibrated axis and a physical twist look identical. We return to this in \cref{T1c:sec:rot-alpha,T1c:sec:mk}.
+
+\begin{pitfall}[Two sign conventions for $U$]
+The angle $\psi$ can be measured from north towards east, as astronomers do (the IAU convention), or towards west, which is the convention of HEALPix and of the Planck maps. Changing convention flips the sign of $U$, and therefore the sign of every twist angle, of $B$, and of the $EB$ and $TB$ spectra built below. A twist reported as positive in one convention is negative in the other. Always check which convention a map and a paper use before comparing signs.
+\end{pitfall}
+
+\subsection{\texorpdfstring{$E$}{E} and \texorpdfstring{$B$}{B} on a small patch of sky}
+\label{T1c:sec:eb-flat}
+
+The numbers $Q$ and $U$ at a point depend on the axes we chose there, so they are not a good description of a pattern: turn the axes and they change. We want two fields that describe the pattern itself. On a small patch of sky, treated as flat with angular coordinates $\bm\theta=(\theta_1,\theta_2)$ as in \cref{T1b:sec:shapes}, the natural way is to take the pattern apart into waves. Write each field as a sum of plane waves, $f(\bm\theta)=\int\frac{\dd^2\bm\ell}{(2\pi)^2}f(\bm\ell)\,e^{i\bm\ell\cdot\bm\theta}$, where the wavevector $\bm\ell$ points at the angle $\varphi_{\bm\ell}$ from $\bm e_1$, and its length $\ell$ plays the part of the multipole.
+
+\emph{Which axes does one wave pick?} A single plane wave has one direction of its own, the direction of $\bm\ell$. So for that wave there is a natural pair of axes: the first along $\bm\ell$, the second across it. Read the Stokes numbers of the wave in those axes, which means turning the axes by $\varphi_{\bm\ell}$ and applying \cref{T1b:eq:spin2}. The two numbers we get are called $E$ and $B$:
+\begin{align}
+E(\bm\ell)+iB(\bm\ell)&\eqby{1}e^{-2i\varphi_{\bm\ell}}\bigl[Q(\bm\ell)+iU(\bm\ell)\bigr],
+\qquad
+E(\bm\ell)-iB(\bm\ell)\eqby{2}e^{2i\varphi_{\bm\ell}}\bigl[Q(\bm\ell)-iU(\bm\ell)\bigr],
+\nonumber\\
+E(\bm\ell)&\eqby{3}\cos2\varphi_{\bm\ell}\,Q(\bm\ell)+\sin2\varphi_{\bm\ell}\,U(\bm\ell),
+\qquad
+B(\bm\ell)\eqby{4}-\sin2\varphi_{\bm\ell}\,Q(\bm\ell)+\cos2\varphi_{\bm\ell}\,U(\bm\ell).
+\label{T1c:eq:eb-flat}
+\end{align}
+\begin{explain}
+  \item Turning the axes by $\varphi_{\bm\ell}$ multiplies $Q+iU$ by $e^{-2i\varphi_{\bm\ell}}$ \eqref{T1b:eq:spin2}; this holds wave by wave because the turn is the same at every point of the wave.
+  \item The same for $Q-iU$, which picks up the opposite phase. In Fourier space $Q(\bm\ell)$ and $U(\bm\ell)$ are complex, so the second line is a separate statement, not the complex conjugate of the first.
+  \item Add the two equations of the first line and divide by two: $e^{\mp2i\varphi}$ combine into $\cos2\varphi$ and $\sin2\varphi$.
+  \item Subtract them and divide by $2i$.
+\end{explain}
+In words: $E$ is the part of each wave whose sticks lie along or across its wavevector, and $B$ is the part whose sticks lean at $45^\circ$ to it. The first row of \cref{T1c:fig:patterns} shows one wave of each. This choice of axes uses nothing but the wave itself, so $E$ and $B$ do not depend on how we oriented $\bm e_1,\bm e_2$; they describe the pattern.
+
+Are these the same $E$ and $B$ that weak lensing used, \cref{T1b:sec:objects}, where they were defined by $\Delta E=(\partial_1^2-\partial_2^2)Q+2\partial_1\partial_2U$ and $\Delta B=-2\partial_1\partial_2Q+(\partial_1^2-\partial_2^2)U$ with $\gamma_1,\gamma_2$ in place of $Q,U$? On one wave each derivative $\partial_a$ becomes a factor $i\ell_a$, with $\ell_1=\ell\cos\varphi_{\bm\ell}$ and $\ell_2=\ell\sin\varphi_{\bm\ell}$, so
+\begin{align}
+-\ell^2E(\bm\ell)&\eqby{1}-(\ell_1^2-\ell_2^2)\,Q(\bm\ell)-2\ell_1\ell_2\,U(\bm\ell)
+\eqby{2}-\ell^2\bigl[\cos2\varphi_{\bm\ell}\,Q(\bm\ell)+\sin2\varphi_{\bm\ell}\,U(\bm\ell)\bigr],
+\nonumber\\
+-\ell^2B(\bm\ell)&\eqby{1}2\ell_1\ell_2\,Q(\bm\ell)-(\ell_1^2-\ell_2^2)\,U(\bm\ell)
+\eqby{2}-\ell^2\bigl[-\sin2\varphi_{\bm\ell}\,Q(\bm\ell)+\cos2\varphi_{\bm\ell}\,U(\bm\ell)\bigr].
+\label{T1c:eq:eb-check}
+\end{align}
+\begin{explain}
+  \item The Laplacian becomes $-\ell^2$, $\partial_1^2-\partial_2^2$ becomes $-(\ell_1^2-\ell_2^2)$, and $2\partial_1\partial_2$ becomes $-2\ell_1\ell_2$.
+  \item $\ell_1^2-\ell_2^2=\ell^2(\cos^2\varphi-\sin^2\varphi)=\ell^2\cos2\varphi$ and $2\ell_1\ell_2=\ell^2\sin2\varphi$.
+\end{explain}
+Dividing by $-\ell^2$ gives back \eqref{T1c:eq:eb-flat}: the two definitions agree. The derivative form says that $E$ and $B$ at a point depend on $Q$ and $U$ all around it. One stick does not know whether it belongs to an $E$ or a $B$ pattern; only its neighbours do.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/eb_patterns.pdf}
+\caption{Pure $E$ and pure $B$ patterns as fields of sticks (stick length proportional to $P$). (a) One plane wave of $E$, wavevector along the first axis (arrow): the sticks lie along the wavevector where the wave is positive and across it where it is negative. (b) The same wave of $B$: the sticks lean at $\pm45^\circ$. (c) A localised lump of $E$: rings and spokes. (d) A lump of $B$: a swirl. (e) The mirror image of (d), reflected top to bottom: it swirls the other way, and it is exactly the $B$ lump with its sign reversed. (f) The $E$ lump of (c) with every stick twisted by $20^\circ$: it now swirls, and it is $\cos40^\circ$ of the $E$ lump plus $\sin40^\circ$ of a $B$ lump.}
+\label{T1c:fig:patterns}
+\end{figure}
+
+\paragraph{Example: what each lump is made of.} The script \nolinkurl{code/chT1/05_eb_patterns.py} builds the six panels of \cref{T1c:fig:patterns} from \eqref{T1c:eq:eb-flat} run backwards, $Q+iU=e^{2i\varphi_{\bm\ell}}(E+iB)$ wave by wave, and then recovers $E$ and $B$ from the sticks. For the twisted lump of panel (f) the recovered fields are $\cos40^\circ$ times the original $E$ and $\sin40^\circ$ times it as $B$, to a relative error of $\TOneCRotErr$, round-off. That is the rule \eqref{T1c:eq:twist} at work on a whole pattern, and \cref{T1c:sec:rotation} derives it in general.
+
+\begin{workdef}[$E$ and $B$ modes]
+For each Fourier wave of a polarization pattern, $E$ and $B$ are the Stokes parameters $Q$ and $U$ read in axes aligned with the wavevector: $E(\bm\ell)+iB(\bm\ell)=e^{-2i\varphi_{\bm\ell}}[Q(\bm\ell)+iU(\bm\ell)]$. $E$ sticks lie along or across the wavevector, $B$ sticks at $45^\circ$ to it. \emph{Operational:} Fourier-transform the $Q$ and $U$ maps, combine them with \eqref{T1c:eq:eb-flat}, and on the full sky use the spin-2 harmonic transform of \pyname{healpy} (\pyname{map2alm} with $T,Q,U$), which returns $T_{\ell m},E_{\ell m},B_{\ell m}$.
+\end{workdef}
+
+\subsection{The whole sky}
+\label{T1c:sec:eb-sky}
+
+On the whole sphere the plane waves are replaced by spherical harmonics, and the stick-carrying fields need their spin-weighted version. Spin-weighted harmonics ${}_{\pm2}Y_{\ell m}$ are the functions that turn by $e^{\mp2i\psi}$ when the local axes turn by $\psi$, just as $Q\pm iU$ do, so they are the natural basis for $Q\pm iU$; they are built from the ordinary $Y_{\ell m}$ by two derivatives (see the cosmology notes, and \cite{ZaldarriagaSeljak1997,Kamionkowski1997}). With the sign convention of the cosmology notes and of \cite{ZaldarriagaSeljak1997},
+\begin{equation}
+(Q\pm iU)(\bm n)=-\sum_{\ell\ge2}\sum_{m=-\ell}^{\ell}\bigl(E_{\ell m}\pm iB_{\ell m}\bigr)\,{}_{\pm2}Y_{\ell m}(\bm n).
+\label{T1c:eq:eb-sky}
+\end{equation}
+The sum starts at $\ell=2$ because a stick pattern has no monopole or dipole. On small scales this becomes the flat-sky \eqref{T1c:eq:eb-flat}, wave by wave, and the overall minus sign is a convention that the flat-sky form hides in its Fourier phases. The temperature has its own coefficients $T_{\ell m}$, the $\alm$ of \cref{T1a:sec:objects}.
+
+The three sets $T_{\ell m}$, $E_{\ell m}$, $B_{\ell m}$ are Gaussian random numbers with mean zero, like the $\alm$ of \cref{ch:07}, but now they can be correlated with each other at the same $(\ell,m)$. For any two of them, $X,Y\in\{T,E,B\}$, the \newterm{angular cross-spectrum} is
+\begin{equation}
+\langle X_{\ell m}Y^*_{\ell'm'}\rangle=\delta_{\ell\ell'}\delta_{mm'}\,C_\ell^{XY},
+\qquad
+\widehat C_\ell^{XY}=\frac{1}{2\ell+1}\sum_{m=-\ell}^{\ell}\mathrm{Re}\bigl(X_{\ell m}Y^*_{\ell m}\bigr).
+\label{T1c:eq:spectra}
+\end{equation}
+There are six: $TT$, $EE$, $BB$, $TE$, $EB$ and $TB$. On a flat patch the same definition reads $\langle X(\bm\ell)Y^*(\bm\ell')\rangle=(2\pi)^2\delta^2(\bm\ell-\bm\ell')\,C^{XY}_\ell$. The CAMB fiducial of \pyname{code/camb_fiducial.py} returns four of them, $TT$, $EE$, $BB$ and $TE$, and none of $EB$ or $TB$. The next subsection says why.
+
+\subsection{What a mirror does}
+\label{T1c:sec:parity}
+
+\emph{The event.} The fiducial spectra contain no $EB$ and no $TB$. \emph{What would it take to produce them?} The answer comes from the mirror test of the opening, now done with the formulas.
+
+Reflect the patch of sky in the line $\theta_2=0$: the mirror sends the point $(\theta_1,\theta_2)$ to $(\theta_1,-\theta_2)$. A stick at angle $\psi$ appears in the mirror at $-\psi$. By \eqref{T1c:eq:qu-psi} that leaves $Q=P\cos2\psi$ unchanged and flips $U=P\sin2\psi$. So the mirrored sky has $Q^{\mathrm M}(\theta_1,\theta_2)=Q(\theta_1,-\theta_2)$, $U^{\mathrm M}(\theta_1,\theta_2)=-U(\theta_1,-\theta_2)$ and $T^{\mathrm M}(\theta_1,\theta_2)=T(\theta_1,-\theta_2)$. In Fourier space a field flipped in $\theta_2$ has its waves flipped in $\ell_2$, so with $\bar{\bm\ell}\equiv(\ell_1,-\ell_2)$, whose angle is $\varphi_{\bar{\bm\ell}}=-\varphi_{\bm\ell}$,
+\begin{align}
+E^{\mathrm M}(\bm\ell)&\eqby{1}\cos2\varphi_{\bm\ell}\,Q(\bar{\bm\ell})-\sin2\varphi_{\bm\ell}\,U(\bar{\bm\ell})
+\eqby{2}\cos2\varphi_{\bar{\bm\ell}}\,Q(\bar{\bm\ell})+\sin2\varphi_{\bar{\bm\ell}}\,U(\bar{\bm\ell})
+\eqby{3}E(\bar{\bm\ell}),
+\nonumber\\
+B^{\mathrm M}(\bm\ell)&\eqby{1}-\sin2\varphi_{\bm\ell}\,Q(\bar{\bm\ell})-\cos2\varphi_{\bm\ell}\,U(\bar{\bm\ell})
+\eqby{2}-\bigl[-\sin2\varphi_{\bar{\bm\ell}}\,Q(\bar{\bm\ell})+\cos2\varphi_{\bar{\bm\ell}}\,U(\bar{\bm\ell})\bigr]
+\eqby{3}-B(\bar{\bm\ell}),
+\nonumber\\
+T^{\mathrm M}(\bm\ell)&=T(\bar{\bm\ell}).
+\label{T1c:eq:mirror}
+\end{align}
+\begin{explain}
+  \item \eqref{T1c:eq:eb-flat} applied to the mirrored maps: $Q^{\mathrm M}(\bm\ell)=Q(\bar{\bm\ell})$ and $U^{\mathrm M}(\bm\ell)=-U(\bar{\bm\ell})$.
+  \item $\varphi_{\bar{\bm\ell}}=-\varphi_{\bm\ell}$, so $\cos2\varphi_{\bm\ell}=\cos2\varphi_{\bar{\bm\ell}}$ and $\sin2\varphi_{\bm\ell}=-\sin2\varphi_{\bar{\bm\ell}}$.
+  \item \eqref{T1c:eq:eb-flat} again, now at the wavevector $\bar{\bm\ell}$.
+\end{explain}
+A mirror carries $E$ into $E$ and $B$ into $-B$, as panels (d) and (e) of \cref{T1c:fig:patterns} show; the script finds the mirrored $B$ lump equal to minus the original to a relative error of $\TOneCMirrorErr$. On the whole sky the corresponding statement is about the reflection through the centre, $\bm n\to-\bm n$, under which $T_{\ell m}\to(-1)^\ell T_{\ell m}$, $E_{\ell m}\to(-1)^\ell E_{\ell m}$ and $B_{\ell m}\to(-1)^{\ell+1}B_{\ell m}$ \cite{Kamionkowski1997,MinamiKomatsu2020}: again $B$ has the opposite sign to $E$ and $T$. $E$ is called a scalar and $B$ a \newterm{pseudoscalar}.
+
+\emph{Now the spectra.} Suppose the laws that produced the sky do not distinguish left from right. Then the mirror image of our sky is exactly as probable as our sky itself, so its spectra are the same as ours. But by \eqref{T1c:eq:mirror} its cross-spectra are
+\begin{align}
+C_\ell^{EB,\mathrm M}&\eqby{1}-C_\ell^{EB},
+\qquad
+C_\ell^{TB,\mathrm M}\eqby{1}-C_\ell^{TB},
+\qquad
+C_\ell^{XY,\mathrm M}\eqby{2}C_\ell^{XY}\ \ (XY=TT,EE,BB,TE),
+\nonumber\\
+C_\ell^{EB}&\eqby{3}-C_\ell^{EB}\ \Longrightarrow\ C_\ell^{EB}=0,
+\qquad C_\ell^{TB}=0 .
+\label{T1c:eq:parity-zero}
+\end{align}
+\begin{explain}
+  \item Insert $E^{\mathrm M}(\bm\ell)=E(\bar{\bm\ell})$, $B^{\mathrm M}(\bm\ell)=-B(\bar{\bm\ell})$, $T^{\mathrm M}(\bm\ell)=T(\bar{\bm\ell})$ into $\langle X(\bm\ell)Y^*(\bm\ell')\rangle$; one minus sign comes out, and $\bar{\bm\ell}$ has the same length $\ell$ as $\bm\ell$, so the spectrum is evaluated at the same multipole.
+  \item In $BB$ the minus sign appears twice, in the others not at all.
+  \item A mirror-symmetric law makes the mirrored sky as probable as ours, so its spectra equal ours; with the first line, $C^{EB}$ equals its own negative.
+\end{explain}
+Four of the six spectra survive the mirror, and two, $EB$ and $TB$, change sign. In a universe whose physics treats left and right alike, the two parity-odd spectra vanish on average. On one sky they are not exactly zero: $\widehat C^{EB}_\ell$ scatters around zero from chance alignments, by an amount set by $C^{EE}$ and $C^{BB}$, just as $\widehat C_\ell$ scatters around $C_\ell$.
+
+\begin{keyidea}[$EB$ and $TB$ detect handedness]
+Under a mirror $T$ and $E$ keep their sign and $B$ reverses. A universe whose laws are mirror symmetric therefore has $C_\ell^{EB}=C_\ell^{TB}=0$ on average. A nonzero $EB$ or $TB$ on the sky means that something between the emission and our detector picked a hand: a twist of the polarization by new physics, a twist by our own instrument, or a source whose own structure is handed.
+\end{keyidea}
+
+\subsection{Where the \texorpdfstring{$E$}{E} modes come from, and how large they are}
+\label{T1c:sec:e-origin}
+
+The CMB is polarized because of Thomson scattering at the last-scattering surface: an electron illuminated more strongly from one direction than from the direction at right angles (a quadrupole in the radiation it sees) scatters light that is linearly polarized \cite{HuWhite1997Pol}; the physics is in the cosmology notes. The quadrupole comes from the flows of the primordial plasma, and a second, smaller dose of polarization was added at reionization, at much larger angular scales.
+
+Which patterns can a density wave produce? A single scalar wave, a plane wave of density in the early universe, has one special direction, its wavevector. Reflect the whole set-up in any plane that contains the wavevector and the line of sight, and nothing changes. By \eqref{T1c:eq:mirror} the $B$ part of the pattern it produces must then equal its own negative, so it is zero. Scalar perturbations make only $E$ \cite{Kamionkowski1997,SeljakZaldarriaga1997}. A gravitational wave is different: its two polarization states stretch space along crossed axes, and the $\times$ state is not symmetric under that reflection, so tensor perturbations make both $E$ and $B$. This is why $B$ modes became the target of searches for primordial gravitational waves, and why the next sections ask what else can make them.
+
+The fiducial spectra fix the sizes. $D_\ell^{EE}=\ell(\ell+1)C_\ell^{EE}/2\pi$ peaks at $\TOneCDEEpeak\,\mu\mathrm K^2$ near $\ell\approx\TOneCEEpeakL$, so the polarization fluctuations are roughly a tenth of the temperature ones in amplitude. The $TE$ spectrum, with both signs, connects the two. The fiducial $BB$ is not zero, but it contains no primordial gravitational waves: it is the lensing $B$ of \cref{T1c:sec:lensing}, which peaks at $D_\ell^{BB}=\TOneCDBBpeak\,\mu\mathrm K^2$ near $\ell\approx\TOneCBBpeakL$, four hundred times below $EE$.
+\section{When power moves from \texorpdfstring{$E$}{E} to \texorpdfstring{$B$}{B}}
+\label{T1c:sec:rotation}
+
+We now have the rule for one stick, \eqref{T1c:eq:twist}: a twist by $\beta$ multiplies $Q+iU$ by $e^{2i\beta}$. And we have the split of a field of sticks into $E$ and $B$, with the six spectra $C_\ell^{XY}$ of \eqref{T1c:eq:spectra}. That is enough to draw a twisted pattern, as in panel (f) of \cref{T1c:fig:patterns}. It is not yet enough for data. A CMB experiment does not compare sticks one by one; it measures the spectra, and the spectra of the sky are known only statistically. The question is what a twist does to the spectra, and how its effect differs from that of anything else that turns $E$ into $B$.
+
+Think of two radio stations on neighbouring frequencies, a loud one and a nearly silent one. A slightly mistuned receiver lets a little of the loud station into the quiet channel. You hear the leak as extra sound in the quiet channel, but there is a better test than loudness: play the loud station's programme next to the leak and they match, word for word and with the same sign. Now suppose instead the antenna wobbles in the wind, so that the loud programme is added to the quiet channel sometimes with a plus sign and sometimes with a minus sign. You still hear extra sound, as loud as before. But the match with the loud programme averages to zero, because the plus and minus moments cancel. Loudness cannot tell the two leaks apart; the correlation with the source can.
+
+On the sky the loud station is $E$ and the quiet one is $B$. A twist of every stick by the same angle is the mistuned receiver: it moves a fixed fraction of $E$ into $B$ with a fixed sign, so the new $B$ is correlated with $E$ (and with $T$, which is correlated with $E$). Gravitational lensing is the wobbling antenna: it moves $E$ into $B$ through the lensing potential, which is positive in some places and negative in others, so it adds $BB$ power but leaves no $EB$ and no $TB$ on average.
+
+\emph{The two leaks in symbols.} For one wave, write the mistuned receiver as $B'=sE$ with a fixed number $s$, and the wobbling antenna as $B'=wE$ with a random $w$ of mean zero and variance $\sigma_w^2$, independent of $E$. The extra power is $\langle\abs{B'}^2\rangle=s^2C^{EE}$ in the first case and $\sigma_w^2C^{EE}$ in the second: equal when $\sigma_w=\abs s$, so power cannot tell them apart. The correlation is $\langle B'E^*\rangle=s\,C^{EE}$ in the first case and $\langle w\rangle C^{EE}=0$ in the second. The dial is the mean of the leak coefficient: a fixed leak has one, a random one does not. Lesson: to identify a twist, measure the correlation $EB$, not the power $BB$.
+
+\emph{A picture.} Plot every mode of the sky as a point in a plane, its $E$ along the horizontal axis and its $B$ along the vertical one. Before any leak the cloud of points is a thin horizontal cigar. A twist turns every point by the same angle, so the cigar tilts, and a tilted cigar is exactly a correlation between the two axes. A random leak pushes each point up or down by a random amount, so the cigar gets fatter but stays horizontal, and a fat horizontal cigar has no correlation.
+
+\emph{One idea, many names.} A leak with a fixed sign is what an electronics engineer calls coherent cross-talk, and a leak with a random sign incoherent cross-talk; a lock-in amplifier finds a weak signal by correlating with a reference, not by measuring power. In data analysis the same split separates a systematic error, which has a mean and therefore correlates with its cause, from a random one, which only adds variance. The rest of the section turns this into the exact formulas, first for the twist and then for lensing.
+
+\subsection{From sticks to harmonic coefficients}
+\label{T1c:sec:rot-alm}
+
+\emph{What does a uniform twist do to $E_{\ell m}$ and $B_{\ell m}$?} Twist every stick of the sky by the same angle $\beta$. At every direction $\bm n$, \eqref{T1c:eq:twist} gives $(Q'\pm iU')(\bm n)=e^{\pm2i\beta}(Q\pm iU)(\bm n)$. Insert the harmonic expansion \eqref{T1c:eq:eb-sky} on both sides:
+\begin{align}
+-\sum_{\ell m}\bigl(E'_{\ell m}\pm iB'_{\ell m}\bigr){}_{\pm2}Y_{\ell m}(\bm n)
+&\eqby{1}e^{\pm2i\beta}\Bigl[-\sum_{\ell m}\bigl(E_{\ell m}\pm iB_{\ell m}\bigr){}_{\pm2}Y_{\ell m}(\bm n)\Bigr]
+\nonumber\\
+&\eqby{2}-\sum_{\ell m}e^{\pm2i\beta}\bigl(E_{\ell m}\pm iB_{\ell m}\bigr){}_{\pm2}Y_{\ell m}(\bm n),
+\nonumber\\
+E'_{\ell m}\pm iB'_{\ell m}&\eqby{3}e^{\pm2i\beta}\bigl(E_{\ell m}\pm iB_{\ell m}\bigr).
+\label{T1c:eq:rot-alm}
+\end{align}
+\begin{explain}
+  \item The twist rule at each point, with both sides written in the harmonic basis.
+  \item $\beta$ is the same in every direction, so $e^{\pm2i\beta}$ is a constant and moves inside the sum.
+  \item The spin-weighted harmonics are a basis, so two expansions of the same function have the same coefficients.
+\end{explain}
+Now separate $E'$ and $B'$, adding and subtracting the two signs:
+\begin{align}
+E'_{\ell m}&\eqby{1}\tfrac12\bigl[e^{2i\beta}(E_{\ell m}+iB_{\ell m})+e^{-2i\beta}(E_{\ell m}-iB_{\ell m})\bigr]
+\eqby{2}\cos2\beta\,E_{\ell m}-\sin2\beta\,B_{\ell m},
+\nonumber\\
+B'_{\ell m}&\eqby{3}\tfrac{1}{2i}\bigl[e^{2i\beta}(E_{\ell m}+iB_{\ell m})-e^{-2i\beta}(E_{\ell m}-iB_{\ell m})\bigr]
+\eqby{4}\sin2\beta\,E_{\ell m}+\cos2\beta\,B_{\ell m}.
+\label{T1c:eq:rot-eb}
+\end{align}
+\begin{explain}
+  \item Add the $+$ and $-$ versions of \eqref{T1c:eq:rot-alm}; the $\pm iB'$ cancel and $2E'$ is left.
+  \item Collect: the $E$ terms give $\frac12(e^{2i\beta}+e^{-2i\beta})=\cos2\beta$; the $B$ terms give $\frac i2(e^{2i\beta}-e^{-2i\beta})=\frac i2\cdot2i\sin2\beta=-\sin2\beta$.
+  \item Subtract the two versions; the $E'$ cancel and $2iB'$ is left.
+  \item The $E$ terms give $\frac1{2i}(e^{2i\beta}-e^{-2i\beta})=\sin2\beta$; the $B$ terms give $\frac{i}{2i}(e^{2i\beta}+e^{-2i\beta})=\cos2\beta$.
+\end{explain}
+The pair $(E_{\ell m},B_{\ell m})$ turns like $(Q,U)$ at a point, by the angle $2\beta$, mode by mode and with the same angle for every $\ell$ and $m$. The temperature does not change at all, $T'_{\ell m}=T_{\ell m}$, because a twist changes the direction of the polarization and not the intensity. The flat-sky version is the same with $E(\bm\ell)$, $B(\bm\ell)$ in place of $E_{\ell m}$, $B_{\ell m}$: panel (f) of \cref{T1c:fig:patterns}, with $2\beta=40^\circ$, is exactly $\cos40^\circ$ of $E$ and $\sin40^\circ$ of $B$.
+
+\subsection{All the rotated spectra}
+\label{T1c:sec:rot-spectra}
+
+\emph{What happens to each of the six spectra?} We take them one at a time, starting from a sky that is mirror symmetric before the twist: by \eqref{T1c:eq:parity-zero}, $C_\ell^{EB}=C_\ell^{TB}=0$. Write $c\equiv\cos2\beta$ and $s\equiv\sin2\beta$, both real numbers, and use the definition $\langle X_{\ell m}Y^*_{\ell m}\rangle=C_\ell^{XY}$ of \eqref{T1c:eq:spectra}. The expectation of a sum is the sum of the expectations, and real constants come out of it.
+
+\emph{$EE$: how much $E$ is left?}
+\begin{align}
+C_\ell^{EE\prime}=\langle E'_{\ell m}E'^*_{\ell m}\rangle
+&\eqby{1}\bigl\langle(cE_{\ell m}-sB_{\ell m})(cE^*_{\ell m}-sB^*_{\ell m})\bigr\rangle
+\nonumber\\
+&\eqby{2}c^2C_\ell^{EE}-cs\bigl(C_\ell^{EB}+C_\ell^{BE}\bigr)+s^2C_\ell^{BB}
+\eqby{3}\cos^22\beta\,C_\ell^{EE}+\sin^22\beta\,C_\ell^{BB}.
+\label{T1c:eq:rot-ee}
+\end{align}
+\begin{explain}
+  \item Insert $E'$ from \eqref{T1c:eq:rot-eb} and its complex conjugate.
+  \item Multiply out and take the expectation term by term.
+  \item The sky before the twist has $C_\ell^{EB}=C_\ell^{BE}=0$.
+\end{explain}
+\emph{$BB$: how much $B$ is there now?}
+\begin{align}
+C_\ell^{BB\prime}
+&\eqby{1}\bigl\langle(sE_{\ell m}+cB_{\ell m})(sE^*_{\ell m}+cB^*_{\ell m})\bigr\rangle
+\eqby{2}s^2C_\ell^{EE}+sc\bigl(C_\ell^{EB}+C_\ell^{BE}\bigr)+c^2C_\ell^{BB}
+\nonumber\\
+&\eqby{3}\sin^22\beta\,C_\ell^{EE}+\cos^22\beta\,C_\ell^{BB}.
+\label{T1c:eq:rot-bb}
+\end{align}
+\begin{explain}
+  \item Insert $B'$ from \eqref{T1c:eq:rot-eb}.
+  \item Multiply out and take expectations.
+  \item No $EB$ before the twist.
+\end{explain}
+\emph{$EB$: does the new $B$ remember $E$?}
+\begin{align}
+C_\ell^{EB\prime}
+&\eqby{1}\bigl\langle(cE_{\ell m}-sB_{\ell m})(sE^*_{\ell m}+cB^*_{\ell m})\bigr\rangle
+\eqby{2}cs\,C_\ell^{EE}+c^2C_\ell^{EB}-s^2C_\ell^{BE}-sc\,C_\ell^{BB}
+\nonumber\\
+&\eqby{3}\cos2\beta\sin2\beta\,\bigl(C_\ell^{EE}-C_\ell^{BB}\bigr)
+\eqby{4}\tfrac12\sin4\beta\,\bigl(C_\ell^{EE}-C_\ell^{BB}\bigr).
+\label{T1c:eq:rot-ebsp}
+\end{align}
+\begin{explain}
+  \item $E'$ times the complex conjugate of $B'$.
+  \item Multiply out and take expectations.
+  \item No $EB$ before the twist; factor out $cs$.
+  \item The double-angle identity $2\sin x\cos x=\sin2x$ with $x=2\beta$.
+\end{explain}
+\emph{$TE$ and $TB$: what does the temperature see?} The temperature is untouched, so only the second factor changes:
+\begin{align}
+C_\ell^{TE\prime}&\eqby{1}\bigl\langle T_{\ell m}(cE^*_{\ell m}-sB^*_{\ell m})\bigr\rangle\eqby{2}c\,C_\ell^{TE}-s\,C_\ell^{TB}\eqby{3}\cos2\beta\,C_\ell^{TE},
+\nonumber\\
+C_\ell^{TB\prime}&\eqby{1}\bigl\langle T_{\ell m}(sE^*_{\ell m}+cB^*_{\ell m})\bigr\rangle\eqby{2}s\,C_\ell^{TE}+c\,C_\ell^{TB}\eqby{3}\sin2\beta\,C_\ell^{TE},
+\qquad C_\ell^{TT\prime}=C_\ell^{TT}.
+\label{T1c:eq:rot-t}
+\end{align}
+\begin{explain}
+  \item $T'_{\ell m}=T_{\ell m}$, and $E'$, $B'$ from \eqref{T1c:eq:rot-eb}, conjugated.
+  \item Take the expectations.
+  \item No $TB$ before the twist.
+\end{explain}
+Had we kept an $EB$ already present before the twist, the same steps would give $C_\ell^{EB\prime}=\frac12\sin4\beta\,(C_\ell^{EE}-C_\ell^{BB})+\cos4\beta\,C_\ell^{EB}$, with the $C^{EB}$ terms of the first two lines adding $\mp\sin4\beta\,C_\ell^{EB}$ to $EE'$ and $BB'$; we need this once, in \cref{T1c:sec:mk}.
+
+\begin{keyidea}[The rotated spectra]
+A uniform twist $\beta$ of a parity-symmetric sky gives
+\begin{align*}
+C_\ell^{EE\prime}&=\cos^22\beta\,C_\ell^{EE}+\sin^22\beta\,C_\ell^{BB}, &
+C_\ell^{BB\prime}&=\sin^22\beta\,C_\ell^{EE}+\cos^22\beta\,C_\ell^{BB},\\
+C_\ell^{EB\prime}&=\tfrac12\sin4\beta\,\bigl(C_\ell^{EE}-C_\ell^{BB}\bigr), &
+C_\ell^{TE\prime}&=\cos2\beta\,C_\ell^{TE},\qquad C_\ell^{TB\prime}=\sin2\beta\,C_\ell^{TE},
+\end{align*}
+and leaves $C_\ell^{TT}$ alone \cite{LueWangKamionkowski1999,Feng2006}. Power leaves $EE$ and appears in $BB$; $EB$ and $TB$ appear because the twist has a hand.
+\end{keyidea}
+
+\subsection{Reading the formulas}
+\label{T1c:sec:rot-read}
+
+\emph{Power moves; nothing is lost.} Add \eqref{T1c:eq:rot-ee} and \eqref{T1c:eq:rot-bb}: $C^{EE\prime}_\ell+C^{BB\prime}_\ell=C^{EE}_\ell+C^{BB}_\ell$, because $\cos^2+\sin^2=1$. The total polarized power at each $\ell$ is unchanged, as it must be, since a twist does not change the length $P$ of any stick. The fraction $\sin^22\beta$ of the $E$ power has moved into $B$, and the same fraction of the (small) $B$ power has moved into $E$. Subtract instead, and $C^{EE\prime}_\ell-C^{BB\prime}_\ell=\cos4\beta\,(C^{EE}_\ell-C^{BB}_\ell)$, by $\cos^2-\sin^2=\cos(2\cdot2\beta)$.
+
+\emph{$EB$ and $TB$ appear because the twist picks a hand.} Before the twist they were zero by the mirror argument. After it they are proportional to $\sin4\beta$ and $\sin2\beta$, which change sign with $\beta$: twisting the other way gives the other sign, and the mirror image of a sky twisted by $\beta$ is a sky twisted by $-\beta$. $EB$ follows the shape of $C^{EE}_\ell-C^{BB}_\ell$, which on the real sky is essentially $C^{EE}_\ell$, and $TB$ follows the shape of $C^{TE}_\ell$, with its changes of sign. These shapes are known from the $\Lambda$CDM fit, so a twist is a one-parameter template.
+
+\emph{Small twists: linear against quadratic.} For $\abs\beta\ll1$ (in radians), $\sin2\beta\approx2\beta$ and $\sin4\beta\approx4\beta$, so
+\begin{equation}
+C^{EB\prime}_\ell\approx2\beta\,\bigl(C^{EE}_\ell-C^{BB}_\ell\bigr),\qquad
+C^{TB\prime}_\ell\approx2\beta\,C^{TE}_\ell,\qquad
+C^{BB\prime}_\ell-C^{BB}_\ell\approx4\beta^2\bigl(C^{EE}_\ell-C^{BB}_\ell\bigr).
+\label{T1c:eq:rot-small}
+\end{equation}
+The parity-odd spectra grow like $\beta$, the extra $BB$ like $\beta^2$. For a small twist the signal is therefore in $EB$ and $TB$, as in the radio story.
+
+\paragraph{Example 1: a quarter turn of the sticks.} $\beta=45^\circ$: $\cos2\beta=0$, $\sin2\beta=1$, $\sin4\beta=0$. Then $C^{EE\prime}=C^{BB}$, $C^{BB\prime}=C^{EE}$, $C^{TE\prime}=0$, $C^{TB\prime}=C^{TE}$, and $C^{EB\prime}=0$. $E$ and $B$ have swapped completely, so the sky looks like a pure-$B$ sky with a $TB$ correlation, and $EB$ is zero because each mode is again purely of one kind. Panel (a) of \cref{T1c:fig:patterns}, with every stick turned by $45^\circ$, becomes panel (b).
+
+\paragraph{Example 2: a half turn of the sticks.} $\beta=90^\circ$: $\cos2\beta=-1$, $\sin2\beta=\sin4\beta=0$. Every stick along a wavevector now lies across it, so $E\to-E$ and $B\to-B$. All auto-spectra and $EB$ are unchanged, but $C^{TE\prime}=-C^{TE}$: only the correlation with the temperature notices.
+
+\paragraph{Example 3: the reported angle.} $\beta=\TOneCBetaDeg^\circ$ is the value reported from Planck by \cite{MinamiKomatsu2020}. Then $\sin2\beta=\TOneCTwoBetaPct\%$ and $\sin^22\beta=\TOneCSinSqTwoBeta$. \Cref{T1c:fig:rotated} draws the rotated spectra computed by \nolinkurl{code/chT1/06_rotated_spectra.py} from the fiducial spectra. The new $EB$ reaches $D_\ell^{EB}=\TOneCDEBmax\,\mu\mathrm K^2$ at $\ell\approx\TOneCEBmaxL$, where $EE$ peaks, and the new $TB$ reaches $\abs{D_\ell^{TB}}=\TOneCDTBmax\,\mu\mathrm K^2$ near $\ell\approx\TOneCTBmaxL$, larger because $TE$ is larger than $EE$ there. The extra $BB$ is a small fraction of the lensing $BB$: $\TOneCRotLensHundred$ of it at $\ell=100$ and $\TOneCRotLensThousand$ at $\ell=1000$. Only at the very largest scales, $\ell\lesssim4$, where the reionization peak of $EE$ meets the smallest lensing power, does it exceed lensing, by up to a factor $\TOneCRotLensMax$. A search for $\beta$ in $BB$ would be fighting lensing at every multipole where the data are good; a search in $EB$ has no lensing to fight.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/rotated_spectra.pdf}
+\caption{The spectra of the fiducial sky twisted by $\beta=\TOneCBetaDeg^\circ$. (a) $BB$: the lensing $B$ modes that the untwisted sky already has (blue), the part moved over from $EE$ by the twist, $\sin^22\beta\,C_\ell^{EE}$ (orange), and their sum (dotted), which is indistinguishable from lensing except on the largest scales. (b) The two parity-odd spectra created by the twist: $EB$ follows the shape of $EE$, and $TB$ follows $TE$ with its changes of sign. Lensing alone leaves both at zero (blue line).}
+\label{T1c:fig:rotated}
+\end{figure}
+
+\subsection{Lensing: \texorpdfstring{$E$}{E} into \texorpdfstring{$B$}{B} without a hand}
+\label{T1c:sec:lensing}
+
+Lensing was met twice already: as the remapping $\hat T(\bm n)=T(\bm n+\bm\nabla\phi)$ of the temperature by the gradient of the lensing potential $\phi$ (\cref{T1a:sec:objects}, where the cosmology notes' $\psi$ is CAMB's $\phi$), and in \cref{T1b:eq:no-b}, where the shear made by a single potential was shown to have no $B$. That second result does not apply here. There, lensing \emph{created} the sticks, and sticks made as second derivatives of one potential have no curl. Here the sticks already exist, created at last scattering as a pure $E$ pattern, and lensing \emph{moves} them: the stick seen in direction $\bm n$ is the one that, without lensing, would have been seen in direction $\bm n+\bm\nabla\phi$. To the accuracy needed here the stick is carried along without being turned \cite{LewisChallinor2006}. A pure $E$ pattern whose pieces are shifted by different amounts in different places is no longer a pure $E$ pattern. \emph{How much $B$ does that make, and does it have a hand?}
+
+\emph{First order in the deflection.} The deflection is a few arcminutes, small compared with the scales of the $E$ pattern, so we expand to first order on a flat patch, for each of $X=T,Q,U$:
+\begin{equation}
+\tilde X(\bm\theta)=X(\bm\theta+\bm\nabla\phi)\approx X(\bm\theta)+\bm\nabla\phi\cdot\bm\nabla X(\bm\theta).
+\label{T1c:eq:lens-first}
+\end{equation}
+The correction is a product of two fields. In Fourier space, with the convention of \cref{T1c:sec:eb-flat}, a product becomes a convolution, $(gh)(\bm\ell)=\int\frac{\dd^2\bm\ell'}{(2\pi)^2}\,g(\bm\ell-\bm\ell')\,h(\bm\ell')$, and a gradient becomes a factor $i\bm\ell$. Before lensing $B=0$, so $Q\pm iU=e^{\pm2i\varphi_{\bm\ell'}}E(\bm\ell')$ by \eqref{T1c:eq:eb-flat}. Write $K(\bm\ell,\bm\ell')\equiv(\bm\ell-\bm\ell')\cdot\bm\ell'$. Then
+\begin{align}
+\delta(Q\pm iU)(\bm\ell)
+&\eqby{1}\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,\bigl[i(\bm\ell-\bm\ell')\phi(\bm\ell-\bm\ell')\bigr]\cdot\bigl[i\bm\ell'(Q\pm iU)(\bm\ell')\bigr]
+\nonumber\\
+&\eqby{2}-\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,K(\bm\ell,\bm\ell')\,\phi(\bm\ell-\bm\ell')\,e^{\pm2i\varphi_{\bm\ell'}}E(\bm\ell'),
+\nonumber\\
+\delta(E\pm iB)(\bm\ell)
+&\eqby{3}e^{\mp2i\varphi_{\bm\ell}}\,\delta(Q\pm iU)(\bm\ell)
+\eqby{4}-\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,K\,\phi(\bm\ell-\bm\ell')\,e^{\pm2i(\varphi_{\bm\ell'}-\varphi_{\bm\ell})}E(\bm\ell'),
+\nonumber\\
+\tilde B(\bm\ell)
+&\eqby{5}-\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,K(\bm\ell,\bm\ell')\,\phi(\bm\ell-\bm\ell')\,E(\bm\ell')\,\sin2(\varphi_{\bm\ell'}-\varphi_{\bm\ell}).
+\label{T1c:eq:lens-b}
+\end{align}
+\begin{explain}
+  \item The correction term of \eqref{T1c:eq:lens-first} is the product of $\bm\nabla\phi$ and $\bm\nabla(Q\pm iU)$; transform the product as a convolution, each gradient bringing down $i$ times its own wavevector.
+  \item $i\cdot i=-1$; insert $Q\pm iU=e^{\pm2i\varphi_{\bm\ell'}}E$ for the unlensed, pure-$E$ sky.
+  \item The definition \eqref{T1c:eq:eb-flat} of $E$ and $B$ at the wavevector $\bm\ell$, applied to the change.
+  \item Combine the two phases.
+  \item $B$ was zero, so $\tilde B=\delta B=[\delta(E+iB)-\delta(E-iB)]/2i$, and $(e^{ix}-e^{-ix})/2i=\sin x$ with $x=2(\varphi_{\bm\ell'}-\varphi_{\bm\ell})$.
+\end{explain}
+Each lensed $B$ wave collects $E$ waves at other wavevectors $\bm\ell'$, weighted by the lensing potential at the difference $\bm\ell-\bm\ell'$ and by the sine of twice the angle between the two wavevectors. That is the wobbling antenna of the opening: a leak from $E$ into $B$ whose coefficient is the random field $\phi$.
+
+\emph{Does the new $B$ remember $E$?} Correlate \eqref{T1c:eq:lens-b} with $E$ or with $T$:
+\begin{equation}
+\langle\tilde B(\bm\ell)\,E^*(\bm\ell'')\rangle
+\eqby{1}-\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,K\,\sin2(\varphi_{\bm\ell'}-\varphi_{\bm\ell})\,\bigl\langle\phi(\bm\ell-\bm\ell')\,E(\bm\ell')\,E^*(\bm\ell'')\bigr\rangle
+\eqby{2}0,
+\label{T1c:eq:lens-eb}
+\end{equation}
+and in the same way $\langle\tilde B\,T^*\rangle=0$.
+\begin{explain}
+  \item Insert \eqref{T1c:eq:lens-b}; the expectation passes inside the integral.
+  \item $\phi$, $E$ and $T$ are jointly Gaussian with mean zero. The average of a product of three such variables vanishes: changing the sign of all of them leaves their joint distribution unchanged but flips the sign of the product, so its average equals its own negative. This holds even though $\phi$ is slightly correlated with $T$.
+\end{explain}
+At the next order the lensed $E$ also has a correction $\delta E$, and $\langle\delta E\,\delta B^*\rangle$ contains the integral of $\cos2(\varphi_{\bm\ell'}-\varphi_{\bm\ell})\sin2(\varphi_{\bm\ell'}-\varphi_{\bm\ell})$ against a weight that does not change when $\bm\ell'$ is reflected across $\bm\ell$; the sine changes sign under that reflection, so this term integrates to zero as well. The general reason holds at every order: $\phi$ is a scalar, a mirror carries a sky lensed by $\phi$ into the mirrored sky lensed by the mirrored $\phi$, and both are equally probable, so the argument of \eqref{T1c:eq:parity-zero} goes through unchanged. Lensing makes $B$, but no $EB$ and no $TB$.
+
+\emph{How much $B$ power?} Multiply \eqref{T1c:eq:lens-b} by its complex conjugate at $\bm\ell''$ and average. Treat $\phi$ and $E$ as independent Gaussian fields (their correlation is negligible), so the four-field average splits into $\langle\phi\phi^*\rangle\langle EE^*\rangle$, each a delta function times a spectrum, as in \eqref{T1c:eq:spectra}:
+\begin{align}
+\langle\tilde B(\bm\ell)\tilde B^*(\bm\ell'')\rangle
+&\eqby{1}\int\!\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\frac{\dd^2\bm\ell'''}{(2\pi)^2}\,KK'''\,\sin\sin'''\,
+(2\pi)^2\delta^2(\bm\ell'-\bm\ell''')C^{EE}_{\ell'}\,
+(2\pi)^2\delta^2\bigl(\bm\ell-\bm\ell'-\bm\ell''+\bm\ell'''\bigr)C^{\phi\phi}_{\abs{\bm\ell-\bm\ell'}}
+\nonumber\\
+&\eqby{2}(2\pi)^2\delta^2(\bm\ell-\bm\ell'')\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,
+\bigl[(\bm\ell-\bm\ell')\cdot\bm\ell'\bigr]^2\sin^22(\varphi_{\bm\ell'}-\varphi_{\bm\ell})\,C^{\phi\phi}_{\abs{\bm\ell-\bm\ell'}}\,C^{EE}_{\ell'},
+\nonumber\\
+C^{BB}_\ell&\eqby{3}\int\!\frac{\dd^2\bm\ell'}{(2\pi)^2}\,
+\bigl[(\bm\ell-\bm\ell')\cdot\bm\ell'\bigr]^2\sin^22(\varphi_{\bm\ell'}-\varphi_{\bm\ell})\,C^{\phi\phi}_{\abs{\bm\ell-\bm\ell'}}\,C^{EE}_{\ell'}.
+\label{T1c:eq:lens-bb}
+\end{align}
+\begin{explain}
+  \item Insert \eqref{T1c:eq:lens-b} twice (the second with integration variable $\bm\ell'''$ and its factors $K'''$, $\sin'''$), and replace $\langle EE^*\rangle$ and $\langle\phi\phi^*\rangle$ by their delta functions and spectra; the other pairings vanish because $\phi$ and $E$ are independent with mean zero.
+  \item Do the $\bm\ell'''$ integral with the first delta function, which sets $\bm\ell'''=\bm\ell'$; the second then becomes $\delta^2(\bm\ell-\bm\ell'')$.
+  \item Read off the spectrum from the definition $\langle\tilde B(\bm\ell)\tilde B^*(\bm\ell'')\rangle=(2\pi)^2\delta^2(\bm\ell-\bm\ell'')C^{BB}_\ell$.
+\end{explain}
+This is the standard first-order lensing $B$ spectrum \cite{ZaldarriagaSeljak1998,LewisChallinor2006}. Its strength is set by the product $C^{\phi\phi}C^{EE}$ and nothing else: no parameter of new physics, and no hand.
+
+\emph{Why is lensing $B$ white on large scales?} For $\ell$ much smaller than the multipoles $\ell'\sim1000$ where $E$ has its power, $\bm\ell-\bm\ell'\approx-\bm\ell'$. Then $K\approx-\ell'^2$, $C^{\phi\phi}_{\abs{\bm\ell-\bm\ell'}}\approx C^{\phi\phi}_{\ell'}$, and only the sine still depends on the direction of $\bm\ell'$. Write $\dd^2\bm\ell'=\ell'\dd\ell'\,\dd\varphi_{\bm\ell'}$:
+\begin{equation}
+C^{BB}_{\ell\to0}
+\eqby{1}\int_0^\infty\!\frac{\ell'\dd\ell'}{(2\pi)^2}\,\ell'^4C^{\phi\phi}_{\ell'}C^{EE}_{\ell'}\int_0^{2\pi}\!\dd\varphi\,\sin^22\varphi
+\eqby{2}\frac{1}{4\pi}\int_0^\infty\!\dd\ell'\,\ell'^5\,C^{\phi\phi}_{\ell'}\,C^{EE}_{\ell'}.
+\label{T1c:eq:lens-white}
+\end{equation}
+\begin{explain}
+  \item Insert the large-$\ell'$ approximations into \eqref{T1c:eq:lens-bb}; the angle between $\bm\ell'$ and $\bm\ell$ is now the only angle left.
+  \item $\int_0^{2\pi}\sin^22\varphi\,\dd\varphi=\pi$, and $\pi/(2\pi)^2=1/4\pi$.
+\end{explain}
+The answer does not depend on $\ell$: a flat spectrum, like white noise. Large-scale lensing $B$ modes are a sum of many small-scale $E$ modes, each moved a little, and such a sum has no preferred large scale. \Cref{T1c:fig:lens-check} checks both formulas against CAMB's full calculation. The first-order integral \eqref{T1c:eq:lens-bb} gives between $\TOneCFirstOrderMin$ and $\TOneCFirstOrderMax$ times CAMB's lensed $BB$ everywhere between $\ell=20$ and $1500$, and the white limit \eqref{T1c:eq:lens-white} gives $C^{BB}=\TOneCLensWhiteC\,\mu\mathrm K^2$, against CAMB's mean $\TOneCLensLowMean\,\mu\mathrm K^2$ over $10\le\ell\le50$. Written as the noise level of a map, that white floor is $\sqrt{C^{BB}}=\TOneCLensWhiteUKarcmin\,\mu\mathrm K$-arcmin: an experiment whose polarization noise is below about $5\,\mu$K-arcmin sees lensing, not its own noise, as the floor of its $B$-mode map.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.72\linewidth]{figures/chT1/lensing_bb_check.pdf}
+\caption{The lensing $B$-mode spectrum. Blue: CAMB's lensed $BB$ for the fiducial model with no gravitational waves. Orange dots: the first-order integral \eqref{T1c:eq:lens-bb} evaluated from CAMB's unlensed $EE$ and lensing potential. Dashed: its large-scale limit \eqref{T1c:eq:lens-white}, a constant $C_\ell^{BB}$, which appears as a line of slope two in $D_\ell$. The first-order formula holds up to $\ell\approx1500$; beyond, higher orders in the deflection matter.}
+\label{T1c:fig:lens-check}
+\end{figure}
+
+\emph{Lensing $B$ is not Gaussian.} \Cref{T1c:eq:lens-b} makes $\tilde B$ a product of two Gaussian fields, and a product of Gaussians is not Gaussian: its four-point function has a part that the power spectrum does not describe, which correlates the errors of different $\ell$ bins. The same product structure is what allows \newterm{delensing} \cite{LewisChallinor2006}: reconstruct $\phi$ (by the quadratic estimator of \cref{T1b:sec:objects}, or from tracers of the matter), take $E$ from the measured map, compute $\tilde B$ from \eqref{T1c:eq:lens-b} and subtract it. A Gaussian noise could not be removed this way, because nothing in the data predicts it.
+
+\subsection{Both on simulated skies}
+\label{T1c:sec:rot-sims}
+
+The two derivations make claims about averages over many skies. The script \nolinkurl{code/chT1/08_flat_rotation_lensing.py} checks them on $\TOneCNsim$ simulated flat patches of $17^\circ\times17^\circ$ (256 pixels of $4'$ on a side). Each patch is a Gaussian sky with the unlensed $T$ and $E$ of CAMB, correlated through $TE$, no $B$, and an independent Gaussian lensing potential with CAMB's $C^{\phi\phi}$. Each sky is processed twice: once twisted by $\beta=\TOneCSimBetaDeg^\circ$, chosen so that the $B$ power it makes is about that of lensing (their median ratio over $100<\ell<1500$ is $\TOneCBBRotOverLens$), and once lensed to first order with \eqref{T1c:eq:lens-first}. For each sky we measure the binned $BB$, $EB$ and $TB$ in $\TOneCNbin$ bins between $\ell=40$ and $2040$ and average over the skies.
+
+\Cref{T1c:fig:rot-lens} shows the answer. In $BB$ the two are alike, each following its own prediction. In $EB$ and $TB$ they are not: the twist produces the shapes of $C^{EE}$ and $C^{TE}$ from \cref{T1c:sec:rot-spectra}, and lensing produces nothing. Quantitatively, the averaged lensing $BB$ divided by the first-order integral is $\TOneCLensBBRatio\pm\TOneCLensBBErr$ over $100<\ell<1500$, and the twisted $EB$ divided by $\frac12\sin4\beta\,C^{EE}$ is $\TOneCRotEBRatio\pm\TOneCRotEBErr$. The lensing $EB$ and $TB$ bin averages scatter around zero by the amount their own Monte Carlo errors allow: the sums of their squared ratios to those errors are $\TOneCChiEB$ and $\TOneCChiTB$ for $\TOneCNbin$ bins, where pure chance gives $25\pm7$. The largest lensing $EB$ average is $\TOneCEBFracPct\%$ of the peak of the twisted $EB$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/rotation_vs_lensing.pdf}
+\caption{A twist and lensing on $\TOneCNsim$ simulated flat skies. Green circles: skies twisted by $\TOneCSimBetaDeg^\circ$; blue squares: the same skies lensed to first order; error bars are the errors of the averages over the skies; dashed: the predictions ($\sin^22\beta\,C^{EE}$, $\frac12\sin4\beta\,C^{EE}$, $\sin2\beta\,C^{TE}$ for the twist; the first-order integral for lensing $BB$, zero for lensing $EB$ and $TB$). Both make $B$ power of about the same size. Only the twist makes $EB$ and $TB$.}
+\label{T1c:fig:rot-lens}
+\end{figure}
+
+The simulation also shows a property of the twist that is exact sky by sky, not only on average. Since the simulated skies have no $B$ before the twist, $\widehat C^{EB\prime}_\ell=\frac12\sin4\beta\,\widehat C^{EE}_\ell$ and $\widehat C^{EE\prime}_\ell-\widehat C^{BB\prime}_\ell=\cos4\beta\,\widehat C^{EE}_\ell$ hold for the measured spectra of each sky, because \eqref{T1c:eq:rot-eb} acts mode by mode. Dividing one by the other, $\widehat C^{EB\prime}_\ell=\frac12\tan4\beta\,(\widehat C^{EE\prime}_\ell-\widehat C^{BB\prime}_\ell)$: the twisted $EB$ is predicted by the twisted $EE$ and $BB$ of the same sky, with no reference to any model. The script finds this to hold to $\TOneCIdentity$ in every sky. On the real sky, where some $B$ is present before the twist, chance $EB$ adds scatter to this relation; \cref{T1c:sec:mk} builds the measurement on it.
+
+\subsection{The instrument twists too}
+\label{T1c:sec:rot-alpha}
+
+Every detector that measures $Q$ and $U$ has its own reference axis on the sky. If the true axis is turned by $-\alpha$ from where the analysis believes it is, then by the argument at the end of \cref{T1c:sec:stokes} every measured stick appears twisted by $+\alpha$. The twist of the instrument acts on the maps at the end of the line, after any physical twist $\beta$ the sky light received on its way, so two twists in a row add: $e^{2i\alpha}e^{2i\beta}=e^{2i(\alpha+\beta)}$. Every formula derived above therefore holds with $\beta$ replaced by $\alpha+\beta$: $C^{EB,\mathrm{obs}}_\ell=\frac12\sin(4\alpha+4\beta)(C^{EE}_\ell-C^{BB}_\ell)$ for the CMB, and likewise for $TB$, $EE$ and $BB$. The CMB spectra alone measure the sum and nothing else, so a miscalibrated polarization angle and a physical twist are exactly degenerate in them. \Cref{T1c:sec:mk} shows how the light of our own Galaxy, which is twisted by $\alpha$ but not by $\beta$, breaks this degeneracy.
+
+\begin{pitfall}[$EB$ alone does not prove new physics]
+A nonzero $EB$ with the shape of $C^{EE}$ measures $\alpha+\beta$. Without an independent handle on $\alpha$ (a calibration source of known polarization angle, or the Galactic foreground method of \cref{T1c:sec:mk}), an $EB$ signal is first of all a statement about the orientation of the detectors.
+\end{pitfall}
+\section{Where \texorpdfstring{$B$}{B} modes come from}
+\label{T1c:sec:sources}
+
+We have met three makers of $B$ so far. Gravitational waves make it at last scattering, because their pattern is not mirror symmetric (\cref{T1c:sec:e-origin}). Lensing makes it from $E$, with no hand (\cref{T1c:sec:lensing}). A twist makes it from $E$, with a hand (\cref{T1c:sec:rot-spectra}). Each was studied alone. A real $B$-mode map contains all of them at once, plus the light of our own Galaxy and the imperfections of the instrument, and nothing in the map is labelled. Given a measured excess of $B$ power, or a measured $EB$, how do we decide what made it?
+
+Imagine a photograph with stains on it, and three ways to examine it. First, look at it through a red, a green and a blue filter. A stain that is equally dark through all three is grey; one that is darker through the red filter is reddish. Second, look at the size of the blotches: some are a centimetre across, some are a fine grain. Third, hold it to a mirror: stains with no shape of their own look the same, but a stain shaped like a swirl or a letter is reversed. No single test sorts every stain, but together the colour, the size and the mirror nearly always do.
+
+The $B$-mode sky is examined in exactly these three ways. The filters are the observing frequencies. In the temperature units used for the CMB, everything that comes from the CMB itself (gravitational waves, lensing, a twist on the way) has the same amplitude in every channel, a grey stain. The Galaxy is coloured: dust brightens towards high frequency, synchrotron towards low. The blotch size is the multipole $\ell$. The mirror is the parity of the spectrum: $EB$ and $TB$ are nonzero only for a source with a hand. One sentence holds the idea of the section: \emph{each source of $B$ leaves fingerprints in frequency, in $\ell$ and in parity, and the fingerprints are read together.}
+
+\emph{The colour test in symbols.} Take one multipole, $\ell=80$, and two channels, $150$ and $353\,$GHz. A grey source has the same $D_\ell^{BB}$ in both. Dust, scaled with the frequency law of \cref{T1c:sec:galaxy}, has $\TOneCDustRatio$ times more power at $353$ than at $150\,$GHz. Measure $D_{80}^{BB}$ in both channels, $x_{150}=g+d$ and $x_{353}=g+\TOneCDustRatio\,d$, with $g$ the grey part and $d$ the dust at $150\,$GHz. The naive reading of the $150\,$GHz channel alone takes all of $x_{150}$ as cosmological. In the cleanest one per cent of the sky, where the dust is weakest, it would be wrong by a large factor: there the dust at $150\,$GHz is $D_{80}^{BB}=\TOneCDdustEighty\,\mu\mathrm K^2$, $\TOneCDustOverLens$ times the lensing $B$ and $\TOneCDustOverGW$ times the $B$ of gravitational waves with $r=\TOneCr$. The good choice uses both channels, $d=(x_{353}-x_{150})/(\TOneCDustRatio-1)$ and $g=x_{150}-d$, the two-reading weighting of \cref{3a:sec:weighted-corr} in its simplest form. Its price is the noise of the $353\,$GHz channel, which enters $g$ with a weight of only $1/(\TOneCDustRatio-1)$ but is large, and the assumption that the dust frequency law is known. Lesson: frequency separates the Galaxy from the CMB, but it cannot separate one grey source from another; for that we need the other two tests.
+
+\emph{One idea, many names.} Telling sources apart by how they respond to several probes is what an astronomer does with colours, what a particle physicist does with a calorimeter and a tracker together, and what a statistician calls a mixing model: each reading is a sum of sources, each source with its own pattern across the readings. When the patterns are linearly independent, linear algebra separates the sources; the internal linear combination of \cref{3a:sec:weighted-corr} and the parametric fits of $B$-mode experiments are both this idea.
+
+We now take the sources one at a time, each with its physical origin and its fingerprints, and then collect them in one table.
+
+\subsection{Gravitational waves from the early universe}
+\label{T1c:sec:gw}
+
+\emph{Origin.} Inflation predicts a background of gravitational waves in addition to the density perturbations (see the cosmology notes). Its strength is quoted as the \newterm{tensor-to-scalar ratio} $r$ \unpack{the primordial power of the gravitational waves divided by that of the curvature perturbations, at the pivot $k_*=0.05\,\mathrm{Mpc}^{-1}$ of \cref{T1a:sec:objects}}. As a gravitational wave passes, it stretches the plasma in a quadrupole pattern, and Thomson scattering turns that quadrupole into polarization with both $E$ and $B$ \cite{SeljakZaldarriaga1997,Kamionkowski1997}. The best limit is $r<0.036$ at $95\%$ confidence \cite{BICEPKeck2021}.
+
+\emph{Fingerprints.} In $\ell$, two bumps (blue curve of \cref{T1c:fig:sources}, computed with CAMB for $r=\TOneCr$). The \emph{reionization bump} at $\ell\lesssim10$ comes from polarization generated when the universe was reionized, late and therefore seen on very large angles. The \emph{recombination bump}, here at $\ell\approx\TOneCRecombL$ with $D_\ell^{BB}=\TOneCDtRec\,\mu\mathrm K^2$, comes from last scattering: it sits at the angle that the horizon at last scattering subtends, because a gravitational wave decays once it is inside the horizon, so waves smaller than the horizon then had already faded. The amplitude is proportional to $r$. In frequency, grey: the signal is a pattern in the CMB itself, so it has the black-body spectrum of the CMB and the same amplitude in every channel in CMB temperature units. In statistics, Gaussian, like the primordial density field. In parity, symmetric: standard inflation has no hand, so $EB=TB=0$. (Models with chiral gravitational waves, where one circular polarization of the wave is stronger, would break this \cite{LueWangKamionkowski1999}.)
+
+\subsection{Lensing of \texorpdfstring{$E$}{E}}
+\label{T1c:sec:lens-fp}
+
+\emph{Origin.} The remapping of the $E$ pattern by the matter between us and last scattering, derived in \cref{T1c:sec:lensing}.
+
+\emph{Fingerprints.} In $\ell$, a broad peak at $\ell\approx\TOneCBBpeakL$, inherited from the peak of $EE$, and a white spectrum, $C_\ell^{BB}\approx\TOneCLensWhiteC\,\mu\mathrm K^2$, on large scales \eqref{T1c:eq:lens-white}. At $\ell=80$ lensing is $D_{80}^{BB}=\TOneCDlensEighty\,\mu\mathrm K^2$, about three times the recombination bump of $r=\TOneCr$; for smaller $r$ the gravitational-wave bump hides under lensing, which is why delensing matters for future searches. In frequency, grey, since gravity bends all wavelengths alike. In statistics, non-Gaussian (a product of $\phi$ and $E$), which is what delensing exploits. In parity, symmetric: $EB=TB=0$ on average \eqref{T1c:eq:lens-eb}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/chT1/bmode_sources.pdf}
+\caption{The $B$-mode spectra of the different sources at $150\,$GHz. Gravitational waves with $r=\TOneCr$ (blue): the reionization bump at the lowest $\ell$ and the recombination bump near $\ell\approx\TOneCRecombL$. Lensing (orange): white on large scales, peaking near $\ell\approx\TOneCBBpeakL$. Dust (yellow) in the cleanest one per cent of the sky, from the BICEP/Keck model \cite{BICEPKeck2021}, and the 95\% upper limit on synchrotron (pink dashed): power laws that fall with $\ell$. A twist of $\beta=\TOneCBetaDeg^\circ$ (green): the shape of $EE$, a factor $\TOneCSinSqTwoBeta$ down. Over most of the sky the dust is tens of times higher than drawn here.}
+\label{T1c:fig:sources}
+\end{figure}
+
+\subsection{The Galaxy: dust and synchrotron}
+\label{T1c:sec:galaxy}
+
+\emph{Origin.} Two kinds of emission from the Milky Way are polarized \cite{Planck2018XI,Planck2018IV}. Interstellar \emph{dust} grains are elongated and spin with their long axes across the Galactic magnetic field, so their thermal emission is polarized across the field. \emph{Synchrotron} emission comes from relativistic electrons spiralling around the magnetic field lines, and it is polarized too. Both trace the turbulent, filamentary magnetized gas of the Galaxy, which has structure on every scale.
+
+\emph{Fingerprints in $\ell$.} Power laws, $D_\ell\propto\ell^{\alpha}$, falling towards small scales. For dust, Planck finds $D_\ell^{EE}$ and $D_\ell^{BB}$ both close to $\ell^{-0.42}$ over $40\le\ell\le600$, with $BB/EE\approx0.5$ and a positive $TE$ \cite{Planck2018XI}. For synchrotron the slope is between $-0.6$ and $-1$ \cite{BICEPKeck2021}. A power law that falls with $\ell$ is unlike both the bumps of gravitational waves and the rising lensing spectrum.
+
+\emph{Fingerprints in frequency.} This is the strongest test. Dust emits like a black body at $T_d\approx19.6\,$K multiplied by $\nu^{\beta_d}$ with $\beta_d\approx1.5$ (a modified black body); synchrotron falls like $\nu^{-3.1}$ in brightness temperature \cite{BICEPKeck2021}. Converted to CMB temperature units, dust rises steeply with frequency and synchrotron falls steeply, and the CMB is flat. \Cref{T1c:fig:frequency}(a), from \nolinkurl{code/chT1/07_bmode_sources.py}, plots the $B$-mode amplitude at $\ell=80$ against frequency in the cleanest patch of sky: the dust power grows by a factor $\TOneCDustRatio$ from $150$ to $353\,$GHz, the synchrotron power (at its upper limit) by a factor $\TOneCSyncRatio$ from $150$ down to $30\,$GHz, and the sum of the two is smallest near $\TOneCFgMinNu\,$GHz. This is why CMB experiments put their most sensitive channels near $100$ to $150\,$GHz and add channels on both sides to measure the Galaxy.
+
+\emph{Fingerprints in statistics.} Neither emission is Gaussian or statistically isotropic. Its amplitude follows the column of gas along each line of sight, so it is far brighter near the Galactic plane than at high latitude, and its maps are filamentary. Over $71\%$ of the sky Planck measures a dust amplitude $D_{80}^{EE}=315\,\mu\mathrm K^2$ at $353\,$GHz \cite{Planck2018XI}, so $D_{80}^{BB}\approx0.53\times315\approx170\,\mu\mathrm K^2$, against $4.4\,\mu\mathrm K^2$ in the cleanest patch \cite{BICEPKeck2021}: about forty times more. A Galactic mask is therefore part of every analysis, and the answer depends on which mask.
+
+\emph{Fingerprints in parity.} The Galaxy can have a hand. The intensity filaments of the dust tend to be aligned with the magnetic field, which makes the dust polarization mostly $E$-like; where filament and field are misaligned, the misalignment angle has a sign, and the polarization acquires correlations $TB$ and $EB$ \cite{Clark2021}. Planck finds a positive dust $TB$ at $353\,$GHz \cite{Planck2018XI}, and \cite{Clark2021} predicts a positive dust $EB$ of up to $D_\ell^{EB}\approx2.5\,\mu\mathrm K^2$ at $353\,$GHz for $100\lesssim\ell\lesssim500$ over their mask, with a sign and size that can change with the sky area. This small Galactic hand is the main worry for birefringence measurements (\cref{T1c:sec:not-yet}).
+
+\subsection{Twists: birefringence and Faraday rotation}
+\label{T1c:sec:twists}
+
+\emph{Cosmic birefringence.} A twist of the plane of polarization during the journey from last scattering, by an angle $\beta$ that is the same for every frequency. Its physical origin is discussed in \cref{T1c:sec:biref}. Fingerprints: $BB$, $EB$ and $TB$ with the shapes of \cref{T1c:sec:rot-spectra} ($EB$ follows $C^{EE}-C^{BB}$, $TB$ follows $C^{TE}$); grey in frequency; Gaussian (it is a fixed linear operation on Gaussian fields); and the only cosmological source that creates $EB$ and $TB$.
+
+\emph{Faraday rotation.} A plane of polarization travelling along a magnetic field through an ionized gas is also twisted, by an angle proportional to the square of the wavelength, that is to $1/\nu^2$ \cite{KosowskyLoeb1996}. A primordial magnetic field of $10^{-9}\,$G today would twist the CMB polarization by about $1^\circ$ at $30\,$GHz \cite{KosowskyLoeb1996}, hence by $(30/150)^2\times1^\circ=\TOneCFaradayOneFifty^\circ$ at $150\,$GHz. The twist formulas of \cref{T1c:sec:rotation} apply channel by channel (with the angle varying across the sky when the field does), so Faraday rotation makes $EB$ and $TB$ like birefringence, but its strong frequency dependence (\cref{T1c:fig:frequency}(b)) tells it apart: a constant $\beta$ and an angle falling as $\nu^{-2}$ cannot be confused once several channels are compared.
+
+\subsection{The instrument}
+\label{T1c:sec:instrument}
+
+Three imperfections of the telescope matter most \cite{HuHedmanZaldarriaga2003}. A \emph{miscalibrated polarization angle} $\alpha$ is a twist applied to the maps by the instrument (\cref{T1c:sec:rot-alpha}): in the CMB it is exactly degenerate with $\beta$, and it is grey only by accident, since each channel, or each detector, has its own $\alpha$. \emph{Temperature-to-polarization leakage} \unpack{a small fraction of the temperature signal read as $Q$ or $U$, from mismatched gains or bandpasses of the paired detectors} copies the much larger temperature anisotropy into polarization, producing spurious $TE$ and $EE$, and $TB$ and $BB$ as well, with shapes inherited from $C^{TT}$. \emph{Beam asymmetry} \unpack{the two detectors of a pair seeing slightly different, non-circular patches of sky} does the same with the gradients and second derivatives of the temperature. These effects depend on how the sky was scanned, so they differ between channels, detectors and data splits, and they are hunted with null tests on differences of data splits and corrected with models of the beams \cite{Planck2018V}.
+
+\phantomsection\label{T1c:sec:table}%
+All these fingerprints fit in one table, which is the tool to reach for when a $B$-mode signal needs a name.
+
+\begin{taxonomy}[Where a $B$ mode comes from: the fingerprints]
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}
+                               >{\raggedright\arraybackslash}X
+                               >{\raggedright\arraybackslash}p{2.3cm}
+                               >{\raggedright\arraybackslash}p{1.9cm}
+                               >{\raggedright\arraybackslash}p{2.1cm}@{}}
+\toprule
+source & shape in $\ell$ ($BB$) & frequency (CMB units) & statistics & $EB$, $TB$\\\midrule
+gravitational waves ($r$) & reionization bump at $\ell<10$, recombination bump near $\ell\approx80$, amplitude $\propto r$ & flat & Gaussian & none\\
+lensing of $E$ & white at low $\ell$, broad peak near $\ell\approx1000$ & flat & non-Gaussian, removable by delensing & none on average\\
+dust & power law $D_\ell\propto\ell^{-0.42}$, rising to low $\ell$ & rises steeply with $\nu$ & non-Gaussian, anisotropic & small $EB$, $TB$ from filament--field misalignment\\
+synchrotron & power law, rising to low $\ell$ & falls steeply with $\nu$ & non-Gaussian, anisotropic & small, if any\\
+cosmic birefringence ($\beta$) & $BB=\sin^22\beta\,C^{EE}$; $EB$ follows $C^{EE}-C^{BB}$, $TB$ follows $C^{TE}$ & flat & Gaussian & yes: the only cosmological source\\
+Faraday rotation & as birefringence, angle varying over the sky & angle $\propto\nu^{-2}$ & follows the magnetized plasma & yes\\
+angle miscalibration ($\alpha$) & exactly as birefringence & own value per channel or detector & as the CMB & yes\\
+$T\to P$ leakage, beam asymmetry & shapes of $C^{TT}$ and its derivatives & per channel and detector & depends on scan & can be nonzero\\
+\bottomrule
+\end{tabularx}
+\end{taxonomy}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/bmode_frequency.pdf}
+\caption{The colour test. (a) The rms $B$-mode amplitude at $\ell=80$ against observing frequency, in CMB temperature units, for the cleanest patch of sky: gravitational waves ($r=\TOneCr$) and lensing are flat, dust rises and synchrotron (upper limit) falls; the Galaxy is weakest near $\TOneCFgMinNu\,$GHz. (b) The twist angle against frequency: cosmic birefringence ($\beta=\TOneCBetaDeg^\circ$) is flat, Faraday rotation by a $1\,$nG primordial field falls as $\nu^{-2}$; the dotted line marks the $0.28^\circ$ calibration uncertainty of Planck, which a single channel cannot distinguish from $\beta$.}
+\label{T1c:fig:frequency}
+\end{figure}
+
+\subsection{Reading the fingerprints together}
+\label{T1c:sec:reading}
+
+The table is read with three questions, each of which splits the list along a different line. \emph{Does the signal change with frequency?} If it does, it comes from the Galaxy, from Faraday rotation, or from the instrument; if it does not, it comes from the CMB, which leaves gravitational waves, lensing and birefringence (and an angle miscalibration that happens to be equal in every channel). \emph{What is its shape in $\ell$?} Among the grey sources, the recombination bump near $\ell\approx80$ marks gravitational waves, the white spectrum rising to a peak near $\ell\approx1000$ marks lensing, and the shape of $C^{EE}$ marks a twist. \emph{Is it parity-odd?} $EB$ and $TB$ separate the twists (birefringence, Faraday, miscalibration) and the slightly handed dust from everything that preserves parity, which includes gravitational waves and lensing. Here are four cases, worked in the order of the opening: the event, what could have made it, and how each candidate fares.
+
+\paragraph{Case 1: a $BB$ excess at $\ell\approx80$.} \emph{The event:} $D_{80}^{BB}$ at $150\,$GHz is a few times the lensing prediction. \emph{What could make it?} Gravitational waves (bump there), dust (rising to low $\ell$), leakage. \emph{Test each.} Measure the same patch at $353\,$GHz. Gravitational waves predict the same $D_{80}^{BB}$; dust predicts $\TOneCDustRatio$ times more. Leakage predicts a different answer for each detector set. Only after this does $r$ get a number, from what is left of the $150\,$GHz power once the dust inferred at $353\,$GHz is subtracted, as in the colour test of the opening.
+
+\paragraph{Case 2: $BB$ power that rises from a flat floor to a peak at $\ell\approx1000$, the same in every channel.} Grey, so cosmological. The shape is that of lensing, and the identification can be confirmed in a way no other source allows: reconstruct $\phi$, compute the $B$ it predicts from the measured $E$ with \eqref{T1c:eq:lens-b}, and correlate. If the correlation matches, the power is lensing.
+
+\paragraph{Case 3: an $EB$ with the shape of $C^{EE}$, equal in all channels.} Parity-odd, grey, and with the shape of a twist: the candidates are birefringence and a common angle miscalibration. The CMB cannot tell them apart (\cref{T1c:sec:rot-alpha}). Something that is twisted by $\alpha$ but not by $\beta$ is needed, and \cref{T1c:sec:mk} finds it in the Galaxy.
+
+\paragraph{Case 4: an $EB$ that is four times larger at $75\,$GHz than at $150\,$GHz.} A ratio of $(150/75)^2=4$ is the $\nu^{-2}$ law of Faraday rotation; birefringence would give a ratio of one, dust, which is faint at low frequency, a ratio below one, and synchrotron, which brightens much faster towards low frequency, a ratio of tens. The candidates are Faraday rotation or, if the ratio differs from channel to channel without a pattern, independent miscalibrations of the two channels.
+
+The lesson of the four cases: frequency separates the Galaxy (and Faraday rotation) from the CMB; the shape in $\ell$ separates gravitational waves from lensing; and $EB$, $TB$ separate a rotation from everything that preserves parity. A real analysis does all three at once, as one likelihood over all the auto- and cross-spectra of all channels \cite{BICEPKeck2021}.
+\section{Cosmic birefringence, the instrument and the Galaxy}
+\label{T1c:sec:biref}
+
+The previous sections leave us with a precise statement and a problem. The statement: a uniform twist of the CMB polarization by an angle produces $EB=\frac12\sin(4\times\text{angle})\,(C^{EE}-C^{BB})$ and $TB=\sin(2\times\text{angle})\,C^{TE}$, and nothing else on the sky produces that pattern in every channel. The problem: the angle the CMB measures is $\alpha+\beta$, the twist of the instrument plus the twist of the sky (\cref{T1c:sec:rot-alpha}), and from the CMB alone there is no way to split the sum.
+
+Think of a painting in a room that looks crooked to you. Either the painting hangs crooked, or your head is tilted, or both. Looking harder at the painting cannot decide: all you see is the sum of the two tilts. So you look at the door frame next to it. The door frame is close to you, and nothing made it crooked except, possibly, your own head. If the door frame looks straight and the painting crooked, the painting is crooked; if both look crooked by the same amount, it is your head. The method works as long as the door frame really is straight. If the builder hung it slightly crooked, you will misjudge the painting by exactly that amount.
+
+The microwave sky has a door frame. The polarized emission of our Galaxy reaches the telescope after a journey of a few hundred to a few thousand light years, far too short for any cosmological twist to act on it, but it passes through the same detectors as the CMB. It is twisted by $\alpha$ and not by $\beta$ \cite{Minami2019}. The idea of the section, in one sentence: \emph{measure the twist of the Galaxy to get $\alpha$, measure the twist of the CMB to get $\alpha+\beta$, and take the difference.}
+
+\emph{The door frame in symbols.} Write the twisted $EB$ of each component to first order in the angles, using \eqref{T1c:eq:rot-small}: the CMB gives $2(\alpha+\beta)\Delta^{\mathrm{CMB}}_\ell$ and the dust gives $2\alpha\,\Delta^{\mathrm{dust}}_\ell$, where $\Delta_\ell\equiv C^{EE}_\ell-C^{BB}_\ell$ of each. The two dials are $\alpha$ and $\beta$; the two patterns across multipoles are $\Delta^{\mathrm{CMB}}_\ell$, with its acoustic peaks, and $\Delta^{\mathrm{dust}}_\ell$, a smooth power law. Without dust the data are one number times one pattern and fix only $\alpha+\beta$: the naive analysis has one equation for two unknowns. With dust the data are $2\alpha(\Delta^{\mathrm{dust}}_\ell+\Delta^{\mathrm{CMB}}_\ell)+2\beta\,\Delta^{\mathrm{CMB}}_\ell$, two patterns with two different shapes, and both numbers follow. The price is that $\beta$ is now the difference of two measured quantities, so its error is at least as large as the larger of their two errors. And the reference is not free: dust bright enough to fix $\alpha$ is also extra scatter in the CMB's own $EB$. In the forecast of \cref{T1c:sec:mk} for one channel, the CMB in a dust-free map fixes $\alpha+\beta$ to $\TOneCSigSum^\circ$; at $353\,$GHz the dust fixes $\alpha$ to $\TOneCSigAThreeFiftyThree^\circ$, but the sum is now known only to $\TOneCSigSumThreeFiftyThree^\circ$, and $\beta$ alone to $\TOneCSigBThreeFiftyThree^\circ$, ten times worse than the dust-free sum. Lesson: a degeneracy is broken by a second component that sees only one of the two parameters, and the price is paid in the precision of that second component.
+
+\emph{One idea, many names.} Calibrating an instrument on a source whose answer is known, while measuring an unknown one at the same time, is the oldest trick of experimental physics: a reference star in the same field, a known line in a spectrum, a tag-and-probe sample at a collider. What is special here is that the reference is not known in advance. Only one of its properties is assumed, that the Galaxy itself has no $EB$, and its own $EE-BB$ is measured from the same data.
+
+We first say what physics could twist the CMB light, then derive the Minami--Komatsu relation that turns the door-frame idea into a measurement, and end with what has been measured and why it is not yet a discovery.
+
+\subsection{What could twist the light}
+\label{T1c:sec:what-twists}
+
+\emph{A twist is a phase difference between two helicities.} Write the two circular polarization states of a wave travelling along $\bm e_3$ as $\bm e_\pm=(\bm e_1\pm i\bm e_2)/\sqrt2$. A wave linearly polarized at angle $\psi$, with polarization vector $\bm\epsilon=\cos\psi\,\bm e_1+\sin\psi\,\bm e_2$, is a sum of the two:
+\begin{align}
+\frac{e^{-i\psi}\bm e_++e^{i\psi}\bm e_-}{\sqrt2}
+&\eqby{1}\tfrac12\bigl[e^{-i\psi}(\bm e_1+i\bm e_2)+e^{i\psi}(\bm e_1-i\bm e_2)\bigr]
+\eqby{2}\cos\psi\,\bm e_1+\sin\psi\,\bm e_2=\bm\epsilon .
+\label{T1c:eq:helicity}
+\end{align}
+\begin{explain}
+  \item Insert the definitions of $\bm e_\pm$.
+  \item Collect: $\frac12(e^{-i\psi}+e^{i\psi})=\cos\psi$ multiplies $\bm e_1$, and $\frac i2(e^{-i\psi}-e^{i\psi})=\frac i2(-2i\sin\psi)=\sin\psi$ multiplies $\bm e_2$.
+\end{explain}
+Now suppose that on its way the $+$ helicity is delayed in phase by $\beta$ relative to the average, and the $-$ helicity advanced by $\beta$, so the left side becomes $(e^{-i(\psi+\beta)}\bm e_++e^{i(\psi+\beta)}\bm e_-)/\sqrt2$. By the same identity this is the linear polarization at $\psi+\beta$. A relative phase of $2\beta$ between the two helicities is a twist of the plane by $\beta$. A medium in which the two helicities travel at different speeds is called birefringent, and a twist of the CMB plane accumulated over its whole journey is called \newterm{cosmic birefringence}.
+
+\emph{What could make the helicities differ?} A pseudoscalar field $\phi$ that couples to photons through the term $\frac14g_{\phi\gamma}\phi F_{\mu\nu}\tilde F^{\mu\nu}$ in the Lagrangian, where $F$ is the electromagnetic field tensor, $\tilde F$ its dual and $g_{\phi\gamma}$ a coupling constant, does exactly this when $\phi$ changes in time \cite{CarrollFieldJackiw1990,Carroll1998}. The product $F\tilde F$ is proportional to $\bm E\cdot\bm B$ of the electromagnetic field, which changes sign in a mirror; multiplied by a pseudoscalar, which also changes sign, it keeps the Lagrangian mirror symmetric, but a background $\phi$ that evolves in one direction picks a hand. The result is a twist
+\begin{equation}
+\beta=\tfrac12g_{\phi\gamma}\bigl(\phi_{\mathrm{obs}}-\phi_{\mathrm{LSS}}\bigr),
+\label{T1c:eq:beta-phi}
+\end{equation}
+set by how much the field changed between last scattering and today, and independent of the frequency of the light \cite{Carroll1998,LueWangKamionkowski1999,MinamiKomatsu2020}. Such ``axion-like'' fields are candidates for dark matter and dark energy. If the field had always been constant, or did not couple, $\beta=0$. Because the CMB has travelled for almost the whole age of the universe, it is the most sensitive test: a nonzero $\beta$ would be a sign of parity violation in the laws of physics beyond the Standard Model. For the data analyst the microphysics matters through three consequences, all met already: $\beta$ is the same in every channel, it is (for a field that is uniform on the sky) the same in every direction, and its signature is the set of spectra of \cref{T1c:sec:rot-spectra}. \Cref{T1c:eq:beta-phi} also says that the early proposals and searches for a twist in the CMB \cite{LueWangKamionkowski1999,Feng2006} are, in this language, measurements of $g_{\phi\gamma}\Delta\phi$.
+
+\emph{Faraday rotation} is also a helicity phase difference, caused by free electrons in a magnetic field, but its phase grows with the square of the wavelength (\cref{T1c:sec:twists}). That is the physical reason it is told apart by frequency, while a pseudoscalar twist is not.
+
+\subsection{The Galaxy as a reference: the Minami--Komatsu relation}
+\label{T1c:sec:mk}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw=accent,rounded corners=2pt,fill=ideabg,align=center,font=\small,minimum height=0.95cm,inner sep=3pt},
+  arr/.style={->,thick}]
+  \node[box,minimum width=2.6cm] (lss) at (0,1.1) {last scattering\\ CMB: $E$, no $B$};
+  \node[box,minimum width=2.6cm] (gal) at (6.0,-0.6) {our Galaxy\\ dust, synchrotron};
+  \node[box,minimum width=2.4cm] (tel) at (10.2,0.3) {detectors\\ angle error $\alpha$};
+  \node[box,minimum width=2.1cm,fill=warnbg,draw=bdryred] (map) at (13.4,0.3) {maps\\ $Q$, $U$};
+  \draw[arr,tangentgreen] (lss.east) -- (tel.west|-0,0.55);
+  \draw[arr,fibreorange] (gal.east) -- (tel.west|-0,0.05);
+  \draw[arr,black] (tel) -- (map);
+  \node[font=\small,tangentgreen,align=center] at (6.0,2.15) {CMB light: twist $\beta$ over $13.8$ Gyr, then $\alpha$; total $\alpha+\beta$};
+  \node[font=\small,fibreorange,align=center] at (6.0,-1.75) {Galactic light: no twist on the way, then $\alpha$; total $\alpha$};
+\end{tikzpicture}
+\caption{The door frame of the microwave sky. CMB light (green) is twisted by $\beta$ on its long journey and then by the detector angle error $\alpha$; light from the Galaxy (orange) travels too short a distance to be twisted by $\beta$ and receives only $\alpha$. The maps contain both, so the twists of the two components can be measured separately.}
+\label{T1c:fig:doorframe}
+\end{figure}
+
+\emph{The observed spectra.} A map at one frequency contains the CMB, the Galactic foreground (``fg''), and noise. By \cref{T1c:fig:doorframe}, the foreground is twisted by $\alpha$ and the CMB by $\alpha+\beta$, so by \eqref{T1c:eq:rot-eb} applied to each,
+\begin{equation}
+E^{\mathrm o}_{\ell m}+iB^{\mathrm o}_{\ell m}=e^{2i\alpha}\bigl(E^{\mathrm{fg}}_{\ell m}+iB^{\mathrm{fg}}_{\ell m}\bigr)+e^{2i(\alpha+\beta)}\bigl(E^{\mathrm{CMB}}_{\ell m}+iB^{\mathrm{CMB}}_{\ell m}\bigr)+\text{noise}.
+\label{T1c:eq:mk-alm}
+\end{equation}
+Assume, as \cite{Minami2019,MinamiKomatsu2020} do in their baseline, that neither the foreground nor the CMB has an $EB$ of its own, and that the CMB, the foreground and the noise are uncorrelated, so the cross terms between them vanish on average. Each component then contributes to the averaged spectra exactly as in \cref{T1c:sec:rot-spectra}, with its own angle. Writing $\Delta^{X}_\ell\equiv C^{EE,X}_\ell-C^{BB,X}_\ell$ for the component $X$, and leaving out the noise, which has $EE=BB$ and no $EB$,
+\begin{align}
+C^{EB,\mathrm o}_\ell&\eqby{1}\tfrac12\sin4\alpha\,\Delta^{\mathrm{fg}}_\ell+\tfrac12\sin(4\alpha+4\beta)\,\Delta^{\mathrm{CMB}}_\ell,
+\nonumber\\
+C^{EE,\mathrm o}_\ell-C^{BB,\mathrm o}_\ell&\eqby{2}\cos4\alpha\,\Delta^{\mathrm{fg}}_\ell+\cos(4\alpha+4\beta)\,\Delta^{\mathrm{CMB}}_\ell .
+\label{T1c:eq:mk-spectra}
+\end{align}
+\begin{explain}
+  \item \eqref{T1c:eq:rot-ebsp} for each component, with the angle $\alpha$ for the foreground and $\alpha+\beta$ for the CMB.
+  \item $C^{EE\prime}-C^{BB\prime}=\cos4\beta\,(C^{EE}-C^{BB})$ from \cref{T1c:sec:rot-read}, again with each component's own angle; the noise has $C^{EE}=C^{BB}$ and drops out.
+\end{explain}
+\emph{Removing the unknown foreground.} We do not know $\Delta^{\mathrm{fg}}_\ell$; modelling the Galaxy is exactly what we want to avoid. But it appears in both lines with known coefficients, so it can be eliminated:
+\begin{align}
+C^{EB,\mathrm o}_\ell-\tfrac12\tan4\alpha\,\bigl(C^{EE,\mathrm o}_\ell-C^{BB,\mathrm o}_\ell\bigr)
+&\eqby{1}\tfrac12\bigl[\sin(4\alpha+4\beta)-\tan4\alpha\cos(4\alpha+4\beta)\bigr]\Delta^{\mathrm{CMB}}_\ell
+\nonumber\\
+&\eqby{2}\frac{\sin(4\alpha+4\beta)\cos4\alpha-\sin4\alpha\cos(4\alpha+4\beta)}{2\cos4\alpha}\,\Delta^{\mathrm{CMB}}_\ell
+\nonumber\\
+&\eqby{3}\frac{\sin4\beta}{2\cos4\alpha}\,\Delta^{\mathrm{CMB}}_\ell .
+\label{T1c:eq:mk}
+\end{align}
+\begin{explain}
+  \item Insert both lines of \eqref{T1c:eq:mk-spectra}; the foreground terms are $\frac12\sin4\alpha\,\Delta^{\mathrm{fg}}-\frac12\tan4\alpha\cos4\alpha\,\Delta^{\mathrm{fg}}=0$, since $\tan4\alpha\cos4\alpha=\sin4\alpha$.
+  \item Put both terms over the common denominator $\cos4\alpha$.
+  \item The subtraction formula $\sin(A+B)\cos A-\sin A\cos(A+B)=\sin B$ with $A=4\alpha$, $B=4\beta$.
+\end{explain}
+Rearranged, this is the relation of \cite{Minami2019} (their eq.~9 without the noise and intrinsic-$EB$ terms):
+\begin{equation}
+C^{EB,\mathrm o}_\ell=\frac{\tan4\alpha}{2}\bigl(C^{EE,\mathrm o}_\ell-C^{BB,\mathrm o}_\ell\bigr)+\frac{\sin4\beta}{2\cos4\alpha}\bigl(C^{EE,\mathrm{CMB}}_\ell-C^{BB,\mathrm{CMB}}_\ell\bigr).
+\label{T1c:eq:mk-final}
+\end{equation}
+Read it in words. The first term uses the \emph{observed} $EE-BB$ of the map, foreground and all, and its coefficient depends only on $\alpha$: everything in the map has been twisted by $\alpha$. The second term uses the \emph{theoretical} CMB spectra from the $\Lambda$CDM fit, and its coefficient carries $\beta$: only the CMB has the extra twist. Where the foreground is negligible, $C^{EE,\mathrm o}-C^{BB,\mathrm o}\approx\cos(4\alpha+4\beta)\Delta^{\mathrm{CMB}}$ has the same shape as the second template and the two terms cannot be separated; that is the degeneracy of \cref{T1c:sec:rot-alpha} again. Where the foreground contributes, the observed $EE-BB$ has a different shape in $\ell$ (a power law added to the acoustic peaks) and a different size in each frequency channel, and the two coefficients are separately measurable. With no foreground at all and $\beta=0$, \eqref{T1c:eq:mk-final} reduces to the sky-by-sky relation $\widehat C^{EB}=\frac12\tan4\alpha(\widehat C^{EE}-\widehat C^{BB})$ verified on simulations in \cref{T1c:sec:rot-sims}.
+
+\emph{How well can it work?} \Cref{T1c:fig:fisher} gives a size, from a Fisher forecast in \nolinkurl{code/chT1/09_alpha_beta_fisher.py}. The set-up is one frequency channel covering $70\%$ of the sky with white noise of $50\,\mu$K-arcmin and a $5'$ beam, $51\le\ell\le1500$, the CMB fiducial, and Planck's dust over $71\%$ of the sky \cite{Planck2018XI}; the data are the $EB$ spectrum \eqref{T1c:eq:mk-spectra}, with the cosmic-variance error of each $\widehat C^{EB}_\ell$, $[C^{EE}_\ell C^{BB}_\ell/(2\ell+1)f_{\mathrm{sky}}]^{1/2}$ with total spectra, as in \cref{ch:10}. With the CMB alone the Fisher matrix is singular: only the sum is measured, $\sigma(\alpha+\beta)=\TOneCSigSum^\circ$, the band in the figure. At $143\,$GHz the dust is faint: it hardly disturbs the CMB, which still fixes $\sigma(\alpha+\beta)=\TOneCSigSumOneFortyThree^\circ$, but it anchors $\alpha$ only weakly, and the band closes into a long, thin ellipse with $\sigma(\beta)=\TOneCSigBOneFortyThree^\circ$. At $353\,$GHz, where the dust is $\TOneCDustRatioFish$ times brighter in power than at $143\,$GHz, the dust anchors $\alpha$ well, $\sigma(\alpha)=\TOneCSigAThreeFiftyThree^\circ$, but over $70\%$ of the sky its $EE$ and $BB$ exceed those of the CMB at every multipole used, so it also swamps the CMB's $EB$ with chance scatter: the sum is known only to $\TOneCSigSumThreeFiftyThree^\circ$, and $\sigma(\beta)=\TOneCSigBThreeFiftyThree^\circ$. One channel faces a trade-off, too little dust to calibrate or so much that it blurs the CMB. In both cases $\alpha$ and $\beta$ are strongly anti-correlated (correlation coefficients $\TOneCRhoOneFortyThree$ and $\TOneCRhoThreeFiftyThree$), because $\alpha+\beta$ is better measured than $\beta$ itself, and $\beta=(\alpha+\beta)-\alpha$. The real analyses combine several channels, each with its own $\alpha_\nu$ and a single $\beta$, which is how \cite{MinamiKomatsu2020} reach $\sigma(\beta)=0.14^\circ$; their posterior shows the same anti-correlation. The forecast assumes the dust spectra are known; the measurement does not need them, because \eqref{T1c:eq:mk-final} uses the observed $EE-BB$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\linewidth]{figures/chT1/alpha_beta_fisher.pdf}
+\caption{Fisher forecast for the detector angle $\alpha$ and the birefringence angle $\beta$ from the $EB$ spectrum of one channel. With the CMB alone only $\alpha+\beta$ is measured (shaded band, $1\sigma$). Adding the dust of the same map, twisted by $\alpha$ only, closes the band into an ellipse ($1\sigma$). At $143\,$GHz, where the dust is faint, the ellipse is long and stays inside the band: the CMB still fixes the sum, and the dust pins $\alpha$ only weakly. At $353\,$GHz the bright dust pins $\alpha$ tightly, so the ellipse is short in $\alpha$, but the same dust adds scatter to the CMB's $EB$, so the ellipse is wider than the band and $\beta$ is still uncertain by about a third of a degree.}
+\label{T1c:fig:fisher}
+\end{figure}
+
+\emph{When the door frame is crooked.} The method assumes the Galaxy has no $EB$ of its own. Suppose instead the dust has an intrinsic $EB$, and write it, as \cite{MinamiKomatsu2020} do, as if the dust were twisted at the source by an angle $\gamma$: $C^{EB,\mathrm{dust}}_\ell=\frac12\sin4\gamma\,\Delta^{\mathrm{dust}}_\ell$. Then the dust in the map is twisted by $\alpha+\gamma$ in total, and
+\begin{equation}
+\hat\alpha\eqby{1}\alpha+\gamma,\qquad
+\hat\alpha+\hat\beta\eqby{2}\alpha+\beta
+\quad\Longrightarrow\quad
+\hat\beta\eqby{3}\beta-\gamma .
+\label{T1c:eq:gamma}
+\end{equation}
+\begin{explain}
+  \item The method reads the total twist of the foreground as the detector angle.
+  \item The CMB still fixes the sum of the detector angle and its own twist, which the method splits as $\hat\alpha+\hat\beta$.
+  \item Subtract the first equation from the second.
+\end{explain}
+The estimate of $\beta$ is off by exactly the dust's own handedness. Since the dust $TB$ and $TE$ are both positive, the misalignment picture of \cref{T1c:sec:galaxy} predicts $\gamma>0$, so an analysis that assumes $\gamma=0$ would underestimate $\beta$ \cite{MinamiKomatsu2020}; but the size and even the sign of the dust $EB$ can change with the sky area \cite{Clark2021}.
+
+\subsection{What has been measured, and why it is not yet a detection}
+\label{T1c:sec:not-yet}
+
+\emph{The measurements.} With the detector angles fixed at their ground calibration, the Planck team found an angle of $0.31^\circ\pm0.05^\circ$ (statistical) $\pm0.28^\circ$ (systematic), where the second error is the calibration uncertainty of $\alpha$ \cite{MinamiKomatsu2020}. Applying the relation \eqref{T1c:eq:mk-final} to the Planck 2018 maps at $100$, $143$, $217$ and $353\,$GHz, fitting one $\beta$ and four $\alpha_\nu$, \cite{MinamiKomatsu2020} found
+\begin{equation}
+\beta=0.35^\circ\pm0.14^\circ\quad(68\%),
+\end{equation}
+which excludes zero at $99.2\%$ confidence, a $2.4\sigma$ result, with the calibration uncertainty no longer in the error. Repeating the analysis on the reprocessed Planck data (PR4) gave $\beta=0.30^\circ\pm0.11^\circ$ for nearly the full sky, with values that decrease as the Galactic mask is enlarged \cite{DiegoPalazuelos2022}. Adding WMAP and the Planck low-frequency channels, $23$ to $353\,$GHz, gave
+\begin{equation}
+\beta=0.342^{\circ\,+0.094^\circ}_{\ \,-0.091^\circ}\quad(68\%),
+\end{equation}
+excluding zero at $99.987\%$ confidence, $3.6\sigma$, with no evidence that $\beta$ depends on frequency \cite{EskiltKomatsu2022}. The independence of frequency argues against Faraday rotation, whose angle would change by a factor $(353/23)^2\approx240$ across that range.
+
+\emph{Why is it not yet a detection?} Treat it as an inference problem, in the order used throughout the book. \emph{The event:} an $EB$ (and $TB$) with the shape of a twist, at the level of three to four standard deviations, after the detector angles were fitted using the Galaxy. \emph{What could have produced it?} Four candidates.
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+\item \emph{Chance.} With a $3.6\sigma$ result, a fluctuation of the noise and of the cosmic variance is unlikely, but particle physics and cosmology reserve the word ``discovery'' for $5\sigma$, because many analyses are performed and systematic errors are often underestimated (\cref{ch:04}).
+\item \emph{A crooked door frame.} An intrinsic dust $EB$ shifts the estimate to $\beta-\gamma$ \eqref{T1c:eq:gamma}. Its size is not known well enough: the dust $EB$ predicted from filament misalignment is of the same order as the effect \cite{Clark2021}, and the dependence of $\beta$ on the mask found by \cite{DiegoPalazuelos2022} is what a foreground effect would produce. Those authors chose not to assign cosmological significance to the value until the foreground polarization is better understood.
+\item \emph{The instrument.} Leakage from temperature to polarization and beam effects can create $EB$ and $TB$ (\cref{T1c:sec:instrument}). The analyses correct for them with beam models and test the corrections on simulations \cite{MinamiKomatsu2020}, but the corrections are themselves models.
+\item \emph{New physics.} A twist \eqref{T1c:eq:beta-phi} by a pseudoscalar field, $g_{\phi\gamma}\Delta\phi$ of about $10^{-2}$ radians \cite{MinamiKomatsu2020}.
+\end{enumerate}
+Only the last is interesting, and only the last is grey, uniform over the sky and independent of the mask. A detection therefore needs evidence that removes the others: experiments with an independent calibration of $\alpha$ (artificial polarized sources, or well-measured astrophysical ones), a better model of the dust $EB$ from its correlation with $TB$ and $TE$ \cite{Clark2021}, and agreement between instruments with different detectors and scan strategies.
+
+\begin{inpractice}[How the measurement is made]
+The published analyses work with the cross-spectra of maps that share no noise: the two half-mission maps of each frequency channel, in all combinations of channels, so that noise bias drops out \cite{MinamiKomatsu2020}. The spectra are measured on the masked sky with a pseudo-$C_\ell$ code (NaMaster) that corrects for the mask, which otherwise leaks $E$ into $B$ and mixes multipoles (the MASTER method of \cref{ch:08}). Equation \eqref{T1c:eq:mk-final}, written for every pair of channels, is turned into a Gaussian likelihood whose covariance is estimated from the observed spectra, and $\alpha_\nu$, $\beta$ are sampled with an MCMC (\cref{ch:09}). The pipeline is validated on end-to-end simulations with no twist, which must return $\beta$ consistent with zero. Our forecast replaces all of this with one channel, a known dust spectrum and a Fisher matrix; it gives the sizes, not the result. \Cref{ch:13} measures the twist on the Planck SMICA maps, where only the sum $\alpha+\beta$ is accessible because a component-separated map has had its Galaxy removed.
+\end{inpractice}
+
+One chain of reasoning runs from the sticks to the published angle. Polarization is a field of headless sticks; its split into $E$ and $B$ is a split by behaviour in a mirror; ordinary physics leaves the parity-odd spectra at zero; a uniform twist moves power from $E$ to $B$ and, unlike lensing, leaves a hand behind in $EB$ and $TB$; and the twist of the instrument is told from the twist of the sky only by a component, the Galaxy, that sees one of them and not the other.
+
+\begin{recap}
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item The polarization stick is $Q+iU=Pe^{2i\psi}$; a twist by $\beta$ multiplies it by $e^{2i\beta}$, and turning the axes by $\alpha$ multiplies it by $e^{-2i\alpha}$.
+\item $E$ and $B$ are $Q$ and $U$ read in axes aligned with each wavevector; $E$ is mirror symmetric, $B$ changes sign, so a mirror-symmetric universe has $EB=TB=0$.
+\item Scalar perturbations make only $E$; gravitational waves make $E$ and $B$.
+\item A uniform twist rotates $(E_{\ell m},B_{\ell m})$ by $2\beta$ and gives $C^{EE\prime}=\cos^22\beta\,C^{EE}+\sin^22\beta\,C^{BB}$, $C^{BB\prime}=\sin^22\beta\,C^{EE}+\cos^22\beta\,C^{BB}$, $C^{EB\prime}=\frac12\sin4\beta(C^{EE}-C^{BB})$, $C^{TE\prime}=\cos2\beta\,C^{TE}$, $C^{TB\prime}=\sin2\beta\,C^{TE}$; total polarized power is conserved.
+\item Lensing also turns $E$ into $B$, $C^{BB}=\int\frac{\dd^2\ell'}{(2\pi)^2}[\bm\ell'\cdot(\bm\ell-\bm\ell')]^2\sin^22\Delta\varphi\,C^{\phi\phi}C^{EE}$, white at low $\ell$ ($\approx\TOneCLensWhiteUKarcmin\,\mu$K-arcmin), but leaves $EB=TB=0$: no hand.
+\item Fingerprints of $B$: frequency separates the Galaxy and Faraday rotation from the CMB; the $\ell$ shape separates gravitational waves from lensing; $EB$, $TB$ separate twists from parity-preserving sources.
+\item A detector angle error $\alpha$ adds to $\beta$; the Galaxy is twisted by $\alpha$ only, which gives the Minami--Komatsu relation \eqref{T1c:eq:mk-final}; dust $EB$ shifts the result to $\beta-\gamma$.
+\item Measured: $\beta=0.35^\circ\pm0.14^\circ$ (Planck 2018), $0.30^\circ\pm0.11^\circ$ (PR4), $0.342^\circ{}^{+0.094^\circ}_{-0.091^\circ}$ (WMAP + Planck); not yet a detection because of the dust $EB$ and instrumental systematics.
+\end{itemize}
+\end{recap}
 \section*{Chapter summary}
 \addcontentsline{toc}{section}{Chapter summary}
 \label{T1a:sec:summary}
 
-The cosmological model is the first step of the book's pipeline. For every choice of the six $\Lambda$CDM numbers it fixes the expected value of each summary that the later chapters estimate from data, and never the sky itself. The route is short enough to hold in the head. The Friedmann equation gives the expansion rate $E(z)$, and one integral of $1/E$ gives the distances $D_A$ and $D_L$. The primordial spectrum $\mathcal P_\zeta=A_s(k/k_*)^{n_s-1}$ is carried to the sky by the radiation transfer function, $C_\ell=\frac2\pi\int k^2\dd k\,P_\zeta\,g_{T\ell}^2$, and to the matter field by growth and the matter transfer function, $P_\delta(k,a_0)=P_\delta(k,a_{\mathrm i})\,T^2[D_+(a_0)/D_+(a_{\mathrm i})]^2$. The data are one draw from each: the $\alm$ with variance $\Cell$, the Fourier modes $\delta_{\bm k}$ with variance $P_\delta(k)$. Weak lensing adds a third field built from the same matter: projected along the line of sight with the lensing efficiency $g(\chi)$, it becomes the convergence $\kappa$, whose power spectrum $C_\ell^{\kappa\kappa}$ is a Limber integral of $P_\delta$, and it is read off galaxy shapes through the shear $\gamma$, buried under shape noise.
+The cosmological model is the first step of the book's pipeline. For every choice of the six $\Lambda$CDM numbers it fixes the expected value of each summary that the later chapters estimate from data, and never the sky itself. The route is short enough to hold in the head. The Friedmann equation gives the expansion rate $E(z)$, and one integral of $1/E$ gives the distances $D_A$ and $D_L$. The primordial spectrum $\mathcal P_\zeta=A_s(k/k_*)^{n_s-1}$ is carried to the sky by the radiation transfer function, $C_\ell=\frac2\pi\int k^2\dd k\,P_\zeta\,g_{T\ell}^2$, and to the matter field by growth and the matter transfer function, $P_\delta(k,a_0)=P_\delta(k,a_{\mathrm i})\,T^2[D_+(a_0)/D_+(a_{\mathrm i})]^2$. The data are one draw from each: the $\alm$ with variance $\Cell$, the Fourier modes $\delta_{\bm k}$ with variance $P_\delta(k)$. Weak lensing adds a third field built from the same matter: projected along the line of sight with the lensing efficiency $g(\chi)$, it becomes the convergence $\kappa$, whose power spectrum $C_\ell^{\kappa\kappa}$ is a Limber integral of $P_\delta$, and it is read off galaxy shapes through the shear $\gamma$, buried under shape noise. The CMB light is also polarized, a field of headless sticks split into a mirror-symmetric $E$ and a mirror-odd $B$: ordinary physics leaves $EB=TB=0$, gravitational waves and lensing make $B$ without a hand, and a uniform twist of the polarization, by new physics ($\beta$) or by a miscalibrated detector ($\alpha$), moves power from $E$ to $B$ and creates $EB$ and $TB$.
 
 What carries into the inference chapters is how these predictions move when the parameters move. The finite-difference responses $R_i(\ell)$ of \cref{T1a:eq:response} are the derivatives of the Fisher matrix, two nearly parallel responses are a degeneracy, and the line between linear and halofit $P(k)$ is where the Gaussian description of the matter field stops. Conventions are the fixed factors that decide whether a script reproduces these numbers. The table lists what to carry forward, what each item means in practice, and where it is used.
 
@@ -1249,10 +2131,15 @@ $f_{\mathrm{NL}}$ & amplitude of the primordial bispectrum; invisible to $\Cell$
 $\kappa$, $\gamma$, $E$/$B$ & projected density and its spin-2 tidal stretch (\cref{T1b:sec:shapes}); lensing makes only $E$, so $B$ is a null test & \cref{ch:12}\\
 $C_\ell^{\kappa\kappa}$ and shape noise & Limber integral of $[g/a]^2P_\delta$ (CAMB lensing windows); measured power $C_\ell^{ij}+\delta_{ij}\sigma_e^2/\bar n_i$ & \cref{ch:10,ch:12}\\
 $S_8$ and nuisances & cosmic shear fixes $\sigma_8\Omega_m^{\alpha}$, $\alpha\approx0.55$; photo-$z$, shear bias, intrinsic alignment, baryons are marginalised & \cref{ch:09,ch:10,ch:12}\\
+$E$, $B$ and parity & $Q,U$ read along each wavevector; $B$ changes sign in a mirror, so $EB=TB=0$ unless something picks a hand (\cref{T1c:sec:parity}) & \cref{ch:13,ch:T3}\\
+rotated spectra & a twist $\beta$ gives $EB=\frac12\sin4\beta\,(C^{EE}-C^{BB})$, $TB=\sin2\beta\,C^{TE}$, $BB$ gains $\sin^22\beta\,C^{EE}$; a detector angle error $\alpha$ enters as $\alpha+\beta$ & \cref{ch:13}\\
+lensing $B$ modes & $C^{BB}=\int[\bm\ell'\cdot(\bm\ell-\bm\ell')]^2\sin^22\Delta\varphi\,C^{\phi\phi}C^{EE}$; white at low $\ell$, peak near $\ell\approx1000$; no $EB$, $TB$; non-Gaussian & \cref{ch:10,ch:13}\\
+$B$-mode fingerprints & frequency (Galaxy vs CMB), $\ell$ shape (gravitational waves vs lensing), parity ($EB$, $TB$: twists vs the rest); table in \cref{T1c:sec:table} & \cref{ch:13}\\
+Minami--Komatsu relation & the Galaxy is twisted by $\alpha$ only: $C^{EB,\mathrm o}=\frac12\tan4\alpha\,(C^{EE,\mathrm o}-C^{BB,\mathrm o})+\frac{\sin4\beta}{2\cos4\alpha}(C^{EE}-C^{BB})^{\mathrm{CMB}}$; dust $EB$ biases $\beta$ to $\beta-\gamma$ & \cref{ch:13}\\
 \bottomrule
 \end{tabularx}
 \end{center}
 
 \paragraph{Reading the literature.}
-The physics of every object above is developed in the cosmology notes. The Boltzmann code used throughout is CAMB \cite{CAMB2000}. The parameter values and errors are those of Planck 2018 \cite{Planck2018VI}. The non-linear correction is the halofit version of \cite{Takahashi2012}, and the first detection of the BAO bump in the galaxy correlation function is \cite{Eisenstein2005}. For weak lensing, the standard reviews are \cite{BartelmannSchneider2001} and \cite{Kilbinger2015}, CMB lensing is reviewed in \cite{LewisChallinor2006} and measured in \cite{Planck2018VIII}, and the Stage-III cosmic-shear results are \cite{Asgari2021KiDS,Amon2022DES,Hikage2019HSC}.
- 
+The physics of every object above is developed in the cosmology notes. The Boltzmann code used throughout is CAMB \cite{CAMB2000}. The parameter values and errors are those of Planck 2018 \cite{Planck2018VI}. The non-linear correction is the halofit version of \cite{Takahashi2012}, and the first detection of the BAO bump in the galaxy correlation function is \cite{Eisenstein2005}. For weak lensing, the standard reviews are \cite{BartelmannSchneider2001} and \cite{Kilbinger2015}, CMB lensing is reviewed in \cite{LewisChallinor2006} and measured in \cite{Planck2018VIII}, and the Stage-III cosmic-shear results are \cite{Asgari2021KiDS,Amon2022DES,Hikage2019HSC}. For CMB polarization, the $E$/$B$ decomposition is due to \cite{ZaldarriagaSeljak1997,Kamionkowski1997}, with a gentle introduction in \cite{HuWhite1997Pol}; gravitational-wave $B$ modes are predicted in \cite{SeljakZaldarriaga1997}, lensing $B$ modes in \cite{ZaldarriagaSeljak1998}, and experimental systematics are catalogued in \cite{HuHedmanZaldarriaga2003}. The physics of cosmic birefringence is in \cite{CarrollFieldJackiw1990,Carroll1998,LueWangKamionkowski1999}; the method that uses the Galaxy to calibrate the detector angles is \cite{Minami2019}, applied in \cite{MinamiKomatsu2020,DiegoPalazuelos2022,EskiltKomatsu2022}, with the dust $EB$ caveat of \cite{Clark2021}. The polarized foregrounds are characterised in \cite{Planck2018XI} and the current limit on $r$ is \cite{BICEPKeck2021}.
+  
