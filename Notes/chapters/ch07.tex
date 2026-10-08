@@ -3577,6 +3577,229 @@ area.}
 \label{7b:fig:healpix-tiling}
 \end{figure}
 
+\paragraph{Where the pixel edges come from.} The edges in \cref{7b:fig:healpix-tiling} look like
+arbitrary curves, but every one of them follows from the demand for equal areas and an observation
+of Archimedes. Wrap the unit sphere in a cylinder that touches it along the equator, and push each
+point of the sphere straight out, away from the axis and at constant height, onto the cylinder
+(\cref{7b:fig:healpix-cylinder}a). The point at polar angle $\theta$ and longitude $\phi$ lands at
+the same $\phi$ and at height $z=\cos\theta$. This map keeps areas. Take the small patch between
+$\theta$ and $\theta+\Delta\theta$ and between $\phi$ and $\phi+\Delta\phi$:
+\begin{equation}
+  \Delta\Omega\eqby{1}(\sin\theta\,\Delta\phi)\,(\Delta\theta)\eqby{2}\Delta\phi\,\abs{\Delta z} .
+  \label{7b:eq:archimedes}
+\end{equation}
+\begin{explain}
+  \item The patch is nearly a rectangle. Its width runs along the circle of latitude, whose radius
+        is $\sin\theta$, so the width is $\sin\theta\,\Delta\phi$; its height runs along the meridian
+        and is $\Delta\theta$.
+  \item On the cylinder, of radius $1$, the same patch has width $\Delta\phi$ and height
+        $\abs{\Delta z}$, and $z=\cos\theta$ gives $\abs{\Delta z}=\sin\theta\,\Delta\theta$.
+\end{explain}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small,>=Stealth,scale=1.12,every node/.style={transform shape}]
+  \begin{scope}
+    \begin{scope}\clip (0,0) circle (1.7); \shade[inner color=white,outer color=black!25] (-0.5,0.6) circle (3.0);\end{scope}
+    \draw[black!45] (0,0) circle (1.7);
+    \draw[black!30,densely dotted,domain=180:360,samples=40,variable=\t] plot ({1.7*cos(\t)},{-0.9751*sin(\t)});
+    \draw[black!30,domain=0:180,samples=40,variable=\t] plot ({1.7*cos(\t)},{-0.9751*sin(\t)});
+    \draw[accent!70,domain=0:360,samples=60,variable=\t] plot ({1.7*cos(\t)},{1.3926-0.9751*sin(\t)});
+    \draw[accent!70,domain=0:180,samples=40,variable=\t] plot ({1.7*cos(\t)},{-1.3926-0.9751*sin(\t)});
+    \draw[accent!70,densely dotted,domain=180:360,samples=40,variable=\t] plot ({1.7*cos(\t)},{-1.3926-0.9751*sin(\t)});
+    \draw[accent!70] (-1.7,-1.3926) -- (-1.7,1.3926) (1.7,-1.3926) -- (1.7,1.3926);
+    \draw[->,black!55] (0,-1.3926) -- (0,2.45) node[above,font=\footnotesize] {$z$};
+    \fill[fibreorange!85,draw=fibreorange!60!black,line width=0.6pt] plot[domain=0:1,samples=12,variable=\s] ({1.7*sqrt(1-(0.33333+\s*(0.33333))^2)*cos(67.5+\s*(22.5))},{1.3926*(0.33333+\s*(0.33333))-0.9751*sqrt(1-(0.33333+\s*(0.33333))^2)*sin(67.5+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*sqrt(1-(0.66667+\s*(-0.33333))^2)*cos(90+\s*(22.5))},{1.3926*(0.66667+\s*(-0.33333))-0.9751*sqrt(1-(0.66667+\s*(-0.33333))^2)*sin(90+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*sqrt(1-(0.33333+\s*(-0.33333))^2)*cos(112.5+\s*(-22.5))},{1.3926*(0.33333+\s*(-0.33333))-0.9751*sqrt(1-(0.33333+\s*(-0.33333))^2)*sin(112.5+\s*(-22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*sqrt(1-(0.00000+\s*(0.33333))^2)*cos(90+\s*(-22.5))},{1.3926*(0.00000+\s*(0.33333))-0.9751*sqrt(1-(0.00000+\s*(0.33333))^2)*sin(90+\s*(-22.5))}) -- cycle;
+    \fill[fibreorange!60,fill opacity=0.35] plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(67.5+\s*(22.5))},{1.3926*(0.33333+\s*(0.33333))-0.9751*sin(67.5+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(90+\s*(22.5))},{1.3926*(0.66667+\s*(-0.33333))-0.9751*sin(90+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(112.5+\s*(-22.5))},{1.3926*(0.33333+\s*(-0.33333))-0.9751*sin(112.5+\s*(-22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(90+\s*(-22.5))},{1.3926*(0.00000+\s*(0.33333))-0.9751*sin(90+\s*(-22.5))}) -- cycle;
+    \draw[fibreorange!55!black,line width=0.9pt] plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(67.5+\s*(22.5))},{1.3926*(0.33333+\s*(0.33333))-0.9751*sin(67.5+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(90+\s*(22.5))},{1.3926*(0.66667+\s*(-0.33333))-0.9751*sin(90+\s*(22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(112.5+\s*(-22.5))},{1.3926*(0.33333+\s*(-0.33333))-0.9751*sin(112.5+\s*(-22.5))}) -- plot[domain=0:1,samples=12,variable=\s] ({1.7*cos(90+\s*(-22.5))},{1.3926*(0.00000+\s*(0.33333))-0.9751*sin(90+\s*(-22.5))}) -- cycle;
+    \foreach \p/\z in {67.5/0.33333,90/0.66667,112.5/0.33333}
+      \draw[->,black,densely dashed,line width=0.5pt,shorten >=0.5pt] ({1.7*sqrt(1-(\z)^2)*cos(\p)},{1.3926*(\z)-0.9751*sqrt(1-(\z)^2)*sin(\p)}) -- ({1.7*cos(\p)},{1.3926*(\z)-0.9751*sin(\p)});
+    \draw[black!70,dashed,line width=0.5pt,domain=15:140,samples=40,variable=\t] plot ({1.7*cos(\t)},{1.3926*(0.33333)-0.9751*sin(\t)});
+    \draw[black!70,dashed,line width=0.5pt,domain=15:140,samples=40,variable=\t] plot ({1.7*cos(\t)},{1.3926*(0.66667)-0.9751*sin(\t)});
+    \draw[<->,black,line width=0.6pt] ({1.7*cos(22)},{1.3926*(0.33333)-0.9751*sin(22)}) -- ({1.7*cos(22)},{1.3926*(0.66667)-0.9751*sin(22)}) node[midway,right,font=\footnotesize] {$\Delta z$};
+    \draw[black!70,dashed,line width=0.5pt] ({1.7*cos(67.5)},{1.3926*(0.33333)-0.9751*sin(67.5)}) -- ({1.7*cos(67.5)},{1.3926*(-0.22)-0.9751*sin(67.5)}) ({1.7*cos(112.5)},{1.3926*(0.33333)-0.9751*sin(112.5)}) -- ({1.7*cos(112.5)},{1.3926*(-0.22)-0.9751*sin(112.5)});
+    \draw[<->,black,line width=0.6pt,domain=68.5:111.5,samples=16,variable=\t] plot ({1.7*cos(\t)},{1.3926*(-0.16)-0.9751*sin(\t)});
+    \node[font=\footnotesize,anchor=north] at ({1.7*cos(90)},{1.3926*(-0.2)-0.9751*sin(90)}) {$\Delta\phi$};
+    \node[font=\scriptsize,fibreorange!90!black,align=center] at (-1.05,1.35) {pixel on\\[-2pt]the sphere};
+    \draw[fibreorange!90!black,->,shorten >=1pt] (-0.75,1.15) .. controls (-0.3,1.0) .. ({1.7*sqrt(1-(0.55)^2)*cos(90)},{1.3926*(0.55)-0.9751*sqrt(1-(0.55)^2)*sin(90)});
+    \node[font=\scriptsize,fibreorange!70!black,align=left,anchor=west] at (1.85,1.75) {its image on\\[-2pt]the cylinder};
+    \draw[fibreorange!70!black,->,shorten >=1pt] (1.95,1.5) -- ({1.7*cos(76)},{1.3926*(0.45)-0.9751*sin(76)});
+    \node[font=\small] at (0,-2.85) {(a)};
+  \end{scope}
+  \begin{scope}[shift={(4.75,0)},x=0.95cm,y=2.0cm]
+    \draw[black!40] (0,-1) rectangle ({2*pi},1);
+    \draw[black!35,densely dashed] (0,{2/3}) -- ({2*pi},{2/3}) (0,{-2/3}) -- ({2*pi},{-2/3});
+    \begin{scope}
+      \clip (0,{-2/3}) rectangle ({2*pi},{2/3});
+      \foreach \k in {0,...,10} {
+        \pgfmathsetmacro\w{mod(\k,2)==0 ? 1.1 : 0.45}
+        \draw[accent,line width=\w pt] (0,{2/3-2*\k/3}) -- ({2*pi},{2/3-2*\k/3+16/3});
+        \draw[accent,line width=\w pt] (0,{-2/3+2*\k/3}) -- ({2*pi},{-2/3+2*\k/3-16/3});
+      }
+    \end{scope}
+    \foreach \q in {0,1,2,3} {
+      \pgfmathsetmacro\a{\q*pi/2}
+      \foreach \s in {1,-1} {
+        \draw[accent,line width=1.1pt] (\a,{\s*2/3}) -- (\a,\s);
+        \foreach \k in {1} {
+          \pgfmathsetmacro\lo{\k*pi/4}\pgfmathsetmacro\hi{pi/2-\k*pi/4}
+          \draw[accent,line width=0.45pt,domain=\lo:1.5708,samples=30,variable=\t]
+            plot ({\a+\t},{\s*(1-(\k*\k/12)*(pi/(2*\t))^2)});
+          \draw[accent,line width=0.45pt,domain=0:\hi,samples=30,variable=\t]
+            plot ({\a+\t},{\s*(1-(\k*\k/12)*(pi/(pi-2*\t))^2)});
+        }
+      }
+    }
+    
+    \foreach \x/\l in {0/0,{pi/2}/{\pi/2},{pi}/{\pi},{3*pi/2}/{3\pi/2},{2*pi}/{2\pi}}
+      \node[font=\scriptsize,below] at (\x,-1) {$\l$};
+    \node[font=\footnotesize] at ({pi},-1.27) {$\phi$};
+    \foreach \y/\l in {-1/{-1},{-2/3}/{-\frac23},0/0,{2/3}/{\frac23},1/1}
+      \node[font=\scriptsize,left] at (0,\y) {$\l$};
+    \node[font=\footnotesize] at (-0.7,0) {$z$};
+    \def\pc{1.5708}\def\dph{0.7854}
+    \fill[fibreorange!85,draw=fibreorange!60!black,line width=0.8pt] ({\pc-\dph/2},{1/3}) -- (\pc,{2/3}) -- ({\pc+\dph/2},{1/3}) -- (\pc,0) -- cycle;
+    \draw[black!75,dashed,line width=0.5pt] ({\pc-0.45},{1/3}) -- ({\pc+1.25},{1/3}) ({\pc-0.45},{2/3}) -- ({\pc+1.25},{2/3});
+    \draw[<->,black,line width=0.6pt] ({\pc+0.75},{1/3}) -- ({\pc+0.75},{2/3});
+    \node[font=\scriptsize,anchor=west,fill=white,inner sep=1pt] at ({\pc+0.8},0.5) {$\Delta z$};
+    \draw[black!75,dashed,line width=0.5pt] ({\pc-\dph/2},{1/3}) -- ({\pc-\dph/2},-0.22) ({\pc+\dph/2},{1/3}) -- ({\pc+\dph/2},-0.22);
+    \draw[<->,black,line width=0.6pt] ({\pc-\dph/2},-0.16) -- ({\pc+\dph/2},-0.16);
+    \node[font=\scriptsize,anchor=north,fill=white,inner sep=1pt] at (\pc,-0.2) {$\Delta\phi$};
+    \node[font=\scriptsize,anchor=west,fill=white,inner sep=1pt] at ({\pc+1.27},{1/3}) {$z_j$};
+    \node[font=\scriptsize,anchor=west,fill=white,inner sep=1pt] at ({\pc+1.27},{2/3}) {$z_{j+1}$};
+    \node[font=\scriptsize,softgray,anchor=west] at ({2*pi+0.1},0.83) {polar cap};
+    \node[font=\scriptsize,softgray,anchor=west] at ({2*pi+0.1},0) {equatorial};
+    \node[font=\scriptsize,softgray,anchor=west] at ({2*pi+0.1},-0.12) {belt};
+    \node[font=\scriptsize,softgray,anchor=west] at ({2*pi+0.1},-0.83) {polar cap};
+    \node[font=\small] at ({pi},-1.48) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Archimedes' map and the HEALPix edges. (a) Each point of the sphere is pushed straight out,
+at constant height, onto the cylinder that touches the sphere along the equator. One pixel for
+$N_{\rm side}=2$ is shown on the sphere (solid) and as its image on the cylinder (see-through); the
+dashed rings $z_j$ and $z_{j+1}$ and the dashed lines below its side corners mark $\Delta z$ and
+$\Delta\phi$ on the cylinder. (b) The cylinder cut open along $\phi=0$ and laid flat. The thick
+lines are the boundaries of the twelve base pixels, the thin ones those for $N_{\rm side}=2$:
+straight \eqref{7b:eq:hpx-belt} in the belt $\abs z\le\tfrac23$, curved \eqref{7b:eq:hpx-cap} in the
+two polar caps. The same pixel is shaded: its width along its ring is $\Delta\phi=\pi/(2N_{\rm side})$,
+and the rings $z_j$ and $z_{j+1}$ of pixel centres are $\Delta z=2/(3N_{\rm side})$ apart
+\eqref{7b:eq:hpx-dphidz}, so its area is $\Delta\phi\,\Delta z=\Omega_{\rm pix}$.}
+\label{7b:fig:healpix-cylinder}
+\end{figure}
+
+The image on the cylinder is wider than the patch by $1/\sin\theta$ and shorter by $\sin\theta$,
+and the two factors cancel. Now cut the cylinder open along $\phi=0$ and lay it flat: a rectangle
+$0\le\phi<2\pi$, $-1\le z\le1$, of area $4\pi$ (\cref{7b:fig:healpix-cylinder}b). A region of the
+sphere has the same area as its image in this rectangle, so \emph{equal-area pixels on the sphere
+are the same thing as equal-area tiles in the flat $(\phi,z)$ rectangle}. We design the tiles
+there.
+
+\emph{The equatorial belt.} Here the pixels are laid out in rings of constant $z$, and every ring
+holds the same number of pixels, $4N_{\rm side}$: the equator crosses four base pixels, each
+$N_{\rm side}$ pixels across. Two numbers then fix everything, the width $\Delta\phi$ of a pixel
+along its ring and the spacing $\Delta z$ between neighbouring rings (\cref{7b:fig:healpix-cylinder}b):
+\begin{equation}
+  \Delta\phi\eqby{1}\frac{2\pi}{4N_{\rm side}}=\frac{\pi}{2N_{\rm side}},
+  \qquad
+  \Delta z\eqby{2}\frac{\Omega_{\rm pix}}{\Delta\phi}
+  \eqby{3}\frac{\pi/(3N_{\rm side}^2)}{\pi/(2N_{\rm side})}=\frac{2}{3N_{\rm side}} .
+  \label{7b:eq:hpx-dphidz}
+\end{equation}
+\begin{explain}
+  \item A ring goes once round, $2\pi$, and holds $4N_{\rm side}$ pixels.
+  \item In the flat picture area is $\Delta\phi\,\Delta z$, and each pixel must have area
+        $\Omega_{\rm pix}$.
+  \item $\Omega_{\rm pix}=\pi/(3N_{\rm side}^2)$ from \eqref{7b:eq:healpix}.
+\end{explain}
+The rings of pixel centres in the belt are therefore at
+\begin{equation}
+  z_j=j\,\Delta z=\frac{2j}{3N_{\rm side}},\qquad
+  \cos\theta_j=\frac{2j}{3N_{\rm side}},\qquad j=-N_{\rm side},\dots,N_{\rm side},
+  \label{7b:eq:hpx-rings}
+\end{equation}
+and the belt ends at $j=\pm N_{\rm side}$, $z=\pm\tfrac23$, which is where the number $\tfrac23$ in
+HEALPix comes from. If the pixels of neighbouring rings sat directly above one another, they would
+be rectangles $\Delta\phi\times\Delta z$. HEALPix instead shifts each ring by half a pixel,
+$\Delta\phi/2$, against its neighbours, so a pixel centre sits directly above the gap between two
+pixels of the ring below. The pixel around the centre $(\phi_c,z_j)$ is then the diamond with
+corners at $(\phi_c\pm\tfrac12\Delta\phi,\,z_j)$ on its own ring and at $(\phi_c,\,z_j\pm\Delta z)$,
+the centres' height of the rings above and below. Its area is half the product of its diagonals,
+$\tfrac12\,\Delta\phi\cdot2\Delta z=\Delta\phi\,\Delta z=\Omega_{\rm pix}$, as required, and its
+edges are straight lines of slope
+\begin{equation}
+  \pm\frac{\Delta z}{\Delta\phi/2}=\pm\frac{2/(3N_{\rm side})}{\pi/(4N_{\rm side})}=\pm\frac{8}{3\pi},
+\end{equation}
+the same for every $N_{\rm side}$. Edges of the same slope pass through corners that are $\Delta\phi$
+apart along a ring, so their values at $\phi=0$ differ by
+$\tfrac{8}{3\pi}\Delta\phi=\tfrac{4}{3N_{\rm side}}$, and one of them passes through the corner at
+$(0,\tfrac23)$. The pixel edges in the belt are thus
+\begin{equation}
+  z=\frac23-\frac{4k}{3N_{\rm side}}\pm\frac{8\phi}{3\pi},
+  \qquad k\ \text{an integer},\quad\abs z\le\frac23 ,
+  \label{7b:eq:hpx-belt}
+\end{equation}
+straight lines on the flat rectangle and curves with $\cos\theta$ linear in $\phi$ on the sphere.
+For $N_{\rm side}=1$ the same construction gives the twelve base pixels: four diamonds
+$\Delta\phi=\tfrac\pi2$ wide and $2\Delta z=\tfrac43$ tall around the equator, with the four northern
+and four southern base pixels filling the triangles between them.
+
+\emph{The polar caps.} Above $z=\tfrac23$ the flat picture has a strip of height $\tfrac13$ and
+area $2\pi/3$. It belongs to the four northern base pixels. The lower part of each, a triangle
+between two equatorial diamonds, has area $\tfrac12\cdot\tfrac\pi2\cdot\tfrac23=\tfrac\pi6$, so the
+remaining $\tfrac\pi6$ of each is a quarter of the strip, a rectangle
+$\phi_t\in[0,\tfrac\pi2]$, $z\in[\tfrac23,1]$, where $\phi_t$ is $\phi$ measured from the start of
+its quarter. Diamonds cannot tile it, because its top edge $z=1$ is not a line on the sphere but a
+single point, the pole: on the sphere the rectangle is a triangle with one corner at the pole. We
+need coordinates in which it is drawn as a triangle and areas are still uniform. Near the pole
+$1-z=1-\cos\theta\approx\theta^2/2$, so $\sqrt{1-z}$ measures distance from the pole. Set
+\begin{equation}
+  \rho=\sqrt{3(1-z)},\qquad
+  u=\frac{2\phi_t}{\pi}\,\rho,\qquad
+  v=\Bigl(1-\frac{2\phi_t}{\pi}\Bigr)\rho .
+  \label{7b:eq:hpx-uv}
+\end{equation}
+The pole, $\rho=0$, becomes the single point $u=v=0$. The edge $\phi_t=0$ becomes $u=0$, the edge
+$\phi_t=\tfrac\pi2$ becomes $v=0$, and the bottom edge $z=\tfrac23$, where $\rho=1$, becomes the line
+$u+v=1$. The quarter-cap is the triangle $u,v\ge0$, $u+v\le1$, half of a unit square. Its areas are
+uniform:
+\begin{equation}
+  \Delta\Omega\eqby{1}\abs{\Delta z}\,\Delta\phi_t
+  \eqby{2}\frac{2\rho}{3}\,\Delta\rho\,\Delta\phi_t
+  \eqby{3}\frac{\pi}{3}\,\Delta u\,\Delta v .
+  \label{7b:eq:hpx-jac}
+\end{equation}
+\begin{explain}
+  \item Archimedes' rule \eqref{7b:eq:archimedes}.
+  \item $z=1-\rho^2/3$, so $\abs{\Delta z}=\tfrac{2\rho}{3}\Delta\rho$.
+  \item The area of a small cell in the $(u,v)$ plane is the Jacobian times $\Delta\rho\,\Delta\phi_t$:
+        with $\partial u/\partial\rho=2\phi_t/\pi$, $\partial u/\partial\phi_t=2\rho/\pi$,
+        $\partial v/\partial\rho=1-2\phi_t/\pi$ and $\partial v/\partial\phi_t=-2\rho/\pi$, the
+        determinant is $-\tfrac{2\phi_t}{\pi}\tfrac{2\rho}{\pi}-\tfrac{2\rho}{\pi}\bigl(1-\tfrac{2\phi_t}{\pi}\bigr)=-\tfrac{2\rho}{\pi}$,
+        so $\Delta u\,\Delta v=\tfrac{2\rho}{\pi}\Delta\rho\,\Delta\phi_t$; replace
+        $\tfrac{2\rho}{3}\Delta\rho\,\Delta\phi_t$ by $\tfrac{\pi}{3}\Delta u\,\Delta v$.
+\end{explain}
+The factor $\pi/3$ is the same everywhere, so equal areas in the $(u,v)$ triangle are equal areas on
+the sphere (the whole triangle, of area $\tfrac12$, is $\tfrac\pi6$, as it should be). In the
+triangle we can again cut with straight lines, $u=k/N_{\rm side}$ and $v=k/N_{\rm side}$, into
+squares of area $1/N_{\rm side}^2$, each a pixel of area $\tfrac{\pi}{3N_{\rm side}^2}=\Omega_{\rm
+pix}$; the squares cut in half by $u+v=1$ are completed by the half-diamonds just below
+$z=\tfrac23$, since at $\rho=1$ the line $u=k/N_{\rm side}$ sits at $\phi_t=k\pi/(2N_{\rm side})$,
+exactly where the belt edge \eqref{7b:eq:hpx-belt} with the same $k$ reaches $z=\tfrac23$. Turning
+the straight lines back into $(\phi,z)$ with \eqref{7b:eq:hpx-uv}: $u=k/N_{\rm side}$ means
+$\tfrac{2\phi_t}{\pi}\sqrt{3(1-z)}=\tfrac{k}{N_{\rm side}}$; square both sides and solve for $z$, and
+do the same for $v$:
+\begin{equation}
+  z=1-\frac{k^2}{3N_{\rm side}^2}\Bigl(\frac{\pi}{2\phi_t}\Bigr)^2,
+  \qquad
+  z=1-\frac{k^2}{3N_{\rm side}^2}\Bigl(\frac{\pi}{\pi-2\phi_t}\Bigr)^2 ,
+  \qquad z\ge\frac23 ,
+  \label{7b:eq:hpx-cap}
+\end{equation}
+and the same with $z\to-z$ in the south. These are the curved edges near the top and bottom of
+\cref{7b:fig:healpix-cylinder}b, and \eqref{7b:eq:hpx-belt} and \eqref{7b:eq:hpx-cap} are the pixel
+boundaries of \cite{Gorski2005}. The corners again sit on rings: where $u=k/N_{\rm side}$ meets
+$v=j/N_{\rm side}$, $\rho=u+v=(k+j)/N_{\rm side}$ and $z=1-(k+j)^2/(3N_{\rm side}^2)$.
+
 \paragraph{Example: pixel sizes and band limits.} The side of a pixel is about the square root
 of its area,
 \begin{equation}
