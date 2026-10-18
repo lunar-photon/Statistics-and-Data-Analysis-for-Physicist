@@ -394,6 +394,35 @@ Why does this matter? The CMB fixes $r_s$ precisely, so the bump is a ruler of k
 \providecommand{\TOneSigmaE}{}\renewcommand{\TOneSigmaE}{0.27}
 \providecommand{\TOneNeff}{}\renewcommand{\TOneNeff}{6.2}
 \providecommand{\TOneArea}{}\renewcommand{\TOneArea}{1000}
+\providecommand{\TOneRN}{}\renewcommand{\TOneRN}{512}
+\providecommand{\TOneRNoise}{}\renewcommand{\TOneRNoise}{5}
+\providecommand{\TOneRLmin}{}\renewcommand{\TOneRLmin}{30}
+\providecommand{\TOneRLmax}{}\renewcommand{\TOneRLmax}{2500}
+\providecommand{\TOneRNsim}{}\renewcommand{\TOneRNsim}{400}
+\providecommand{\TOneRNgau}{}\renewcommand{\TOneRNgau}{400}
+\providecommand{\TOneRNpair}{}\renewcommand{\TOneRNpair}{400}
+\providecommand{\TOneRNbin}{}\renewcommand{\TOneRNbin}{15}
+\providecommand{\TOneRResp}{}\renewcommand{\TOneRResp}{0.993}
+\providecommand{\TOneRRespErr}{}\renewcommand{\TOneRRespErr}{0.002}
+\providecommand{\TOneRNzeroDev}{}\renewcommand{\TOneRNzeroDev}{3.9}
+\providecommand{\TOneRNzeroChi}{}\renewcommand{\TOneRNzeroChi}{19.5}
+\providecommand{\TOneRNoneChi}{}\renewcommand{\TOneRNoneChi}{24.9}
+\providecommand{\TOneRRawChi}{}\renewcommand{\TOneRRawChi}{46.5}
+\providecommand{\TOneRRawChiLow}{}\renewcommand{\TOneRRawChiLow}{30.1}
+\providecommand{\TOneRNbinLow}{}\renewcommand{\TOneRNbinLow}{11}
+\providecommand{\TOneRNoneSig}{}\renewcommand{\TOneRNoneSig}{44}
+\providecommand{\TOneRNoneMax}{}\renewcommand{\TOneRNoneMax}{158.4}
+\providecommand{\TOneRNoneMaxL}{}\renewcommand{\TOneRNoneMaxL}{1853}
+\providecommand{\TOneRNoneHundred}{}\renewcommand{\TOneRNoneHundred}{2.6}
+\providecommand{\TOneRNoneThousand}{}\renewcommand{\TOneRNoneThousand}{59.6}
+\providecommand{\TOneRNzeroOverCHundred}{}\renewcommand{\TOneRNzeroOverCHundred}{0.63}
+\providecommand{\TOneRNzeroOverCThousand}{}\renewcommand{\TOneRNzeroOverCThousand}{21.2}
+\providecommand{\TOneRCrossL}{}\renewcommand{\TOneRCrossL}{139}
+\providecommand{\TOneRNoisePartHundred}{}\renewcommand{\TOneRNoisePartHundred}{2}
+\providecommand{\TOneRNoisePartThousand}{}\renewcommand{\TOneRNoisePartThousand}{1}
+\providecommand{\TOneRLensedExtra}{}\renewcommand{\TOneRLensedExtra}{1}
+\providecommand{\TOneRAmpBias}{}\renewcommand{\TOneRAmpBias}{16.3}
+\providecommand{\TOneRAgridDev}{}\renewcommand{\TOneRAgridDev}{0.6}
  
 \section{Weak lensing: the matter field written on galaxy shapes}
 \label{T1b:sec:shapes}
@@ -788,7 +817,7 @@ The last row is the CMB version. Lensing by the same structures remaps the CMB b
   \item Fourier transform: each gradient becomes $i$ times its wavevector, and the transform of a product is the convolution of the transforms, so the potential at wavevector $\bm\ell-\bm\ell_1$ moves CMB power from mode $\bm\ell_1$ into mode $\bm\ell$.
   \item Average over the unlensed CMB with $\psi$ held fixed. The unlensed term alone gives zero for $\bm L\neq\bm0$; in each cross term only the pairing allowed by independence survives, giving the two terms with the unlensed spectrum $C_\ell$; the term of second order in $\psi$ is dropped.
 \end{explain}
-So with lensing, two CMB modes whose wavevectors add up to $\bm L$ are correlated, by an amount proportional to $\psi_{\bm L}$ times a weight built from the known CMB spectrum. Multiplying pairs of observed modes, dividing by the weight and averaging over all pairs with the same $\bm L$ gives an estimate of $\psi_{\bm L}$: this is the \newterm{quadratic estimator} \cite{LewisChallinor2006}, which uses temperature and polarization in the same way. Its noise comes from the CMB itself, since each product $\hat T_{\bm\ell}\hat T_{\bm\ell'}$ also contains the chance product of two unlensed modes.
+So with lensing, two CMB modes whose wavevectors add up to $\bm L$ are correlated, by an amount proportional to $\psi_{\bm L}$ times a weight built from the known CMB spectrum. Multiplying pairs of observed modes, dividing by the weight and averaging over all pairs with the same $\bm L$ gives an estimate of $\psi_{\bm L}$: this is the \newterm{quadratic estimator} \cite{LewisChallinor2006}, which uses temperature and polarization in the same way. Its noise comes from the CMB itself, since each product $\hat T_{\bm\ell}\hat T_{\bm\ell'}$ also contains the chance product of two unlensed modes. How large that noise is, and what else it adds to the power spectrum of the reconstructed map, is worked out in \cref{T1b:sec:recon}.
 
 Planck reconstructed the lensing potential over the full sky in this way. Its total signal-to-noise ratio, summed over all $L$, is $40$ (the ``$40\sigma$'' of the paper), the same kind of number as the signal-to-noise ratio of a galaxy survey computed in \cref{T1b:sec:noise}. From it alone Planck measured $\sigma_8\Omega_m^{0.25}=0.589\pm0.020$ \cite{Planck2018VIII}. The kernel in the last row, $g(\chi)f_K(\chi)=f_K(\chi)f_K(\chi_*-\chi)/f_K(\chi_*)$, is largest midway to the last-scattering surface in distance; per unit redshift it peaks near $z\approx2$ (\cref{T1b:fig:bins}), far behind the galaxy samples. \Cref{T1b:sec:s8} finds that deeper samples hold a combination $\sigma_8\Omega_m^\alpha$ with a smaller $\alpha$ fixed, and the CMB, the deepest source of all, has $\alpha=0.25$. A different combination of the same two parameters is what is used to break the degeneracy of the next section.
 
@@ -1209,7 +1238,162 @@ So freeing $\Omega_m$ multiplies the error on $\ln\sigma_8$ by $1/\sqrt{1-r^2}$:
 Our numbers come from a Gaussian, nuisance-free forecast with all other parameters fixed. The published analyses measure tomographic $\xi_\pm(\vartheta)$, band powers or related statistics from tens of millions of shapes \cite{Asgari2021KiDS,Amon2022DES,Hikage2019HSC}. They take the covariance from analytic models checked against hundreds to thousands of ray-traced $N$-body simulations, such as the full-sky lensing maps of \cite{Takahashi2017sims}, and they sample the posterior of cosmological and nuisance parameters by MCMC. The same simulations are what make summaries beyond two-point statistics usable: peak counts \cite{Kratochvil2010,DietrichHartlap2010}, Kaiser--Squires mass maps \cite{Jeffrey2021DESmass}, lognormal fields as a fast model of the skewed $\kappa$ distribution \cite{Xavier2016}, and persistent homology of $\kappa$ maps \cite{Heydenreich2021}. All of these return in \cref{ch:12}.
 \end{inpractice}
 
-The lesson of the two experiments for the rest of the book is in two parts. The signal is a projected, smoothed field whose two-point statistic is degenerate along $S_8$. The noise is white, large and known. So the statistical problem is to extract as much as possible from a noisy, non-Gaussian field with a small number of summaries. \Cref{ch:12} takes up that problem with topological summaries.
+The lesson of the two galaxy-shape experiments for the rest of the book is in two parts. The signal is a projected, smoothed field whose two-point statistic is degenerate along $S_8$. The noise is white, large and known. So the statistical problem is to extract as much as possible from a noisy, non-Gaussian field with a small number of summaries. \Cref{ch:12} takes up that problem with topological summaries.
+
+\section{Experiment 3: the spectrum of a reconstructed lensing map, and its two biases}
+\label{T1b:sec:recon}
+
+The quadratic estimator of \cref{T1b:sec:objects} turns a CMB temperature map into a map $\hat\psi$ of the lensing potential. Planck's $40\sigma$ is a statement about the power spectrum of that map. So take $\hat\psi$, square its Fourier modes and average them in rings of $L$, exactly as one does for any map. The answer is larger than $C^{\psi\psi}_L$, and at most multipoles it is many times larger. Nothing went wrong in the estimator. What could have added the extra power? There are two candidates, and we take them one at a time.
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+\item \emph{Chance pairs.} Each product $\hat T_{\bm\ell_1}\hat T_{\bm\ell_2}$ in the estimator contains the chance product of two unlensed modes, and of two noise values. On average such products vanish, so $\hat\psi$ is unbiased. But the power spectrum squares $\hat\psi$, and the square of a chance fluctuation does not average to zero. This is the noise bias of \cref{8a:sec:noise-bias} once more, one level up: there the noise of a map added to its spectrum; here the noise of the reconstruction, which comes mostly from the CMB itself, adds to the spectrum of $\hat\psi$. It would be there with no lensing at all, that is at zeroth order in $C^{\psi\psi}$, and it is called $N^{(0)}_L$. The general rule is worth stating. When the quantity we measure is a fixed number, noise scatters the estimate about it, and averaging many readings removes the scatter. When the quantity is itself a variance, as a power spectrum is, the noise brings a variance of its own, and that adds to the answer: averaging makes it more precise, not smaller. What is scatter for a deterministic quantity becomes a bias for a statistical one.
+\item \emph{Lensing, used twice.} The spectrum of $\hat\psi$ is built from four CMB modes, two in each copy of $\hat\psi$, and all four were deflected by the same potential. The pairing we want correlates the two modes inside each copy through $\psi_{\bm L}$. But a mode of the first copy and a mode of the second are also correlated, through the lensing at the sum of their wavevectors, which is some other $\bm L'$. Those correlations add power proportional to $C^{\psi\psi}$, at first order, and the term is called $N^{(1)}_L$.
+\end{enumerate}
+The experiment derives both terms and checks each against simulated skies.
+
+\subsection{The estimator and its best weights}
+\label{T1b:sec:recon-weights}
+
+On a flat patch the Fourier modes of a statistically homogeneous field $X$ obey $\langle X_{\bm\ell}X^*_{\bm\ell'}\rangle=(2\pi)^2\delta^2(\bm\ell-\bm\ell')\,C_\ell$, the flat-sky form of \eqref{T1c:eq:spectra}, and $X^*_{\bm\ell}=X_{-\bm\ell}$ because $X$ is real. Write the weight of \eqref{T1b:eq:qe} as
+\[
+f(\bm\ell_1,\bm\ell_2)\equiv(\bm L\cdot\bm\ell_1)\,C_{\ell_1}+(\bm L\cdot\bm\ell_2)\,C_{\ell_2},\qquad\bm L=\bm\ell_1+\bm\ell_2,
+\]
+so that $\langle\hat T_{\bm\ell_1}\hat T_{\bm\ell_2}\rangle_{\rm CMB}=f(\bm\ell_1,\bm\ell_2)\,\psi_{\bm L}$, with the unlensed spectrum $C_\ell$. The observed map is $\hat T$ plus noise, and its total spectrum, lensed CMB plus noise, is $C^{\rm tot}_\ell$. A general quadratic estimator multiplies every pair of observed modes that adds up to $\bm L$ by a weight $F$, symmetric in its two arguments, and sums:
+\begin{equation}
+\hat\psi_{\bm L}=A_L\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)\,\hat T_{\bm\ell_1}\hat T_{\bm\ell_2},\qquad\bm\ell_2=\bm L-\bm\ell_1 .
+\label{T1b:eq:qe-general}
+\end{equation}
+\emph{What fixes $A_L$?} The mean over CMB and noise at fixed $\psi$:
+\begin{equation}
+\langle\hat\psi_{\bm L}\rangle
+\eqby{1}A_L\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)\,f(\bm\ell_1,\bm\ell_2)\,\psi_{\bm L}
+\eqby{2}\psi_{\bm L}
+\quad\text{if}\quad
+\frac1{A_L}=\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F\,f .
+\label{T1b:eq:qe-norm}
+\end{equation}
+\begin{explain}
+  \item The average acts only on the product of modes, which is \eqref{T1b:eq:qe}; the noise is independent of the CMB and has mean zero, so it adds nothing for $\bm L\neq\bm0$.
+  \item Choose $A_L$ so that the integral times $A_L$ is one.
+\end{explain}
+\emph{How noisy is it?} Switch lensing off and let the map be Gaussian with spectrum $C^{\rm tot}$. The power spectrum of the estimate is defined like any other, $\langle\hat\psi_{\bm L}\hat\psi^*_{\bm L'}\rangle=(2\pi)^2\delta^2(\bm L-\bm L')\,C^{\hat\psi\hat\psi}_L$, and the four-point average is a sum over pairings by Wick's theorem \eqref{7a:eq:wick}:
+\begin{align}
+\langle\hat\psi_{\bm L}\hat\psi^*_{\bm L'}\rangle
+&\eqby{1}A_L^2\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\frac{\dd^2\ell'_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)F(\bm\ell'_1,\bm\ell'_2)\,
+\bigl\langle\hat T_{\bm\ell_1}\hat T_{\bm\ell_2}\hat T^*_{\bm\ell'_1}\hat T^*_{\bm\ell'_2}\bigr\rangle\nonumber\\
+&\eqby{2}A_L^2\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\frac{\dd^2\ell'_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)F(\bm\ell'_1,\bm\ell'_2)\,(2\pi)^4\,C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}\nonumber\\
+&\hphantom{\eqby{2}}\qquad\times\bigl[\delta^2(\bm\ell_1-\bm\ell'_1)\delta^2(\bm\ell_2-\bm\ell'_2)+\delta^2(\bm\ell_1-\bm\ell'_2)\delta^2(\bm\ell_2-\bm\ell'_1)\bigr]\nonumber\\
+&\eqby{3}(2\pi)^2\delta^2(\bm L-\bm L')\;2A_L^2\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)^2\,C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}
+\equiv(2\pi)^2\delta^2(\bm L-\bm L')\,N^{(0)}_L .
+\label{T1b:eq:n0-general}
+\end{align}
+\begin{explain}
+  \item Insert \eqref{T1b:eq:qe-general} twice, the second time conjugated and with $\bm\ell'_1+\bm\ell'_2=\bm L'$; $A_L$ and $F$ are real.
+  \item Of the three pairings, the one inside each copy, $\langle\hat T_{\bm\ell_1}\hat T_{\bm\ell_2}\rangle$, vanishes for $\bm L\neq\bm0$ without lensing. The other two pair a mode of the first copy with a mode of the second, each pair giving $(2\pi)^2\delta^2\,C^{\rm tot}$.
+  \item The first delta function sets $\bm\ell'_1=\bm\ell_1$, and then $\bm\ell_2-\bm\ell'_2=\bm L-\bm L'$ leaves the delta function in $\bm L$. The second sets $\bm\ell'_1=\bm\ell_2$ and gives the same with $F(\bm\ell_1,\bm\ell_2)F(\bm\ell_2,\bm\ell_1)=F(\bm\ell_1,\bm\ell_2)^2$, since $F$ is symmetric: twice the same integral.
+\end{explain}
+\emph{Which weights are best?} Write the normalisation integral as an integral of a product and apply the Cauchy--Schwarz inequality, $\bigl(\int ab\bigr)^2\le\int a^2\int b^2$:
+\begin{equation}
+\frac1{A_L^2}=\Bigl(\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F\sqrt{2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}}\;\frac{f}{\sqrt{2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}}}\Bigr)^2
+\le\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,2F^2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}\;\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,\frac{f^2}{2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}} .
+\end{equation}
+Multiply both sides by $A_L^2$ and use \eqref{T1b:eq:n0-general}: $1\le N^{(0)}_L\int f^2/(2C^{\rm tot}C^{\rm tot})$, so no choice of $F$ can push the noise below $1/\int f^2/(2C^{\rm tot}C^{\rm tot})$. Equality holds when the two factors are proportional, $F\propto f/(2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2})$, and since a constant factor in $F$ is undone by $A_L$ we may take
+\begin{equation}
+F(\bm\ell_1,\bm\ell_2)=\frac{f(\bm\ell_1,\bm\ell_2)}{2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}},
+\qquad
+\frac1{A_L}=\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,\frac{f(\bm\ell_1,\bm\ell_2)^2}{2C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}},
+\qquad
+N^{(0)}_L=A_L .
+\label{T1b:eq:qe-mv}
+\end{equation}
+This is the estimator of Hu and Okamoto \cite{HuOkamoto2002}. The weight is the expected signal of the pair, $f$, divided by the variance of the pair, $C^{\rm tot}_{\ell_1}C^{\rm tot}_{\ell_2}$, the same rule that weights each reading of an average by its inverse variance. And the noise of the estimate equals its normalisation, so computing $A_L$ computes $N^{(0)}_L$ for free. Check: with \eqref{T1b:eq:qe-mv}, $2A_L^2\int F^2C^{\rm tot}C^{\rm tot}=2A_L^2\int f^2/(4C^{\rm tot}C^{\rm tot})=A_L^2/A_L=A_L$.
+
+\subsection{The four-point function of a lensed sky}
+\label{T1b:sec:recon-4pt}
+
+With lensing on, the four-point average in \eqref{T1b:eq:n0-general} is no longer a Gaussian one, and we need it. One observation makes it easy. \emph{Hold $\psi$ fixed.} The first-order lensed map $T+\bm\nabla\psi\cdot\bm\nabla T$ is then a linear function of the Gaussian unlensed $T$, and adding Gaussian noise keeps it Gaussian. So for a given $\psi$ the observed map is Gaussian, Wick's theorem applies, and all we need is its covariance at fixed $\psi$:
+\begin{equation}
+\langle\hat T_{\bm a}\hat T_{\bm b}\rangle_{\psi}=(2\pi)^2\delta^2(\bm a+\bm b)\,C^{\rm tot}_a+f(\bm a,\bm b)\,\psi_{\bm a+\bm b},
+\label{T1b:eq:cov-fixed-psi}
+\end{equation}
+the diagonal part plus the off-diagonal part of \eqref{T1b:eq:qe}. (The diagonal part depends weakly on $\psi$ too; averaged over $\psi$ it is the lensed spectrum, which is why $C^{\rm tot}$ is the spectrum of the lensed map.) Now average the four-point function first over the CMB and noise at fixed $\psi$, then over $\psi$, which is Gaussian with $\langle\psi_{\bm L}\psi_{\bm L'}\rangle=(2\pi)^2\delta^2(\bm L+\bm L')\,C^{\psi\psi}_L$:
+\begin{align}
+\langle\hat T_{\bm a}\hat T_{\bm b}\hat T_{\bm c}\hat T_{\bm d}\rangle
+&\eqby{1}\Bigl\langle\langle\hat T_{\bm a}\hat T_{\bm b}\rangle_\psi\langle\hat T_{\bm c}\hat T_{\bm d}\rangle_\psi
++\langle\hat T_{\bm a}\hat T_{\bm c}\rangle_\psi\langle\hat T_{\bm b}\hat T_{\bm d}\rangle_\psi
++\langle\hat T_{\bm a}\hat T_{\bm d}\rangle_\psi\langle\hat T_{\bm b}\hat T_{\bm c}\rangle_\psi\Bigr\rangle_{\psi}\nonumber\\
+&\eqby{2}\bigl[\text{the three Gaussian pairings with }C^{\rm tot}\bigr]\nonumber\\
+&\hphantom{\eqby{2}}+(2\pi)^2\delta^2(\bm a+\bm b+\bm c+\bm d)\Bigl[f(\bm a,\bm b)f(\bm c,\bm d)\,C^{\psi\psi}_{\abs{\bm a+\bm b}}\nonumber\\
+&\hphantom{\eqby{2}}\quad+f(\bm a,\bm c)f(\bm b,\bm d)\,C^{\psi\psi}_{\abs{\bm a+\bm c}}\nonumber\\
+&\hphantom{\eqby{2}}\quad+f(\bm a,\bm d)f(\bm b,\bm c)\,C^{\psi\psi}_{\abs{\bm a+\bm d}}\Bigr].
+\label{T1b:eq:lensed-4pt}
+\end{align}
+\begin{explain}
+  \item Wick's theorem \eqref{7a:eq:wick} for the Gaussian map at fixed $\psi$, then the average over $\psi$.
+  \item Insert \eqref{T1b:eq:cov-fixed-psi} into each product. Diagonal times diagonal gives the Gaussian pairings. Diagonal times off-diagonal is linear in $\psi$ and averages to zero. Off-diagonal times off-diagonal gives $f f\,\langle\psi_{\bm a+\bm b}\psi_{\bm c+\bm d}\rangle$, and the average of the two potentials is $(2\pi)^2\delta^2(\bm a+\bm b+\bm c+\bm d)\,C^{\psi\psi}_{\abs{\bm a+\bm b}}$.
+\end{explain}
+So lensing adds to the four-point function one term per pairing, each the product of the two pair correlations of \eqref{T1b:eq:qe} times the spectrum of the potential at the pair's total wavevector. This is the connected four-point function, the trispectrum, of the lensed CMB.
+
+\emph{The spectrum of the estimate.} Insert \eqref{T1b:eq:lensed-4pt} into the first line of \eqref{T1b:eq:n0-general}, written with $\hat T^*_{\bm\ell'}=\hat T_{-\bm\ell'}$, so that the four wavevectors are $\bm a=\bm\ell_1$, $\bm b=\bm\ell_2$, $\bm c=-\bm\ell'_1$, $\bm d=-\bm\ell'_2$. Each pairing gives one term:
+\begin{equation}
+C^{\hat\psi\hat\psi}_L=C^{\psi\psi}_L+N^{(0)}_L+N^{(1)}_L,
+\label{T1b:eq:recon-budget}
+\end{equation}
+\begin{equation}
+N^{(1)}_L=2A_L^2\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\frac{\dd^2\ell'_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)F(\bm\ell'_1,\bm\ell'_2)\,
+f(\bm\ell_1,-\bm\ell'_1)\,f(\bm\ell_2,-\bm\ell'_2)\,C^{\psi\psi}_{\abs{\bm\ell_1-\bm\ell'_1}} .
+\label{T1b:eq:n1}
+\end{equation}
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item The lensing term of the pairing inside each copy, $(\bm a\bm b)(\bm c\bm d)$, is $f(\bm\ell_1,\bm\ell_2)f(-\bm\ell'_1,-\bm\ell'_2)\,C^{\psi\psi}_L$. Since $f$ is even under a change of sign of both arguments, the two integrals each give $1/A_L$ by \eqref{T1b:eq:qe-norm}, and the term is $C^{\psi\psi}_L$: the signal.
+\item The Gaussian pairings give \eqref{T1b:eq:n0-general}, $N^{(0)}_L$, with the lensed $C^{\rm tot}$.
+\item The lensing terms of the two pairings across the copies give $N^{(1)}_L$. The first pairs $\bm\ell_1$ with $-\bm\ell'_1$ through the potential at $\bm\ell_1-\bm\ell'_1$; the second pairs $\bm\ell_1$ with $-\bm\ell'_2$ and equals the first after the relabelling $\bm\ell'_1\leftrightarrow\bm\ell'_2$, which leaves the symmetric $F$ unchanged: hence the factor $2$.
+\end{itemize}
+$N^{(1)}$ is the bias of \cite{Kesden2003}. Its potential is evaluated at $\bm\ell_1-\bm\ell'_1$, which ranges over all wavevectors, so the measured spectrum at one $L$ responds to the potential at all others. It cannot be computed without assuming a $C^{\psi\psi}$, and in practice it is computed with a fiducial one. An error in that assumption changes $N^{(1)}$ in proportion, so a $10\%$ error in a bias of a few per cent of the signal moves the result by a few tenths of a per cent.
+
+\emph{First order, and the real sky.} Everything above is first order in the deflection. How small is it? The rms deflection is about $2.5'$, which is $7\times10^{-4}$ rad, so for a mode at $\ell=2000$ the shift is about $1.5$ radians of phase: not small at all. The expansion $T+\bm\nabla\psi\cdot\bm\nabla T$ describes such a mode badly, and a simulation built on it would put far too much power at high $\ell$. The real remapping $T(\bm n+\bm\nabla\psi)$ is gentler than its expansion, because most of the deflection comes from large-scale potential modes that move whole regions of the map together, and a common shift $\bm d$ only multiplies each product $\hat T_{\bm\ell_1}\hat T_{\bm\ell_2}$ by $e^{i\bm L\cdot\bm d}$, which is close to one for $L\,d\ll1$, whatever $\ell_1$ and $\ell_2$ are. Analyses keep the structure derived here and absorb most of the higher orders by one change: the weight $f$ is built with the lensed spectrum instead of the unlensed one \cite{Hanson2011}. Our simulations do the same, and they lens by remapping, not by the expansion; how well the first-order formulas then hold is something they measure.
+
+\emph{The mean field.} On our periodic patches the mean of $\hat\psi_{\bm L}$ is zero for $\bm L\neq\bm0$, by \eqref{T1b:eq:qe-norm} averaged over $\psi$. On a real sky it is not. A mask, or noise that is deeper in some places than in others, breaks the statistical homogeneity that made unlensed modes independent, and it correlates pairs of modes just as lensing does. The estimator cannot tell the two apart, and it returns a \newterm{mean field} $\langle\hat\psi_{\bm L}\rangle\neq0$ even on unlensed skies. It is estimated as the average of $\hat\psi$ over simulations with the real mask and noise, and subtracted from $\hat\psi$ before squaring \cite{Hanson2011,Planck2018VIII}.
+
+\subsection{What we compute, and how}
+\label{T1b:sec:recon-code}
+
+The script \pyname{code/chT1/11_lens_n0n1.py} works on periodic flat patches of $17^\circ\times17^\circ$ ($\TOneRN^2$ pixels of $2'$), temperature only. Each sky is a Gaussian unlensed $T$ with CAMB's spectrum and an independent Gaussian $\psi$ with CAMB's $C^{\psi\psi}$, both drawn on a grid twice as fine ($1'$ pixels). The temperature is remapped, $T(\bm n+\bm\nabla\psi)$, by cubic-spline interpolation on the fine grid, then cut back to the $2'$ grid by keeping its Fourier modes, and white noise of $\TOneRNoise\,\mu$K-arcmin is added. The estimator uses the multipoles $\TOneRLmin\le\ell\le\TOneRLmax$. The computation runs in five steps.
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+\item \emph{The total spectrum.} $C^{\rm tot}_\ell$ is measured as the ring average of $\abs{\hat T_{\bm\ell}}^2$ over the same $\TOneRNsim$ lensed skies whose reconstructions step~4 analyses: the spectrum of the maps themselves, as on real data. (Each sky has its own random stream, so it can be drawn a second time.) This matters more than it seems. At high $L$, $N^{(0)}$ is a hundred times the signal, so an error of half a per cent in $C^{\rm tot}$, and hence in $N^{(0)}$, would be as large as the whole of $N^{(1)}$. Measuring $C^{\rm tot}$ on an independent set of skies leaves exactly such an error. Measured on the same skies, the chance excess or deficit of their spectrum enters $\hat C^{\hat\psi\hat\psi}$ and $A_L$ alike, and cancels to first order.
+\item \emph{The weights and $A_L$.} The weight $f$ uses the lensed CMB spectrum, $C^{\rm tot}_\ell$ minus the noise. Products in Fourier space are convolutions, so every integral of the form $\int\dd^2\ell_1\,g(\bm\ell_1)h(\bm L-\bm\ell_1)$ is one product of two maps, computed with fast Fourier transforms. The estimator becomes $\hat\psi_{\bm L}=-iA_L\,\bm L\cdot\mathcal F\bigl[\bm\nabla(C\bar T)\,\bar T\bigr]$ with the filtered map $\bar T=\hat T/C^{\rm tot}$, and $1/A_L$ of \eqref{T1b:eq:qe-mv} splits the same way into six products after expanding $f^2$. This gives $A_L=N^{(0)}_L$ exactly on the grid.
+\item \emph{$N^{(0)}$ by simulation.} The estimator applied to $\TOneRNgau$ Gaussian skies with spectrum $C^{\rm tot}$ and no lensing. By \eqref{T1b:eq:n0-general} their mean spectrum is $N^{(0)}_L$.
+\item \emph{The raw spectrum.} The estimator applied to $\TOneRNsim$ lensed skies, with the spectrum of each estimate, its cross-spectrum with the input $\psi$ and the spectrum of the input itself.
+\item \emph{$N^{(1)}$ by simulation, and by the integral.} Lensing two independent CMB skies $a$ and $b$ with one shared $\psi$ isolates the cross-copy pairings. In the estimate $\hat\psi[a,b]$, which takes one mode of each pair from $a$ and the other from $b$, the pairing inside a copy vanishes, because $a$ and $b$ are independent, and only the pairing that joins $a$ to $a$ and $b$ to $b$ survives; with symmetric weights it contributes half of $N^{(0)}+N^{(1)}$, and the swapped estimate $\hat\psi[b,a]$, which is equal, the other half. Lensing $b$ with an independent potential removes the $N^{(1)}$ half, since then $\langle\psi\psi'\rangle=0$. So $N^{(1)}$ is the mean of $2\abs{\hat\psi[a,b]}^2$ with a shared potential minus the same with independent potentials, over $\TOneRNpair$ pairs. The same $a$ and $b$ enter both terms, so their chance products cancel in the difference and a few hundred pairs suffice \cite{Planck2018VIII}. Independently, \eqref{T1b:eq:n1} is evaluated as a four-dimensional sum, with $\bm\ell_1$ on a polar grid and $\bm\ell_1-\bm\ell'_1$ on a polar grid that is finer near zero, where $C^{\psi\psi}$ is largest.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/chT1/lens_maps.pdf}
+\caption{One simulated patch. Left: the input convergence $\kappa=\frac12\nabla^2\psi$. Right: the convergence reconstructed by the quadratic estimator from the lensed, noisy temperature map. Both are filtered with the same weights $C^{\psi\psi}_L/(C^{\psi\psi}_L+N^{(0)}_L)$, which suppress the multipoles where the reconstruction is worse than its noise, and smoothed with a Gaussian of $1^\circ$ full width at half maximum. The structures of a degree and more agree; the finer ones in the reconstruction are mostly $N^{(0)}$.}
+\label{T1b:fig:recon-maps}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/lens_n0n1.pdf}
+\caption{Left: the mean spectrum of the reconstructed potential over \TOneRNsim\ lensed skies (blue dots) against the input $C^{\psi\psi}_L$ (black dashed), the noise $N^{(0)}_L=A_L$ of \eqref{T1b:eq:qe-mv} (orange line) and its simulation on Gaussian skies (orange squares), and the sum $C^{\psi\psi}_L+N^{(0)}_L+N^{(1)}_L$ (blue line). Right: $N^{(1)}_L$ as a percentage of $C^{\psi\psi}_L$, from pairs of skies sharing one potential (green dots), from the raw spectrum minus each sky's own input power and $N^{(0)}_L$ (open squares), and from the integral \eqref{T1b:eq:n1} (black dashed).}
+\label{T1b:fig:recon}
+\end{figure}
+
+\subsection{The answer}
+\label{T1b:sec:recon-answer}
+
+\Cref{T1b:fig:recon-maps} shows what the estimator delivers on one patch: the structures larger than about a degree are recovered, and finer detail is buried in noise. \Cref{T1b:fig:recon} takes the spectrum apart, and every term of \eqref{T1b:eq:recon-budget} is where the derivation put it.
+
+\emph{The estimator is unbiased.} Averaged over the bins, the cross-spectrum of $\hat\psi$ with the input potential is $\TOneRResp\pm\TOneRRespErr$ times the input spectrum. So $A_L$ of \eqref{T1b:eq:qe-mv}, with the lensed weights, normalises the estimator to better than one per cent, although the skies were lensed to all orders and the derivation kept only the first. The small shortfall is what the lensed weights leave of the higher orders.
+
+\emph{$N^{(0)}$ is the normalisation.} On the grid, $A_L$ agrees with the integral of \eqref{T1b:eq:qe-mv} to $\TOneRAgridDev\%$ at single modes. On Gaussian skies with no lensing, the mean spectrum of the estimate matches $A_L$ in all \TOneRNbin\ bins, with $\chi^2=\TOneRNzeroChi$ for \TOneRNbin\ degrees of freedom. It is smaller than the signal only on the largest scales: $N^{(0)}_L$ equals $C^{\psi\psi}_L$ near $L\approx\TOneRCrossL$; at $L\approx100$ it is $\TOneRNzeroOverCHundred$ times the signal, and at $L\approx1000$ it is $\TOneRNzeroOverCThousand$ times. A single reconstructed mode is noise-dominated above $L\approx\TOneRCrossL$, and the spectrum is measured there only by averaging many modes, as the shape-noise-dominated spectra of \cref{T1b:sec:noise-sn} were.
+
+\emph{Where $N^{(0)}$ comes from.} Recompute $A_L$ with the noise removed from $C^{\rm tot}$: it drops by only $\TOneRNoisePartHundred\%$ at $L\approx100$ and $\TOneRNoisePartThousand\%$ at $L\approx1000$. At $\TOneRNoise\,\mu$K-arcmin the instrument contributes almost nothing; the noise of the reconstruction is the chance pairing of the unlensed CMB with itself. This decides what can and cannot remove it. The trick of \cref{8a:sec:noise-bias}, crossing two maps with independent noise, removes the instrument's share of $N^{(0)}$ when the four modes are taken from four splits of the data \cite{Madhavacheril2021}. It cannot remove the rest, because every split sees the same CMB. That part must be subtracted, which is why its formula and its simulation matter.
+
+\emph{$N^{(1)}$ is there, and the integral gets it right.} The pairs of skies sharing one potential detect $N^{(1)}$ at $\TOneRNoneSig\sigma$ over the bins, and they agree with the integral \eqref{T1b:eq:n1}, $\chi^2=\TOneRNoneChi$ for \TOneRNbin\ degrees of freedom. As a fraction of the signal it grows with $L$: $\TOneRNoneHundred\%$ of $C^{\psi\psi}_L$ at $L\approx100$, $\TOneRNoneThousand\%$ at $L\approx1000$. Small next to $N^{(0)}$, it is not small next to the signal: an amplitude fitted to the spectrum with $N^{(1)}$ left in, weighting the bins by their Fisher information, would come out $\TOneRAmpBias\%$ too high. The raw spectrum tells the same story less cleanly. After subtracting each sky's own input power and $A_L$, what remains (open squares in \cref{T1b:fig:recon}) follows the integral and stays within about three standard errors of it in every bin, but its $\chi^2$ is $\TOneRRawChi$ for \TOneRNbin\ degrees of freedom, worse than the pairs give. The reason is the size of what was subtracted. Above $L\approx1000$, $N^{(0)}$ is twenty to a hundred and fifty times the signal, so a few tenths of a per cent of $N^{(0)}$, from the higher orders of lensing or from the scatter of $C^{\rm tot}$, is as large as $N^{(1)}$ itself. A residual that is a small difference of large numbers inherits their errors. The pairs avoid that difference, because the same two CMB skies enter both of their terms.
+
+So the spectrum of a reconstructed map is the signal plus two biases with the structure of \eqref{T1b:eq:recon-budget}. $N^{(0)}$ is the Gaussian part of a four-point function, the same object as the noise bias of a power spectrum, and the best estimator makes it equal to the normalisation. $N^{(1)}$ is the part of the lensing trispectrum that joins the two copies of the estimate, proportional to $C^{\psi\psi}$ itself. Published analyses subtract both, with refinements the experiment did not need. $N^{(0)}$ is computed from the data's own spectrum, sky by sky (the realization-dependent $N^{(0)}$), which removes the sensitivity to a wrong $C^{\rm tot}$ and part of the scatter. $N^{(1)}$ comes from simulations sharing one potential, as in step~5. And the mean field of the mask and the uneven noise is subtracted first \cite{Hanson2011,Namikawa2013,Planck2018VIII}.
 
 \begin{recap}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt]
@@ -1219,6 +1403,7 @@ The lesson of the two experiments for the rest of the book is in two parts. The 
 \item Cosmic shear measures $\sigma_8\Omega_m^\alpha$ with $\alpha\approx\TOneAlphaFive$ for a Stage-III sample ($S_8$ takes $\alpha=0.5$); along that line the spectrum changes by a few per cent, across it by $\sim20\%$ for a $9\%$ change in $S_8$.
 \item Shape noise $N_i=\sigma_e^2/\bar n_i$ is white; for a KiDS-like survey the signal beats it only up to $\ell\approx\TOneLeqOne$--$\TOneLeqFive$ per bin; total $S/N\approx\TOneSNtomo$, $\sigma(\ln\sigma_8)=\TOneSigLnSEight\%$ with everything else fixed, against $\approx3\%$ achieved with nuisances marginalised.
 \item Nuisances: photo-$z$ shifts, shear bias $m$, intrinsic alignments, baryonic feedback. CMB lensing ($\psi$ reconstructed by a quadratic estimator) weights $z\approx2$ and measures $\sigma_8\Omega_m^{0.25}$.
+\item The spectrum of a reconstructed lensing map is $C^{\psi\psi}_L+N^{(0)}_L+N^{(1)}_L$: $N^{(0)}$, the Gaussian part of its four-point function, equals the normalisation $A_L$ of the best (Hu--Okamoto) weights and comes mostly from the CMB itself; $N^{(1)}$, from lensing pairings across the two copies, is proportional to $C^{\psi\psi}$ ($\TOneRNoneHundred\%$ of it at $L\approx100$, $\TOneRNoneThousand\%$ at $L\approx1000$ in our setup). Both are confirmed by simulation; a mask adds a mean field.
 \end{itemize}
 \end{recap}
 

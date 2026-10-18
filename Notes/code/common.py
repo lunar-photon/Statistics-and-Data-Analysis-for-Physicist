@@ -126,6 +126,19 @@ def rng_for(chapter: str, name: str, stream: int = 0) -> np.random.Generator:
     return np.random.Generator(np.random.PCG64(np.random.SeedSequence([seed, stream])))
 
 
+_last_progress = [0.0]
+
+
+def progress(stage: str, i: int, n: int):
+    """Print '##PROGRESS i n stage' (at most twice a second, always at the end of a stage);
+    tools/live.sh turns these lines into the progress band, and plain runs just log them."""
+    import time
+    now = time.time()
+    if i in (0, n) or now - _last_progress[0] >= 0.5:
+        _last_progress[0] = now
+        print(f"##PROGRESS {i} {n} {stage}", flush=True)
+
+
 def theory_line(ax, x, y, label="theory", **kw):
     """Analytic curves are always black dashed, drawn on top of simulations."""
     return ax.plot(x, y, color=THEORY, ls="--", lw=1.4, label=label, zorder=5, **kw)
