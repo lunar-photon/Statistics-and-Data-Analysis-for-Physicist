@@ -2905,7 +2905,7 @@ symmetric that the two coincide.
 \providecommand{\TFiveBKfRmsQhundredth}{}\renewcommand{\TFiveBKfRmsQhundredth}{0.0225}
 \providecommand{\TFiveBKfRmsQhundred}{}\renewcommand{\TFiveBKfRmsQhundred}{0.02219}
  
-\section{Estimators that need their own answer}
+\section{Iteration: solving the equation that defines an estimator}
 \label{T5b:sec:iterative}
 
 \paragraph{What we already have.}
@@ -2914,39 +2914,53 @@ number out. The weighted mean multiplies each reading by the inverse of its
 variance (\cref{3a:sec:weighted}); least squares solves one set of linear
 equations, the normal equations (\cref{3b:sec:least-squares}); the best
 linear unbiased estimator of \cref{T5a:sec:blue} is a fixed matrix times
-the data. Only once did we have to repeat a step: when the score equation of
-a likelihood could not be solved by hand, Newton--Raphson walked to its
-root one parabola at a time (\cref{3b:sec:newton}). Even there the
-equation itself was fixed. Only the way of solving it was repeated.
+the data. Behind every one of these formulas stands an equation. The
+maximum-likelihood estimate is the value at which the score vanishes; the
+least-squares estimate is the value at which the $\chi^2$ is smallest; the
+weighted mean is the value at which the weighted residuals sum to zero.
+For these the equation could be solved with algebra, and the solution,
+written out, is the formula.
 
 \paragraph{When that is not enough.}
-Every one of those formulas assumes that the weights are known before we
-look at the data. Often they are not. A count of $n$ events from a Poisson
-process scatters by $\sqrt{\text{its mean}}$, so the variance of a count is
-its own expected value. If we want to weight counts by their inverse
-variances, we need to know the very rates we are trying to measure. The
-best recipe depends on the answer it is supposed to produce.
+Often the equation that defines the estimate cannot be solved with algebra.
+The score of a likelihood may be a sum of nonlinear terms whose root has no
+closed form; an estimate may need the inverse of a function that cannot be
+inverted on paper; or the unknown may appear on both sides of the equation.
+The last case is common with counts: the variance of a Poisson count equals
+its mean, so the inverse-variance weights that the best combination needs
+contain the very rates we are trying to measure. In all these cases the
+estimator is still perfectly well defined: it is the solution of its
+equation. What is missing is only a way to compute that solution, and the
+standard way is to repeat a simple step until the answer stops changing.
+That repetition is what \newterm{iteration} means here. It is a numerical
+method for solving an equation, not a new kind of estimator.
 
 \paragraph{A story with the whole trick in it.}
-Think of a shower whose mixer has no markings. You want the water at body
-temperature, but you cannot know where to set the knob until you know how
-hot the water comes out at each setting, which is what you are trying to
-find. So you guess. You set the knob, wait, feel the water, and turn the
-knob by an amount that depends on how far off it feels. Then you feel
-again. If each correction is a little smaller than the error it corrects,
-the temperature settles after a few tries at the setting that reproduces
-itself: feeling the water no longer tells you to move the knob. If you
-over-react, turning the knob further than the error deserves, the water
-swings from too hot to too cold and back, and with a large enough
-over-reaction it never settles at all.
+What number squares to two? The question defines the number completely, but
+no finite piece of arithmetic produces it. So we guess, and improve the
+guess. If $x$ is too large, $2/x$ is too small, and their average is closer
+than either: $x_{k+1}=\frac12(x_k+2/x_k)$. Starting from $1$ this gives
+$1.5$, then $1.41667$, then $1.414216$, then $1.41421356$, and the next pass
+changes nothing in the digits shown. The answer is $\sqrt2$ because $\sqrt2$
+is the solution of $x^2=2$, not because of the particular recipe: halving an
+interval that brackets the root reaches the same number more slowly, and any
+route that converges arrives at the same place. Three things can still go
+wrong, and each depends on the route. Stop after two passes and the answer is
+$1.41667$, a different number from $\sqrt2$. Start from $-1$ and the same
+recipe walks to $-\sqrt2$, the other solution of the same equation. And
+rewrite the equation as $x=2/x$ and repeat that step: from $1$ it jumps to $2$,
+back to $1$, and on forever, because each correction overshoots the error
+it corrects.
 
-Counting experiments do exactly this. A gamma-ray telescope sees a source
-through two detectors, one with a large background and one with a small
-one, and wants to combine them with the best weights. Those weights depend
-on the source strength. The trick is the shower's: guess the strength,
-compute the weights it implies, combine, and use the combined value as the
-new guess. When the guess stops changing, it is consistent with the
-weights it produced, and that self-consistent value is the estimate.
+Estimators that need iteration are this story with data in it. The
+equation is the statistical choice: which equation we write decides the
+bias and the scatter of the estimate. The iteration only solves it.
+Newton--Raphson for a score equation, Fisher scoring, iteratively reweighted
+least squares and the expectation--maximisation algorithm are all recipes
+like the averaging step, each a different way of improving a guess. The three ways the
+square-root recipe can fail return as the three places where the route does
+matter for statistics: stopping early, several solutions, and a step that
+overshoots.
 
 \paragraph{The story in symbols: two detectors, one source.}
 Each detector counts for the same time and sees the same source, which
@@ -3010,9 +3024,29 @@ value that reproduces itself is $\hat s=\TFiveBTwoShat$, with standard error
 $\sqrt{1/\sum_i1/(\hat s+b_i)}=\TFiveBTwoSigML$. Against equal weights the
 variance has dropped to $\TFiveBTwoVarRatio$ of its value, as if we had
 collected almost half as much data again, and the cost was three more lines
-of arithmetic. The lesson: when the best weights need the unknown, put the
-current estimate into them, solve, and feed the result back; the value that
-no longer changes is the estimate.
+of arithmetic. The weights contain the unknown, so the estimate is the solution
+of an equation with $s$ on both sides, $s=g(s)$; feeding each answer back into
+the weights is the square-root recipe applied to that equation.
+
+\paragraph{What the iteration decides, and what it does not.}
+If the iteration converges, the answer is the solution of the equation, and
+which numerical route led there does not matter. Three situations make the
+route matter all the same. \emph{Stopping early}: an iteration halted before
+it converges returns something that is not the solution of the equation,
+and the number of passes becomes part of the estimator, a dial that trades
+bias for scatter (\cref{T5b:sec:early-stop}). \emph{Several solutions, or
+none that the iteration can reach}: when the equation has more than one root,
+as the likelihood of a mixture often does, the starting point decides which
+one we get (\cref{T5b:sec:em}), and when the step overshoots, the iteration
+never settles at all (\cref{T5b:sec:contraction}). \emph{The choice of
+equation}: weights taken from the data, weights taken from the model and
+minimised directly, and weights re-solved from the current answer are three
+different equations, hence three different estimators with different biases
+(\cref{T5b:sec:fixed-ml}); the iteration only solves whichever equation we
+chose, and choosing it is the statistical decision. None of this is the same
+as updating an estimate when new readings arrive, which consumes new data
+instead of reusing the same data; that is the recursion of
+\cref{T5b:sec:recursive}.
 
 \paragraph{A picture: the iteration as a staircase.}
 Write one pass of the recipe as a function, $s_{k+1}=g(s_k)$, where $g$ is the
@@ -4355,7 +4389,11 @@ alternating in sign, to $\theta_c=T/(1+\varepsilon)=T\,(n-1)/n$. That is the exa
 unbiased estimator, since $\E[T(n-1)/n]=\lambda$ by \eqref{T5b:eq:lambda-bias}. Each
 level of bootstrap is one pass of a fixed-point iteration on the bias
 equation, and the iteration helps when the bias is a smooth, well-estimated
-function of the parameter with $|b'|<1$.
+function of the parameter with $|b'|<1$. The same equation, with many parameters at once,
+fixes the power spectrum of a reconstructed lensing map: its bias $N^{(1)}$ is
+linear in the very spectrum being measured, so the debiased spectrum solves
+$\bm c=\bm d-\mathbf K\bm c$, and \cref{T1b:sec:recon-solve} solves it both
+directly and by this iteration.
 
 \paragraph{What the simulation shows.}
 \Cref{T5b:fig:bias-ladder}, left, compares the corrections over $\TFiveBLamNtoys$

@@ -422,6 +422,12 @@ Why does this matter? The CMB fixes $r_s$ precisely, so the bump is a ruler of k
 \providecommand{\TOneRNoisePartThousand}{}\renewcommand{\TOneRNoisePartThousand}{1}
 \providecommand{\TOneRLensedExtra}{}\renewcommand{\TOneRLensedExtra}{1}
 \providecommand{\TOneRAmpBias}{}\renewcommand{\TOneRAmpBias}{16.3}
+\providecommand{\TOneRRho}{}\renewcommand{\TOneRRho}{0.26}
+\providecommand{\TOneRIterRate}{}\renewcommand{\TOneRIterRate}{0.26}
+\providecommand{\TOneRIterN}{}\renewcommand{\TOneRIterN}{8}
+\providecommand{\TOneROneStep}{}\renewcommand{\TOneROneStep}{14.0}
+\providecommand{\TOneROneStepAmp}{}\renewcommand{\TOneROneStepAmp}{1.6}
+\providecommand{\TOneRSolChi}{}\renewcommand{\TOneRSolChi}{20.7}
 \providecommand{\TOneRAgridDev}{}\renewcommand{\TOneRAgridDev}{0.6}
  
 \section{Weak lensing: the matter field written on galaxy shapes}
@@ -1240,7 +1246,7 @@ Our numbers come from a Gaussian, nuisance-free forecast with all other paramete
 
 The lesson of the two galaxy-shape experiments for the rest of the book is in two parts. The signal is a projected, smoothed field whose two-point statistic is degenerate along $S_8$. The noise is white, large and known. So the statistical problem is to extract as much as possible from a noisy, non-Gaussian field with a small number of summaries. \Cref{ch:12} takes up that problem with topological summaries.
 
-\section{Experiment 3: the spectrum of a reconstructed lensing map, and its two biases}
+\section[Experiment 3: the two biases of a reconstructed lensing map]{Experiment 3: the spectrum of a reconstructed lensing map, and its two biases}
 \label{T1b:sec:recon}
 
 The quadratic estimator of \cref{T1b:sec:objects} turns a CMB temperature map into a map $\hat\psi$ of the lensing potential. Planck's $40\sigma$ is a statement about the power spectrum of that map. So take $\hat\psi$, square its Fourier modes and average them in rings of $L$, exactly as one does for any map. The answer is larger than $C^{\psi\psi}_L$, and at most multipoles it is many times larger. Nothing went wrong in the estimator. What could have added the extra power? There are two candidates, and we take them one at a time.
@@ -1395,6 +1401,65 @@ The script \pyname{code/chT1/11_lens_n0n1.py} works on periodic flat patches of 
 
 So the spectrum of a reconstructed map is the signal plus two biases with the structure of \eqref{T1b:eq:recon-budget}. $N^{(0)}$ is the Gaussian part of a four-point function, the same object as the noise bias of a power spectrum, and the best estimator makes it equal to the normalisation. $N^{(1)}$ is the part of the lensing trispectrum that joins the two copies of the estimate, proportional to $C^{\psi\psi}$ itself. Published analyses subtract both, with refinements the experiment did not need. $N^{(0)}$ is computed from the data's own spectrum, sky by sky (the realization-dependent $N^{(0)}$), which removes the sensitivity to a wrong $C^{\rm tot}$ and part of the scatter. $N^{(1)}$ comes from simulations sharing one potential, as in step~5. And the mean field of the mask and the uneven noise is subtracted first \cite{Hanson2011,Namikawa2013,Planck2018VIII}.
 
+\subsection{Solving for the lensing spectrum: the answer on both sides}
+\label{T1b:sec:recon-solve}
+
+The two biases are not subtracted in the same way. $N^{(0)}$ is computed from the spectrum of the observed maps, and it does not contain $C^{\psi\psi}$, so subtracting it is one step. $N^{(1)}$ is different: by \eqref{T1b:eq:n1} it is proportional to $C^{\psi\psi}$, the very spectrum we are trying to measure. The debiased spectrum is therefore defined by an equation with the unknown on both sides, the situation of \cref{T5b:sec:iterative}. What does that equation look like, and how is it solved?
+
+\emph{The kernel.} In \eqref{T1b:eq:n1} the potential enters only through its spectrum at one wavevector, $\bm L'\equiv\bm\ell_1-\bm\ell'_1$. Group the terms by that wavevector:
+\begin{align}
+N^{(1)}_L
+&\eqby{1}\int\!\frac{\dd^2L'}{(2\pi)^2}\,\mathcal K(\bm L,\bm L')\,C^{\psi\psi}_{L'},\nonumber\\
+\mathcal K(\bm L,\bm L')
+&\eqby{2}2A_L^2\int\!\frac{\dd^2\ell_1}{(2\pi)^2}\,F(\bm\ell_1,\bm\ell_2)F(\bm\ell'_1,\bm\ell'_2)\,f(\bm\ell_1,-\bm\ell'_1)\,f(\bm\ell_2,-\bm\ell'_2),\qquad
+\bm\ell'_1=\bm\ell_1-\bm L',\ \bm\ell'_2=\bm L-\bm\ell'_1,\nonumber\\
+N^{(1)}_b
+&\eqby{3}\sum_{b'}K_{bb'}\,C^{\psi\psi}_{b'}+N^{(1),{\rm out}}_b .
+\label{T1b:eq:n1-kernel}
+\end{align}
+\begin{explain}
+  \item In the double integral of \eqref{T1b:eq:n1}, change the variable of the inner integral from $\bm\ell'_1$ to $\bm L'=\bm\ell_1-\bm\ell'_1$ at fixed $\bm\ell_1$; the shift has unit Jacobian, so $\dd^2\ell'_1=\dd^2L'$.
+  \item What multiplies $C^{\psi\psi}_{L'}$: the weights and the response $f$, which contain only the CMB spectra. The kernel $\mathcal K$ does not depend on $C^{\psi\psi}$ at all.
+  \item Average over the $L$ of one band $b$ and split the $L'$ integral into the bands $b'$ in which the spectrum is measured. $K_{bb'}$ is the part from band $b'$ divided by the band's value of $C^{\psi\psi}$, which is exact when the spectrum has the fiducial shape inside each band. The last term collects the potential outside the measured bands, computed with the fiducial spectrum and treated as known.
+\end{explain}
+So $N^{(1)}$ is a fixed matrix acting on the unknown spectrum. Collect the band powers into a vector $\bm c$, and the measured spectrum minus $N^{(0)}$ and the outside part into $\bm d$, with components $d_b=\hat C^{\hat\psi\hat\psi}_b-N^{(0)}_b-N^{(1),{\rm out}}_b$. Then \eqref{T1b:eq:recon-budget} reads
+\begin{equation}
+\langle\bm d\rangle=(\mathbf I+\mathbf K)\,\bm c,
+\qquad\text{solved by}\qquad
+\bm c_*=(\mathbf I+\mathbf K)^{-1}\bm d .
+\label{T1b:eq:n1-linear}
+\end{equation}
+The equation is linear, because $N^{(1)}$ is linear in $C^{\psi\psi}$, and one matrix inversion solves it.
+
+\emph{The same equation by iteration.} Move the bias to the other side, $\bm c=\bm d-\mathbf K\bm c$, and replace the unknown inside the correction by the latest estimate:
+\begin{equation}
+\bm c^{(n+1)}=\bm d-\mathbf K\,\bm c^{(n)},\qquad \bm c^{(0)}=\bm c_{\rm fid}.
+\label{T1b:eq:n1-iter}
+\end{equation}
+The first pass, $\bm c^{(1)}=\bm d-\mathbf K\bm c_{\rm fid}$, is exactly the usual recipe: subtract the $N^{(1)}$ that the fiducial spectrum predicts. Every further pass recomputes the bias with the corrected spectrum. Does this settle on $\bm c_*$? Subtract the equation that $\bm c_*$ satisfies, $\bm c_*=\bm d-\mathbf K\bm c_*$, and call $\bm e^{(n)}=\bm c^{(n)}-\bm c_*$ the error:
+\begin{equation}
+\bm e^{(n+1)}\eqby{1}-\mathbf K\,\bm e^{(n)},\qquad
+\bm e^{(n)}\eqby{2}(-\mathbf K)^n\,\bm e^{(0)}\eqby{3}\sum_k a_k(-\lambda_k)^n\bm v_k .
+\label{T1b:eq:n1-error}
+\end{equation}
+\begin{explain}
+  \item Subtract the two equations; $\bm d$ cancels.
+  \item Apply the first result $n$ times.
+  \item Expand the starting error in the eigenvectors $\bm v_k$ of $\mathbf K$, $\bm e^{(0)}=\sum_ka_k\bm v_k$; each application of $-\mathbf K$ multiplies the $k$-th component by $-\lambda_k$.
+\end{explain}
+Every component shrinks if every eigenvalue has $\abs{\lambda_k}<1$, that is if the \newterm{spectral radius} $\rho(\mathbf K)=\max_k\abs{\lambda_k}$ is below one, and the error then falls by the factor $\rho$ per pass. This is the contraction condition $\abs{g'}<1$ of \cref{T5b:sec:contraction}, with the slope replaced by the matrix $\mathbf K$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/chT1/lens_n1_iter.pdf}
+\caption{Left: the $N^{(1)}$ kernel of our simulated experiment, as the share of $N^{(1)}_L$ in band $L$ (row) that comes from the potential in band $L'$ (column), relative to $C^{\psi\psi}_L$; the rows add up to $N^{(1)}_L/C^{\psi\psi}_L$ apart from the part outside the bands. Right: the largest relative error of the iteration \eqref{T1b:eq:n1-iter} on the mean simulated spectrum, from three starting spectra, against the pass number; the dashed line falls by $\rho(\mathbf K)$ per pass.}
+\label{T1b:fig:n1-iter}
+\end{figure}
+
+\emph{What our kernel does.} The script computes $\mathbf K$ from the same polar sums that gave $N^{(1)}$ in \cref{T1b:fig:recon}, now kept apart band by band (\cref{T1b:fig:n1-iter}, left). Its spectral radius is $\rho(\mathbf K)=\TOneRRho$, and the iteration on the mean simulated spectrum shrinks its error by $\TOneRIterRate$ per pass (right panel), as \eqref{T1b:eq:n1-error} says; started from twice the fiducial spectrum it is within $10^{-3}$ of $\bm c_*$ after $\TOneRIterN$ passes. This is perhaps surprising, since $N^{(1)}$ exceeds the signal at the highest $L$ (up to $\TOneRNoneMax\%$ of it). The kernel shows why. The large entries sit in the high-$L$ rows, which draw on the potential at intermediate $L'$, where the spectrum is large; the low-$L$ rows, which would carry an error back, are weak. For an error to grow it must go round that loop, from high $L$ back to low $L$ and up again, and one leg of the loop is small. The size of the rows controls a single pass, the spectral radius controls many: started from half the fiducial spectrum, the largest relative error first grows, then falls at the rate $\rho$.
+
+\emph{Is one pass enough?} After the first pass the error is $-\mathbf K(\bm c_{\rm fid}-\bm c_*)$. A fiducial spectrum wrong by $10\%$ leaves an error of up to $\TOneROneStep\%$ in the highest band, where $N^{(0)}$ is a hundred and fifty times the signal and the band carries almost no weight, and $\TOneROneStepAmp\%$ on an amplitude fitted with the Fisher weights of \cref{T1b:sec:recon-answer}; a second pass would cut that by $\rho$ again. That is why Planck keeps to one pass: it subtracts $N^{(1)}$ computed in a fiducial model and lets the likelihood correct, to first order, for its dependence on the model. It also tested the direct inversion \eqref{T1b:eq:n1-linear} and found band powers that differ by a small fraction of their error \cite{Planck2018VIII}. Iterating on the data has a price the matrix form hides: $\bm d$ is noisy, and every pass feeds that noise back through $\mathbf K$, while a fiducial correction keeps the bias in the model, where it belongs. And the kernel itself depends on the assumed CMB spectra. If those are updated between passes as well, the iteration is a general fixed point whose convergence has to be checked, not assumed.
+
 \begin{recap}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt]
 \item Lensing distorts galaxy images by about $1\%$: $\kappa=\frac12\nabla^2\psi$ magnifies, the spin-2 shear $\gamma_1=\frac12(\psi_{,11}-\psi_{,22})$, $\gamma_2=\psi_{,12}$ stretches; a galaxy measures $\varepsilon\approx\varepsilon^{(0)}+\gamma$, with the reduced shear $\gamma/(1-\kappa)$ as its mean.
@@ -1403,7 +1468,7 @@ So the spectrum of a reconstructed map is the signal plus two biases with the st
 \item Cosmic shear measures $\sigma_8\Omega_m^\alpha$ with $\alpha\approx\TOneAlphaFive$ for a Stage-III sample ($S_8$ takes $\alpha=0.5$); along that line the spectrum changes by a few per cent, across it by $\sim20\%$ for a $9\%$ change in $S_8$.
 \item Shape noise $N_i=\sigma_e^2/\bar n_i$ is white; for a KiDS-like survey the signal beats it only up to $\ell\approx\TOneLeqOne$--$\TOneLeqFive$ per bin; total $S/N\approx\TOneSNtomo$, $\sigma(\ln\sigma_8)=\TOneSigLnSEight\%$ with everything else fixed, against $\approx3\%$ achieved with nuisances marginalised.
 \item Nuisances: photo-$z$ shifts, shear bias $m$, intrinsic alignments, baryonic feedback. CMB lensing ($\psi$ reconstructed by a quadratic estimator) weights $z\approx2$ and measures $\sigma_8\Omega_m^{0.25}$.
-\item The spectrum of a reconstructed lensing map is $C^{\psi\psi}_L+N^{(0)}_L+N^{(1)}_L$: $N^{(0)}$, the Gaussian part of its four-point function, equals the normalisation $A_L$ of the best (Hu--Okamoto) weights and comes mostly from the CMB itself; $N^{(1)}$, from lensing pairings across the two copies, is proportional to $C^{\psi\psi}$ ($\TOneRNoneHundred\%$ of it at $L\approx100$, $\TOneRNoneThousand\%$ at $L\approx1000$ in our setup). Both are confirmed by simulation; a mask adds a mean field.
+\item The spectrum of a reconstructed lensing map is $C^{\psi\psi}_L+N^{(0)}_L+N^{(1)}_L$: $N^{(0)}$, the Gaussian part of its four-point function, equals the normalisation $A_L$ of the best (Hu--Okamoto) weights and comes mostly from the CMB itself; $N^{(1)}$, from lensing pairings across the two copies, is proportional to $C^{\psi\psi}$ ($\TOneRNoneHundred\%$ of it at $L\approx100$, $\TOneRNoneThousand\%$ at $L\approx1000$ in our setup). Both are confirmed by simulation; a mask adds a mean field. Because $N^{(1)}$ is linear in $C^{\psi\psi}$, the debiased spectrum solves $(\mathbf I+\mathbf K)\bm c=\bm d$; iterating $\bm c\to\bm d-\mathbf K\bm c$ from a fiducial converges when $\rho(\mathbf K)<1$ (here $\TOneRRho$), and its first pass is the usual fiducial subtraction.
 \end{itemize}
 \end{recap}
 

@@ -256,22 +256,32 @@ def simulate():
         return np.where(w, f(ax_, ay_, bx_, by_) / (2 * ct_f(ma) * ct_f(mb)), 0.0)
 
     n1_th = np.zeros(nb); A_th = np.zeros(nb)
+    # which L bin each Delta = l1 - l1' falls in (nb = outside the bins)
+    dbin = np.digitize(np.hypot(dx, dy), EDGES) - 1
+    dbin = np.where((dbin >= 0) & (dbin < nb), dbin, nb)
+    contrib = np.zeros((nb, nb + 1))     # N1 of bin b drawn from C^psipsi in bin b' (last column: outside)
     for b, Lb in enumerate(Lcen):
         # l1 = p, l2 = L - p
         F1 = F(px, py, Lb - px, -py)
         A_th[b] = 1.0 / np.sum(pw1 * F1 * f(px, py, Lb - px, -py))
-        tot = 0.0
+        tot = np.zeros(nb + 1)
         for i in np.nonzero(F1)[0]:
             # l1' = Delta - l1, l2' = -L - l1'
             q1x, q1y = dx - px[i], dy - py[i]
             q2x, q2y = -Lb - q1x, -q1y
             Fp = F(q1x, q1y, q2x, q2y)
             g = f(px[i], py[i], q1x, q1y) * f(Lb - px[i], -py[i], q2x, q2y)
-            tot += pw1[i] * F1[i] * np.sum(dw * Fp * g * cpd)
-        n1_th[b] = 2 * A_th[b] ** 2 * tot
+            tot += pw1[i] * F1[i] * np.bincount(dbin, dw * Fp * g * cpd, nb + 1)
+        contrib[b] = 2 * A_th[b] ** 2 * tot
+        n1_th[b] = contrib[b].sum()
         progress("N1 integral, L bins", b + 1, nb)
     # A_L is steep, so its bin average exceeds its value at the mean L; N1/A_L varies slowly
     n1_b = n1_th / A_th * A_b
+    # N1_b = sum_b' K_bb' C_b' + N1_out_b, exact for the fiducial shape of C^psipsi inside each bin
+    contrib *= (A_b / A_th)[:, None]
+    K = contrib[:, :nb] / cpp_b[None, :]
+    n1_out = contrib[:, nb]
+    assert np.allclose(K @ cpp_b + n1_out, n1_b)
     # the grid's A_L against the integral at single modes on the l_x axis
     kt = np.array([3, 10, 30, 60, 90])
     A_axis = A[0, kt]
@@ -281,7 +291,7 @@ def simulate():
                 rm=mean["rawminus"][0], rm_e=mean["rawminus"][1], cross=mean["cross"][0], cross_e=mean["cross"][1],
                 inp=mean["inp"][0], n0_mc=n0_mc, n0_mc_e=n0_mc_e, n1_mc=n1_mc, n1_mc_e=n1_mc_e,
                 A_cmb_b=binned(A_cmb), A_axis=A_axis, A_axis_th=A_axis_th, A_th=A_th,
-                lensed_extra=lensed_extra, pk=example[0], ph=example[1], A=A, cpp=cpp, ell=ell)
+                K=K, n1_out=n1_out, lensed_extra=lensed_extra, pk=example[0], ph=example[1], A=A, cpp=cpp, ell=ell)
 
 
 def main():
@@ -340,6 +350,40 @@ def main():
     fig.colorbar(im, ax=axs, shrink=0.8, pad=0.02)
     savefig(fig, "chT1", "lens_maps")
 
+    # ---- the N1 equation: d = (I + K) c + N1_out, with d the raw spectrum minus N0 ----
+    K, n1_out = r["K"], r["n1_out"]
+    d = r["raw"] - A_b
+    c_star = np.linalg.solve(np.eye(nb) + K, d - n1_out)
+    rho = float(np.max(np.abs(np.linalg.eigvals(K))))
+    starts = {"fid": cpp_b, "half": 0.5 * cpp_b, "double": 2.0 * cpp_b}
+    errs = {}
+    for name, c in starts.items():
+        e = []
+        for _ in range(12):
+            e.append(float(np.max(np.abs(c - c_star) / c_star)))
+            c = d - n1_out - K @ c
+        errs[name] = np.array(e)
+    rate = float(np.median(errs["double"][4:9] / errs["double"][3:8]))
+    iters = int(np.argmax(errs["double"] < 1e-3))
+    one_step = float(np.max(np.abs(K @ (0.1 * cpp_b)) / cpp_b))       # error left by a 10% wrong fiducial
+    sol_chi = float(np.sum(((c_star - r["inp"]) / r["raw_e"]) ** 2 * (Lcen < 1000)))
+    setup(7.2, 3.0)
+    fig, axs = plt.subplots(1, 2)
+    im = axs[0].imshow(K * cpp_b[None, :] / cpp_b[:, None], origin="lower", cmap="Blues",
+                       extent=[-0.5, nb - 0.5, -0.5, nb - 0.5])
+    axs[0].set_xlabel(r"bin of $L'$"); axs[0].set_ylabel(r"bin of $L$"); axs[0].grid(False)
+    axs[0].set_title(r"$K_{LL'}C^{\psi\psi}_{L'}/C^{\psi\psi}_L$", fontsize=9)
+    fig.colorbar(im, ax=axs[0], shrink=0.8)
+    for (name, e), col, lab in zip(errs.items(), SERIES, ["start: fiducial", "start: fiducial/2", "start: 2 x fiducial"]):
+        axs[1].semilogy(np.arange(e.size), np.maximum(e, 1e-16), "o-", ms=3, color=col, label=lab)
+    axs[1].semilogy(np.arange(12), errs["double"][0] * rho ** np.arange(12), "k--", lw=1, label=r"$\rho(K)^n$")
+    axs[1].set_xlabel("iteration $n$"); axs[1].set_title("largest relative error", fontsize=9)
+    axs[1].legend(fontsize=6.5)
+    for ax in (axs[0].xaxis, axs[0].yaxis, axs[1].xaxis):
+        ax.set_major_locator(plt.MaxNLocator(integer=True))
+    fig.tight_layout()
+    savefig(fig, "chT1", "lens_n1_iter")
+
     # ---- numbers ----
     cross, cross_e, inp = r["cross"], r["cross_e"], r["inp"]
     w = (Lcen > 40)
@@ -371,6 +415,9 @@ def main():
     print("noise part of N0", np.round(noise_part, 3))
     print("resp", resp, resp_e, "chi2 N0", n0_chi, "N1", n1_chi, "rm", rm_chi, "N1 sig", n1_sig, "dof", nb)
     print("lensed excess of C^tot near l=2000", lensed_extra, "amplitude bias from N1", amp_bias)
+    print("rho(K)", rho, "rate", rate, "iters to 1e-3", iters, "one-step 10% err", one_step, "sol chi2 L<1000", sol_chi)
+    print("K row sums (N1/C)", np.round(K @ cpp_b / cpp_b, 3), "diag", np.round(np.diag(K), 3))
+    for k_, v_ in errs.items(): print(k_, np.array2string(v_, precision=2))
     save_numbers("chT1", "11_lens_n0n1", {
         "TOneRN": N, "TOneRNoise": NOISE, "TOneRLmin": LMIN, "TOneRLmax": LMAX,
         "TOneRNsim": NSIM, "TOneRNgau": NGAU, "TOneRNpair": NPAIR, "TOneRNbin": nb,
@@ -387,6 +434,9 @@ def main():
         "TOneRNoisePartThousand": f"{100 * noise_part[i1000]:.0f}",
         "TOneRLensedExtra": f"{100 * lensed_extra:.0f}",
         "TOneRAmpBias": f"{100 * amp_bias:.1f}",
+        "TOneRRho": f"{rho:.2f}", "TOneRIterRate": f"{rate:.2f}", "TOneRIterN": iters,
+        "TOneROneStep": f"{100 * one_step:.1f}",
+        "TOneROneStepAmp": f"{10 * amp_bias:.1f}", "TOneRSolChi": f"{sol_chi:.1f}",
         "TOneRAgridDev": f"{100 * float(np.max(np.abs(A_axis / A_axis_th - 1))):.1f}",
     })
 
