@@ -147,6 +147,75 @@ function of $\theta$ and is the subject of the second part.}
 \label{3a:fig:roadmap}
 \end{figure}
 
+\paragraph{Many estimators, few ideas.}
+The chapter meets some thirty estimators: the sample mean and the median,
+twice the mean and the largest reading of a uniform box, the sample variance
+with three different divisors, covariances and correlations, weighted means,
+least-squares fits, fits to Poisson counts, posterior means and modes. It is
+easy to take them for thirty separate tricks. They are not. Each one comes
+from answering two physical questions, and then applying one of four
+principles. The questions: how does the theory say the observable quantities
+change with the parameter $\theta$, and what do we know about the noise on
+them? The principles: match a predicted average; maximise the likelihood;
+take the unbiased rule with the least variance; take the rule with the least
+expected loss. Everything else is implementation. The same principle applied
+to a different noise law gives a different formula, and several formulas
+are reached by more than one principle: the weighted mean is both the
+least-variance combination and the Gaussian maximum-likelihood estimate, and
+when two different roads end at the same formula, that is good evidence it
+is the right one. \Cref{3a:fig:estimator-tree} lays out the whole tree.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  top/.style={draw=accent,thick,rounded corners=2pt,fill=ideabg,align=center,
+              font=\small,text width=146mm,inner sep=4pt},
+  pr/.style={draw=accent,thick,rounded corners=2pt,fill=ideabg,align=center,
+             font=\footnotesize,text width=33mm,minimum height=13mm,inner sep=3pt},
+  lf/.style={draw=softgray,rounded corners=2pt,fill=defbg,align=left,
+             font=\footnotesize,text width=33mm,inner sep=3pt,anchor=north},
+  same/.style={draw=fibreorange!80!black,dashed,thick,rounded corners=2pt,fill=warnbg,
+               align=left,font=\footnotesize,text width=146mm,inner sep=4pt},
+  flow/.style={->,thick,accent}]
+  \node[top] (phys) at (0,0) {\textbf{Physics.} Theory relates the parameter $\theta$ to quantities we can observe:
+    a predicted mean $\E x_i=a_i\theta+b_i$, a variance, a correlation, or a whole distribution.};
+  \node[top] (noise) at (0,-1.45) {\textbf{Noise.} Every observable fluctuates. What do we know about the
+    fluctuations, and what do we want from the answer?};
+  \draw[flow] (phys) -- (noise);
+  \foreach \x/\n/\t in {-5.85/p1/{\textbf{only averages}\\$\Rightarrow$ match the moments},
+                        -1.95/p2/{\textbf{the whole law}\\$\Rightarrow$ maximise the likelihood},
+                         1.95/p3/{\textbf{mean and covariance}\\$\Rightarrow$ least variance among unbiased rules},
+                         5.85/p4/{\textbf{a prior, or a cost of error}\\$\Rightarrow$ least expected loss}}
+    {\node[pr] (\n) at (\x,-3.15) {\t}; \draw[flow] (noise.south) -- (\n.north);}
+  \node[lf] (l1) at (-5.85,-4.1) {sample mean\\ $2\bar x$ (uniform box)\\ sample variance\\
+    covariance, correlation\\ angular moments\\ $\Chat$ from the $\alm$};
+  \node[lf] (l2) at (-1.95,-4.1) {Gaussian: least squares, $\chi^2$\\ Poisson: binned fit\\ decay times\\
+    angular shapes\\ largest reading (uniform)\\ profile the nuisances};
+  \node[lf] (l3) at (1.95,-4.1) {weighted mean\\ correlated readings\\ cancel a contaminant\\
+    Rao--Blackwell};
+  \node[lf] (l4) at (5.85,-4.1) {posterior mean, median, mode\\ divisor $N+1$\\
+    shrunken mean $c\bar x$\\ median (absolute error)};
+  \foreach \n in {1,2,3,4} \draw[flow] (p\n.south) -- (l\n.north);
+  \node[same,anchor=north] (same) at ([yshift=-5mm]current bounding box.south) {\textbf{Same formula, different roads.}
+    The sample mean matches the first moment, maximises the Gaussian, Poisson and exponential
+    likelihoods, and is the least-variance combination of equally good readings. The weighted mean
+    is the least-variance combination and the Gaussian likelihood estimate. Least squares is Gaussian
+    maximum likelihood. $\Chat$ matches the second moment, maximises the likelihood of the $\alm$,
+    and reaches the Cram\'er--Rao bound.};
+  \node[top,anchor=north] (check) at ([yshift=-5mm]same.south) {\textbf{Then check the rule over repeated experiments.}
+    Bias (and its correction: divisor $N-1$, $(n+1)X_{(n)}/n$, the Hartlap factor), variance and mean
+    squared error, consistency, the Cram\'er--Rao bound. The error bar: propagation through formulas,
+    the curvature of $\ln\Like$, the bootstrap.};
+  \draw[flow] (same) -- (check);
+\end{tikzpicture}
+\caption{The estimators of this chapter as one tree. Two physical questions (top) decide which of
+four principles applies (middle row); each principle, fed a particular noise law, produces the
+formulas listed below it. The dashed box records formulas that several principles reach together.
+Every rule, however it was built, is then judged by the same criteria over imagined repetitions of
+the experiment (bottom).}
+\label{3a:fig:estimator-tree}
+\end{figure}
+
 \section{One number from many readings: estimators and their sampling distribution}
 \label{3a:sec:sampling}
 
@@ -325,6 +394,22 @@ is a random variable. The estimate is one realisation of that random variable,
 the one our universe happened to give us. For the pendulum, the sample mean is
 an estimator of $g$, and $9.815\,\mathrm{m\,s^{-2}}$ is an estimate
 \srcref{Cowan}{\S5.1, p.~64}.
+
+\paragraph{Where the theory ends and the statistics begins.}
+The pendulum shows the division of labour. Theory relates the quantity we
+want to quantities we can observe: a pendulum of length $L$ swings with period
+$T=2\pi\sqrt{L/g}$, so $g=4\pi^2L/T^2$. That relation is physics, and it is
+exact. If every timing were exact too, one swing would give $g$ and nothing
+would be left to do. But each timing comes with its own fluctuation (a
+reaction time, a draught, a stopwatch tick), so ten swings give ten different
+values of $g$, and the relation alone cannot say which one to believe.
+Statistics begins at exactly this point. Its questions are how to combine the
+noisy readings into one number, the choice of the estimator
+\eqref{3a:eq:estimator}, and how far
+that number can be from the truth, the sampling distribution. Every
+estimator in this chapter has the same two parts: a physical relation between
+$\theta$ and the observables, which theory supplies, and a way of dealing with
+the noise on those observables, which is what the chapter is about.
 
 The readings are independent and identically distributed (iid): each comes
 from the same $f(x;\theta)$, and none influences another. Independence means
@@ -7258,6 +7343,57 @@ slots; exponential decay times $t_i$ with mean lifetime $\tau$; and the
 multipole coefficients $\alm$ of a full-sky Gaussian CMB map. The CMB
 example is then followed through the whole chain in
 \cref{3b:sec:recipe-cmb}.
+
+\subsection{One measurement, five jobs}
+\label{3b:sec:recipe-jobs}
+
+Each tool met so far has one job. One measurement model, covering most of what a physicist meets, shows all of them:
+\begin{equation}
+x_i=a_i\theta+b_i+\epsilon_i,\qquad i=1,\dots,N .
+\label{3b:eq:jobs-model}
+\end{equation}
+Here $\theta$ is the parameter we want; $a_i$ is the known sensitivity of the instrument in reading $i$, how much that reading changes per unit change of $\theta$ (a gain, a filter transmission, a template value); $b_i$ is any other contribution to the reading (a background, a foreground, an offset); and $\epsilon_i$ is noise. Theory and calibration tell us how much we know about each piece, and what we know decides which tool does which job.
+
+\emph{Job 1: build a rule from a predicted average.} Suppose we know only that the noise averages to zero. Then $\E x_i=a_i\theta+b_i$, and that is already enough to estimate $\theta$, with no statement about the shape of the noise. Add the readings, replace the expected sum by the observed one, and solve:
+\[
+\sum_i\E x_i=\theta\sum_ia_i+\sum_ib_i
+\quad\Longrightarrow\quad
+\hat\theta_{\rm mom}=\frac{\sum_i(x_i-b_i)}{\sum_ia_i},
+\]
+which for $a_i=1$, $b_i=0$ is the sample mean. This is the method of moments (\cref{3b:sec:mom}): put the measured counterpart in place of a predicted expectation. Second moments work the same way. If theory predicts a variance, the average of squared deviations estimates it (\cref{3a:sec:n-minus-one}); if it predicts a correlation, $\E[x_iy_i]=\theta$, the average of the products $x_iy_i$ estimates it, and that estimator is \emph{quadratic} in the readings, the starting point of the quadratic estimators of \cref{T5a:sec:quadratic}. Probability is still involved, since an expectation is defined by a probability model; the method simply uses less of that model than a likelihood does. Not every simple rule is of this kind. The median, for instance, matches no expectation: it matches a predicted \emph{quantile} (half the probability on each side), or equivalently it minimises the sum of absolute deviations, by the argument that makes the posterior median the answer for absolute loss in \cref{3b:sec:recipe-candidates}.
+
+\emph{Job 2: build a rule from the whole law of the fluctuations.} Suppose we know more: the noise is Gaussian with a known covariance $\Cmat$. Now the probability of the entire data vector can be written, and the likelihood asks which $\theta$ makes the observed readings least surprising. With $\bm r=\bm x-\bm a\theta-\bm b$,
+\begin{equation}
+-2\ln\Like(\theta)\eqby{1}\bm r\T\Cmat^{-1}\bm r+\text{const},\qquad
+0\eqby{2}-2\bm a\T\Cmat^{-1}(\bm x-\bm a\hat\theta-\bm b),\qquad
+\hat\theta_{\rm ML}\eqby{3}\frac{\bm a\T\Cmat^{-1}(\bm x-\bm b)}{\bm a\T\Cmat^{-1}\bm a}.
+\label{3b:eq:jobs-ml}
+\end{equation}
+\begin{explain}
+  \item The multivariate Gaussian density of \cref{3b:sec:correlated}; the normalisation does not depend on $\theta$ because $\Cmat$ does not.
+  \item Set the derivative with respect to $\theta$ to zero; $\partial\bm r/\partial\theta=-\bm a$, and $\Cmat^{-1}$ is symmetric.
+  \item Solve the linear equation for $\hat\theta$.
+\end{explain}
+Moments and likelihood are two ways of using the same physical relation \eqref{3b:eq:jobs-model}, with different amounts of knowledge about the noise. Sometimes they give the same rule (independent, equal-variance readings with $a_i=1$: both give the mean); sometimes not (unequal variances: the moment rule weights all readings equally, the likelihood does not).
+
+\emph{Job 3: choose how to combine the readings.} Many combinations of the readings respond to $\theta$. Restrict to linear ones, $\hat\theta=\bm w\T(\bm x-\bm b)$. Its average is $\bm w\T\bm a\,\theta$, so it is unbiased exactly when $\bm w\T\bm a=1$; its variance is $\bm w\T\Cmat\bm w$. Which allowed combination fluctuates least?
+\begin{equation}
+\frac{\partial}{\partial\bm w}\Bigl[\bm w\T\Cmat\bm w-2\lambda(\bm w\T\bm a-1)\Bigr]\eqby{1}2\Cmat\bm w-2\lambda\bm a=0,\qquad
+\bm w\eqby{2}\lambda\Cmat^{-1}\bm a\eqby{3}\frac{\Cmat^{-1}\bm a}{\bm a\T\Cmat^{-1}\bm a}.
+\label{3b:eq:jobs-blue}
+\end{equation}
+\begin{explain}
+  \item Minimise the variance with the unbiasedness condition attached by a Lagrange multiplier $\lambda$ (the factor $2$ is for convenience).
+  \item Multiply by $\Cmat^{-1}/2$.
+  \item Fix $\lambda$ from the condition $\bm w\T\bm a=1$: $\lambda\,\bm a\T\Cmat^{-1}\bm a=1$.
+\end{explain}
+Inserted into $\bm w\T(\bm x-\bm b)$ this is exactly \eqref{3b:eq:jobs-ml}. For independent readings with $a_i=1$ it is the inverse-variance weighted mean of \cref{3a:sec:weighted}. Variance optimisation is not a method for the special occasions when noise matters; every method above has to account for the noise. It answers one particular question, which allowed combination scatters least, and under the Gaussian model the likelihood gives the same answer.
+
+\emph{Job 4: decide what the rule must keep and what it must remove.} The term $b_i$ is not noise; it is a signal we do not want. What to do depends on what we know about it. If $b_i$ is known, subtract it, as above. If its shape is known but not its size, $b_i=\beta c_i$ with known $c_i$, either fit $\beta$ together with $\theta$ and profile it away (\cref{3b:sec:profile}), or build a combination that cancels it, adding the condition $\bm w\T\bm c=0$ to Job 3, the noise-cancelling trick of \cref{3a:sec:weighted}. And if the unwanted signal responds exactly like the wanted one, $\bm c\propto\bm a$, no combination of these data can tell them apart: the condition $\bm w\T\bm a=1$ and $\bm w\T\bm c=0$ contradict each other, and only outside information (another frequency, another experiment, a prior) can separate them. These are background subtraction, nuisance parameters and component separation. None of them is what statisticians call bias correction.
+
+\emph{Job 5: check what the finished rule does over many repetitions.} Even with every contaminant handled correctly, the rule itself may miss on average, $\E_\theta\hat\theta\neq\theta$. Estimating a Gaussian variance with the mean also estimated from the same readings divides by $N$ and comes out low by the factor $(N-1)/N$; correcting it gives the divisor $N-1$ (\cref{3a:sec:n-minus-one}). No unwanted signal was present: the bias came from the procedure. Removing a contaminant can remove a source of bias, but the two are different things, and a rule that is free of contaminants still has to be checked for its own bias and scatter, by a formula where one exists and by simulated repetitions where it does not.
+
+So the chain from physics to an answer has five links. What does the theory predict? What do we know about the fluctuations and the contaminants? How can the parameter be extracted? Which extraction rule serves the purpose? And does that rule recover the truth reliably over repeated experiments? Moments and likelihood build a rule; variance optimisation chooses a combination; the treatment of contaminants fixes what must be kept and removed; and bias correction concerns how the finished rule behaves when the experiment is repeated.
 
 \subsection{Step 1: write the likelihood}
 \label{3b:sec:recipe-like}
