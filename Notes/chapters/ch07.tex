@@ -1853,7 +1853,7 @@ $P(0)\cdot\frac{(2\pi)^d}{V}\cdot\frac{1}{(2\pi)^d}=P(0)/V$.
   \addplot[very thick,fibreorange] coordinates {(0,1) (1,1) (1,0) (3,0)};
   \addlegendentry{top-hat}
 \end{axis}
-\begin{axis}[xshift=7.6cm,xlabel={$kR$},ylabel={$W(k)$},xmin=0,xmax=12,ymin=-0.15,ymax=1.05,
+\begin{axis}[at={(7.6cm,0)},xlabel={$kR$},ylabel={$W(k)$},xmin=0,xmax=12,ymin=-0.15,ymax=1.05,
   legend pos=north east]
   \addplot[very thick,formblue,domain=0:12,samples=200] {exp(-x^2/2)};
   \addlegendentry{$e^{-k^2R^2/2}$}

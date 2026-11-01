@@ -622,7 +622,7 @@ tail beyond $\pm\FourAPzZfivepctTwo$.
   \node[anchor=south, font=\small, bdryred] at (axis cs:1.645,0.30) {$1.645$};
   \node[anchor=south west, font=\small] at (axis cs:2.0,0.07) {$\alpha$};
 \end{axis}
-\begin{axis}[fouraSides, xshift=7cm, title={\small two-sided: $H_1:\theta\neq\theta_0$}]
+\begin{axis}[fouraSides, at={(7cm,0)}, title={\small two-sided: $H_1:\theta\neq\theta_0$}]
   \addplot[name path=g, formblue, thick] {exp(-x^2/2)/sqrt(2*pi)};
   \path[name path=ax] (axis cs:-3.6,0) -- (axis cs:3.6,0);
   \addplot[fibreorange!75] fill between[of=g and ax, soft clip={domain=1.96:3.6}];
@@ -631,8 +631,8 @@ tail beyond $\pm\FourAPzZfivepctTwo$.
   \draw[bdryred] (axis cs:-1.96,0) -- (axis cs:-1.96,0.30);
   \node[anchor=south, font=\small, bdryred] at (axis cs:1.96,0.30) {$1.96$};
   \node[anchor=south, font=\small, bdryred] at (axis cs:-1.96,0.30) {$-1.96$};
-  \node[anchor=south west, font=\small] at (axis cs:2.3,0.05) {$\alpha/2$};
-  \node[anchor=south east, font=\small] at (axis cs:-2.3,0.05) {$\alpha/2$};
+  \node[anchor=south east, font=\small] at (axis cs:3.5,0.05) {$\alpha/2$};
+  \node[anchor=south west, font=\small] at (axis cs:-3.5,0.05) {$\alpha/2$};
 \end{axis}
 \end{tikzpicture}
 \caption{The same total probability $\alpha=0.05$ placed in one tail (left)
