@@ -88,7 +88,7 @@
 \section*{Where this chapter is going}
 \addcontentsline{toc}{section}{Where this chapter is going}
 
-A physicist rarely invents a probability distribution. It is forced on us by the way the data were made. A paddle that either fires or does not fire, a histogram filled one event at a time, a Geiger counter clicking at random, a photomultiplier waiting for its tenth photon: each of these is a small machine, and each machine produces its own distribution. We build the common distributions from the machines that generate them. We state the assumptions in words, derive the probability law line by line, compute its mean and variance, and then run the machine in Python to check that the histogram of simulated outcomes lands on the formula.
+The way an experiment records data guides our choice of probability law. A detector paddle records whether it fired, a histogram counts how many events fell in each bin, and a photomultiplier can record how long it took for the tenth photon to arrive. Even when the particles arrive by the same random process, the count in a fixed interval and the waiting time for a fixed count have different distributions. For each example we state our assumptions, derive the distribution and its mean and variance, then simulate the experiment in Python to compare the observed frequencies with the prediction.
 
 Building a distribution from its machine is the \emph{prediction} direction of probability (\cref{ch:01}). We fix a hypothesis, say ``the source emits at rate $\lambda$'', and ask which outcomes it produces and how often. Recall the book's pipeline (\cref{ch:00}): a theory produces data, we compress the data into a statistic $S$, we work out how $S$ scatters when the experiment is repeated, and from that we infer the physics, labelled by parameters $\theta$. The distributions of counts, histograms and waiting times in this chapter supply the scatter step, $P(S\given\theta)$, for the simplest statistics. Once we have $P(S\given\theta)$, we can read it the other way round: hold the observed $S$ fixed and let $\theta$ vary. Read that way it is the likelihood (\cref{ch:03}), and Bayes' theorem turns the likelihood into a posterior (\cref{ch:05}).
 
@@ -333,7 +333,7 @@ A yes/no trial is fully described by one number $p$. The pmf $p^x(1-p)^{1-x}$ is
 
 \section{Many successive trials: the binomial distribution}\label{2a:sec:binomial}
 
-A cosmic-ray telescope is a stack of four scintillator layers. A muon going straight down crosses all four. Each layer fires independently with efficiency $\epsilon=0.95$, the probability that it fires when a muon crosses it. To reject noise, the trigger demands that \emph{at least three} of the four layers fire. What fraction of real muons does the trigger keep? Requiring all four would be cleaner, but how many muons would it cost? Both questions need the same thing: the probability of exactly $k$ successes in $n$ independent trials. The binomial distribution supplies it. It turns ``each trial succeeds with probability $p$'' into the full distribution of the number of successes.
+A downward-going muon crosses all four scintillator layers of a cosmic-ray telescope. Given such a crossing, each layer fires with probability $\epsilon=0.95$, independently of the others. To reject noise, the trigger demands that \emph{at least three} of the four layers fire. What fraction of real muons does the trigger keep? Requiring all four would be cleaner, but how many muons would it cost? Both questions need the same thing: the probability of exactly $k$ successes in $n$ independent trials. The binomial distribution supplies it. It turns ``each trial succeeds with probability $p$'' into the full distribution of the number of successes.
 
 \paragraph{Physical picture: paths through a tree.}
 Picture each trial as a fork in a road: up for success, down for failure. After $n$ forks, every possible history is a path, and the number of successes is the number of ``up'' steps along that path. A random walk in one dimension has the same combinatorics. So do $n$ non-interacting spin-$\tfrac12$ particles: the number of spin-up particles is binomially distributed. The binomial coefficient $\binom nk$ that appears below is the \emph{multiplicity} of the macrostate ``$k$ up'', the same multiplicity that statistical mechanics uses to define entropy.
@@ -1852,7 +1852,7 @@ For a paralysable counter, every recorded rate below $1/(e\tau)$ is produced by 
 
 \paragraph{The scatter of the recorded counts.} Dead time removes precisely the hits that come soon after another hit, so the recorded stream is more regular than the true one (\cref{2a:fig:three-streams}, bottom). How much more regular?
 
-The recorded stream of either model is a \newterm{renewal process} \unpack{the gaps between successive recorded hits are independent and all have the same distribution}. Why? After each recorded hit, the future depends only on true hits that have not happened yet, and those are independent of the past (input P1 for the true stream).
+The recorded stream of either model is a \newterm{renewal process} \unpack{the gaps between successive recorded hits are independent and all have the same distribution}. After a recorded hit, the waiting time to the next recorded hit depends only on subsequent arrivals. By input P1 these are independent of the past, so each recorded hit starts the same waiting-time experiment afresh.
 
 For a renewal process the count's scatter follows from the gaps. Let the gap $I$ between recorded hits have mean $m_I$ and variance $\sigma_I^2$. Count in a window $T\gg m_I$, and let $S_k$ be the time of the $k$-th recorded hit, the sum of $k$ independent gaps. The count reaches $k$ when $S_k$ reaches $T$. Write $S_k=km_I+\delta S$, with $\Var\delta S=k\sigma_I^2$. Suppose the gaps happen to add up to a little more time than average, $\delta S>0$. Then fewer hits fit into $T$. Each missing hit is worth one mean gap, so the count changes by $\delta N\approx-\delta S/m_I$. Hence
 \begin{align}
@@ -2516,7 +2516,7 @@ Here the plot only \emph{verifies} a known limit: the exact pmf is cheap, so not
 \section{The Gaussian, second way: the central limit theorem}
 \label{2b:sec:clt}
 
-A binomial count is a sum of $n$ Bernoulli variables, one per trial (each is $1$ for a success and $0$ for a failure). So de Moivre--Laplace is really a statement about \emph{sums}. The central limit theorem says that sums of almost anything become Gaussian. That is why measurement errors are modelled as Gaussian. Knowing exactly what the theorem assumes tells us when \emph{not} to.
+A binomial count is the sum of $n$ Bernoulli variables, each equal to $1$ for a success and $0$ for a failure. The de Moivre--Laplace result is therefore a statement about the distribution of a \emph{sum}. The central limit theorem extends the argument beyond Bernoulli trials and explains why a Gaussian can approximate measurement errors that accumulate from many small contributions. Its assumptions tell us when that approximation is justified.
 
 \paragraph{Where a timing error comes from.}
 A drift-chamber hit time is shifted by the drift of the ionisation cluster, the rise time of the amplifier, the discriminator walk, cable delays that depend on temperature, the jitter of the clock, and a dozen smaller effects. None of these is Gaussian. A walk correction leaves a residual that is roughly uniform; a photon arrival delay is roughly exponential. Yet the histogram of timing residuals in a well-calibrated detector is a clean bell curve, until we look far out in its tails.
@@ -2916,7 +2916,7 @@ A calibration note says: ``the timing resolution of the chamber is $2$\,ns rms.'
 
 The third reason the Gaussian is everywhere is of a different kind. It is not about how the noise was produced. It is about what we \emph{know}. The principle of maximum entropy picks out the one distribution that agrees with the facts we have and assumes nothing else. With it we can write a density when all we have is a mean, or a variance, or a covariance matrix. It shows why least squares, which is a Gaussian likelihood, is the natural fit when all we know is the size of the error bars. And it is the same variational principle that produces the Boltzmann distribution in statistical mechanics, so it rests on physics we already trust.
 
-The question, stated in words: \emph{among all distributions that satisfy a set of known averages, which one should we use, and what does it look like when the known average is a variance?}
+\emph{Among all distributions that satisfy a set of known averages, which one should we use, and what does it look like when the known average is a variance?}
 
 \subsection{A die with a loaded average}
 \label{2b:sec:maxent-die}
@@ -3227,7 +3227,7 @@ Most measurements come as several numbers that move together, and one object des
 
 Four things about it are used constantly. How to \emph{sample} it, which follows from building it out of independent standard normals. The shape of its contours, the ellipses of every parameter-estimation plot. What fraction of the probability each ellipse contains. And two operations: \emph{marginalising} (averaging out a nuisance variable) and \emph{conditioning} (fixing one variable at a known value).
 
-The questions, in words: \emph{what is the joint density of several correlated Gaussian quantities, how do we draw from it, and what are the distributions of a subset of them, either ignoring the rest or with the rest held fixed?}
+\emph{What is the joint density of several correlated Gaussian quantities, how do we draw from it, and what are the distributions of a subset of them, either ignoring the rest or with the rest held fixed?}
 
 \subsection{Building it: a linear map of independent standard normals}
 \label{2b:sec:mvn-build}
@@ -3383,7 +3383,7 @@ Two special cases are the ones everybody uses \mainref{Thm~2.44}, \srcref{Casell
   \item A single linear combination, $\mathbf B=\bm a\T$: $\bm a\T\bm X\sim\Normal(\bm a\T\bm\mu,\bm a\T\Cmat\bm a)$. For two variables, $ax+by\sim\Normal(a\mu_x+b\mu_y,\ a^2\sigma_x^2+b^2\sigma_y^2+2ab\rho\sigma_x\sigma_y)$. This is the exact form of the error-propagation formula for linear functions.
   \item The marginal of a subset. Split $\bm X=(\bm X_a,\bm X_b)$ and $\bm\mu$, $\Cmat$ into the matching blocks $\bm\mu_a$, $\Cmat_{aa}$, $\Cmat_{ab}$, and so on. Choosing $\mathbf B=(\Id\;\;0)$ picks out $\bm X_a$, and $\mathbf B\Cmat\mathbf B\T=\Cmat_{aa}$. So $\bm X_a\sim\Normal(\bm\mu_a,\Cmat_{aa})$.
 \end{itemize}
-The second statement is marginalising in exactly the sense of \cref{ch:01}. In words: to average out the nuisance variables $\bm X_b$ of a Gaussian, \emph{delete their rows and columns} from $\bm\mu$ and $\Cmat$. No integral needs to be done. In the running example the marginal of $y$ is $\Normal(\mu_y,4)$ whatever the value of $\rho$; the script finds a sample standard deviation of $\tbMVNmargSd$ for $y$.
+The second statement is marginalising in exactly the sense of \cref{ch:01}. To average out the nuisance variables $\bm X_b$ of a Gaussian, \emph{delete their rows and columns} from $\bm\mu$ and $\Cmat$. No integral needs to be done. In the running example the marginal of $y$ is $\Normal(\mu_y,4)$ whatever the value of $\rho$; the script finds a sample standard deviation of $\tbMVNmargSd$ for $y$.
 
 \subsection{Conditionals: fixing one variable}
 \label{2b:sec:mvn-conditional}
@@ -3468,7 +3468,7 @@ We fit a straight line to ten points with error bars and get $\chi^2=\sum_i(x_i-
 
 Two results answer these questions. A sum of $\nu$ squared standard normals has a definite distribution, $\chi^2_\nu$, with mean $\nu$ and variance $2\nu$. And the sample variance divides by $n-1$, not $n$, because estimating the mean uses up exactly one ``degree of freedom'' in a sense the geometry makes precise.
 
-The questions, in words: \emph{if $\nu$ independent standard normal numbers are squared and added, what is the density of the total? And what changes when the numbers are deviations from their own average rather than from the true mean?}
+\emph{If $\nu$ independent standard normal numbers are squared and added, what is the density of the total? And what changes when the numbers are deviations from their own average rather than from the true mean?}
 
 \subsection{One square}
 \label{2b:sec:chi2-one}
@@ -3704,7 +3704,7 @@ We time five swings of a pendulum, compute $g$ from each, and quote the result a
 
 Gosset's distribution does three jobs. It is the exact distribution of the \emph{studentised} mean for Gaussian data, so small-sample intervals and tests built on it are honest. It is also a Gaussian whose variance is itself random, which makes it the standard robust replacement for a Gaussian likelihood. And the same construction applied to two variances gives the $F$ distribution, the tool for asking whether two detectors, two runs or two models have the same scatter.
 
-The question, in words: \emph{if a Gaussian quantity is divided by an independent, estimated measure of its own spread, how is the ratio distributed, and how different is it from a Gaussian?}
+\emph{If a Gaussian quantity is divided by an independent, estimated measure of its own spread, how is the ratio distributed, and how different is it from a Gaussian?}
 
 \subsection{The studentised mean}
 \label{2b:sec:t-derive}

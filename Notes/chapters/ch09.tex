@@ -108,18 +108,18 @@
 By the end of \cref{ch:05} every inference problem had the same shape. The data $\data$ have
 been observed, the parameters $\params$ are the possible explanations, and Bayes' theorem
 gives the posterior $p(\params\given\data)\propto\Like(\params)\,p(\params)$, the likelihood
-times the prior. We can evaluate the right-hand side at any $\params$ we like. What we cannot
-do, once $\params$ has more than two or three components, is integrate it: the evidence
-$Z=p(\data)$, every posterior mean, every marginal and every credible interval is an integral
-over the whole parameter space. A grid of 100 points per axis already needs $10^{12}$
+times the prior. We can evaluate the right-hand side for any specified $\params$, but the evidence
+$Z=p(\data)$ requires an integral over parameter space. Posterior means,
+marginal distributions and credible intervals also require integration. Even
+a modest grid of 100 points along each axis would require $10^{12}$
 evaluations for six cosmological parameters.
 
-There is a way round the integrals, and the book has used it since \cref{ch:01}: a large
-sample from a distribution \emph{is} the distribution, for every practical purpose. Histogram
-the sample and you have the density; average a function over the sample and you have its
-expectation; ignore a column and you have marginalised over that parameter
-\srcref{Kruschke}{§7.1}. So the question becomes: how do we draw a large sample from a
-distribution that we can only evaluate, up to a constant, one point at a time?
+A representative sample from the posterior gives another way to approximate
+these integrals. A histogram estimates a density, an average of a function
+estimates its expectation, and retaining just the columns of interest gives a
+sample from their marginal distribution \srcref{Kruschke}{§7.1}. The problem
+is how to obtain those draws when we can evaluate the density only up to an
+unknown normalisation, one point at a time.
 
 Sometimes nature answers it for us. An oscillator of fixed energy, looked at at random
 instants, hands us a sample of its phase-space orbit with no effort at all, because its
@@ -451,8 +451,9 @@ makes its fractions of time equal to the target probabilities.
 An elected politician lives on a chain of seven islands, numbered $\theta=1,\dots,7$ from
 west to east \srcref{Kruschke}{§7.2.1}. He wants to visit each island in proportion to its
 population, but he does not know the total population, nor even how many islands there are.
-All his advisers can do is ask the mayor of the island he is on, and the mayor of a
-neighbouring island, how many people live there.
+His advisers can obtain just two population counts at a time, one from the
+mayor of his current island and the other from the mayor of a neighbouring
+island under consideration.
 
 \paragraph{Kruschke's question.}
 The story is Kruschke's way of asking the question every posterior sampler faces. Can a walker
@@ -3541,10 +3542,11 @@ log-likelihoods and never multiply raw ones.
 The walker of \cref{9b:sec:biased} took every uphill proposal and a downhill one with
 probability $f(y)/f(x)$, and on the two-bump density \eqref{9b:eq:two-bumps} its histogram came
 out right. We justified the rule with a crowd of walkers whose flows between two points cancel.
-That argument used one special feature, a symmetric proposal, and it left open whether other
-rules would also work. Both points matter in practice. Parameters with a boundary, such as a
-rate that must be positive, need proposals that are not symmetric, and among the rules that
-work we want the one that wastes the fewest proposals.
+The cancellation relied on a symmetric proposal. A boundary, such as the
+requirement that a rate be positive, can make an asymmetric proposal more
+convenient. We therefore need to see how the acceptance rule changes when
+the forward and reverse proposals have different probabilities, and how
+efficiently the resulting walker uses its proposals.
 
 \paragraph{The question.} Fix a way of proposing moves: from $x$, a candidate $y$ is drawn from
 a density $q(y\given x)$. With what probability $a(x,y)$ should we accept it so that the target
@@ -4071,9 +4073,7 @@ from the exact $\tfrac12$ than the ``stuck'' $b=10$ chain.
 \centering
 \includegraphics[width=\linewidth]{figures/ch09/cauchy_chains.pdf}
 \caption{Wasserman's Cauchy example: three Metropolis chains of 1000 steps with proposal widths
-$b=0.1$, $1$ and $10$ (left), and their histograms with the Cauchy density (right). Small steps
-creep; large steps are mostly refused and the trace has flat stretches; in 1000 steps no
-histogram is yet a good copy of the target.}
+$b=0.1$, $1$ and $10$ (left), and their histograms with the Cauchy density (right). With small proposals the chain explores the target slowly, while large proposals are often rejected and leave flat stretches in the trace. After 1000 steps all three histograms still differ visibly from the target density.}
 \label{9b:fig:cauchy}
 \end{figure}
 
@@ -7033,12 +7033,13 @@ coordinates the posterior (ellipse, 68 and 95 per cent) is a thin diagonal ridge
 \section{A decaying source: curved posteriors and nuisance parameters}
 \label{9c:sec:exp}
 
-The straight line had a Gaussian posterior because the model was linear in its parameters. Most
-physical models are not. A radioactive source, a cooling body, a charging capacitor, the light curve
-of a supernova: each is an exponential in time, and the decay time enters inside the exponential.
-For such models the posterior has no closed form, a Gaussian fitted at the peak is only an
-approximation, and the chain becomes the instrument rather than a check. The same models also
-bring the most common nuisance parameter of all, an unknown noise level.
+For the straight-line fit, a Gaussian likelihood and a model linear in its
+parameters gave a Gaussian posterior under the prior we used. In a decay
+model the unknown time scale enters inside an exponential, as in radioactive
+decay, cooling, capacitor charging and models for portions of a supernova
+light curve. The posterior then need not have a closed form. A Gaussian fit
+at the peak describes only the local shape, so we use the chain to explore
+the rest of the posterior and to account for uncertainty in the noise level.
 
 \paragraph{The data.} A source is read once an hour for fifteen hours. The count rate falls as
 $y(t)=Ae^{-t/\tau}$, and each reading has a Gaussian error of standard deviation $\sigma$. We
@@ -7464,10 +7465,7 @@ $\params\mapsto\Cell(\params)$.
   \node[font=\footnotesize,text=black!70,align=center] at (9.65,-1.0) {beam, noise,\\mask, estimator};
   \draw[<-,thick,bdryred!80!black,dashed] (0,0.75) to[bend left=14] node[pos=0.5,above,font=\footnotesize] {inference: $p(\params\given\data)\propto p(\params)\,p(\data\given\Cell(\params))$} (11.3,0.75);
 \end{tikzpicture}
-\caption{The CMB as a chain of dependence. Prediction runs left to right: the parameters fix the
-spectrum, the spectrum fixes the distribution of the harmonic coefficients, one random sky is drawn
-and observed. Inference runs back along the dashed arc, and because the first link has no randomness,
-the likelihood of the parameters is the likelihood of the spectrum at $\Cell(\params)$.}
+\caption{The CMB as a chain of dependence. Reading from left to right, the parameters determine the spectrum, which in turn sets the distribution of the harmonic coefficients from which an observed sky is drawn. The dashed arc traces inference in the reverse direction. Because $\Cell(\params)$ is fixed once the parameters are specified, their likelihood is the spectrum likelihood evaluated at that prediction.}
 \label{9c:fig:hierarchy}
 \end{figure}
 

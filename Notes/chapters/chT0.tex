@@ -317,9 +317,9 @@
 \addcontentsline{toc}{section}{Where this chapter is going}
 \label{T0a:sec:roadmap}
 
-Every result in this book is printed by a short Python script, and every figure is drawn by one. A reader who has never programmed may open one of those scripts, see a page of unfamiliar words (\texttt{np.linspace}, \texttt{ax.loglog}, \texttt{rng.standard\_normal}, \texttt{optimize.brentq}) and conclude that programming is a second subject to be learned before the statistics can begin. It is not. The scripts are written in a small, repetitive subset of Python. The same two dozen names do half of all the work, and a reader who knows about a hundred of them can follow almost every line in the book.
+Short Python scripts produce the numerical results and figures throughout these notes. A first encounter with names such as \texttt{np.linspace}, \texttt{ax.loglog}, \texttt{rng.standard\_normal} and \texttt{optimize.brentq} can make even a familiar calculation hard to follow. Fortunately, the scripts reuse a small vocabulary. Two dozen names account for about half the work, and knowing roughly a hundred is enough to follow almost every line.
 
-That claim is not a guess. The code can be asked directly: a program can read every script in the book, without running any of them, and count which pieces of the language they use and which functions they call. The answer says what to learn, in what order, and what can safely be skipped on a first reading.
+We can find that vocabulary by reading the scripts as text, recording which language features and function calls appear and counting how often each one occurs. Those counts help us decide what to learn first and which specialised calls to look up when we need them.
 
 A script is read from the top down (\cref{T0a:fig:roadmap}). It opens with a docstring that states its question, then a fixed block of imports, then the computation, then a figure and a file of numbers. The computation is written in plain Python (numbers, text, lists and dictionaries, loops and conditions, functions) and almost all of its arithmetic is done by NumPy, the array library: arrays, indexing, masks, broadcasting, random numbers, linear algebra and Fourier transforms. On top of NumPy sit a few SciPy tools (integrals, roots, minimisers, probability distributions) and the few Matplotlib calls that draw every figure. A handful of features appear in only a few scripts, and two physics libraries, healpy and CAMB, can be read as black boxes with known inputs and outputs. And a few traps catch every newcomer once.
 
@@ -475,7 +475,7 @@ That vocabulary is best learned in the order in which a reader meets it inside a
 \section{Running a script and reading what it prints}
 \label{T0a:sec:anatomy}
 
-A script is a recipe for an experiment that the computer carries out. Like a lab procedure, it has a fixed shape: what it is for, what equipment it uses, the measurement itself, and where the results are written down. Every script in the book follows the same shape, so once one script has been read closely, the others look familiar. We read one closely here: \pyname{code/ch02/02_binomial.py}, which checks the binomial distribution of \cref{2a:sec:binomial} by simulation. Its question is: if we repeat a yes/no trial with success probability $p$ a number $n$ of times and count the successes, does the histogram of that count match the binomial formula $\binom nk p^k(1-p)^{n-k}$?
+Much like a written lab procedure, each script states the question, identifies the tools it needs, carries out the calculation and records the results. We can follow all four steps in \pyname{code/ch02/02_binomial.py}, which checks the binomial distribution of \cref{2a:sec:binomial} by simulation. Each simulated experiment counts the successes in $n$ independent trials with success probability $p$. Across repeated experiments, does the histogram of counts follow the binomial formula $\binom nk p^k(1-p)^{n-k}$?
 
 \paragraph{Running it.} From the top directory of the book (the folder \texttt{Notes}), one types in a terminal
 \begin{center}

@@ -83,14 +83,13 @@
 \section*{Where this chapter is going}
 \label{1a:sec:roadmap}
 
-Every analysis in this book ends with a sentence of the form ``the probability
-of this is that''. The probability that a muon passing through a detector
-fires the trigger. The probability that a background fluctuation looks as large
-as the bump we saw. The probability that $\Omega_m$, the fraction of the cosmic energy
-density in matter, lies between $0.30$ and $0.32$, given a CMB map. Before we can say
-any of these, three questions need answers. What exactly is the ``this'' that
-has a probability? What rules must the numbers obey? How does a probability
-change when we learn something?
+What is the probability that a muon passing through a detector fires the
+trigger, or that a background fluctuation produces a bump at least as large
+as the one we saw? Given a CMB map, we might instead ask for the probability
+that $\Omega_m$, the fraction of the cosmic energy density in matter, lies
+between $0.30$ and $0.32$. To make sense of each question we need to specify
+the event whose probability we want, the rules that probability obeys and
+the information on which it is conditioned.
 
 The answers come in two steps. The first step works with \emph{events}: yes-or-no
 statements about the outcome of an experiment, such as ``the track was tagged as
@@ -608,9 +607,9 @@ one has recorded a million muon passages and assigns to each of the eight
 patterns the fraction of passages that produced it. Analyst two has just
 installed a new middle paddle, has no data yet, and assigns numbers that
 express how strongly she expects each pattern, based on the data sheet of the
-photomultiplier. The two sets of numbers mean different things. Yet both
-analysts will add them, subtract them from one, and combine them into trigger
-probabilities in exactly the same way.
+photomultiplier. One analyst starts from measured frequencies and the other from expectations
+about a new detector. Nevertheless, both use the same rules to combine pattern
+probabilities into the probability that the trigger fires.
 
 Whatever the numbers mean, any assignment of probabilities must obey three
 rules, the axioms. Every rule we compute with follows from these three: the
@@ -1283,10 +1282,7 @@ but which $51$ depends on the first card.
     \node[lbl,anchor=west] at (7.0,-0.5) {one unordered set};
   \end{scope}
 \end{tikzpicture}
-\caption{Top: filling $r$ ordered slots from $n$ distinct objects without
-putting any object back. The first slot has $n$ options, the second $n-1$, and
-so on. Bottom: the $3!=6$ ordered lists of the letters $a,b,c$ all describe the
-same unordered set, so counting sets means dividing the ordered count by $r!$.}
+\caption{The upper panel fills $r$ ordered slots from $n$ distinct objects without replacement. Each choice leaves one fewer option for the next slot. The lower panel shows why this procedure overcounts unordered sets. All $3!=6$ arrangements of $a,b,c$ give the same set, and in general each set of $r$ objects occurs $r!$ times in the ordered count.}
 \label{1a:fig:slots}
 \end{figure}
 
@@ -4236,9 +4232,9 @@ Gamma, $\chi^2_p$, $t_\nu$, Beta, Cauchy & sums of waiting times, sums of square
 \label{1b:sec:pdf}
 
 A test beam fires electrons of exactly $50\,\mathrm{GeV}$ into an
-electromagnetic calorimeter. The calorimeter does not report 50 every time:
-the shower fluctuates and the readout is noisy, so the measured energy $E$
-scatters around 50 with a spread of about $0.25\,\mathrm{GeV}$. We want to
+electromagnetic calorimeter. Although the beam energy is fixed, fluctuations in the shower and noise in
+the readout make the measured energy $E$ scatter around 50 with a spread of
+about $0.25\,\mathrm{GeV}$. We want to
 answer questions such as ``what fraction of electrons are measured below
 49.5?'', ``which energy is exceeded by only 5\% of them?'' and ``how does the
 histogram of measured energies look if we take more data?''
@@ -5638,7 +5634,7 @@ each of length $\dd t=\dd x/\abs{v}$:
         $\tfrac12mv^2+\tfrac12m\omega^2x^2=\tfrac12m\omega^2A^2$).
   \item $T=2\pi/\omega$.
 \end{explain}
-In words: the probability of finding the mass in $\dd x$ is the fraction of the
+The probability of finding the mass in $\dd x$ is the fraction of the
 period it spends there, $\propto\dd x/\abs{v}$. It is slow near the turning
 points, so it is found there most often.
 
@@ -5672,10 +5668,9 @@ one, so
 It is normalised: $\int_0^T\frac\omega4\abs{\sin\omega t}\,\dd t
 =\frac\omega4\cdot2\cdot\frac2\omega=1$. The time is no longer uniform. The
 sampled instants crowd around $t=T/4$ and $3T/4$, where the mass crosses the
-centre at full speed, and they avoid the turning points. This is the reverse
-of the arcsine picture. Why? Every $\dd x$ now carries the same probability,
-and a fast stretch of the swing covers many $\dd x$ per unit time, so it
-collects many of the sampled instants. The fraction of instants in the first
+centre at full speed, and they avoid the turning points. This reverses the arcsine picture because each $\dd x$ now carries the
+same probability. Where the swing is fast it covers more such intervals
+per unit time, so more sampled instants fall on that part of the swing. The fraction of instants in the first
 tenth of the period is $(1-\cos\frac\pi5)/4=\OneBRuleFracExact$, not $0.1$.
 The script \texttt{14b\_sampling\_rule.py} finds $\OneBRuleFracSim$, and its
 histogram of $t$ matches \eqref{1b:eq:time-from-uniform-x} with
@@ -5768,8 +5763,8 @@ and it is normalised, $\frac1\pi\int_{-A}^{A}\dd x/\sqrt{A^2-x^2}=\frac1\pi[\arc
 
 All three methods agree, and the agreement is not a coincidence. Methods 2 and 3
 say the same thing from two ends: the \emph{time} average over one orbit equals
-the \emph{ensemble} average over the energy shell. Why? The time spent in a
-patch of the shell is its width over the speed, $\dd x/\abs v$. The patch area
+the \emph{ensemble} average over the energy shell. To see the connection, compare the time spent in a
+patch with the patch's area. The time is its width divided by the speed, $\dd x/\abs v$. The patch area
 is $2\Delta p\,\dd x$, and $\Delta p\propto1/\abs{v}$, so the area is
 proportional to the same thing. A uniformly random instant therefore lands in
 each patch in proportion to its area. This equality of time and

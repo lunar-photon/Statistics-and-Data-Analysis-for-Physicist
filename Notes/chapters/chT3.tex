@@ -85,7 +85,7 @@
 \addcontentsline{toc}{section}{Where this chapter is going}
 \label{T3a:sec:roadmap}
 
-Look at a map of the microwave sky and the first thing you see is not a number but a pattern: hot blobs and cold blobs, some isolated, some joined into long ridges, a few large cold lakes with hot islands inside them. The angular power spectrum $\Cell$ of \cref{ch:07} turns that map into one number per multipole, the mean squared amplitude of the fluctuation on that angular scale. It does not record how the blobs are joined to each other. For a Gaussian, statistically isotropic sky nothing is lost by that (\cref{7b:sec:what-cl-misses}): the phases are random and the spectrum is the whole story. For any other sky, the way the blobs connect carries information the spectrum has thrown away, and the question becomes physical. What does inflation predict for the shapes? What would a small primordial skewness, measured by $f_{\rm NL}$, do to them? What does gravitational lensing, which shifts every point of the image by a couple of arcminutes, do to them? And which shape statistics are left untouched by those shifts, so that they can be trusted when the shifts are a nuisance? That last question is the general one behind everything below. An experiment gives one imperfect realization of a field, and smoothing, noise and propagation effects change its detailed values; what we want are summaries of shape and structure that survive the transformations we regard as nuisance.
+On a map of the microwave sky, some hot regions are isolated while others join into ridges, and a large cold region can surround a hot island. The angular power spectrum $\Cell$ of \cref{ch:07} measures the mean squared amplitude of the fluctuations at each multipole. The spectrum does not specify which hot regions connect on a particular map. For a Gaussian, statistically isotropic sky, however, it determines how often each kind of pattern occurs across the ensemble (\cref{7b:sec:what-cl-misses}). This gives us a reference against which to test shape measurements. We can ask how a small primordial skewness, measured by $f_{\rm NL}$, changes the shapes predicted by inflation, or how gravitational lensing alters them by shifting points on the sky by a few arcminutes. When lensing is a nuisance for the measurement at hand, we want to identify shape statistics that survive those shifts and understand how smoothing and noise affect them.
 
 The polarization of the microwave background adds a second pattern. At every point the polarization is a short stick with a direction but no arrowhead. Where the polarized intensity drops to zero the stick has no direction at all, and around such a point the sticks turn by half a revolution. These points are the polarization singularities. They can be counted, their number per square degree follows from the spectrum, and a smooth remapping such as lensing moves them but cannot create or destroy them one at a time.
 
@@ -290,7 +290,9 @@ Real maps are not Gaussian random fields drawn on a computer, and the functional
 \section{What a skewed sky and a lensed sky change}
 \label{T3a:sec:nongauss}
 
-The simplest inflationary models make the primordial fluctuations almost exactly Gaussian. Models with more than one field can leave a small quadratic piece. The standard way of writing it, used by \textit{Planck}, is the \newterm{local model} \cite{Planck2018IX}
+The simplest inflationary models predict nearly Gaussian primordial fluctuations.
+In models with more than one field, the primordial potential can also contain a
+small term quadratic in a Gaussian field. The \textit{Planck} analysis describes this contribution with the \newterm{local model} \cite{Planck2018IX}
 \begin{equation}
   \Phi(\bm x)=\phi(\bm x)+f_{\rm NL}\big[\phi^2(\bm x)-\langle\phi^2\rangle\big],
   \label{T3a:eq:local}
@@ -459,7 +461,7 @@ with $\dd\alpha$ the change of the stick angle along the loop \cite{VachaspatiLu
     \end{scope}
   }
 \end{tikzpicture}
-\caption{The two fundamental polarization singularities. Each stick is drawn along $\alpha=\pm\frac12\arg(x+iy)$ at its grid point, and the cross marks the zero. Following the sticks once around the red loop, they turn half a turn with the loop (left) or half a turn against it (right).}
+\caption{The two fundamental polarization singularities. Each stick is drawn along $\alpha=\pm\frac12\arg(x+iy)$ at its grid point, and the cross marks the zero. As we follow the red loop once around the zero, the orientation of the sticks rotates through half a turn, in the direction of traversal on the left and in the opposite direction on the right.}
 \label{T3a:fig:defects}
 \end{figure}
 

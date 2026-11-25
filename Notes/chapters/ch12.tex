@@ -222,10 +222,11 @@ mask, after the light has been bent by every galaxy cluster it passed. Until now
 map into its power spectrum (\cref{ch:07,ch:08}) and fed that summary to likelihoods, Markov chains and
 Fisher matrices (\cref{ch:09,ch:10}). The power spectrum keeps the amount of fluctuation on each scale and
 throws away everything else: in \cref{7a:sec:phases} two fields with identical spectra looked nothing
-alike, one made of blobs and the other of rings. So the question of this chapter is a question about what
-to measure. A physical process, or an instrument, changes the detailed values of the field in ways we do
-not care about. \emph{Is there information about the shape and structure of the field that those changes
-cannot easily erase, and how do we turn it into numbers we can do statistics with?}
+alike, one made of blobs and the other of rings. The difference between blobs and rings suggests a measurement of shape.
+To use such a measurement on an observed field, we need to know which aspects
+of its geometry survive the effects of propagation and of the instrument.
+\emph{Which features survive the changes we regard as nuisances, and how
+can we quantify them?}
 
 The answer starts from a simple construction. Pick a threshold and colour every point where the field is
 above it. The coloured region, the excursion set, is a genuine geometric object: it has separate pieces,
@@ -321,7 +322,7 @@ that does not notice the nuisance,
   T\big[\mathcal N[\phi]\big]=T[\phi]\qquad\text{for every field }\phi\text{ the theory can produce.}
   \label{12a:eq:protected}
 \end{equation}
-We call such a $T$ \newterm{protected} against $\mathcal N$. Read in words: we may measure $T$ on the field
+We call such a $T$ \newterm{protected} against $\mathcal N$. This protection means that we may measure $T$ on the field
 we received and interpret it as if we had measured it on the field the physics made, without ever
 modelling the nuisance. That is a physical reason to care about $T$, not just one more way of
 compressing data.
@@ -481,13 +482,12 @@ already using does not expose?
 \section{The topology of a field: excursion sets and what we count in them}
 \label{12a:sec:excursion}
 
-A weather map shows the temperature over a country. Ask a forecaster for ``the topology of the temperature
-field'' and the question has no answer: the country has a shape, and the field puts a number at every place
-in it, but a list of numbers has no pieces or holes. Ask instead ``which regions are warmer than
-$25^\circ$C?'' and the answer is a set of regions you can colour on the map. That coloured set has a
-shape, and the shape can be counted: three warm regions, one of them with a cooler lake inside. This is the
-whole trick. We do not assign a topology to the field; we use the field to cut out regions, and we count
-the topology of the regions.
+Consider a weather map that gives the temperature at every point in a country.
+To ask a question about topology, we first use those temperatures to define a region.
+For example, colour every point warmer than $25^\circ$C. The coloured set might
+consist of three disconnected warm regions, one of which surrounds a cooler lake.
+The threshold has turned a collection of temperatures into a geometric object whose
+connected components and holes we can count.
 
 \subsection{Excursion sets}
 \label{12a:sec:xnu}
@@ -772,7 +772,7 @@ does the mirror image at negative thresholds.
 \centering
 \includegraphics[width=0.75\linewidth]{figures/ch12/threshold_scan.pdf}
 \caption{Pieces, holes and their difference for one $256\times256$ Gaussian map as the threshold is scanned.
-Holes dominate at negative thresholds and pieces at positive ones; $\chi$ swings from negative to positive.
+As the threshold rises, the excursion set changes from a connected region with many holes to a collection of isolated peaks. This change in which count dominates takes $\chi$ from negative to positive.
 The dashed curve is the expected $\chi$ for a Gaussian field in a square, derived in
 \cref{12a:sec:gkf,12a:sec:edges}.}
 \label{12a:fig:scan}
@@ -2632,13 +2632,15 @@ $2\epsilon$ may have been created by the error, while a feature that persists mu
 \section{Small changes of the field, small changes of the diagram}
 \label{12b:sec:stability}
 
-A measured map is never the field itself. It is the field plus instrumental noise, smoothed by a beam, with
-the occasional bad pixel. Every wiggle that noise adds to the landscape of \cref{12b:sec:filtration} is a tiny
-summit with a tiny pass beside it, so a noisy map has many more islands than the field under it. If each of
-them were an equal entry in the persistence diagram, the diagram of the data would have little to do with the
-diagram of the physics. What saves the method is that the noise-made islands are not equal entries: they are
-born and die at almost the same level, so they sit right next to the diagonal, while the islands of the
-underlying field barely move. The statement can be made precise, and checked on simulated maps.
+An observed map contains a beam-smoothed signal, instrumental noise and
+occasionally a bad pixel. In the landscape of \cref{12b:sec:filtration}, a small
+noise fluctuation can introduce a summit and a nearby pass, giving the noisy
+map an island that was absent from the underlying field. What distinguishes
+such an island is the small difference between its birth and death levels.
+It appears close to the diagonal of the persistence diagram, whereas a
+prominent island can survive a small perturbation with only a modest shift
+in its birth and death levels. We can quantify this distinction and check it
+on simulated maps.
 
 \paragraph{The question.} Suppose every value of the field changes by at most $\epsilon$,
 \begin{equation}
@@ -2709,7 +2711,7 @@ $(2,1.6)$ goes to the diagonal:
 \end{explain}
 In the second, $(2,1.6)$ goes with $(2.8,0.1)$ and $(3,0)$ goes to the diagonal: the costs are
 $\max(0.8,1.5)=1.5$ and $3/2=1.5$, so the worst is $1.5$. The bottleneck distance is the better of the two,
-$d_B=0.2$. In words: the long-lived feature moved by $0.2$, and the short one could have been created or destroyed
+$d_B=0.2$. The long-lived feature moved by $0.2$, and the short one could have been created or destroyed
 by a change of size $0.2$.
 
 \begin{figure}[htbp]
@@ -4796,9 +4798,10 @@ maps \cite{Takahashi2017sims}; we return to the cost in \cref{12w:sec:research}.
 \section{From galaxy shapes to a mass map}
 \label{12w:sec:ks}
 
-A survey never sees the convergence. It sees galaxies, each with a measured ellipticity
-$\varepsilon\approx\varepsilon^{(0)}+\gamma$: its own random shape $\varepsilon^{(0)}$ plus the shear $\gamma$ of
-\cref{T1b:sec:objects}, a spin-2 quantity, a headless stick. Peaks, islands and lakes are properties of a map
+A weak-lensing survey measures galaxy shapes. In the weak limit, the measured
+ellipticity $\varepsilon\approx\varepsilon^{(0)}+\gamma$ combines the intrinsic
+ellipticity $\varepsilon^{(0)}$ with the shear $\gamma$ of \cref{T1b:sec:objects}.
+The shear is a spin-2 quantity, represented by a stick with no arrowhead. Peaks, islands and lakes are properties of a map
 of $\kappa$, so before any of the summaries of \cref{12a:sec:excursion,12b:sec:filtration} can be computed, the
 convergence must be reconstructed from the sticks. Three things stand between the sticks and the map. The
 reconstruction itself is non-local: the shear at one point is caused by matter everywhere. The shapes carry noise
@@ -6704,9 +6707,10 @@ route, simulation, whose error falls as $1/\sqrt n$ with the number of maps what
 \section{Two fields with one power spectrum}
 \label{12c:sec:twins}
 
-A Gaussian field is fixed completely by its power spectrum (\cref{7a:sec:grf}). The moment a field is not
-Gaussian, the spectrum stops being the whole story, and in \cref{7a:sec:phases} we saw two maps with identical
-spectra that looked nothing alike. Primordial non-Gaussianity of the local type is the physical version of that
+For the Gaussian fields of \cref{7a:sec:grf}, specifying the mean and power
+spectrum fixes the distribution. Once Gaussianity is relaxed, fields with the
+same spectrum can differ substantially in shape, as the two maps in
+\cref{7a:sec:phases} illustrated. Primordial non-Gaussianity of the local type is the physical version of that
 situation: inflation with more than one field can add to the Gaussian potential a small piece of its own square
 (\eqref{T3a:eq:local}; see the cosmology notes for the physics). The square adds a little power, but the dominant
 signature is in the shapes: high peaks become a little higher and more numerous than deep troughs, or the other way
@@ -7845,9 +7849,10 @@ and how probable is each, using nothing but the prior and the simulator?
 
 The plainest answer is a direct imitation of Bayes' theorem by sampling, \newterm{approximate Bayesian computation} (ABC). Repeat
 many times: draw $\epsilon$ from the prior; simulate a map with that $\epsilon$; compute its summary $t$; keep $\epsilon$ if $t$ lands
-within a distance $\delta$ of the observed $t_{\rm obs}$. The kept values are draws from the posterior. Why? A value $\epsilon$ is
-proposed with probability density $p(\epsilon)$ and, once proposed, kept with probability $\Prob(|t-t_{\rm obs}|<\delta\given\epsilon)$.
-So the density of kept values is
+within a distance $\delta$ of the observed $t_{\rm obs}$. The tolerance $\delta$ determines which posterior this procedure approximates.
+A proposed $\epsilon$ has density $p(\epsilon)$, and its probability of acceptance
+is $\Prob(|t-t_{\rm obs}|<\delta\given\epsilon)$. Multiplying the proposal density
+by that acceptance probability gives the density of the retained values up to normalisation,
 \begin{align}
   p_{\rm kept}(\epsilon)
   &\eqby{1}\frac{p(\epsilon)\,\Prob(|t-t_{\rm obs}|<\delta\given\epsilon)}{\int p(\epsilon')\,\Prob(|t-t_{\rm obs}|<\delta\given\epsilon')\,\dd\epsilon'}

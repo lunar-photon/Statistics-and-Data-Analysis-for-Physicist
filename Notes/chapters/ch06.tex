@@ -113,18 +113,16 @@
 \section*{Where this chapter is going}
 \label{6a:sec:roadmap}
 
-Every simulation in this book starts the same way: a line such as
-\texttt{rng.random(N)} hands us $N$ numbers that behave like independent draws
-from the uniform distribution on $[0,1)$. From them we build draws from any
-distribution we like, and averages over the draws estimate probabilities,
-expectation values and integrals that no formula gives us. The computer that
-produces those numbers is a deterministic machine: run the same program twice and
-it does exactly the same thing. So the numbers cannot be random. They are the
-output of a small dynamical system, a \emph{state} that is updated by a fixed
-rule, and the only honest claim we can make about them is a statistical one: no
-test we care about can tell them apart from genuinely independent uniform draws.
+A call such as \texttt{rng.random(N)} supplies $N$ numbers that we use as
+independent draws from the uniform distribution on $[0,1)$. By transforming
+these draws we can sample other distributions, then estimate probabilities,
+expectations and integrals by averaging. Yet a generator follows a fixed rule
+for updating its internal \emph{state}, so starting from the same state
+reproduces the entire sequence. Its suitability for a simulation therefore
+depends on whether the regularities in that sequence affect the quantities
+we intend to estimate.
 
-That claim can fail, and it has failed in instructive ways. A generator has a
+One regularity is unavoidable. A generator has a
 finite number of states, so it must eventually repeat, and after that no new
 information enters a simulation. The simplest generators, the linear
 congruential ones, put their consecutive outputs on a crystal lattice: in three
@@ -568,13 +566,10 @@ they are not.
 
 The generator that broke Monty's coin in \cref{6a:sec:monty} is a
 \emph{linear congruential generator}, the oldest family still in use and, until
-the 1990s, the default in most scientific libraries. It deserves a careful look
-for two reasons. It is simple enough that we can prove everything about it: its
-period, which of its bits are good and which are bad, and where its points lie.
-And the generator numpy uses today, PCG64, has a linear congruential generator
-inside it. So we ask two questions. With one multiplication and one addition per
-step, how long a sequence can we get before it repeats? And which parts of each
-number can we trust?
+the 1990s, the default in most scientific libraries. Its simple update, one multiplication and one addition per step, lets
+us derive the period, examine how quickly individual bits repeat, and locate
+successive outputs geometrically. These properties also matter for a more recent
+generator, PCG64, whose internal state evolves by a linear congruential rule.
 
 \subsection{The rule and its closed form}
 
@@ -2686,10 +2681,10 @@ one draw out, with nothing thrown away \srcref{CasellaBerger}{\S5.6.1}.
 \section{Gaussian numbers: Box--Muller and the Cholesky factor}
 \label{6b:sec:gauss}
 
-Gaussian noise is everywhere in a simulation. The thermal noise of an amplifier, the
-detector noise of a gravitational-wave interferometer, the smearing of a
-calorimeter's energy measurement and the primordial fluctuations of the CMB are all
-modelled as Gaussian. So we need a fast, exact way to turn uniform numbers into
+Gaussian draws enter simulations of amplifier noise, gravitational-wave
+detector noise, calorimeter energy resolution and the primordial fluctuations
+of the CMB. In the first three cases they model measurement fluctuations,
+while in the last they model the signal itself. So we need a fast, exact way to turn uniform numbers into
 standard normal numbers $Z\sim\Normal(0,1)$, and then into correlated Gaussian
 vectors with any covariance matrix we like.
 
@@ -2955,7 +2950,7 @@ and match $\mathbf L\mathbf L\T$ to $\Cmat$ entry by entry:
   \item The bottom-right entry: $l_{22}^2=\sigma_y^2-\rho^2\sigma_y^2$.
 \end{explain}
 So $x=\mu_x+\sigma_xz_1$ and $y=\mu_y+\rho\sigma_yz_1+\sigma_y\sqrt{1-\rho^2}\,z_2$.
-In words: $y$ copies a fraction $\rho$ of the fluctuation $z_1$ of $x$, in units of
+In this construction $y$ inherits a fraction $\rho$ of the fluctuation $z_1$ of $x$, in units of
 its own width $\sigma_y$, and adds fresh noise $z_2$ of its own (the same example as
 \cref{ch:02}). For $\sigma_x=1$,
 $\sigma_y=2$, $\rho=0.8$ this gives $l_{21}=\SixBChLa$ and $l_{22}=\SixBChLb$. From
@@ -3063,7 +3058,7 @@ elsewhere. The density of its horizontal coordinate alone is the marginal
   \item The length of the vertical slice of $A_f$ at $x$ is the height of the curve.
 \end{explain}
 So \emph{the $x$-coordinates of points spread uniformly under the graph of $f$ are
-draws from $f$}. In words: a tall part of the curve holds more of the points, in
+draws from $f$}. More sampled points fall where the curve is high, in
 proportion to its height. The same holds if we only know $f$ up to a constant
 factor $c>0$. The region under $cf$ has area $c$, so a uniform point in it has
 joint density $1/c$, and the $x$-marginal is $cf(x)/c=f(x)$ again. So we never
@@ -3476,10 +3471,10 @@ fraction of simulated batches in which they do \srcref{CasellaBerger}{Ex.~5.6.2}
 
 A grid rule beats $1/\sqrt N$ easily in one dimension, and loses that advantage as the
 dimension grows. Take the midpoint rule with spacing $\Delta$: it replaces $h$ on each cell
-by its value at the cell's midpoint. For a smooth integrand its error is of order
-$\Delta^2$. Why? Expand $h$ in a Taylor series about the midpoint. The linear term is odd
-about the midpoint, so it integrates to zero over the cell, and the first term that
-survives is quadratic. Now spend $N$ points in $d$ dimensions. A grid gives only
+by its value at the cell's midpoint. For a smooth integrand the midpoint approximation has an error of order
+$\Delta^2$. To see where this power comes from, expand $h$ about the midpoint.
+The linear term is odd and integrates to zero over the cell, leaving the
+quadratic term as the first contribution to the error. Now spend $N$ points in $d$ dimensions. A grid gives only
 $n=N^{1/d}$ points per axis, so
 \begin{align}
   \text{grid error}\;\propto\;\Delta^2\eqby{1}\Bigl(\frac{1}{n}\Bigr)^{2}\eqby{2}N^{-2/d},
@@ -3716,9 +3711,10 @@ A search for a rare background fluctuation needs the probability that a standard
 test statistic exceeds $3$, $\Prob(Z>3)=\SixBIsTailP$. Estimated by plain Monte Carlo
 with $N=\SixBIsTailN$ draws, it is the fraction of draws above $3$ (\cref{6b:sec:sqrtN}).
 Most runs of $100$ draws contain no such draw at all: in $\SixBIsTailR$ repeated runs, a
-fraction $\SixBIsPlainZero$ returned exactly zero. Why? The integrand is the indicator
-$h(x)=\mathbf 1[x>3]$, equal to $1$ above $3$ and $0$ below. Nearly every draw lands
-below $3$, where $h$ is zero, and tells us nothing. So the trouble is not the factor
+fraction $\SixBIsPlainZero$ returned exactly zero. The integrand is the indicator
+$h(x)=\mathbf 1[x>3]$, so only draws above $3$ contribute. A run in which
+every draw falls below the threshold therefore estimates the tail probability
+as zero. So the trouble is not the factor
 $1/\sqrt N$ but the constant $\sigma$ in front of it: we sampled from a density that
 rarely visits the region that matters.
 
@@ -5084,7 +5080,7 @@ variance is
         $\beta^*$; substitute it back.
   \item $\rho_{hc}=\Cov(h,c)/(\sigma_h\sigma_c)$ is the correlation coefficient.
 \end{explain}
-In words: we let the draws measure only the \emph{difference} between the integrand and a
+We therefore use the draws to estimate only the \emph{difference} between the integrand and a
 function whose integral we already know. The better $c$ tracks $h$, the closer $\rho_{hc}^2$
 is to one and the smaller the variance that is left.
 

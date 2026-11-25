@@ -117,17 +117,16 @@
 \section*{Where this chapter is going}
 \label{5a:sec:roadmap}
 
-Nature produced one set of data. Several situations could have produced it: a
-disease or no disease, signal or background, a fair coin or a biased one, a
-universe with one value of $\Omega_m$ or another. Physics usually tells us how
-each situation \emph{generates} data. What we want is the reverse: given the
-data we actually have, how should probability be spread over the situations that
-could have produced them? Bayes' theorem is the rule that turns the first kind
-of knowledge into the second, and one picture carries it throughout. Before the
-evidence, the whole sample space is in play. The evidence tells us that we are
-somewhere in the region where it is true, so the sample space shrinks to that
-region, and every hypothesis is re-measured by the share of the surviving region
-it occupies.
+The same observation can admit several explanations. A positive test can
+occur with or without disease, and a run of heads can come from a fair or a
+biased coin. In cosmology, several values of $\Omega_m$ can be consistent
+with the sky we observe. In each case our model tells us how likely the
+data are under each hypothesis. Bayes' theorem uses those likelihoods
+together with the prior probabilities to tell us how much probability to
+assign to each hypothesis after the observation. Picture the sample space
+with area proportional to probability. Conditioning restricts our attention
+to the region compatible with the observation, and the posterior probability
+of a hypothesis is its share of the area that remains.
 
 With a handful of discrete hypotheses the picture can be drawn and computed by
 hand. Credibility is reallocated: hypotheses that predicted the observation well
@@ -594,11 +593,12 @@ to write $I$ down.
 
 A disease affects one person in a hundred. A test for it comes out positive for
 $95\%$ of the people who have the disease and, falsely, for $10\%$ of the people
-who do not. A person picked at random tests positive. How worried should they
-be? Most people's first answer is ``about $95\%$''. The right answer is about
-$9\%$. We computed it by formula in
-\cref{ch:01}. Here we want to \emph{see} it, in one picture that works for every
-inference problem.
+who do not. Suppose a person picked at random tests positive. The $95\%$ sensitivity
+tells us how often the test detects the disease in someone who has it. To
+find the probability that this person has the disease, we must also count
+the false positives among the much larger group of healthy people. This
+gave about $9\%$ in \cref{ch:01}. Here we represent the same calculation
+as an area so that we can see how each group contributes.
 
 The picture rests on one idea. Before the evidence, every possibility in the
 sample space is still in play, and the probability of a hypothesis is the
@@ -1215,11 +1215,7 @@ shows the whole sequence as bars.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/ch05/credibility_trigger.pdf}
-\caption{Credibility of the three trigger paths. From left: the prior (share of
-recorded events); the likelihood of an isolated high-$p_T$ muon under each path; the
-posterior; the likelihood of the run-log entry ``muon trigger masked''; the final
-posterior. Blue bars always sum to one; grey bars need not. Each blue panel is the
-previous blue panel times the grey panel, renormalised.}
+\caption{How two observations change the probabilities of the three trigger paths. Read from left to right, starting with the prior share of recorded events for each path. The isolated high-$p_T$ muon supplies the first likelihood and the run-log entry ``muon trigger masked'' supplies the second. Each update multiplies the preceding blue probabilities by the corresponding grey likelihoods, then normalises the products so that the new blue bars sum to one.}
 \label{5a:fig:cred-trigger}
 \end{figure}
 
@@ -1642,8 +1638,8 @@ $c=0.8$ these are $\FiveABdtEffS$ and $\FiveABdtEffB$, so
         of that event, the two efficiencies.
   \item Posterior odds $\FiveABdtCutLR/99$, converted with \eqref{5a:eq:odds-prob}.
 \end{explain}
-This is much larger than $\Prob(S\given x=0.8)=\FiveABdtPostEight$. Why? The
-selected sample contains all the events with $x$ between $0.8$ and $1$. Most of
+This exceeds $\Prob(S\given x=0.8)=\FiveABdtPostEight$ because applying
+the cut selects the entire range of scores between $0.8$ and $1$. Most of
 them score well above $0.8$, and their scores are much stronger evidence. An event
 that sits exactly at the cut is among the \emph{least} signal-like in the sample.
 Bayes' theorem conditions on exactly the statement we say we know, nothing more. ``The score is
@@ -2944,11 +2940,12 @@ sampling methods (\cref{ch:06,ch:09}).
 \section{Conjugate priors: posteriors on the back of an envelope}
 \label{5b:sec:conjugate}
 
-For the likelihoods physicists meet most often, the product ``likelihood times prior''
-can be worked out on paper. These are counts of successes, counts of events and
-Gaussian readings. A grid (\cref{5b:sec:continuous}) also gives the posterior, but only
-as a table of numbers. On paper the posterior comes out in the same family of curves as
-the prior, with a few constants shifted by the data. We can then see at a glance how
+For counts of successes, counts of events and Gaussian readings, a suitable
+choice of prior allows us to work out the posterior on paper. The grid
+calculation of \cref{5b:sec:continuous} represents the posterior as a table
+of numbers. With a conjugate prior we can instead write it as a member of
+the same family as the prior and identify exactly which parameters the data
+have changed. We can then see at a glance how
 much of the answer comes from the data and how much from the prior. Updating becomes
 bookkeeping: add the number of heads here, the number of counts there.
 
@@ -3480,9 +3477,7 @@ interval that contains a fraction $1-\alpha$ of the sorted samples.
   \node[lbl,anchor=west] at (5.6,0.45) {$p(\theta\given\data)$};
 \end{tikzpicture}
 \caption{The highest density interval as a water level. The level $W$ is lowered until
-the parts of the posterior above it (shaded) hold probability $1-\alpha$. Every value
-inside the shaded region is more credible than every value outside. With two peaks, the
-HDI is two separate intervals.}
+the parts of the posterior above it (shaded) hold probability $1-\alpha$. The threshold selects points by posterior density, so even the lowest density inside the shaded region is at least as high as any density outside it. For the two peaks shown, the same threshold selects two disjoint intervals.}
 \label{5b:fig:hdi-water}
 \end{figure}
 
@@ -3509,8 +3504,8 @@ has unequal tails. The ETI has equal tails and unequal densities at its ends.
 Recall that $x=C_2/\widehat C_2$ is the quadrupole power relative to its estimate. Its
 95\% ETI is $[\FiveBSumEtiLo,\FiveBSumEtiHi]$ and its 95\% HDI is
 $[\FiveBSumHdiLo,\FiveBSumHdiHi]$, at water level $W=\FiveBSumWater$
-(\cref{5b:fig:summaries}, left). The HDI is shorter and starts lower. Why? Values of $x$
-between $\FiveBSumHdiLo$ and $\FiveBSumEtiLo$ have higher density than values near
+(\cref{5b:fig:summaries}, left). The HDI starts lower and is shorter because it includes values of $x$
+between $\FiveBSumHdiLo$ and $\FiveBSumEtiLo$ that have higher density than values near
 $\FiveBSumEtiHi$, yet the ETI leaves out the former and keeps the latter
 \srcref{Kruschke}{\S12.1.2.2}. From $10^5$ posterior samples, the shortest interval
 containing 95\% of them is $[\FiveBSumHdiSLo,\FiveBSumHdiSHi]$, the same up to sampling
@@ -3605,8 +3600,9 @@ $L''(\theta_0)<0$, and Taylor-expand about it:
 Exponentiate and drop the higher terms. The exponential of $-(\theta-\theta_0)^2/
 2\sigma^2$ is a Gaussian, so $p(\theta\given\data)\approx\Normal(\theta_0,\sigma^2)$
 \srcref{Sivia}{(2.13)--(2.15)}. This is the \newterm{Gaussian} or \newterm{Laplace
-approximation}. In words: the error bar is one over the square root of the curvature of
-the log-posterior at its peak. A sharply curved peak means a small error bar. Within the approximation, $\theta_0\pm\sigma$ holds 68\% of
+approximation}. The approximate posterior standard deviation is the inverse square root of
+the curvature of the negative log-posterior at the mode. A sharper peak
+therefore gives a narrower credible interval. Within the approximation, $\theta_0\pm\sigma$ holds 68\% of
 the probability and $\theta_0\pm2\sigma$ holds 95\%.
 
 \paragraph{Example: Gaussian readings.}
@@ -3857,9 +3853,9 @@ information of a Cauchy density.
 
 The sample mean of the arrival points would be the answer for Gaussian data. Here it
 does not converge at all: after 64 flashes it is $\FiveBLhXbarSix$, and on average it
-is no closer to the truth than a single flash. Why? For Cauchy data the average of $N$ points has the same Cauchy
-distribution as a single point, because the central limit theorem needs a finite
-variance (\cref{ch:02}). One wild flash, sent almost parallel to the shore, can drag the
+is no closer to the truth than a single flash. The average of $N$ independent Cauchy draws has exactly the
+same Cauchy distribution as one draw. Its variance is undefined, so the
+finite-variance central limit theorem of \cref{ch:02} does not apply. One wild flash, sent almost parallel to the shore, can drag the
 mean anywhere. The posterior never uses the mean. It weighs every flash through the
 likelihood. A wild flash far from $\alpha$ has a likelihood that is nearly flat in
 $\alpha$, so it barely moves the posterior \srcref{Sivia}{p.~36}.
@@ -4834,7 +4830,7 @@ over the draws: a mean, a marginal, the probability of an interval. This is the 
 from Bayesian inference to Monte Carlo, and it is how almost all modern posteriors are
 handled.
 
-The question, in words: if we can draw from the posterior, what can we compute from the
+If we can draw from the posterior, what can we compute from the
 draws, and how accurately?
 
 \begin{workdef}[posterior sample]
@@ -5650,9 +5646,10 @@ that the source is there is $\FiveCCntPost$.
 The Bayes factor is smaller than the best fit would suggest, and the gap is the price
 of not knowing $s$. The best signal value is $\hat s=n-b=3$. At that value five
 counts are $\FiveCCntLR$ times more probable than under background only. The Bayes
-factor is only $\FiveCCntB$. Why? The signal model does not commit to $s=3$. It also
-spreads its probability over values like $s=9$, which would have produced far more
-than five counts, and those values pull the average down. The ratio of the two
+factor is only $\FiveCCntB$ because the signal model averages over possible
+values of $s$. Its prior also assigns weight to values such as $s=9$, under
+which observing only five counts would be unlikely. These values pull the
+average down. The ratio of the two
 numbers, $\FiveCCntOcc$, is the price the signal model pays for not knowing $s$ in
 advance; \cref{5c:sec:occam} derives this price in general. The price depends on how
 wide the prior range is. If the physics had allowed anything up to $s_{\max}=100$, the
@@ -5700,7 +5697,8 @@ theory depends on what it is compared with.
 \section{Occam's razor from the evidence}
 \label{5c:sec:occam}
 
-A better fit alone cannot choose between models. Here is why. Forty measurements
+To see why comparing best fits can favour a more elaborate model even when
+the extra feature is absent, consider forty measurements
 $y_i$ are taken at equally spaced points $x_i$ between $0$ and $10$, each with
 Gaussian noise of standard deviation $\sigma=1$. One physicist says the points
 scatter about a straight line, $y=a+bx$. A second says there is also a Gaussian bump
@@ -6040,9 +6038,11 @@ cancels in the Bayes factor, which is therefore
   \exp\!\Bigl[-\tfrac12\bigl(\chi^2_{\min}(A,\mu)-\chi^2_{\min,\rm line}\bigr)\Bigr]\,\dd\mu\,\dd A .
   \label{5c:eq:bump-bf}
 \end{equation}
-In words: the likelihood ratio of each bump to the best line, averaged over the prior
-box of bumps. (We assumed that the line's prior box is wide enough to contain its
-likelihood; with the boxes above it is, by many standard deviations.)
+The Bayes factor averages the likelihood ratio of each candidate bump to the
+best straight line over the prior range of bump heights and positions. In taking
+that average we assumed that the prior bounds for the line parameters enclose
+their likelihood peak. The bounds used here extend many standard deviations
+beyond it.
 
 \pyfile[firstline=72,lastline=91,firstnumber=72]{code/ch05/lib_bump.py}{The Bayes
 factor of bump against line on a grid}

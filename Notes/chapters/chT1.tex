@@ -25,9 +25,9 @@
 \addcontentsline{toc}{section}{Where this chapter is going}
 \label{T1a:sec:roadmap}
 
-A cosmological model is a machine. We feed it six numbers, and it returns the \emph{statistics} of the sky: the angular power spectrum $\Cell$ of the microwave background (how much the temperature varies on each angular scale), the matter power spectrum $P(k)$ (the same for the matter density, scale by scale), and the distance to every redshift. CAMB \cite{CAMB2000} is that machine in code. The machine never returns the sky itself. Our sky, with its particular hot and cold spots and its particular galaxies, is one noisy draw from the statistics the machine predicts. Every later chapter works across that gap. The model predicts a distribution. The data are one draw from it. Statistics is how we read the six numbers back from that one draw.
+For a given set of six cosmological parameters, CAMB \cite{CAMB2000} predicts the angular power spectrum $\Cell$ of the microwave background, the matter power spectrum $P(k)$ and the relation between distance and redshift. The two spectra describe fluctuations scale by scale, in temperature on the sky and in matter density in space. Our sky, with its particular hot and cold spots and its particular galaxies, is one realisation of the model. Inferring the parameters therefore requires us to understand both how the predicted spectra depend on those parameters and how far a single observed spectrum can depart from the prediction.
 
-The book follows one pipeline (\cref{ch:00}): a theory, its data, a compressed statistic, that statistic's scatter, and back to the theory. Cosmology is the first step. It fixes what each summary \emph{should} be on average. The physics behind each object is worked out in the cosmology notes. The data analyst needs less: which objects the statistics uses, what each one means in one line, the equation that defines it, where CAMB and the cosmology notes write it differently, and how the predicted statistics move when the six numbers move. \Cref{T1a:fig:roadmap} is the map.
+Cosmology supplies the first step in the analysis of \cref{ch:00} by fixing the expected values of the summaries we measure. The companion cosmology notes derive the underlying physics. Here we define each observable, relate the conventions used in those notes to CAMB's output, and follow how the prediction changes as we vary the six parameters (\cref{T1a:fig:roadmap}).
 
 \begin{figure}[htbp]
 \centering
@@ -804,7 +804,7 @@ C_\ell^{\kappa\kappa}\propto\Omega_{m0}^2\,\sigma_8^2 ,
 \end{equation}
 and the two parameters enter together (\cref{T1b:sec:s8} finds out how far this holds once the shape of $P_\delta$ is allowed to change). Each multipole mixes many wavenumbers, so a sharp feature in $P_\delta$ is smoothed away in $C_\ell^{\kappa\kappa}$. And the weight $g$ is broad, so lensing measures a smeared, projected density and not a three-dimensional map. Splitting the sources into redshift bins (\newterm{tomography}) recovers some of the lost depth, through the cross spectra $C_\ell^{ij}$ with weights $g_ig_j$.
 
-The last row is the CMB version. Lensing by the same structures remaps the CMB by deflections of a few arcminutes (see the cosmology notes). How can a map of the potential be recovered from a single lensed CMB sky, with no galaxy shapes at all? The question in words: \emph{what does lensing do to the statistics of the CMB that the unlensed sky could never do?}
+The last row is the CMB version. Lensing by the same structures remaps the CMB by deflections of a few arcminutes (see the cosmology notes). How can a map of the potential be recovered from a single lensed CMB sky, with no galaxy shapes at all? \emph{What does lensing do to the statistics of the CMB that the unlensed sky could never do?}
 
 \emph{Unlensed modes are independent.} Without lensing the CMB is statistically the same in every direction, and its Fourier modes on a flat patch are uncorrelated: $\langle T_{\bm\ell}T_{\bm\ell'}\rangle=0$ unless $\bm\ell'=-\bm\ell$ (\cref{T1a:sec:machine}; the flat-sky version of the independence of the $\alm$). \emph{Lensing mixes them.} Hold one lensing potential fixed and expand the remapping of the table to first order in the small deflection:
 \begin{align}
@@ -1976,7 +1976,11 @@ The fiducial spectra fix the sizes. $D_\ell^{EE}=\ell(\ell+1)C_\ell^{EE}/2\pi$ p
 \section{When power moves from \texorpdfstring{$E$}{E} to \texorpdfstring{$B$}{B}}
 \label{T1c:sec:rotation}
 
-We now have the rule for one stick, \eqref{T1c:eq:twist}: a twist by $\beta$ multiplies $Q+iU$ by $e^{2i\beta}$. And we have the split of a field of sticks into $E$ and $B$, with the six spectra $C_\ell^{XY}$ of \eqref{T1c:eq:spectra}. That is enough to draw a twisted pattern, as in panel (f) of \cref{T1c:fig:patterns}. It is not yet enough for data. A CMB experiment does not compare sticks one by one; it measures the spectra, and the spectra of the sky are known only statistically. The question is what a twist does to the spectra, and how its effect differs from that of anything else that turns $E$ into $B$.
+We now have the rule for one stick, \eqref{T1c:eq:twist}: a twist by $\beta$ multiplies $Q+iU$ by $e^{2i\beta}$. And we have the split of a field of sticks into $E$ and $B$, with the six spectra $C_\ell^{XY}$ of \eqref{T1c:eq:spectra}. Together these rules give the rotated pattern in panel (f) of
+\cref{T1c:fig:patterns}. To connect this construction to data, we need the
+effect of the rotation on the measured spectra. Their response tells us how
+to distinguish a coherent rotation from other processes that convert $E$
+into $B$.
 
 Think of two radio stations on neighbouring frequencies, a loud one and a nearly silent one. A slightly mistuned receiver lets a little of the loud station into the quiet channel. You hear the leak as extra sound in the quiet channel, but there is a better test than loudness: play the loud station's programme next to the leak and they match, word for word and with the same sign. Now suppose instead the antenna wobbles in the wind, so that the loud programme is added to the quiet channel sometimes with a plus sign and sometimes with a minus sign. You still hear extra sound, as loud as before. But the match with the loud programme averages to zero, because the plus and minus moments cancel. Loudness cannot tell the two leaks apart; the correlation with the source can.
 

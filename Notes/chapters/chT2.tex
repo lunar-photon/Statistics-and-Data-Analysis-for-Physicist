@@ -106,9 +106,9 @@ The same reading applies to the other astrophysical data in the book. The dark-m
 \section{What a gravitational wave is}
 \label{T2g:sec:wave}
 
-In Newton's theory gravity acts at once. Move the Sun, and the Earth feels the new pull in the same instant, however far away it is. Relativity forbids this: no influence travels faster than light. So when a mass distribution changes, say two black holes swing round each other, the news of the change must spread outwards at a finite speed, as a ripple in the gravitational field. Far from the source the ripple is tiny, and it passes through everything in its way, detectors included.
+In Newtonian gravity a change in the position of a source changes its pull everywhere at once. In relativity the disturbance takes time to propagate. When two black holes orbit one another, for example, the changing distribution of mass produces a ripple that travels outwards in the gravitational field. By the time it reaches a distant detector the ripple is weak enough to treat as a small perturbation.
 
-Three questions decide whether such a ripple can be measured and how. \emph{What is the ripple, as a mathematical object? How many independent kinds of ripple are there? And what does one do to the things it passes through?} The answers are short. The ripple is a small correction $h_{\mu\nu}$ to the flat metric of spacetime; it obeys a wave equation with speed $c$; it comes in exactly two kinds, called $h_+$ and $h_\times$; and its only effect on a set of free masses is to change the distances between them, stretching along one direction while squeezing along the perpendicular one. A detector is a device that measures such changes of distance.
+We write that perturbation as a correction $h_{\mu\nu}$ to the flat spacetime metric. In empty space it obeys a wave equation with speed $c$ and has two independent polarisations, $h_+$ and $h_\times$. To connect those statements to a measurement, consider a ring of freely falling test masses. As a wave passes through the ring along its axis, separations grow in one transverse direction while shrinking in the perpendicular direction. A detector measures this relative change in distance.
 
 \subsection{The inputs}
 
@@ -347,7 +347,7 @@ The two polarisations and the factor $\tfrac12$ in $\delta L/L$ are what a detec
 
 A radio antenna radiates because electrons slosh back and forth along it: the electric dipole moment, charge times separation, oscillates. Two black holes on an orbit look at first sight like the same thing, two ``charges'' swinging round each other, so we might expect them to radiate like a rotating dipole, at the orbital frequency. They do not. The gravitational wave of a binary comes out at \emph{twice} the orbital frequency, and it is weaker than a dipole estimate by a factor $(v/c)^2$. Both facts have one cause. The ``charge'' of gravity is mass, it has only one sign, and it is the same mass that sets the inertia of the body. As a result the two quantities that make up the monopole and the dipole of the field, the total mass and the position of the centre of mass, cannot oscillate: they are protected by conservation laws.
 
-The question, in words: \emph{starting from the field equation of \cref{T2g:sec:wave}, which part of a moving mass distribution produces a wave far away, how large is the wave, and how much power does it carry off?} For a binary the answers are the waveform $h_+$, $h_\times$ that every template in \cref{ch:10} is built on, and the power $P_{\rm GW}$ that drives the chirp of \cref{T2a:sec:chirp}.
+\emph{Starting from the field equation of \cref{T2g:sec:wave}, which part of a moving mass distribution produces a wave far away, how large is the wave, and how much power does it carry off?} For a binary the answers are the waveform $h_+$, $h_\times$ that every template in \cref{ch:10} is built on, and the power $P_{\rm GW}$ that drives the chirp of \cref{T2a:sec:chirp}.
 
 \subsection{The field far from a slow source}
 
@@ -611,7 +611,7 @@ The amplitude \eqref{T2g:eq:amp} and its dependence on the inclination \eqref{T2
 
 A wave arrives with two polarisations, $h_+(t)$ and $h_\times(t)$, defined with respect to axes in the plane perpendicular to its direction of travel (\cref{T2g:sec:wave}). A detector records one time series. LIGO records the difference between the lengths of its two arms, read from the interference of laser light that has run up and down each of them; LISA does the same with laser links between spacecraft millions of kilometres apart. Every likelihood in \cref{ch:10} compares that one recorded number with a template, so we need the exact rule that maps $(h_+,h_\times)$ onto it.
 
-The questions, in words: \emph{how does a change in the light travel time along one arm follow from $h_{ij}$? How do two arms combine into one strain? How strongly does the result depend on where the source sits on the sky and how its orbit is turned? And what changes when the arm is so long that the wave changes while the light is still in flight?} The answers produce three numbers that appear without explanation in most papers: the $\tfrac45$ of the inclination average, the $\tfrac15$ of the sky average, and LISA's $\tfrac{3}{10}$, together with the transfer frequency $f_*=c/(2\pi L)$.
+\emph{How does a change in the light travel time along one arm follow from $h_{ij}$? How do two arms combine into one strain? How strongly does the result depend on where the source sits on the sky and how its orbit is turned? And what changes when the arm is so long that the wave changes while the light is still in flight?} The answers produce three numbers that appear without explanation in most papers: the $\tfrac45$ of the inclination average, the $\tfrac15$ of the sky average, and LISA's $\tfrac{3}{10}$, together with the transfer frequency $f_*=c/(2\pi L)$.
 
 \subsection{One arm: the light travel time}
 
@@ -664,7 +664,7 @@ The matrix $D$, the \newterm{detector tensor}, is all the geometry of the instru
   \draw[vec] (3.25,1.7) -- (3.65,1.7);
   \draw[vec] (2.3,1.1) -- (2.3,1.35);
 \end{tikzpicture}
-\caption{A Michelson interferometer. Laser light is split, runs along two perpendicular arms to free masses (blue) and back, and the two beams are recombined. The recombined light measures the difference of the two round-trip times. A plus wave arriving from above, at the instant drawn, lengthens the horizontal arm and shortens the vertical one (small ellipse), so the two changes add up in the difference.}
+\caption{A Michelson interferometer. A beam splitter sends laser light along two perpendicular arms towards freely suspended test masses (blue). When the reflected beams return, their relative phase measures the difference in round-trip travel times. A plus wave arriving from above, at the instant drawn, lengthens the horizontal arm and shortens the vertical one (small ellipse), so the two changes add up in the difference.}
 \label{T2g:fig:michelson}
 \end{figure}
 
@@ -1132,7 +1132,7 @@ Differentiate $\Psi$ and use $\dot\phi(t_f)=2\pi f$:
   \item The last two terms cancel because $\dot\phi(t_f)=2\pi f$. We write $t(f)\equiv t_f$.
   \item $\dd t/\dd f=1/\dot f$.
 \end{explain}
-In words: the slope of the Fourier phase is the time at which frequency $f$ arrives, and its curvature is $2\pi$ divided by the chirp rate. Whatever changes how fast the binary sweeps, an environment included, changes $\Psi$ through \eqref{T2a:eq:psi-derivs}. \Cref{T2a:sec:forces} applies exactly this equation to a binary that is losing energy to its surroundings as well as to waves.
+The slope of the Fourier phase with respect to $f$ gives $2\pi$ times the arrival time of that frequency, and its curvature gives $2\pi$ divided by the chirp rate. Whatever changes how fast the binary sweeps, an environment included, changes $\Psi$ through \eqref{T2a:eq:psi-derivs}. \Cref{T2a:sec:forces} applies exactly this equation to a binary that is losing energy to its surroundings as well as to waves.
 
 \paragraph{The Newtonian waveform.}
 Integrate \eqref{T2a:eq:psi-derivs} with $t(f)=t_c-\tau(f)$ from \eqref{T2a:eq:tau}:
@@ -2612,7 +2612,7 @@ The raw residuals scatter by $\TwbRawSd$\,mag, against $\TwbRawPred$ from this s
 \section{The distance ladder: why \texorpdfstring{$H_0$}{H0} needs an anchor}
 \label{T2b:sec:ladder}
 
-The supernovae of \cref{T2b:sec:snia} are excellent at \emph{relative} distances: this one is $1.8$ times farther than that one. They say nothing, on their own, about how far away either of them is in megaparsecs. The worked problem of \cref{ch:03} found the same thing in the language of likelihoods. In the Hubble law with supernova magnitudes, the absolute magnitude $M$ and $5\log_{10}H_0$ enter only in the combination $M-5\log_{10}H_0$, so the Fisher matrix of the two is singular. Brighter candles in a faster-expanding universe look exactly like fainter candles in a slower one. To measure $H_0$ someone has to tell us $M$, and the only way to do that is to find supernovae in galaxies whose distances are known by other means. Those distances in turn need calibrating, and the chain ends only at geometry. This chain is the \newterm{distance ladder}.
+The supernovae of \cref{T2b:sec:snia} measure \emph{relative} distances. Their brightnesses might tell us that one is $1.8$ times farther away than another, while leaving both distances in megaparsecs undetermined. We encountered this ambiguity in the likelihood calculation of \cref{ch:03}. In the Hubble law with supernova magnitudes, the absolute magnitude $M$ and $5\log_{10}H_0$ enter only in the combination $M-5\log_{10}H_0$, so the Fisher matrix of the two is singular. Brighter candles in a faster-expanding universe look exactly like fainter candles in a slower one. To measure $H_0$ someone has to tell us $M$, and the only way to do that is to find supernovae in galaxies whose distances are known by other means. Those distances in turn need calibrating, and the chain ends only at geometry. This chain is the \newterm{distance ladder}.
 
 \emph{Where we have met $H_0$ before.} In \cref{3b:sec:hubble} we fitted mock surveys of $100$ supernovae made with $H_0=70$ and an absolute magnitude $M=-19.25$ that we simply declared known, and the maximum-likelihood estimator, the weighted mean of $5\log_{10}H_0$, found $H_0$ to about $0.5$\,km/s/Mpc. \Cref{3b:sec:hubble-degeneracy} then freed $M$, saw the Fisher matrix of $(M,5\log_{10}H_0)$ turn singular, and closed the gap by handing the fit one more number, $M_{\rm cal}\pm0.03$\,mag, from ``the calibrators''; the calibration error then dominated, and the scatter of $\hat H_0$ grew to $1.1$\,km/s/Mpc. Here the parameter, the magnitude likelihood and the degeneracy are the same, and so is the estimator, now written as generalised least squares. What changes is where $M$ comes from: instead of arriving as one number with an assumed error, it is produced by fitting the rungs below, so its error is assembled from parallaxes, Cepheids and calibrator supernovae, and we can ask which rung pays for most of it. The data are still mock, made with $H_0=\TwlHtrue$ to sit near the published value, which is met in \cref{T2b:sec:tension}. The two error bars come out almost equal, $1.1$\,km/s/Mpc in both, because the ladder below delivers $M$ to $0.03$\,mag, the precision the worked problem assumed.
 
@@ -3302,7 +3302,7 @@ So the bump measures $D_M/r_d$ from its angular size and $D_H/r_d$ from its dept
 \label{T2b:fig:bao-geometry}
 \end{figure}
 
-\paragraph{The map is drawn with an assumed cosmology.} To place galaxies in space at all, the survey assumes a fiducial cosmology, with distances $D_M^{\rm fid}$ and $D_H^{\rm fid}$ and a sound horizon $r_d^{\rm fid}$. The question, in words: \emph{if the true distances differ from the assumed ones, where in the fiducial map does the true ring of radius $r_d$ end up, and how do we read the true distances off its position?}
+\paragraph{The map is drawn with an assumed cosmology.} To place galaxies in space at all, the survey assumes a fiducial cosmology, with distances $D_M^{\rm fid}$ and $D_H^{\rm fid}$ and a sound horizon $r_d^{\rm fid}$. \emph{If the true distances differ from the assumed ones, where in the fiducial map does the true ring of radius $r_d$ end up, and how do we read the true distances off its position?}
 
 \emph{Across the line of sight first.} The survey turns a measured angle into a length with the assumed distance, and the angle is set by the true one:
 \begin{align}
@@ -3578,7 +3578,7 @@ The last expression is Bayes' theorem with the redshift distribution $n(z)$ of t
 
 \subsection{The error distribution}
 
-The error $z_{\rm phot}-z$ is not a Gaussian. It has a Gaussian-looking core whose width grows with redshift as $\sigma_z\propto1+z$. Why? A feature at rest wavelength $\lambda_{\rm rest}$ is observed at $\lambda_{\rm obs}=(1+z)\lambda_{\rm rest}$, so $\delta(1+z)/(1+z)=\delta\lambda_{\rm obs}/\lambda_{\rm obs}$. Broad filters locate the break only to a fixed fraction of the wavelength (a filter's width is roughly proportional to its central wavelength), so $\delta\lambda_{\rm obs}/\lambda_{\rm obs}$ is about constant, and then $\sigma_z=\delta z$ is a constant times $1+z$. Good surveys reach $\sigma_z/(1+z)\approx0.02$--$0.05$. And it has \newterm{catastrophic outliers} with $|z_{\rm phot}-z|\sim1$. The main cause is a degeneracy: a sharp drop observed at a wavelength $\lambda_{\rm obs}$ may be the $4000$\,\AA\ break of a nearby galaxy or the Lyman-$\alpha$ edge of a distant one, $(1+z_{\rm low})\,4000\,\text{\AA}=(1+z_{\rm high})\,1216\,\text{\AA}$. For $z_{\rm low}=0.16$,
+The distribution of the error $z_{\rm phot}-z$ has a roughly Gaussian core whose width grows with redshift as $\sigma_z\propto1+z$. This scaling follows from the way broad filters locate a spectral feature. A feature at rest wavelength $\lambda_{\rm rest}$ appears at $\lambda_{\rm obs}=(1+z)\lambda_{\rm rest}$, so $\delta(1+z)/(1+z)=\delta\lambda_{\rm obs}/\lambda_{\rm obs}$. Since a filter's width is roughly proportional to its central wavelength, the fractional uncertainty $\delta\lambda_{\rm obs}/\lambda_{\rm obs}$ is approximately constant, and then $\sigma_z=\delta z$ is a constant times $1+z$. Good surveys reach $\sigma_z/(1+z)\approx0.02$--$0.05$. Outside the core, the distribution also contains \newterm{catastrophic outliers} with $|z_{\rm phot}-z|\sim1$. The main cause is a degeneracy: a sharp drop observed at a wavelength $\lambda_{\rm obs}$ may be the $4000$\,\AA\ break of a nearby galaxy or the Lyman-$\alpha$ edge of a distant one, $(1+z_{\rm low})\,4000\,\text{\AA}=(1+z_{\rm high})\,1216\,\text{\AA}$. For $z_{\rm low}=0.16$,
 \[
   1+z_{\rm high}=1.16\times\frac{4000}{1216}=3.82,\qquad z_{\rm high}=2.8 ,
 \]

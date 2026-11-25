@@ -136,25 +136,26 @@
 \section*{Where this chapter is going}
 \label{4a:sec:roadmap}
 
-A physicist who sees a bump in a histogram asks one question before any other:
-\emph{could this be luck?} Background alone fluctuates. Some bins come out high,
-some low, and if we look at enough histograms one of them will show something
-that looks like a new particle. Before we get excited, we want a number that says
-how surprising the bump would be if nothing new were there. We need to know
-how to compute that number, what it means, and what it does not mean.
+A bump in a histogram may be the first sign of a new particle, but even
+a background-only experiment produces bins with unusually high counts.
+The more places we look, the more opportunities there are for adjacent
+bins to resemble a peak. To judge the bump we observed, we therefore need
+to specify what counted as a candidate in our search and ask how often
+background alone would produce a candidate at least as striking.
 
-The key move is to pick the one hypothesis we can simulate with no free choices:
-``only background, only chance''. This is the \newterm{null hypothesis}. Its
-sampling distribution is the one we know, so we can work out how often chance
-alone would hand us a bump as large as ours or larger
+For this search the \newterm{null hypothesis} specifies a background-only
+experiment. Once we specify how to measure the size of a bump, the sampling
+distribution of that statistic under the null tells us how often background
+alone would give a value at least as extreme as the observed one
 (\cref{4a:sec:null}). That frequency is a tail probability, the
-\newterm{p-value}. Everything else grows out of that question: how to
-choose the summary of the data whose tail we compute (the \emph{test statistic}),
-what ``this direction'' means (one- and two-sided tests), how often a test fires by
-mistake and how often it catches a real effect (size and power), why the p-value is
-uniformly distributed when nothing is there, which statistic is the best one (the
-Neyman--Pearson lemma), and the workhorses built from it (likelihood ratios, Wilks'
-theorem, $\chi^2$ and Kolmogorov--Smirnov goodness of fit). We end by translating
+\newterm{p-value}. Choosing the summary whose tail we compute (the \emph{test statistic}) and
+specifying which departures count as extreme gives us a one- or two-sided
+test. We can then calculate how often the test rejects a true null hypothesis
+(its size) and how often it detects a specified alternative (its power). For a continuous test
+statistic we can explain why the p-value is uniform under the null. We then
+use the Neyman--Pearson lemma to examine the choice of statistic before
+turning to likelihood ratios, Wilks' theorem, and the $\chi^2$ and
+Kolmogorov--Smirnov goodness-of-fit tests. We end by translating
 p-values into the ``$Z\sigma$'' language of particle physics and asking why a
 discovery needs $5\sigma$.
 
@@ -562,9 +563,9 @@ of \cref{4a:sec:gof}.
 A coin is tossed $N=20$ times and comes up heads $n_h=17$ times
 \srcref{Cowan}{p.~58}. A fair coin gives $10$ heads on average, so $17$ looks
 suspicious. To turn the suspicion into a p-value we must say which other
-outcomes are ``at least as extreme'' as $17$ heads. The answer is not a
-technicality. It depends on what we were worried about before we tossed, and,
-more surprisingly, on how we decided when to stop tossing. The coin is small
+outcomes are ``at least as extreme'' as $17$ heads. Which outcomes qualify depends on the departure from fairness we wanted to
+detect. The probability assigned to those outcomes also depends on the rule
+we chose in advance for when to stop tossing. The coin is small
 enough that we can do every sum by hand and see both effects directly.
 
 \paragraph{The question in words.}
@@ -928,11 +929,7 @@ separates the two curves.
   \node[font=\small, anchor=east] at (axis cs:6.4,0.54) {reject $H_0$};
 \end{axis}
 \end{tikzpicture}
-\caption{The trade-off behind every test. Blue: the distribution of the
-statistic when the null is true; green: when a particular alternative is true.
-Everything right of the red cut is rejected. The orange sliver is the
-probability of a false alarm, $\alpha$; the pale green region is the
-probability of missing the signal, $\beta_{\rm II}$. Sliding the cut trades one
+\caption{The statistic has one distribution under the null hypothesis (blue) and another under the specified alternative (green). We reject the null for values to the right of the red cut. The orange tail therefore gives the false-alarm probability $\alpha$, while the pale green area to the left gives the probability of missing the signal, $\beta_{\rm II}$. Sliding the cut trades one
 for the other.}
 \label{4a:fig:alpha-beta}
 \end{figure}
@@ -2070,7 +2067,7 @@ For a large sample, $\hat\theta$ is approximately normal about the true value
 with standard deviation se. Under the null the true value is $\theta_0$, so the
 bracket in the last line is approximately a standard normal $Z$, and
 $-2\ln\lambda\approx Z^2\sim\chi^2_1$. The dropped terms are of higher order in
-$\hat\theta-\theta_0$, which shrinks as $1/\sqrt n$. In words: near its peak,
+$\hat\theta-\theta_0$, which shrinks as $1/\sqrt n$. Near its peak,
 every smooth log likelihood is a parabola, the likelihood-ratio statistic is
 the drop of that parabola between $\hat\theta$ and $\theta_0$, and the drop is
 the square of the Wald statistic of \cref{4a:sec:wald}. With $k$ fixed
@@ -3750,10 +3747,9 @@ statement, and it needs a prior (\cref{4b:sec:credible}, \cref{ch:05}).
 \section{The Neyman construction: a belt of acceptance regions}
 \label{4b:sec:neyman}
 
-A calorimeter measures the energy of a jet. The estimate $\hat\theta$ it
-returns is not Gaussian: at low energy the response is skewed, at high energy
-it is wider, and the shape of the scatter changes with the true energy
-$\theta$. From test beams or simulation we know, for every true $\theta$, the
+When a calorimeter measures the energy of a jet, the shape of its response
+depends on the true energy $\theta$. At low energies the estimates
+$\hat\theta$ are skewed, while at high energies they have a larger spread. From test beams or simulation we know, for every true $\theta$, the
 distribution $g(\hat\theta;\theta)$ of the estimate. We see one number,
 $\hat\theta_{\rm obs}$, and want an interval for $\theta$ that covers the true
 energy in, say, $68.3\%$ of repeated measurements, whatever that energy is.
@@ -3911,7 +3907,7 @@ integral and $\theta=b$ for the second, gives \srcref{Cowan}{(9.9)}
   \beta=\int_{-\infty}^{\hat\theta_{\rm obs}}g(\hat\theta;b)\,\dd\hat\theta .
   \label{4b:eq:belt-ends}
 \end{equation}
-In words: the lower end $a$ is the parameter value for which an estimate as
+The lower endpoint $a$ is the parameter value for which an estimate as
 large as the one observed, or larger, would occur with probability $\alpha$;
 the upper end $b$ is the value for which an estimate this small or smaller
 would occur with probability $\beta$. Each end is a one-sided test with
@@ -4389,9 +4385,7 @@ $95\%$ is a property of the whole ladder, not of any rung.
 \centering
 \includegraphics[width=0.85\linewidth]{figures/ch04/coverage_ladder.pdf}
 \caption{A hundred simulated experiments, each quoting a $95\%$ interval for the
-same Gaussian mean. The vertical bars are the intervals, the dots the sample
-means, the dashed line the true value. The intervals move from experiment to
-experiment; the truth does not. The orange bars are the intervals that miss it.}
+same Gaussian mean. Each vertical bar is an interval around a sample mean (dot). Across experiments both the dots and the intervals move, while the true mean stays fixed at the dashed line. An orange interval misses that line.}
 \label{4b:fig:ladder}
 \end{figure}
 
@@ -5974,7 +5968,7 @@ as $\mu s$.
   \item By the first equation the first two terms cancel, leaving $m/b=\tau$; then
         $\hat\mu s=n-\hat b$.
 \end{explain}
-In words: the sidebands estimate the background, scaled down to the window by $\tau$,
+The sidebands supply an estimate of the background, scaled down to the window by $\tau$,
 and the signal is what is left over. With $n=\FourBTpNon$ and $m=\FourBTpNoff$,
 $\hat b=\FourBTpBhatOO$ and $\hat\mu=\FourBTpMuOO$. We allow $\hat\mu<0$ here: it is
 whatever value maximises the likelihood, as long as the mean count $\mu s+b$ stays

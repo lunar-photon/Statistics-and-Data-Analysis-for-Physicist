@@ -348,18 +348,19 @@
 
 Everything so far has started from data. In \cref{ch:03} a data set gave a likelihood, the likelihood had a
 peak, and the width of the peak was the error bar. In \cref{ch:09} a simulated temperature spectrum gave a
-posterior over six cosmological parameters, and a Markov chain mapped it out. Now turn the question
-around. A satellite costs a billion euros and takes fifteen years to build. Before a single photon is
-collected, a committee wants to know: \emph{if we build this instrument, how well will it measure the
-parameters we care about?} Which beam size, which noise level, which fraction of the sky? There are no
-data yet, so there is no likelihood to look at.
+posterior over six cosmological parameters, and a Markov chain mapped it out. When designing a satellite we have to reason in the other direction. A
+mission may cost a billion euros and take fifteen years to build, yet its
+beam size, noise level and sky coverage must be chosen before it collects a
+single photon. How precisely would each proposed design measure the
+parameters we care about?
 
-What we do have is a model of the experiment: a model of the signal, a model of the noise, and a guess for
-the true parameters. That is enough to say what the data would look like, on average, and therefore how
-sharply peaked the likelihood would be, on average. The average sharpness of the peak is a matrix, the
-\newterm{Fisher matrix}: the expected curvature of $-\ln\Like$ at the true parameters. Its inverse is the
-covariance of the parameters that the experiment will deliver. So a forecast costs one matrix inversion
-instead of a satellite.
+For a specified signal model, noise model and fiducial set of parameters,
+we can predict the distribution of the data each design would collect.
+Averaging the curvature of $-\ln\Like$ over those possible data sets gives
+the \newterm{Fisher matrix} at the fiducial parameters. When the likelihood
+is well approximated locally by a Gaussian and the matrix is invertible,
+its inverse gives the forecast parameter covariance. This lets us compare
+designs on a common footing.
 
 Making the idea precise takes a few steps. The Fisher matrix has two faces, the covariance of
 the score and the average curvature, and they are equal. No unbiased method can beat its inverse (the
@@ -781,11 +782,13 @@ matrices.
 \section{Nobody beats the inverse Fisher matrix: the Cram\'er--Rao bound}
 \label{10a:sec:cr}
 
-The forecast of \cref{10a:sec:cowan} was built from the width of the likelihood. But the analysis team may not
-use the likelihood at all. They might fit moments of the distribution, or train a network to map histograms
-to parameters, or use some estimator nobody has thought of yet. Is $\Fish^{-1}$ a property of one
-particular method, maximum likelihood, or is it a limit on every method? If it is a limit, a forecast is
-much more than a guess: it is the best any analysis of that experiment can ever do.
+The forecast in \cref{10a:sec:cowan} used the width of the likelihood.
+An analysis of the same experiment might use moments of the data or train a
+network to estimate the parameters from a histogram. Does $\Fish^{-1}$
+describe the precision of a maximum likelihood fit alone, or does it limit
+the precision of other estimators as well? To answer that question we must
+specify what we require of the estimator, in particular whether it is
+unbiased.
 
 For one parameter the answer was the Cram\'er--Rao inequality of \cref{3b:sec:cramer-rao}: every unbiased
 estimator has $\Var\hat\theta\ge1/I_n(\theta)$ \srcref{CasellaBerger}{Thm.~7.3.9}, \srcref{Cowan}{(6.16)}. With
@@ -3630,7 +3633,7 @@ anything about the source, and neither can be known in advance. A template with 
 oscillations against noise; a template with the wrong phase lines up its crests against the signal's troughs. In both
 cases the matched filter $(d|h)$ of \eqref{10b:eq:lr} comes out near zero, even with a loud signal in the data.
 
-The question, in words: \emph{must we run a separate matched filter for every phase and every arrival time we can
+\emph{Must we run a separate matched filter for every phase and every arrival time we can
 think of, and if we search over all of them, what does noise alone now produce?} The answer to the first part is no.
 The phase costs exactly two filters instead of one, and every arrival time comes out of one Fourier transform. The
 answer to the second part is the price we pay for not knowing.
@@ -5263,7 +5266,7 @@ proposes to walk over that surface and compute there the noise-weighted size of 
 \end{equation}
 and to accept the forecast if $\lvert\log r\rvert\lesssim0.1$ everywhere on it \cite[eq.~(47)]{Vallisneri2008}. He shows that
 this is the logarithm of the ratio of the exact and the linearised likelihood, averaged over the noise realisations
-that would put the best fit on that surface. In words: on the boundary that the forecast calls ``one sigma'', the
+that would put the best fit on that surface. On the boundary that the forecast calls ``one sigma'', the
 true signals must differ from their tangent-plane stand-ins by much less than the noise. Since the $1\sigma$ surface
 shrinks as $1/\rho$ and $R$ is quadratic in $\Delta\params$, $R$ shrinks as $\rho\cdot\rho^{-2}$ and $\lvert\log r\rvert$ falls as
 $1/\rho^2$: every forecast becomes right at high enough signal-to-noise ratio, and the test says how high is high
@@ -5311,7 +5314,7 @@ friction-like effect with $b=-4$ and $A=-\TenBmhAtrue$\,rad, three times the Fis
 at $\rho=10$. Then the source is moved closer, $\rho=10$, $20$, $40$, $80$, with the same $A$.
 
 \paragraph{Integrating out the phase.} The phase $\phi_c$ is a nuisance with a flat prior on $[0,2\pi)$, and it can be
-removed exactly. The question in words: what is the probability of the data regardless of $\phi_c$? With
+removed exactly. What probability does the model assign to the data after averaging over $\phi_c$? With
 $\tilde h(\params,\phi_c)=\tilde h(\params)e^{i\phi_c}$ (the phase enters $\Psi$ as $-\phi_c$), noise-free data $d=h_0$,
 equal amplitudes $(h|h)=(h_0|h_0)=\rho^2$, and the weight $w$ of \eqref{10b:eq:fisher-blocks},
 \begin{align}
@@ -6186,9 +6189,9 @@ which can be put back into the covariance.
 \section{Two angles and one sum}
 \label{10c:sec:alpha-beta}
 
-Everything in \cref{10c:sec:forecast} assumed that the experiment knows which way its own detectors point. It does
-not, exactly. Each detector measures polarization along an axis whose orientation on the sky is calibrated on the
-ground, and if that axis is off by an angle $\alpha$, every stick the detector sees appears twisted by $\alpha$
+The forecast in \cref{10c:sec:forecast} treated the orientation of each
+detector's polarisation axis as known exactly. In practice that orientation
+comes from a ground calibration, and if that axis is off by an angle $\alpha$, every stick the detector sees appears twisted by $\alpha$
 (\cref{T1c:sec:rot-alpha}). The CMB light then arrives twisted by $\beta$ on its journey and by $\alpha$ in the
 instrument, and its spectra depend only on the sum $\alpha+\beta$. For Planck the ground calibration of $\alpha$ is
 uncertain by $0.28^\circ$ \cite{MinamiKomatsu2020}, almost seven times the statistical error of the forecast

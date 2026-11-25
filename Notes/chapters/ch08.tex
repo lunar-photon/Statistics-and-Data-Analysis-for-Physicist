@@ -194,14 +194,14 @@
 
 A Boltzmann code such as CAMB turns six cosmological numbers into an angular power
 spectrum $\Cell$ (\cref{ch:T1}). That spectrum describes the \emph{ensemble} of skies the
-theory could have produced. A telescope gives us one of those skies, and not even all of it:
-it sees the sky through a beam that blurs it, stores it in pixels that average it, adds
-detector noise to every pixel, and, once the Galaxy is cut away, sees only part of it. Each of
-these steps changes the numbers we compute from the map. In \cref{ch:07} the spectrum
-estimator $\Chat$ was computed on perfect, complete skies, and everything about its sampling
-distribution was known in closed form: it is unbiased, it is a scaled $\chi^2_{2\ell+1}$
-variable, and its variance is the cosmic variance $2\Cell^2/(2\ell+1)$. What survives of those
-statements when the sky is observed by a real instrument? Monte Carlo simulation answers it.
+theory could have produced. We observe a single member of that ensemble through a telescope whose beam
+blurs the sky. Pixelisation averages the signal further, detector noise enters
+the map, and masking the Galaxy removes part of the sky from the analysis.
+In \cref{ch:07}, where we had a complete, noiseless sky, the spectrum estimator
+$\Chat$ was unbiased and followed a scaled $\chi^2_{2\ell+1}$ distribution with
+variance $2\Cell^2/(2\ell+1)$. To see which of these properties survive the
+observation, we can simulate skies with a known spectrum, pass them through
+the same observing procedure, and measure $\Chat$ on each resulting map.
 
 In the pipeline of the book (physical model $\to$ field $\to$ what matters $\to$ summary
 $\to$ sampling distribution $\to$ inference) the problem sits on one arrow: finding the
@@ -477,11 +477,11 @@ pipelines handle by putting it into the simulations \srcref{Hivon}{§3.2--3.3}.
 \section{What the instrument does to the sky}
 \label{8a:sec:model}
 
-A radio telescope pointed in direction $\hat{\bm n}$ does not measure the temperature at
-the single point $\hat{\bm n}$. Its optics collect radiation from a small cone around
-$\hat{\bm n}$, weighted by the \newterm{beam}: the response pattern of the telescope, the
-same object an astronomer calls the point-spread function. What it records is therefore a
-weighted average of the sky. The recorded averages are then binned into pixels, which
+A radio telescope pointed in direction $\hat{\bm n}$ collects radiation
+from a small cone around that direction. Its response to a point source
+defines the \newterm{beam}, also called the point-spread function. This
+response sets the weight of each direction in the average temperature
+recorded by the telescope. The recorded averages are then binned into pixels, which
 averages them a second time over the area of each pixel. Finally every pixel carries noise
 from the detector. The three steps act at different places, and the order matters: the beam
 and the pixels act on the sky, while the noise is added afterwards and is blurred by
@@ -2465,7 +2465,7 @@ Think of fitting a straight line through points. If we report the height of the 
 left of the data, any error in the slope swings that height up or down, so height and slope come
 out strongly correlated. If we report the height in the middle of the data, a small change of
 slope just pivots the line about that point, and the height hardly moves: the two errors are
-independent. The pivot scale is the same idea. The question, in words: \emph{at which $k$ do the
+independent. The pivot scale is the same idea. \emph{At which $k$ do the
 measured amplitude and the measured tilt become uncorrelated, and where does that $k$ sit?}
 
 \paragraph{Step 1: what moving the pivot does.}
@@ -3739,10 +3739,11 @@ On the line, the masked wave's spectrum was the window's spectrum shifted to $k_
 (\cref{8b:sec:leakage}). On the sphere the pseudo-spectrum $\widetilde C_\ell$ of
 \eqref{8b:eq:pcl}, the $m$-average of the squared coefficients of the masked map, is again
 fixed on average by the window's spectrum $\mathcal W_\ell$ (\cref{8b:sec:window}) and the true
-spectrum $\Cell$. The question is: if the sky has spectrum $\Cell$ and we observe it through a
-window $W$, what is $\langle\widetilde C_\ell\rangle$, the average of the pseudo-spectrum over
-skies? The answer is a matrix, the \newterm{mode-coupling matrix} $M_{\ell\ell'}$, and the whole
-of the MASTER method rests on it.
+spectrum $\Cell$. For a given sky spectrum $\Cell$ and window $W$, we therefore seek the
+ensemble mean $\langle\widetilde C_\ell\rangle$. In MASTER the
+\newterm{mode-coupling matrix} $M_{\ell\ell'}$ gives that mean by specifying
+how much power from each true multipole $\ell'$ enters the measured
+multipole $\ell$.
 
 \subsection{From the window to the coupling kernel}
 \label{8b:sec:kernel}
@@ -5401,7 +5402,7 @@ derived next, and the transfer function of a parallel scan (B7) and (B15), deriv
 test.
 
 \paragraph{Their error bar, derived.}
-The question in words: how many independent modes does one bin of a filtered, weighted patch hold?
+How many independent modes does one bin of a filtered, weighted patch hold?
 Start from the full sky and remove what the observation removes, one factor at a time:
 \begin{align}
   \Var\widehat D_b

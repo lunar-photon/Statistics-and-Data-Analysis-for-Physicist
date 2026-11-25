@@ -131,13 +131,13 @@
 \addcontentsline{toc}{section}{Where this chapter is going}
 \label{7a:sec:roadmap}
 
-A cosmological model does not tell us that the microwave sky is hotter in the
-direction of Orion than in the direction of Leo. It tells us how strongly the
-temperature at two points a degree apart tends to agree, and how much the
-temperature fluctuates on each angular scale. The same is true of a turbulent
-flow, of the thermal ripples on a membrane, and of the noise in a detector: the
-theory predicts the \emph{statistics} of a field, and nature hands us a single
-realisation of it. Everything that follows grows out of that one fact.
+A cosmological model predicts how strongly microwave temperatures in two
+directions a degree apart tend to be correlated. We can use that prediction
+even though the model leaves open which direction, Orion or Leo, happens to
+be hotter in our sky. Predictions for turbulent velocities, thermal ripples
+on a membrane and detector noise have the same character. Theory gives us
+the \emph{statistics} of a field, while a measurement gives us a particular
+realisation from which to estimate them.
 
 The object that carries the prediction is a random field: a random variable at
 every point of space, with a joint distribution for any finite set of points.
@@ -514,13 +514,12 @@ important one in physics, for which $\xi$ captures everything.
 \label{7a:sec:grf}
 
 A random field is specified by all of its $n$-point distributions, for every
-$n$ and every placement of the points. That is an infinite amount of
-information, and no experiment will ever pin it down. The microwave background
-spares us this. To the precision of every test so far, its temperature
-fluctuations are a \emph{Gaussian} field \srcref{HobsonBMC}{p.~229}, and for a
-Gaussian field the infinite tower collapses to a single function: once we know
-the mean and $\xi(r)$, we know every $n$-point distribution. This is why the
-whole of CMB cosmology can be phrased in terms of a power spectrum.
+$n$ and every placement of the points. Measuring this entire hierarchy would require infinitely much information.
+The near-Gaussianity of the microwave background motivates a much simpler
+model for its temperature fluctuations \srcref{HobsonBMC}{p.~229}. For a
+Gaussian field with the symmetries assumed here, the mean and the correlation
+function $\xi(r)$ fix every $n$-point distribution. This is what makes the
+power spectrum such an effective summary for CMB cosmology.
 
 \begin{workdef}[Gaussian random field]
 A random field is \newterm{Gaussian} if for every finite set of points
@@ -828,7 +827,7 @@ The eigenvalues also tell us whether a proposed $\xi$ is possible at all. Try
 $\xi_0=1$, $\xi_1=0.9$, $\xi_2=0$: neighbours very strongly correlated,
 next-neighbours not at all. It looks harmless, and $|\xi|\le\xi_0$ holds. But
 $\lambda_2=1-1.8=-0.8<0$, a negative variance, so no random field has this
-correlation function. In words: if pixels $0,1$ are correlated at $0.9$ and
+correlation function. For example, if pixels $0,1$ are correlated at $0.9$ and
 pixels $1,2$ are too, then pixels $0$ and $2$ cannot be uncorrelated. The
 eigenvalues are the positivity test \eqref{7a:eq:posdef} made explicit.
 
@@ -866,11 +865,7 @@ $1/\sqrt M=\SevANoiseExpect$ expected for truly uncorrelated variables
   \node[lbl] at (2,-4.7) {diagonal: $\lambda_m=$ DFT of $\xi$};
   \end{scope}
 \end{tikzpicture}
-\caption{A homogeneous covariance on a ring of four pixels. Left: in pixel space
-every pixel is correlated with every other (darker means larger $\xi$). Right:
-in the basis of plane waves the same matrix is diagonal, and the diagonal entries,
-the variances of the Fourier modes, are the discrete Fourier transform of the
-correlation function.}
+\caption{A homogeneous covariance on a ring of four pixels. In the pixel basis (left), darker entries indicate larger correlations $\xi$ between pixels. Changing to the plane-wave basis (right) diagonalises this same covariance matrix. Its diagonal entries give the Fourier-mode variances and are the discrete Fourier transform of the correlation function.}
 \label{7a:fig:circulant}
 \end{figure}
 
@@ -1499,7 +1494,7 @@ $\sigma^2$ has variance $\sigma^2/n$ (\cref{ch:03}), and write
 \end{equation}
 The volume $V$ acts like $N_{\rm eff}$ independent measurements, one per
 correlation volume $V_c$, because neighbouring points repeat each other's
-information. In words: a survey of volume $V$ contains about $V/L^3$
+information. A survey of volume $V$ contains about $V/L^3$
 statistically independent patches of size $L$, and the scatter between surveys
 that this causes is called cosmic variance.
 
@@ -2644,14 +2639,13 @@ structure of the last.}
 \section{No preferred direction: why the $\alm$ are uncorrelated}
 \label{7b:sec:isotropy}
 
-A cosmological model does not predict our sky. Inflation predicts the statistics of the
-primordial fluctuations, and linear physics carries those statistics forward to the last
-scattering surface; the particular pattern of hot and cold spots we see is one draw from that
-ensemble of possible skies (\cref{ch:T1}). The property of the ensemble that we rely on most
-is that it has no preferred direction: turn the whole sky through any rotation, and the
-collection of possible skies, with their probabilities, is unchanged. This does not say that our
-sky looks the same in every direction. Our sky may well have a striking feature somewhere; the
-statement is that the feature was equally likely to point anywhere.
+Inflation predicts the statistics of the primordial fluctuations, and linear
+evolution carries them forward to the last scattering surface. The particular
+hot and cold spots we observe constitute one draw from the resulting ensemble
+of skies (\cref{ch:T1}). We assume statistical isotropy, meaning that
+rotating the ensemble leaves its probability law unchanged. An individual
+sky can still contain a striking feature in a particular direction. Isotropy means that, across realisations, the feature has no preferred
+orientation.
 
 In flat space the matching symmetry was homogeneity (invariance under shifts), and it made the
 Fourier amplitudes of different wavevectors uncorrelated, $\langle\delta_{\bm k}\delta^*_{\bm k'}\rangle
@@ -3440,7 +3434,7 @@ multipoles form the \newterm{Boltzmann hierarchy}. For free-streaming particles 
   \qquad(\ell\ge2),
   \label{7b:eq:hierarchy}
 \end{equation}
-where the prime is $\partial/\partial\eta$. In words: streaming moves anisotropy from each
+where the prime is $\partial/\partial\eta$. Streaming therefore moves anisotropy from each
 multipole into its neighbours, and so from large angles to small. Photons obey the same equation
 plus two extra terms: a Thomson scattering term, which damps every $\ell\ge2$ multipole while the
 plasma is ionised, and gravitational source terms at $\ell\le2$.

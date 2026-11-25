@@ -150,18 +150,16 @@
 \section*{Where this chapter is going}
 \label{T5a:sec:roadmap}
 
-By now we own several ways of turning data into a number. We can average,
-with weights when the readings differ in quality. We can maximise a
-likelihood. We can match moments, fit by least squares, or take the mean of
-a posterior. Each was built for one situation and shown to work there.
-What we have not done is step back and ask the practical question that
-comes first in every analysis: \emph{faced with a new data set, which of
-these recipes should we use, and how do we know?}
+The estimators we have met so far use different kinds of information. A
+weighted average accounts for differences in measurement precision, a
+likelihood fit uses a model of how the data were generated, and a posterior
+mean also incorporates prior information. Moment matching and least squares
+offer further choices. Faced with a new data set, how do we decide which
+assumptions we can defend and which estimator makes use of them?
 
-The answer is not a list to memorise. It is a short set of questions about
-the problem, and each question has an answer that points to a recipe. What
-do we know about the noise: its full law, only its mean and spread, or only
-that most readings behave and a few may be wild? Do we have prior
+Consider first what we know about the noise. Can we specify its full
+distribution, estimate only its mean and variance, or say only that most
+readings are reliable and a few may be outliers? Do we have prior
 information worth using? Does the parameter shift the data (it sits in their
 mean) or does it make them scatter more (it sits in their covariance)? Are
 many parameters estimated at once? Do the data arrive all together or one
@@ -169,15 +167,14 @@ reading at a time? And does the best recipe need the very value it is
 trying to find? \Cref{T5a:fig:roadmap} draws the questions and where each
 one leads.
 
-Five families of estimators come out of these questions that the earlier
-chapters did not build. \emph{Linear} estimators, with the theorem that
-says when a weighted average is the best one can do. \emph{Bayes}
-estimators judged the way a frequentist judges them, by their error over
-repeated experiments, which leads to the Wiener filter. \emph{Shrinkage},
-where estimating many numbers together beats estimating each on its own.
-\emph{Robust} estimators, which survive wild readings. \emph{Quadratic}
-estimators, for parameters that live in a variance, where noise stops
-being only scatter and becomes a bias. The second half of the chapter adds
+These choices lead to five families of estimators. For \emph{linear}
+estimators we derive the conditions under which a weighted average has the
+smallest variance in its class. Assessing \emph{Bayes} estimators through their
+errors in repeated experiments leads us to the Wiener filter. When several
+parameters are estimated together, \emph{shrinkage} can reduce their combined
+error, while \emph{robust} estimators limit the influence of outlying readings.
+Parameters that enter through the covariance call for \emph{quadratic}
+estimators, for which noise contributes to the mean as well as the scatter. The second half of the chapter adds
 the estimators that iterate, that correct their own bias, and that update
 as data stream in, and closes with a field guide that turns the questions
 into a decision procedure.
@@ -640,12 +637,11 @@ The same situation is everywhere in physics. A CMB telescope sweeps across
 the sky and each sample of the time stream sees one pixel: the pixel values
 are the unknowns, the time stream is the data, and every pixel is seen many
 times along different scans, with noise correlated in time. Turning the time
-stream into a map is the weighing problem with millions of letters. A
-straight-line fit, a calibration of detector gains from single and
-coincident hits, a template fit for foregrounds: each is a set of readings
-that are \emph{linear} in the unknowns plus noise. The idea of the section
-is that for every such problem there is one best linear recipe, and it
-depends on the noise only through its covariance.
+stream into a map is the weighing problem with millions of letters. The same form appears in a straight-line fit, in calibrating detector gains
+from single and coincident hits, and in fitting foreground templates. In each
+case the expected readings are \emph{linear} in the unknowns. To find the
+minimum-variance linear unbiased estimator, we need to know the noise
+covariance.
 
 \paragraph{The story in symbols.}
 Call the two weights $m_1,m_2$ and the three readings
@@ -4154,11 +4150,7 @@ $\hat\lambda-(n-1)(\bar\lambda_{(\cdot)}-\hat\lambda)$, which is \eqref{T5b:eq:j
   \node[font=\footnotesize,anchor=north west] at (axis cs:0.005,0.572) {jackknife: $0.576$};
 \end{axis}
 \end{tikzpicture}
-\caption{The jackknife as an extrapolation. The estimate from all five
-lifetimes (blue, at $1/5$) and the average of the five estimates with one
-lifetime left out (blue, at $1/4$; the individual values are grey circles,
-one of them, $0.80$, above the frame) define a straight line, which is
-followed to an infinite sample at $1/n=0$ (orange).}
+\caption{The jackknife as an extrapolation. The two blue points are the estimate from all five lifetimes at $1/n=1/5$ and the mean of the five leave-one-out estimates at $1/n=1/4$. The individual leave-one-out values are plotted in grey, with one value ($0.80$) above the frame. Extending the line through the blue points to $1/n=0$ gives the extrapolation to infinite sample size (orange).}
 \label{T5b:fig:jk-extrapolate}
 \end{figure}
 

@@ -287,11 +287,12 @@
 Every method in the book so far was tried on data whose truth we had chosen. The skies of
 \cref{ch:08} were drawn from a spectrum we fixed, the parameters of \cref{9c:sec:planck} were recovered from a
 mock spectrum generated with known values, and the galaxies of \cref{ch:11} were points we had scattered
-ourselves. That is how a method is tested: we know the answer, so we can see whether the method finds it.
-Real data take that luxury away. Nobody tells us the true spectrum of the sky, the true distance to a galaxy
-or whether a hot spot is primordial or a leftover of our own Galaxy. What replaces the known answer is a set
-of \emph{checks}: things that must come out a certain way if our description of the data is right, and that
-we can test on the data themselves.
+ourselves. Because we chose the inputs, we could check how well each method recovered
+them. With observations we do not know the true spectrum or the true distance
+to a galaxy, and a hot spot may be primordial or may come from residual
+Galactic emission. We can still test predictions that follow from our
+description of the measurement. These \emph{checks} give us ways to detect a
+failure even when the quantity we ultimately want is unknown.
 
 The chapter takes three public data sets through the pipeline the book has been building,
 \begin{align*}
@@ -881,9 +882,7 @@ our range, is accounted for, and then they are discarded. We report $\TwelveANbi
   \draw[tangentgreen!70!black,thick] (0,-1.45) -- (1199,-1.45);
   \node[font=\footnotesize,tangentgreen!50!black,anchor=west] at (0,-1.75) {coupling matrix $M_{\ell\ell'}$, $\ell\le1199$};
 \end{tikzpicture}
-\caption{The bins. Thirty-three bins of thirty multipoles (blue) are reported, exactly \textit{Planck}'s binning
-between $\ell=30$ and $1019$. Below and above them, buffer bins (grey) absorb the power that the mask moves into
-the reported range from outside it; they are solved for and discarded. The degraded map holds multipoles up to
+\caption{The 33 reported bins (blue) each contain 30 multipoles and reproduce the \textit{Planck} binning from $\ell=30$ to $1019$. Masking couples these bins to multipoles outside the reported range, so we also solve for the grey buffer bins on either side before discarding them. The degraded map holds multipoles up to
 $1535$; the coupling matrix is computed up to $1199$.}
 \label{13a:fig:bins}
 \end{figure}
@@ -1083,7 +1082,7 @@ line for line.
 
 \paragraph{Is the estimator unbiased?} If MASTER is unbiased, the average of the simulated bandpowers must
 equal the fiducial spectrum passed through the bandpower windows, $t_b=\sum_\ell\mathcal F_{b\ell}\Cell$
-\eqref{13a:eq:bpw}. The question in words: if the theory were right, would an average of $n$ simulated
+\eqref{13a:eq:bpw}. If the theory were right, would an average of $n$ simulated
 bandpower vectors as far from $\bm t$ as ours, or farther, be something we would reasonably expect? The average
 $\bar{\bm x}$ of $n$ independent vectors with covariance $\Cmat$ has covariance $\Cmat/n$. For Gaussian vectors with
 mean $\bm t$,
@@ -2425,8 +2424,7 @@ at some thresholds and a deficit at others is expected, not a sign of anything.
 \centering
 \includegraphics[width=\linewidth]{figures/ch13/b_mf_curves.pdf}
 \caption{The three normalised Minkowski functionals of the SMICA map at $N_{\rm side}=256$ ($40'$), against $\MfNTwoFiveSix$
-Gaussian skies with the best-fit spectrum, the same beam, pixels, noise and mask. Grey: the central $99\%$ of the
-skies; dashed: their mean. The genus curve is asymmetric about zero because of the mask: its boundary and its
+Gaussian skies with the best-fit spectrum, the same beam, pixels, noise and mask. The grey band encloses the central $99\%$ of the simulated skies and the dashed curve gives their mean. The mask breaks the symmetry of the genus curve about zero because its boundary and its
 holes add pieces to every excursion set.}
 \label{13b:fig:mf-curves}
 \end{figure}
@@ -3346,10 +3344,10 @@ per galaxy, and assigns each object to one of $\CmNjk$ patches of sky for the ja
 \section{What the survey could not see: the weights}
 \label{13c:sec:weights}
 
-The random catalogue of \cref{13c:sec:files} knows how complete the survey was in
-each patch of sky and how the density falls with redshift. It cannot know about
-losses that depend on the galaxies themselves or on what the sky looked like on
-the night the images were taken. A galaxy that sits right next to another one may
+The random catalogue of \cref{13c:sec:files} encodes the survey completeness
+across the sky and the mean density as a function of redshift. Additional
+corrections are needed for losses that depend on the galaxies themselves or
+on the observing conditions. A galaxy that sits right next to another one may
 not get a fibre; a faint galaxy may not give a usable spectrum; a patch of sky
 crowded with stars may yield fewer galaxy targets. None of these has anything to do
 with cosmology, and all of them imprint a pattern on the galaxy counts that would be
@@ -5106,11 +5104,11 @@ sensitivity, which \cref{13d:sec:repro} quantifies.
 
 The likelihood of \cref{4b:sec:binned-like} needs two templates: the fraction $f_i$ of the
 signal and the fraction $g_i$ of the background expected in each bin $i$ of the mass
-histogram, so that the mean count is $\nu_i=\mu Sf_i+Bg_i$ \eqref{4b:eq:nu-template}. In the
-pseudo-experiments of \cref{ch:04} both were handed to us. Here the signal template has to
-be extracted from the $\HyySigExp$ simulated Higgs events of \cref{13d:sec:data}, and the
-background template has to be a smooth function whose parameters are fitted to the data.
-Both choices change the answer, and each has its own check.
+histogram, so that the mean count is $\nu_i=\mu Sf_i+Bg_i$ \eqref{4b:eq:nu-template}. The pseudo-experiments of \cref{ch:04} supplied both templates. For the data
+analysis we estimate the signal shape from the $\HyySigExp$ simulated Higgs
+events of \cref{13d:sec:data} and fit a smooth background model to the
+observations. Each shape can affect the inferred signal strength, so we
+check the two modelling choices separately.
 
 \subsection{The signal line shape}
 \label{13d:sec:signal-shape}
@@ -5537,9 +5535,7 @@ parameters; the second is $-2$ times the log of the four Gaussian constraints.
   \foreach \p in {mu,ty,ts,tm,tss,c} \draw[arr] (\p) -- (\p|-nu.north);
   \draw[arr] (nu) -- (n);
 \end{tikzpicture}
-\caption{The structure of the diphoton likelihood. The parameter of interest $\mu$ and
-the six background coefficients are free; each of the four nuisance parameters (orange)
-is tied to an auxiliary measurement $a_k$ by a unit Gaussian. All eleven parameters
+\caption{The structure of the diphoton likelihood. The signal strength $\mu$ and the six background coefficients vary freely in the fit, while a Gaussian constraint of unit width connects each of the four nuisance parameters (orange) to its auxiliary measurement $a_k$. All eleven parameters
 together set the mean count of every bin, and the observed counts are Poisson about
 those means.}
 \label{13d:fig:likelihood}
@@ -7003,11 +6999,10 @@ scanning strategy of \textit{Planck} leaves the regions near the ecliptic poles 
 
 For the temperature map of \cref{13a:sec:bandpowers} the route from a masked map to a spectrum had three
 steps: multiply by a tapered window, transform, and undo on average what the window did, with the MASTER
-coupling matrix. A polarization map adds a complication that temperature does not have. A window does
-not only move power from one multipole to another; it also moves it from E to B. Since the angle we want
-is measured precisely by how much E has turned into B, this looks like a disaster. It is not: the toy skies
-of \cref{10c:sec:mc} showed why, and the same one-line reason makes the whole analysis simpler than the
-temperature one.
+coupling matrix. For polarisation, the window also mixes E and B modes. This matters because
+the angle we want to measure itself converts E into B. The toy skies of
+\cref{10c:sec:mc} let us distinguish these effects by examining what masking
+does to the cross-spectrum used to estimate the angle.
 
 \subsection{The window}
 \label{13e:sec:window}
@@ -7442,9 +7437,7 @@ unbiased and adds variance too small for this noise level to show, as the parity
 \centering
 \includegraphics[width=12.4cm]{figures/ch13/biref_sims.pdf}
 \caption{The joint estimator on the $\ThirteenENtest$ held-out simulated skies, for three injected angles
-(orange lines). The histograms are the estimates; the dashed curves are Gaussians centred on the injected
-angle with the mean error bar the estimator reports. The three panels are the same skies rotated three
-ways, so their shapes match.}
+(orange lines). Each histogram shows the recovered angles. The dashed Gaussian is centred on the injected angle and has a width equal to the mean reported error bar. Rotating the same skies by three different angles shifts the histograms while preserving their shapes.}
 \label{13e:fig:sims}
 \end{figure}
 

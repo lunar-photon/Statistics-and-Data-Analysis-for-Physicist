@@ -107,19 +107,19 @@
 \section*{Where this chapter is going}
 \addcontentsline{toc}{section}{Where this chapter is going}
 
-Every analysis began with a question said in words, and the question chose the tool.
-The same few ideas came back in every experiment, from a coin to the \textit{Planck}
-sky: a distribution that predicts, a likelihood that reads the prediction backwards, a
-sampling distribution built by simulation, a posterior, a forecast. Faced with a new
-data set, the quick way to the right one is to start from the question. Each question
-(is this a fluke, how big is the effect, which values survive, which model is better,
-how well could we do) is answered by one object, and the object fixes which
-distribution describes the number and which method turns that distribution into
-physics. Those choices are the stages of a single pipeline, from a physical model to
-an inference, and a collider, a CMB satellite, a gravitational-wave detector and a
-galaxy survey all run it, with different noise. The pipeline also shows where the
-errors enter. Each recurring trap is an object built for one question and used for
-another, and its size can be measured with a small computation.
+A bump in a mass histogram raises two distinct questions. How often would
+background alone produce a bump this large, and what signal strength is
+consistent with the observed counts? Both start from the same data, yet the
+first needs the sampling distribution of a test statistic under the background
+model, while the second needs the dependence of the likelihood on signal
+strength. The same distinction recurs from a coin toss to the \textit{Planck}
+sky. Stating the question first helps us decide whether to test a fluctuation,
+estimate an effect, compare models or forecast a future measurement. We can
+then trace the calculation from the physical model through the noise and the
+chosen summary to the inference. Comparing a collider, a CMB satellite, a
+gravitational-wave detector and a galaxy survey makes clear which steps they
+share and where using a quantity that answers a different question can lead
+us astray.
 
 \begin{figure}[htbp]
 \centering
@@ -417,13 +417,14 @@ meaningful as the match between the question asked and the object computed.
 \end{keyidea}
 \section{Which distribution, which method}\label{14a:sec:which}
 
-Two choices come before any inference. The first is the distribution of the number
-we measured: the machine that made it fixes how it scatters, and the scatter is the
-likelihood. The second is the method that turns that distribution into an answer: a
-forecast, a test, an interval, a posterior or a model comparison. Making the first
-choice by fitting curves to a histogram, or the second by habit, is the commonest way
-an analysis goes wrong without anyone noticing. Both choices can be made by asking a
-few questions in a fixed order, and both orders can be drawn as decision charts.
+Two choices precede an inference. First we use the measurement process to
+specify the distribution of the observable at fixed parameters. Evaluating
+that distribution at the observed data gives the likelihood as a function of
+the parameters. We then choose how to use the model according to the question
+we want to answer, whether it calls for a forecast, a test, an interval, a
+posterior or a model comparison. The two decision charts below make those
+choices explicit, so that the shape of a histogram or familiarity with a
+particular method does not decide the analysis for us.
 
 \subsection{Which distribution: ask what made the number}\label{14a:sec:which-dist}
 
@@ -703,11 +704,7 @@ faced with a new experiment, which parts of the book does each step need?
   \node[ch,anchor=north] at (4.5,-4.7) {\cref{ch:02}: distributions from machines\\ \cref{ch:03}: sampling distributions, bootstrap\\ \cref{ch:06}: Monte Carlo\\ \cref{ch:08}: simulated covariance, Hartlap\\ \cref{12c:sec:mc}: summaries as random numbers\\ \cref{4b:sec:templates}: histograms with nuisances};
   \node[ch,anchor=north] at (0,-4.7) {\cref{ch:04}: tests, intervals, look-elsewhere, $\mathrm{CL}_s$ limits\\ \cref{ch:05}: posteriors, evidence\\ \cref{ch:09}: MCMC\\ \cref{ch:10}: Fisher forecasts\\ \cref{ch:13}: the capstone fits};
 \end{tikzpicture}
-\caption{The pipeline of the book with the chapters that built each stage. The
-probability rules of \cref{ch:01} are the language of every arrow, and the Python of
-\cref{ch:T0} is the tool of every arrow; neither is listed.
-The first three stages decide what is computed; the last three decide what it
-means.}
+\caption{The pipeline of the book with the chapters that built each stage. The probability rules of \cref{ch:01} and the Python tools of \cref{ch:T0} enter throughout. The first three stages establish which quantity to measure, and the last three use its behaviour under repetition to interpret the observed value.}
 \label{14a:fig:pipeline-chapters}
 \end{figure}
 

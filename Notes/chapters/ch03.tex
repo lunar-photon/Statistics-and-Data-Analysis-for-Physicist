@@ -90,16 +90,16 @@
 \section*{Where this chapter is going}
 \label{3a:sec:roadmap}
 
-Every measurement ends with a number and an error bar. The number is easy to
-get: we average, we fit, we read off a peak. The error bar is the hard part,
-and it is where statistics lives. It answers one question:
-\emph{``if nature let us run this experiment again, how different would our
-number be?''}
+A peak fit gives us an estimate of a particle's mass, just as an average
+gives us an estimate from repeated readings. To assign a statistical error
+bar to either number, we have to ask how far the estimate would move if we
+repeated the measurement under the same conditions.
 
-The book's pipeline (\cref{ch:00}) runs from a theory to its data, from the
-data to a statistic $S$ that compresses them, from $S$ to how $S$ scatters,
-$P(S\given\theta)$, and from that scatter to the physics. The error bar lives
-on the two middle arrows: building $S$, and working out how it scatters.
+In the language of \cref{ch:00}, the rule for computing the estimate defines
+a statistic $S$. A physical model with parameters $\theta$ then predicts how
+$S$ varies across repetitions. Its sampling distribution $P(S\given\theta)$
+connects the error bar we report for one measurement to the variation we
+would expect across many such measurements.
 
 The key step is to treat a summary of the data as a \newterm{random variable}
 in its own right. If we imagine repeating the experiment many times, the
@@ -685,12 +685,12 @@ simulator of the sky in place of \pyname{rng.standard_normal}.
 
 Charged particles cross a silicon strip detector and leave hits whose
 positions along one strip are uniformly spread between $0$ and the strip's
-unknown active length $\theta$. We record $n=10$ hit positions. Three
-colleagues propose three recipes. The first doubles the average position
-(the average of a uniform variable sits in the middle). The second takes
-the largest position seen (no hit can be beyond the end). The third takes
-the largest position and nudges it up a little, because the largest of ten
-hits is almost never exactly at the end.
+unknown active length $\theta$. We record $n=10$ hit positions and consider three ways to infer the length.
+Since the mean position for a uniform distribution lies halfway along the
+strip, one estimate doubles the sample average. Another uses the largest
+observed position, which is a lower bound on the length. The third adjusts
+this maximum upwards to allow for the gap between the last of ten hits and
+the end of the strip.
 
 Which recipe should we use? Each one is a guess at $\theta$, and each guess
 misses by some amount that changes from experiment to experiment. The fair
@@ -1331,10 +1331,7 @@ random variable with distribution function $F$.
   \addlegendentry{$n=100$}
 \end{axis}
 \end{tikzpicture}
-\caption{The densities of $X_n\sim\Normal(0,1/n)$ for $n=1,10,100$. The area
-stays one while the width shrinks like $1/\sqrt n$, so all the probability
-crowds onto the point $0$. This is the picture behind every mode of
-convergence to a constant.}
+\caption{The densities of $X_n\sim\Normal(0,1/n)$ for $n=1,10,100$. As the width shrinks like $1/\sqrt n$, the area remains one and the probability outside any fixed interval containing $0$ in its interior tends to zero.}
 \label{3a:fig:squeeze}
 \end{figure}
 
@@ -4658,13 +4655,11 @@ $\Like(\theta)$ \srcref{CasellaBerger}{\S6.3.2}.
 \section{Maximum likelihood: pick the value that needs the least unusual noise}
 \label{3b:sec:mle}
 
-The likelihood $\Like(\theta)$ of \cref{3b:sec:likelihood} gives every
-candidate value of $\theta$ a number: how readily that value would have
-produced the data we hold. If we must report a single value, the natural
-choice is the one with the highest number. Its prediction needs the most
-ordinary noise to become the data. This is the
-\newterm{maximum likelihood estimator}, and it is the workhorse of
-experimental physics. Almost every fitted mass, lifetime, cross-section and
+For fixed data, the likelihood $\Like(\theta)$ of \cref{3b:sec:likelihood}
+ranks candidate parameter values by the probability or density they assign to
+the observation. Selecting the value that maximises this quantity defines the
+\newterm{maximum likelihood estimator}. This rule underlies many measurements
+in experimental physics. Almost every fitted mass, lifetime, cross-section and
 cosmological parameter you have seen was obtained this way, or by its
 Gaussian special case, least squares.
 
@@ -5659,8 +5654,8 @@ $\ell(\mu)=9\ln\mu-\mu$ gives $\hat\mu=9$ and
 $-\ell''(\hat\mu)=n/\hat\mu^2=1/9$, a curvature error of $3=\sqrt n$, the
 familiar rule. The likelihood itself is skewed: solving
 $\ell(\mu)=\ell_{\max}-\tfrac12$ gives $\mu\in[6.32,12.34]$, that is
-$9^{+3.34}_{-2.68}$. The interval reaches further up than down. Why? A
-Poisson count with mean $\mu$ has spread $\sqrt\mu$. A large mean such as
+$9^{+3.34}_{-2.68}$. The interval extends further above the estimate than below it because
+the spread $\sqrt\mu$ of a Poisson count grows with its mean $\mu$. A large mean such as
 $12.34$ has a large spread, $3.5$, so a count of $9$ is less than one spread
 below it. A small mean such as $6.32$ has a small spread, $2.5$, so the
 same count is slightly more than one spread above it. Large means can
@@ -7751,7 +7746,7 @@ Poisson variables add to a Poisson variable, so
   \item The exponentials and factorials cancel, and so does $\lambda^s$, leaving
         $(n-1)^s/n^s$. This is the last place that $\lambda$ could have entered.
 \end{explain}
-So $\tilde W=(1-1/n)^K$. In words: given the total, each of the $K$ events
+So $\tilde W=(1-1/n)^K$. Conditional on the total, each of the $K$ events
 fell in slot $1$ with probability $1/n$, independently, so slot $1$ is
 empty with probability $(1-1/n)^K$. The variance is found from the
 generating function of the Poisson distribution, $\E z^K=\exp[n\lambda(z-1)]$:

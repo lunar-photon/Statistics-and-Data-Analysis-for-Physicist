@@ -180,10 +180,10 @@
 \addcontentsline{toc}{section}{Where this chapter is going}
 \label{11a:sec:roadmap}
 
-A galaxy redshift survey hands us a table. Each row is one galaxy: two angles on
-the sky and a redshift. Turned into distances with a fiducial cosmology, the table
-becomes a cloud of a few hundred thousand, or a few million, points in a box of
-space several billion light years across. No theory predicts where any one of
+A galaxy redshift survey records two angles and a redshift for each galaxy.
+Using a fiducial cosmology to convert redshift to distance, we can place each
+galaxy in three dimensions. The resulting catalogue may contain hundreds of
+thousands or even millions of points in a volume several billion light years across. No theory predicts where any one of
 those points should be. What a cosmological model predicts is how the points
 \emph{cluster}: how much more often than chance two galaxies sit $100\,h^{-1}$Mpc
 apart, how much the clustering depends on direction relative to our line of
@@ -706,10 +706,9 @@ description.
 \section{Estimating the correlation function from pair counts}
 \label{11a:sec:xi}
 
-A survey is never a periodic box. The Sloan footprint is an irregular patch of
-sky with holes cut out around bright stars, the galaxy density falls with
-distance because faint galaxies drop out, and the edges are wherever the
-telescope stopped. The pair probability \eqref{11a:eq:pair-prob} of
+The Sloan survey covers an irregular patch of sky, with holes around bright
+stars and boundaries set by the telescope's coverage. Its observed galaxy
+density also falls with distance as faint galaxies drop out of the sample. The pair probability \eqref{11a:eq:pair-prob} of
 \cref{11a:sec:cox} tells us what to measure: count the pairs of galaxies at
 separation $r$, and compare with the number we would have found if the galaxies
 had no clustering at all. The difficulty is the comparison. In this oddly shaped
@@ -1163,7 +1162,7 @@ The distant part has plenty of volume but few galaxies: its error is shot noise.
 If we Fourier transform the galaxy density with every galaxy counted equally, the
 crowded nearby region dominates the answer and the huge distant volume is wasted.
 
-The question in words: \emph{how much weight should a galaxy get, depending on
+\emph{How much weight should a galaxy get, depending on
 where it sits, so that the estimated power spectrum has the smallest possible
 error?} Feldman, Kaiser and Peacock answered it in 1994, and the answer, the FKP
 weight, is used in essentially every galaxy power-spectrum measurement since
@@ -3484,9 +3483,9 @@ side.
 \section{How many haloes of each mass}
 \label{11b:sec:hmf}
 
-The most massive objects in the Universe are clusters of galaxies, haloes of
-$10^{14}$--$10^{15}$ solar masses. They are rare: a cube $1\,h^{-1}$Gpc on a side
-holds only a few hundred of the largest. Their number is extremely sensitive to
+Galaxy clusters occupy some of the most massive haloes in the Universe,
+with masses of $10^{14}$--$10^{15}$ solar masses. Even a cube
+$1\,h^{-1}$Gpc on a side contains only a few hundred of the largest clusters. Their number is extremely sensitive to
 the amplitude of the initial fluctuations, because building a $10^{15}M_\odot$
 object needs a large region to have been unusually dense, and unusual events in a
 Gaussian field are exponentially rare. Counting clusters has therefore been a
@@ -6320,8 +6319,9 @@ The scatter in Hubble's diagram was $\FBHubSva$\,km/s
 towards us at $220$\,km/s against the general recession. In the refit of
 \cref{11c:sec:hubble1929} these peculiar velocities were noise: independent random
 numbers $\epsilon_i$ with a spread $\sigma_v$ to be estimated from the residuals.
-They are not random in that sense. A galaxy moves because the matter around it
-pulls on it, and two neighbouring galaxies feel nearly the same pull. Once we know
+Treating the velocities as independent neglects their common origin.
+Nearby galaxies accelerate in much the same gravitational field, so their
+peculiar velocities can be correlated. Once we know
 what produces the velocities, three things follow: how large they are in a
 universe with the measured power spectrum, how strongly the velocities of two
 galaxies a distance $r$ apart are correlated, and, in the next two sections, what
@@ -6808,8 +6808,7 @@ of sight through Virgo the two together give the S-shaped curve in
   \node[anchor=south,font=\small,tangentgreen!70!black] at (0.55,0.08) {$\bm u(0)$};
   \draw[dashed,faint] (1.1,0) -- (V);
 \end{tikzpicture}
-\caption{The geometry of the Virgocentric flow. Every galaxy, and we ourselves,
-fall towards the cluster with a speed that falls off as $1/R$. The velocity we
+\caption{The geometry of the Virgocentric flow. In this model both the observed galaxy and our own fall towards the cluster, with infall speed proportional to $1/R$. The velocity we
 record for a galaxy is the radial part of its Hubble velocity plus the difference
 between its fall $\bm u(\bm x)$ and ours $\bm u(0)$.}
 \label{11c:fig:virgo-geometry}

@@ -59,19 +59,16 @@
 \section*{Where this chapter is going}
 \addcontentsline{toc}{section}{Where this chapter is going}
 
-Two ideas fix the questions that every later chapter answers. The first is
-that probability runs in two directions. Forward, it goes from a hypothesis to
-the outcomes that hypothesis can produce. Backward, it goes from an outcome
-that has already happened to the hypotheses that could have produced it.
-Bayes' theorem connects the two directions. The second idea is that a
-physicist never feeds raw data straight into Bayes' theorem. First we decide
-which information in the data matters. Then we compress the data into a
-summary. Then we work out how that summary fluctuates from one experiment to
-the next. These steps form one pipeline, from a physical model to a statement
-about physics, and the whole book is organised along it. Very little is proved
-and only small things are computed; the aim is to see the questions clearly.
-The practical side comes last: how the Python code for every chapter is laid
-out and how to run it.
+Suppose we know the bias of a coin. We can predict how often a run of tosses
+will produce a given number of heads. Once we observe the count, we can ask
+what it tells us about the bias. Bayes' theorem connects these two directions
+of reasoning. In a physics experiment we also have to decide which features
+of the data carry information about the quantity we want to measure. We
+capture those features in a summary and work out how much it would fluctuate
+if we repeated the experiment. That sequence, from a physical model through
+a measurement and back to the physics, organises the book. We introduce it
+here with small calculations, then describe how to find and run the Python
+code that accompanies each chapter.
 
 \begin{figure}[htbp]
 \centering
@@ -586,10 +583,10 @@ second sense.
 
 \section{The questions the book answers}\label{0a:sec:questions}
 
-One coin already raises many different questions, and each needs its own
-tool. Keep the coin from the magic shop of \cref{0a:sec:two-directions}, but
-forget the drawer. Now there is a single coin whose heads probability $p$ is
-unknown, and we may toss it as often as we like.
+Take a single coin from the magic shop of \cref{0a:sec:two-directions}.
+Its heads probability $p$ is unknown, but we can toss it as often as we like.
+Even with this one experiment, the calculation depends on the question we
+ask about the count.
 \emph{How likely is 8 heads if $p=\frac12$?} is a forward calculation.
 \emph{What is our best guess for $p$, and how wrong might it be?} is
 estimation. \emph{Is 8 heads in 10 surprising for a fair coin?} is a test.
