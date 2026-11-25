@@ -7254,6 +7254,45 @@ line.}
 \label{1b:fig:correlation-gallery}
 \end{figure}
 
+\paragraph{Why a nonlinear response can give a strong linear correlation.}
+Suppose a calorimeter converts deposited energy $X$ into a signal $Y=f(X)$.
+Its calibration curve may bend appreciably over the full energy range, yet a
+beam with a narrow energy spread samples only a short stretch of that curve.
+Let $\mu_X=\E(X)$ and write $\delta X=X-\mu_X$. Expanding the response about
+the beam mean and then subtracting its expectation gives
+\begin{align*}
+  Y &= f(\mu_X)+f'(\mu_X)\,\delta X
+       +\tfrac12 f''(\mu_X)(\delta X)^2+\cdots,\\
+  \delta Y \equiv Y-\E(Y)
+    &= f'(\mu_X)\,\delta X
+       +\tfrac12 f''(\mu_X)\bigl[(\delta X)^2-\sigma_X^2\bigr]+\cdots .
+\end{align*}
+The subtraction matters because curvature can shift the mean signal away from
+$f(\mu_X)$. If the slope varies little over the sampled energies and is
+nonzero there, the first term dominates the fluctuations. Multiplying by
+$\delta X$ and averaging then gives
+\[
+  \Cov(X,Y)=\E(\delta X\,\delta Y)
+  \simeq f'(\mu_X)\,\E\bigl[(\delta X)^2\bigr]
+  = f'(\mu_X)\,\sigma_X^2 .
+\]
+The ratio $\Cov(X,Y)/\sigma_X^2$ is the slope of the best mean-square
+straight-line fit, so in this narrow beam it approximates the local gain in
+signal per unit energy. Pearson's $\rho$ gives the slope when both variables
+are measured in their own standard deviations. An increase of one $\sigma_X$
+in energy therefore corresponds to an increase of $\rho\,\sigma_Y$ in the
+fitted signal, with the sign of $\rho$ setting the direction. Independent, additive
+readout noise leaves the covariance with $X$ unchanged but increases
+$\sigma_Y$, so it can reduce $\abs\rho$ even when the gain is unchanged.
+The same local expansion underlies error propagation in \cref{3a:sec:propagation}.
+
+If the beam spans a strongly curved part of the calibration, or is centred
+where $f'(\mu_X)=0$, a single slope can miss an important part of the
+response. A quadratic fluctuation, for example, can be detected by examining
+how the mean signal varies with energy or by measuring its covariance with
+$(\delta X)^2$. Such higher-order summaries can require more data because
+they give unusually large fluctuations more weight.
+
 \subsection{Zero correlation is not independence}
 
 If $X$ and $Y$ are independent, $\E(XY)=\E(X)\E(Y)$ by
@@ -7378,8 +7417,11 @@ is positive semi-definite: for any fixed vector $\bm a$,
 So all eigenvalues of $\Cmat$ are $\ge0$. A zero eigenvalue means some
 combination $\bm a\T\bm X$ has zero variance, i.e.\ is a constant: the
 variables obey an exact linear constraint (as the multinomial counts below do).
-Dividing entry $(i,j)$ by $\sigma_i\sigma_j$ gives the correlation matrix, with
-ones on the diagonal.
+For variables with nonzero variance, dividing entry $(i,j)$ by
+$\sigma_i\sigma_j$ gives the correlation matrix. Each off-diagonal entry
+describes the linear association of a pair on the same dimensionless scale,
+and each diagonal entry is one. For jointly Gaussian variables the mean
+vector and covariance matrix determine the entire joint distribution.
 
 Now let $\bm Y=A\bm X+\bm b$ for a fixed $m\times k$ matrix $A$ and vector $\bm b$.
 Linearity gives $\E\bm Y=A\bm\mu+\bm b$, and \mainref{Lemma~3.21, p.~54}
